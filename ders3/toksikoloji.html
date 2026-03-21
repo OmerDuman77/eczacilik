@@ -1,0 +1,912 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Toksikoloji - Ders Notu & Test</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=Source+Sans+3:wght@300;400;600;700&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #0f1117;
+  --surface: #1a1d27;
+  --surface2: #232736;
+  --accent: #4ecdc4;
+  --accent2: #ff6b6b;
+  --accent3: #ffe66d;
+  --text: #e8e6e3;
+  --text-dim: #8b8d97;
+  --border: #2d3040;
+  --correct: #4ecdc4;
+  --wrong: #ff6b6b;
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+body {
+  font-family: 'Source Sans 3', sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  min-height: 100vh;
+  line-height: 1.7;
+}
+
+.header {
+  background: linear-gradient(135deg, #1a1d27 0%, #2d3040 50%, #1a1d27 100%);
+  border-bottom: 1px solid var(--border);
+  padding: 2.5rem 2rem 1.5rem;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+}
+
+.header::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background: 
+    radial-gradient(ellipse at 20% 50%, rgba(78, 205, 196, 0.08) 0%, transparent 50%),
+    radial-gradient(ellipse at 80% 50%, rgba(255, 107, 107, 0.06) 0%, transparent 50%);
+  pointer-events: none;
+}
+
+.header h1 {
+  font-family: 'Playfair Display', serif;
+  font-size: 2.4rem;
+  font-weight: 900;
+  letter-spacing: -0.02em;
+  background: linear-gradient(135deg, var(--accent), var(--accent3));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  position: relative;
+}
+
+.header .subtitle {
+  color: var(--text-dim);
+  font-size: 0.95rem;
+  margin-top: 0.4rem;
+  font-weight: 300;
+  position: relative;
+}
+
+.tab-nav {
+  display: flex;
+  justify-content: center;
+  gap: 0;
+  background: var(--surface);
+  border-bottom: 1px solid var(--border);
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+
+.tab-btn {
+  padding: 1rem 2.2rem;
+  background: none;
+  border: none;
+  color: var(--text-dim);
+  font-family: 'Source Sans 3', sans-serif;
+  font-size: 0.95rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  position: relative;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+.tab-btn::after {
+  content: '';
+  position: absolute;
+  bottom: 0; left: 50%; right: 50%;
+  height: 2px;
+  background: var(--accent);
+  transition: all 0.3s ease;
+}
+
+.tab-btn.active {
+  color: var(--accent);
+}
+
+.tab-btn.active::after {
+  left: 0; right: 0;
+}
+
+.tab-btn:hover {
+  color: var(--text);
+  background: rgba(255,255,255,0.03);
+}
+
+.tab-content {
+  display: none;
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 2rem 1.5rem 4rem;
+  animation: fadeIn 0.4s ease;
+}
+
+.tab-content.active { display: block; }
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(8px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* SUMMARY STYLES */
+.section {
+  margin-bottom: 2.5rem;
+}
+
+.section-title {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: var(--accent);
+  margin-bottom: 1rem;
+  padding-bottom: 0.5rem;
+  border-bottom: 1px solid var(--border);
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+}
+
+.section-title .num {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px; height: 32px;
+  background: var(--accent);
+  color: var(--bg);
+  border-radius: 8px;
+  font-family: 'Source Sans 3', sans-serif;
+  font-size: 0.85rem;
+  font-weight: 700;
+  flex-shrink: 0;
+}
+
+.card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 1.3rem 1.5rem;
+  margin-bottom: 1rem;
+  transition: border-color 0.3s;
+}
+
+.card:hover { border-color: rgba(78, 205, 196, 0.3); }
+
+.card h3 {
+  font-size: 1.05rem;
+  font-weight: 700;
+  color: var(--accent3);
+  margin-bottom: 0.5rem;
+}
+
+.card p, .card li {
+  color: var(--text);
+  font-size: 0.93rem;
+  line-height: 1.75;
+}
+
+.card ul {
+  list-style: none;
+  padding-left: 0;
+}
+
+.card ul li {
+  padding: 0.2rem 0 0.2rem 1.2rem;
+  position: relative;
+}
+
+.card ul li::before {
+  content: '▸';
+  position: absolute;
+  left: 0;
+  color: var(--accent);
+  font-weight: 700;
+}
+
+.highlight-box {
+  background: linear-gradient(135deg, rgba(78, 205, 196, 0.1), rgba(255, 230, 109, 0.05));
+  border-left: 3px solid var(--accent);
+  padding: 1rem 1.3rem;
+  border-radius: 0 10px 10px 0;
+  margin: 1rem 0;
+  font-style: italic;
+  color: var(--accent3);
+  font-size: 0.95rem;
+}
+
+.keyword {
+  display: inline-block;
+  background: rgba(78, 205, 196, 0.12);
+  color: var(--accent);
+  padding: 0.1rem 0.5rem;
+  border-radius: 4px;
+  font-weight: 600;
+  font-size: 0.88rem;
+}
+
+.table-wrap {
+  overflow-x: auto;
+  margin: 1rem 0;
+}
+
+.table-wrap table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.9rem;
+}
+
+.table-wrap th {
+  background: var(--surface2);
+  color: var(--accent);
+  padding: 0.7rem 1rem;
+  text-align: left;
+  font-weight: 700;
+  border-bottom: 2px solid var(--accent);
+}
+
+.table-wrap td {
+  padding: 0.6rem 1rem;
+  border-bottom: 1px solid var(--border);
+}
+
+.table-wrap tr:hover td { background: rgba(78,205,196,0.04); }
+
+/* QUESTIONS STYLES */
+.question-block {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 1.4rem 1.5rem;
+  margin-bottom: 1.2rem;
+  counter-increment: q;
+  transition: border-color 0.3s;
+}
+
+.question-block:hover { border-color: rgba(78, 205, 196, 0.25); }
+
+.q-number {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 28px; height: 28px;
+  background: var(--accent2);
+  color: #fff;
+  border-radius: 50%;
+  font-size: 0.8rem;
+  font-weight: 700;
+  margin-right: 0.5rem;
+  flex-shrink: 0;
+}
+
+.q-text {
+  font-weight: 600;
+  font-size: 0.97rem;
+  margin-bottom: 0.8rem;
+  display: flex;
+  align-items: flex-start;
+  gap: 0.1rem;
+}
+
+.q-text span { flex: 1; }
+
+.options {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+  padding-left: 2.3rem;
+}
+
+.option {
+  background: var(--surface2);
+  padding: 0.55rem 1rem;
+  border-radius: 8px;
+  font-size: 0.9rem;
+  cursor: pointer;
+  transition: all 0.2s;
+  border: 1px solid transparent;
+  user-select: none;
+}
+
+.option:hover {
+  background: rgba(78, 205, 196, 0.08);
+  border-color: rgba(78, 205, 196, 0.2);
+}
+
+.option.selected {
+  border-color: var(--accent);
+  background: rgba(78, 205, 196, 0.1);
+}
+
+.option.correct {
+  border-color: var(--correct);
+  background: rgba(78, 205, 196, 0.15);
+  color: var(--correct);
+}
+
+.option.wrong {
+  border-color: var(--wrong);
+  background: rgba(255, 107, 107, 0.1);
+  color: var(--wrong);
+  text-decoration: line-through;
+}
+
+.check-btn-container {
+  text-align: center;
+  padding: 2rem 0;
+}
+
+.check-btn {
+  background: linear-gradient(135deg, var(--accent), #38b2ac);
+  color: var(--bg);
+  border: none;
+  padding: 0.85rem 2.5rem;
+  border-radius: 10px;
+  font-family: 'Source Sans 3', sans-serif;
+  font-size: 1rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: transform 0.2s, box-shadow 0.2s;
+  letter-spacing: 0.03em;
+}
+
+.check-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(78, 205, 196, 0.3);
+}
+
+.score-display {
+  text-align: center;
+  padding: 1.5rem;
+  background: var(--surface);
+  border-radius: 12px;
+  border: 1px solid var(--border);
+  margin-top: 1rem;
+  display: none;
+}
+
+.score-display .score-num {
+  font-family: 'Playfair Display', serif;
+  font-size: 3rem;
+  font-weight: 900;
+  background: linear-gradient(135deg, var(--accent), var(--accent3));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.score-display .score-label {
+  color: var(--text-dim);
+  font-size: 0.9rem;
+}
+
+/* ANSWER KEY STYLES */
+.answer-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(80px, 1fr));
+  gap: 0.6rem;
+  margin-bottom: 2rem;
+}
+
+.answer-cell {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 0.6rem;
+  text-align: center;
+  font-size: 0.88rem;
+}
+
+.answer-cell .a-num {
+  color: var(--text-dim);
+  font-size: 0.75rem;
+  display: block;
+}
+
+.answer-cell .a-val {
+  color: var(--accent);
+  font-weight: 700;
+  font-size: 1.1rem;
+}
+
+.explanation {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 1rem 1.3rem;
+  margin-bottom: 0.8rem;
+  font-size: 0.9rem;
+}
+
+.explanation .e-num {
+  color: var(--accent2);
+  font-weight: 700;
+  margin-right: 0.3rem;
+}
+
+.explanation .e-answer {
+  color: var(--accent);
+  font-weight: 700;
+}
+
+@media (max-width: 600px) {
+  .header h1 { font-size: 1.7rem; }
+  .tab-btn { padding: 0.8rem 1.2rem; font-size: 0.82rem; }
+  .tab-content { padding: 1.2rem 1rem 3rem; }
+  .answer-grid { grid-template-columns: repeat(auto-fill, minmax(65px, 1fr)); }
+}
+</style>
+</head>
+<body>
+
+<div class="header">
+  <h1>TOKSİKOLOJİ</h1>
+  <div class="subtitle">Prof.Dr. Gülden Z. Omurtag & Doç.Dr. Esma Söylemez Yeşilçimen — İstanbul Medipol Üniversitesi</div>
+</div>
+
+<nav class="tab-nav">
+  <button class="tab-btn active" onclick="switchTab('summary')">Özet</button>
+  <button class="tab-btn" onclick="switchTab('questions')">Sorular</button>
+  <button class="tab-btn" onclick="switchTab('answers')">Cevap Anahtarı</button>
+</nav>
+
+<!-- ==================== ÖZET ==================== -->
+<div id="summary" class="tab-content active">
+
+  <div class="section">
+    <div class="section-title"><span class="num">1</span> Toksikoloji Nedir?</div>
+    <div class="card">
+      <h3>Etimoloji</h3>
+      <p>Toksikoloji kelimesi Yunanca <span class="keyword">τοξικός (toxikos)</span> = "zehir" ve <span class="keyword">λόγος (logos)</span> = "bilim" sözcüklerinden türemiştir. En basit tanımıyla <strong>zehir bilimi</strong>dir.</p>
+    </div>
+    <div class="card">
+      <h3>Tanım</h3>
+      <p><strong>Ksenobiyotiklerin</strong> biyolojik sistemle etkileşmeleri sonucu ortaya çıkan advers (istenmeyen/zararlı) etkileri inceleyen bilim dalıdır.</p>
+    </div>
+    <div class="card">
+      <h3>Ksenobiyotik Kavramı</h3>
+      <ul>
+        <li><strong>XENO:</strong> Yabani &nbsp;|&nbsp; <strong>BIOS:</strong> Yaşam → Organizmaya yabancı madde</li>
+        <li>Biyolojik sistemde doğal olarak bulunmayan (endojen olmayan) maddeler</li>
+        <li>Normal hücre biyokimyası ve işlevi için gerekli olmayan maddeler</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-title"><span class="num">2</span> Çalışma Alanları ve Amaçları</div>
+    <div class="card">
+      <h3>Çalışma Alanları</h3>
+      <ul>
+        <li>Kimyasallar ile biyolojik sistemler arasındaki etkileşimlerin zararlı sonuçlarını inceler</li>
+        <li>Zararsızlık limitlerini belirler</li>
+        <li>Kimyasal, fiziksel ve biyolojik kökenli maddelerin canlı organizmalar ve ekosistem üzerindeki zararlı etkilerini, korunma yollarını ve zararın azaltılması/giderilmesini araştırır</li>
+      </ul>
+    </div>
+    <div class="card">
+      <h3>Toksikoloji Çalışmalarının Amaçları</h3>
+      <ul>
+        <li>Zehirlerin kaynaklarını, fiziksel-kimyasal-biyolojik özelliklerini belirlemek</li>
+        <li>Zehirlerin canlı organizmada uğradığı değişiklikleri tespit etmek</li>
+        <li>Advers etki mekanizmalarını aydınlatmak</li>
+        <li>Advers etkilerin ortaya çıkma olasılıklarını belirlemek</li>
+        <li>Kimyasalların zararsızlık limitlerini belirlemek ve risk değerlendirmesi yapmak</li>
+        <li>İlaçların güvenilirlik değerlendirmesini yapmak</li>
+        <li>Zehirlerin izolasyonu ve analizi</li>
+        <li>Zehirlenmelere ilişkin tedavi yaklaşımları geliştirmek</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-title"><span class="num">3</span> Toksikolojinin Tarihçesi</div>
+    <div class="card">
+      <h3>Eski Çağlar</h3>
+      <ul>
+        <li><strong>Ebers Papirüsleri (M.Ö. 1500):</strong> Zehirlere ait ilk yazılı belge. Antik Mısır'a ait, 110 sayfalık kapsamlı tıp belgesi. Arsenik, akonitin, antimon, kurşun, opium, hemlock (baldıran) ve siyanojenik glikozitler hakkında bilgi içerir.</li>
+        <li><strong>Hipokrat (M.Ö. 460-377):</strong> Tıbbın babası; birçok zehiri ve tedavilerini tanımlamış, klinik toksikoloji prensiplerinden ilk bahseden kişidir.</li>
+        <li><strong>Sokrates (M.Ö. 403):</strong> Baldıran otu zehiri (Conium maculatum) ile öldürüldü.</li>
+        <li><strong>Kleopatra (M.Ö. 69-30):</strong> Kobra yılanı zehiriyle intihar girişiminde bulundu.</li>
+        <li><strong>Claudius:</strong> Agrippina tarafından Amanita phalloides (ölüm meleği mantarı) ile zehirlendi.</li>
+        <li><strong>Bizans İmparatorları:</strong> Julian Apostate ve Jovian CO gazından zehirlendi.</li>
+      </ul>
+    </div>
+    <div class="card">
+      <h3>Eski Çağ Antidotları</h3>
+      <ul>
+        <li><strong>Moli:</strong> En eski antidot; datura stromonium gibi zehirli bitkilere karşı kullanılan bitki</li>
+        <li><strong>Alexipharmacia/Theriac:</strong> Evrensel antidot (yabani kekik, maydanoz, rezene vb.)</li>
+        <li><strong>Mitridatum:</strong> Örümcek, yılan, akrep gibi canlılara karşı koruyucu</li>
+        <li><strong>Galen:</strong> 73 maddeden oluşan karışım (zehirli yılan eti, ada soğanı, opium alkaloidleri vb.)</li>
+        <li>Ünlü antidot merkezleri: Kahire, Venedik, Floransa, Cenova ve İstanbul</li>
+      </ul>
+    </div>
+    <div class="card">
+      <h3>Orta Çağ — Paracelsus (1493-1541)</h3>
+      <div class="highlight-box">"Tüm maddeler zehirdir. İlacı zehirden ayıran dozudur."</div>
+      <ul>
+        <li>Toksikolojinin bilimsel temellerini atan Rönesans adamı</li>
+        <li>Toksisitenin göreceli bir kavram olduğunu, doza bağlı olduğunu ifade etti</li>
+        <li><strong>DOZ KAVRAMI</strong>nı, doz-cevap ilişkisini, toksik etki-kimyasal yapı ilişkilerini, çevresel faktörleri ve mesleki toksikolojiyi ilk ele alan kişi</li>
+      </ul>
+    </div>
+    <div class="card">
+      <h3>18.-19. Yüzyıl (Analitik Toksikolojinin Gelişimi)</h3>
+      <ul>
+        <li><strong>Mathieu Orfila (1787-1853):</strong> Modern toksikolojinin babası. Adli toksikoloji biliminin temelini kurdu. "Traité des Poisons" (1814) kitabının yazarı. Otopsi materyali ve kimyasal analizini sistematik zehirlenmenin yasal belgesi olarak kullanan ilk toksikolog.</li>
+        <li><strong>François Magendie (1783-1855):</strong> Emetin, striknin ve siyanürün etki mekanizmalarını araştırdı</li>
+        <li><strong>Claude Bernard (1813-1878):</strong> CO ve kürarın etki mekanizmalarını aydınlattı</li>
+        <li><strong>Louis Lewin (1850-1929):</strong> Farmakolojik ve toksikolojik mekanizmalar arasındaki farklılığı vurgulayan ilk bilim adamı</li>
+        <li><strong>Napolyon Bonapart (1769-1821):</strong> Kronik arsenik zehirlenmesiyle öldü; 150 yıl sonra saç analizi ile kanıtlandı</li>
+      </ul>
+    </div>
+    <div class="card">
+      <h3>20. Yüzyıl Gelişmeleri</h3>
+      <ul>
+        <li>2. Dünya Savaşı sonrası kimya ve farmasötik endüstrisindeki büyük atılım → toplumsal kemofobi</li>
+        <li><strong>1960 Talidomid faciası</strong></li>
+        <li><strong>Rachel Carson — "Sessiz Bahar" (1962):</strong> Pestisitlere karşı toplumsal hareket başlattı</li>
+        <li>TCDD, Minamata, Itai-itai, kimyasal silahlar, Çernobil gibi felaketler</li>
+        <li><strong>DNA çift sarmal yapısının keşfi (1953):</strong> Watson ve Crick → Genetik Toksikoloji alanının doğuşu</li>
+      </ul>
+    </div>
+    <div class="card">
+      <h3>Tarihte Toksikolojik Felaketler (Gazlar)</h3>
+      <ul>
+        <li><strong>Pompei (M.S. 79):</strong> Vezüv yanardağı patlaması, ~20.000 ölü</li>
+        <li><strong>I. Dünya Savaşı:</strong> Klorin, fosfor, hardal gazı → 100.000 ölü, 1.2 milyon yaralı</li>
+        <li><strong>II. Dünya Savaşı:</strong> Zyklon B (HCN) gazı ile milyonlarca insan öldürüldü</li>
+        <li><strong>İran-Irak Savaşı (1982):</strong> Hardal gazı kullanıldı</li>
+        <li><strong>Bhopal (1984):</strong> Metilizosiyanat sızıntısı → >2000 ölüm, 200.000 yaralı</li>
+        <li><strong>Tokyo Metrosu (1995):</strong> Sarin gazı terörist saldırısı → 11 ölü, 5510 yaralı</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-title"><span class="num">4</span> Alt Bilim Dalları</div>
+    <div class="card">
+      <ul>
+        <li><strong>Genel Toksikoloji:</strong> Temel ilkeleri kapsar</li>
+        <li><strong>Klinik Toksikoloji:</strong> İlaç ve kimyasal maddelerle oluşan zehirlenmelerin tedavisi</li>
+        <li><strong>Forensik (Adli) Toksikoloji:</strong> Ölüme yol açan ajanların nitel/nicel tanımlanması; yasal amaçlı toksikoloji</li>
+        <li><strong>Mesleki Toksikoloji:</strong> Çalışma ortamındaki zararlı maddelerden korunma, güvenli çalışma koşulları</li>
+        <li><strong>Çevresel Toksikoloji / Ekotoksikoloji:</strong> Çevresel kirlenme etkilerinin incelenmesi (besin, su, hava, toprak)</li>
+        <li><strong>Analitik Toksikoloji:</strong> Toksik maddelerin kalitatif ve kantitatif analizi</li>
+        <li><strong>İlaç Toksikolojisi, Biyokimyasal Toksikoloji, Gıda Toksikolojisi, Fitotoksikoloji</strong></li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-title"><span class="num">5</span> Toksikoloji Yaklaşımları</div>
+    <div class="card">
+      <h3>Üç Temel Yaklaşım</h3>
+      <ul>
+        <li><strong>Tanımlayıcı (Descriptive) Toksikoloji:</strong> Toksisite testleri ile ilgilenir. Güvenilirlik değerlendirmesi ve düzenlemeler için bilgi sağlar. Deney hayvanlarında toksisite testlerinin dizaynı ile insanda risk değerlendirmesi yapar.</li>
+        <li><strong>Mekanistik (Mechanistic) Toksikoloji:</strong> Hücresel, biyokimyasal ve moleküler mekanizmaların anlaşılmasıyla uğraşır. Daha güvenilir alternatif kimyasal dizaynı için gereklidir.</li>
+        <li><strong>Düzenleyici (Regulatory) Toksikoloji:</strong> Tanımlayıcı ve mekanistik verilere dayanarak ilaç/kimyasallar için yasal düzenlemeler yapar. Önemli kurumlar: FDA, EPA, OSHA.</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-title"><span class="num">6</span> Temel Kavramlar ve Terminoloji</div>
+    <div class="card">
+      <h3>Temel Terimler</h3>
+      <ul>
+        <li><span class="keyword">Zehir:</span> Canlı organizmada zararlı etki gösteren herhangi bir madde (doz önemli!)</li>
+        <li><span class="keyword">Toksikon/Toksik Madde:</span> Ok ucuna sürülen zehir anlamına gelir</li>
+        <li><span class="keyword">Toksin:</span> Biyolojik sistemler tarafından üretilen toksik maddeler (bitki, hayvan, bakteri). Örn: aflatoksin, okratoksin</li>
+        <li><span class="keyword">Toksik Etki:</span> İlaçlar dahil tüm ksenobiyotiklerin biyolojik sistemde oluşturduğu zarar</li>
+        <li><span class="keyword">Toksisite:</span> Bir ksenobiyotiğin canlı organizmada toksik etki oluşturma kapasitesi</li>
+      </ul>
+    </div>
+    <div class="card">
+      <h3>Toksisite Kavramı</h3>
+      <p>Hasarın derecesi bir yelpazede ilerler:</p>
+      <p style="text-align:center; margin: 0.8rem 0; color: var(--accent3); font-weight: 600;">
+        İritasyon → Biyokimyasal değişiklikler → Karaciğer hasarı → Kanser
+      </p>
+      <p>Toksisite karakterizasyonu için bilinmesi gerekenler: Maruziyet, doz-cevap, kimyasal madde, biyolojik sistem ve ADME özellikleri.</p>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-title"><span class="num">7</span> Doz Kavramı ve Doz-Cevap İlişkisi</div>
+    <div class="card">
+      <h3>Doz</h3>
+      <div class="highlight-box">"Toksikolojinin temel yasası doz kavramıdır. Her madde doza bağlı olarak toksik etki gösterir."</div>
+      <ul>
+        <li>Doz = Vücuda giren kimyasalın miktarı (mg/kg)</li>
+        <li>Dozu etkileyen faktörler: Çevredeki konsantrasyon, kimyasal maddenin özelliği, maruziyet sıklığı, maruziyet süresi, maruziyet yolağı</li>
+      </ul>
+    </div>
+    <div class="card">
+      <h3>Doz-Cevap İlişkisi</h3>
+      <p>Biyolojik cevabı belirleyen dozdur. Doz-cevap eğrisinde:</p>
+      <ul>
+        <li><strong>0-1 arası:</strong> NOAEL (No Observed Adverse Effect Level) — Hiçbir ters etki görülmeyen doz seviyesi</li>
+        <li><strong>2-3 arası:</strong> Linear (doğrusal) bölge</li>
+        <li><strong>4:</strong> Maksimum cevap (plato)</li>
+      </ul>
+    </div>
+    <div class="card">
+      <h3>LD₅₀ ve Toksisite Dereceleri</h3>
+      <p><strong>LD₅₀:</strong> Median letal doz; deney hayvanlarının %50'sini öldüren toksik madde dozu (mg/kg)</p>
+      <div class="table-wrap">
+        <table>
+          <tr><th>Toksisite Derecesi</th><th>LD₅₀</th></tr>
+          <tr><td>Son derece toksik</td><td>&lt; 5 mg/kg</td></tr>
+          <tr><td>Şiddetli toksik</td><td>5-50 mg/kg</td></tr>
+          <tr><td>Çok toksik</td><td>50-500 mg/kg</td></tr>
+          <tr><td>Orta derecede toksik</td><td>0.5-5 g/kg</td></tr>
+          <tr><td>Az toksik</td><td>5-15 g/kg</td></tr>
+          <tr><td>Oldukça zararsız</td><td>&gt; 15 g/kg</td></tr>
+        </table>
+      </div>
+      <div class="table-wrap">
+        <table>
+          <tr><th>Kimyasal</th><th>LD₅₀ (mg/kg)</th></tr>
+          <tr><td>Etil Alkol</td><td>10.000</td></tr>
+          <tr><td>Sodyum Klorür</td><td>4.000</td></tr>
+          <tr><td>Nikotin</td><td>1</td></tr>
+          <tr><td>Dioksin (TCDD)</td><td>0.001</td></tr>
+          <tr><td>Botulinum toksini</td><td>0.0001</td></tr>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-title"><span class="num">8</span> Maruziyet (Exposure)</div>
+    <div class="card">
+      <h3>Maruziyet Parametreleri</h3>
+      <p>Toksik etki için kimyasal maddenin kendisi veya aktif metaboliti hedef bölgeye ulaşmalı ve yeterli süre kalmalıdır.</p>
+      <ul>
+        <li><strong>Maruziyet Yolları:</strong> Oral (ilaç, gıda), Solunum (gaz, partikül), Deri (endüstriyel), Diğer (iv, im, sc)</li>
+        <li><strong>Etkililik sırası:</strong> iv > inhalasyon > ip > im > oral (ingest) > topikal</li>
+      </ul>
+    </div>
+    <div class="card">
+      <h3>Maruziyet Süresine Göre Toksisite Türleri</h3>
+      <ul>
+        <li><strong>Akut Toksisite:</strong> 24 saat gibi kısa sürede ortaya çıkar</li>
+        <li><strong>Subakut Toksisite:</strong> 1 ay veya daha az sürede tekrarlanan dozlar</li>
+        <li><strong>Subkronik Toksisite:</strong> 1-3 ay tekrarlanan doz</li>
+        <li><strong>Kronik Toksisite:</strong> 3 aydan fazla tekrarlanan doz</li>
+      </ul>
+      <div class="highlight-box">Örnek: Benzen — Tek doz → MSS depresyonu; Tekrarlanan doz → Lösemi</div>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-title"><span class="num">9</span> Zehirlerin Sınıflandırılması</div>
+    <div class="card">
+      <ul>
+        <li><strong>Kaynaklarına göre:</strong> Bitkisel, mineral, hayvansal, sentetik, enerjetik</li>
+        <li><strong>Analitik özelliklerine göre:</strong> Uçucu zehirler, uçucu olmayan organik zehirler, metalik zehirler, zehirli anyonlar</li>
+        <li><strong>Kimyasal yapılarına göre:</strong> İnorganik, organometalik, organik</li>
+        <li><strong>Fiziksel özelliklerine göre:</strong> Gazlar, buharlar, katı tanecikler, patlayıcı/parlayıcı/çözücüler</li>
+        <li><strong>Farmakolojik/toksikolojik etkilerine göre:</strong> MSS uyarıcıları, MSS baskılayıcıları, sinir zehirleri, protoplazma zehirleri, kas zehirleri, karaciğer/böbrek/solunum/göz/kan zehirleri</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-title"><span class="num">10</span> İlişkili Bilim Dalları ve Kimyasal Maruziyet</div>
+    <div class="card">
+      <h3>Multidisipliner Yapı</h3>
+      <p>Toksikoloji; farmakoloji, biyoloji, kimya, fizyoloji, halk sağlığı, biyokimya, adli tıp, patoloji, immünoloji, fizik, istatistik, ekoloji, mikrobiyoloji, genetik, epidemiyoloji, endüstriyel hijyen ve mühendislik ile yakından ilişkilidir.</p>
+      <div class="highlight-box">"Siz de iki kolay dersle toksikolog olabilirsiniz; ancak bu derslerin her biri 10 yıldır." — Arnold Lehman (1955)</div>
+    </div>
+    <div class="card">
+      <h3>Günlük Hayatta Kimyasal Maruziyet</h3>
+      <ul>
+        <li>Her yerde kimyasal maddelerle iç içeyiz: sanayi, tarım ilaçları, ilaç sanayi, kozmetik, tekstil, gıda, temizlik ürünleri, boya, oyuncak</li>
+        <li>Anne sütünde ~100 kimyasal; içme suyunda 500'ün üzerinde kimyasal bulunur</li>
+        <li>Bir insanın ömrü boyunca ~30 ton yiyecek tükettiği tahmin edilir</li>
+        <li>Doğal gıdalarda bile çok sayıda kimyasal vardır (domates ~350, muz ~325, kahve ~625)</li>
+      </ul>
+    </div>
+  </div>
+
+</div>
+
+<!-- ==================== SORULAR ==================== -->
+<div id="questions" class="tab-content">
+
+  <div style="margin-bottom: 1.5rem; color: var(--text-dim); font-size: 0.9rem; text-align:center;">
+    Şıklara tıklayarak cevabınızı seçin, ardından "Cevapları Kontrol Et" butonuna basın.
+  </div>
+
+  <div id="quiz-container"></div>
+
+  <div class="check-btn-container">
+    <button class="check-btn" onclick="checkAnswers()">Cevapları Kontrol Et</button>
+    <button class="check-btn" onclick="resetQuiz()" style="margin-left:1rem; background: linear-gradient(135deg, var(--accent2), #e55555);">Sıfırla</button>
+  </div>
+
+  <div class="score-display" id="score-box">
+    <div class="score-num" id="score-num">0/40</div>
+    <div class="score-label">Doğru Cevap</div>
+  </div>
+
+</div>
+
+<!-- ==================== CEVAP ANAHTARI ==================== -->
+<div id="answers" class="tab-content">
+
+  <div class="section-title" style="margin-bottom:1.2rem;"><span class="num">✓</span> Hızlı Cevap Anahtarı</div>
+  <div class="answer-grid" id="answer-grid"></div>
+
+  <div class="section-title" style="margin-bottom:1.2rem;"><span class="num">i</span> Açıklamalı Cevaplar</div>
+  <div id="explanations-container"></div>
+
+</div>
+
+<script>
+const questions = [
+  {q:"Toksikoloji kelimesi hangi dilden türemiştir?", o:["Latince","Yunanca","Arapça","Farsça"], a:1},
+  {q:"'Ksenobiyotik' teriminin anlamı nedir?", o:["İlaç maddesi","Organizmaya yabancı madde","Vitamin türevi","Enzim inhibitörü"], a:1},
+  {q:"Toksikolojinin en basit tanımı aşağıdakilerden hangisidir?", o:["İlaç bilimi","Zehir bilimi","Hücre bilimi","Genetik bilimi"], a:1},
+  {q:"Zehirlere ait ilk yazılı belge hangisidir?", o:["Hipokrat yazıları","Galen notları","Ebers Papirüsleri","Orfila'nın kitabı"], a:2},
+  {q:"Ebers Papirüsleri hangi döneme aittir?", o:["M.Ö. 500","M.Ö. 1500","M.S. 100","M.Ö. 3000"], a:1},
+  {q:"'Tüm maddeler zehirdir. İlacı zehirden ayıran dozudur.' sözü kime aittir?", o:["Hipokrat","Orfila","Paracelsus","Galen"], a:2},
+  {q:"Modern toksikolojinin babası olarak kabul edilen bilim insanı kimdir?", o:["Paracelsus","Louis Lewin","Mathieu Orfila","Claude Bernard"], a:2},
+  {q:"Sokrates hangi zehir ile öldürülmüştür?", o:["Arsenik","Amanita phalloides","Baldıran otu (hemlock)","Siyanür"], a:2},
+  {q:"Amanita phalloides (ölüm meleği mantarı) ile zehirlenen tarihi figür kimdir?", o:["Sokrates","Kleopatra","Claudius","Napolyon"], a:2},
+  {q:"Napolyon Bonapart'ın ölüm sebebi olarak ortaya konulan zehir hangisidir?", o:["Kurşun","Cıva","Arsenik","Siyanür"], a:2},
+  {q:"Kleopatra'nın intihar girişiminde kullandığı zehir kaynağı nedir?", o:["Baldıran otu","Amanita mantarı","Kobra yılanı","Akrep"], a:2},
+  {q:"İbn-i Sina hangi yüzyılda yaşamıştır?", o:["M.Ö. 5. yüzyıl","M.S. 10-11. yüzyıl","M.S. 15. yüzyıl","M.S. 18. yüzyıl"], a:1},
+  {q:"Rachel Carson'ın 'Sessiz Bahar' kitabı hangi yılda yayımlanmıştır?", o:["1945","1953","1962","1970"], a:2},
+  {q:"Sessiz Bahar kitabı özellikle hangi konuya karşı toplumsal hareket başlatmıştır?", o:["Nükleer enerji","Pestisitler","Plastik atıklar","Hava kirliliği"], a:1},
+  {q:"Talidomid faciası hangi yıl gerçekleşmiştir?", o:["1953","1960","1970","1984"], a:1},
+  {q:"DNA'nın çift sarmal yapısı hangi yıl keşfedilmiştir?", o:["1945","1953","1962","1970"], a:1},
+  {q:"DNA-kimyasal etkileşimlerinin aydınlatılması hangi alanın doğmasına yol açmıştır?", o:["Klinik Toksikoloji","Analitik Toksikoloji","Genetik Toksikoloji","Adli Toksikoloji"], a:2},
+  {q:"Bhopal felaketinde (1984) sızan kimyasal madde hangisidir?", o:["Sarin","Hardal gazı","Metilizosiyanat","Klorin"], a:2},
+  {q:"Tokyo metrosundaki (1995) terörist saldırıda kullanılan sinir gazı hangisidir?", o:["Hardal gazı","VX","Sarin","Fosgen"], a:2},
+  {q:"I. Dünya Savaşı'nda kullanılan kimyasal silahlar arasında hangisi YOKTUR?", o:["Klorin","Fosfor","Sarin","Hardal gazı"], a:2},
+  {q:"LD₅₀ neyi ifade eder?", o:["İlacın etki süresi","Deney hayvanlarının %50'sini öldüren doz","Güvenli günlük alım miktarı","Maksimum tolere edilebilir doz"], a:1},
+  {q:"LD₅₀ değeri < 5 mg/kg olan bir madde hangi toksisite derecesindedir?", o:["Az toksik","Çok toksik","Şiddetli toksik","Son derece toksik"], a:3},
+  {q:"Aşağıdaki kimyasallardan hangisinin LD₅₀ değeri en düşüktür (en toksik)?", o:["Etil alkol","Sodyum klorür","Nikotin","Botulinum toksini"], a:3},
+  {q:"NOAEL kısaltmasının açılımı nedir?", o:["Normal Observed Adverse Effect Level","No Observed Adverse Effect Level","Net Overall Acute Exposure Limit","None of the Above Effect Level"], a:1},
+  {q:"Doz-cevap eğrisinde NOAEL hangi bölgeye karşılık gelir?", o:["Maksimum cevap bölgesi","Doğrusal (linear) bölge","Henüz advers etki gözlenmeyen bölge","Plato bölgesi"], a:2},
+  {q:"Doz birimi olarak aşağıdakilerden hangisi kullanılır?", o:["mg/L","mg/kg","mol/L","g/mol"], a:1},
+  {q:"Akut toksisite genellikle hangi süre içinde ortaya çıkar?", o:["24 saat","1 hafta","1 ay","3 ay"], a:0},
+  {q:"Kronik toksisite kaç aydan fazla tekrarlanan maruziyetle oluşur?", o:["1 ay","2 ay","3 ay","6 ay"], a:2},
+  {q:"Benzenin tekrarlanan dozlarda neden olduğu kronik etki nedir?", o:["Böbrek yetmezliği","MSS depresyonu","Lösemi","Karaciğer sirozu"], a:2},
+  {q:"Maruziyet yolağına göre en yüksek etkililiğe sahip olan yol hangisidir?", o:["Oral","İntravenöz","İntramusküler","Topikal"], a:1},
+  {q:"Aşağıdakilerden hangisi toksikolojinin alt dallarından biri DEĞİLDİR?", o:["Klinik Toksikoloji","Adli Toksikoloji","Kardiyoloji","Ekotoksikoloji"], a:2},
+  {q:"Klinik toksikoloji temel olarak neyle ilgilenir?", o:["Risk değerlendirmesi","Zehirlenmelerin tedavisi","Çevre kirliliği","Gıda analizleri"], a:1},
+  {q:"Adli (forensik) toksikoloji hangi amaçla kullanılır?", o:["İlaç geliştirme","Yasal amaçlarla zehir tanımlanması","Besin güvenliği","Çalışma ortamı güvenliği"], a:1},
+  {q:"FDA ne tür ürünlerden sorumludur?", o:["Çevredeki pestisitler","İlaç, kozmetik ve gıda katkı maddeleri","İşyeri güvenliği","Su arıtma sistemleri"], a:1},
+  {q:"EPA (Environmental Protection Agency) hangi alanla ilgilenir?", o:["İlaç güvenliği","İşyeri hijyeni","Çevredeki kimyasallar","Gıda katkı maddeleri"], a:2},
+  {q:"Tanımlayıcı (descriptive) toksikoloji aşağıdakilerden hangisiyle doğrudan ilgilenir?", o:["Etki mekanizmalarının aydınlatılması","Toksisite testleri","Yasal düzenlemeler","DNA analizi"], a:1},
+  {q:"Mekanistik toksikolojinin temel amacı nedir?", o:["Toksisite testleri yapmak","Yasal düzenlemeler oluşturmak","Hücresel ve moleküler mekanizmaları aydınlatmak","Zehirlerin izolasyonunu yapmak"], a:2},
+  {q:"Anne sütünde yaklaşık kaç kimyasal madde bulunmaktadır?", o:["10","50","100","500"], a:2},
+  {q:"Toksin kavramı hangi kaynaklı toksik maddeleri ifade eder?", o:["Sentetik maddeler","Biyolojik kaynaklı maddeler (bitki, hayvan, bakteri)","Mineral kaynaklı maddeler","Endüstriyel kimyasallar"], a:1},
+  {q:"Subkronik toksisite hangi süreyi kapsar?", o:["24 saat","1 aydan az","1-3 ay","3 aydan fazla"], a:2}
+];
+
+const explanations = [
+  "Toksikoloji, Yunanca toxikos (zehir) ve logos (bilim) kelimelerinden türemiştir.",
+  "Ksenobiyotik = XENO (yabani) + BIOS (yaşam), yani organizmaya yabancı madde demektir.",
+  "Toksikoloji en basit tanımıyla zehir bilimidir.",
+  "Zehirlere ait ilk yazılı belge Antik Mısır'a ait Ebers Papirüsleridir (M.Ö. 1500).",
+  "Ebers Papirüsleri M.Ö. 1500 yılına tarihlenir.",
+  "Bu ünlü söz Paracelsus'a (1493-1541) aittir ve toksikolojinin temel ilkesidir.",
+  "Mathieu Orfila (1787-1853) modern toksikolojinin babası olarak anılır.",
+  "Sokrates M.Ö. 403'te baldıran otu zehiri (Conium maculatum) ile öldürülmüştür.",
+  "Roma İmparatoru Claudius, Agrippina tarafından Amanita phalloides ile zehirlenmiştir.",
+  "Napolyon'un saçlarından yapılan analizle arsenik zehirlenmesi kanıtlanmıştır.",
+  "Kleopatra (M.Ö. 69-30) Kobra yılanının zehiriyle intihar girişiminde bulunmuştur.",
+  "İbn-i Sina M.S. 930-1037 yılları arasında yaşamıştır (10-11. yüzyıl).",
+  "Rachel Carson'ın 'Sessiz Bahar' kitabı 1962 yılında yayımlanmıştır.",
+  "'Sessiz Bahar' özellikle pestisitlere karşı toplumsal bir hareket başlatmıştır.",
+  "Talidomid faciası 1960 yılında yaşanmıştır.",
+  "DNA'nın çift sarmal yapısı 1953 yılında Watson ve Crick tarafından keşfedilmiştir.",
+  "DNA-kimyasal etkileşimlerinin aydınlatılması Genetik Toksikoloji alanının doğmasını sağlamıştır.",
+  "1984 Bhopal felaketinde metilizosiyanat sızmıştır.",
+  "1995 Tokyo metro saldırısında Sarin sinir gazı kullanılmıştır.",
+  "Sarin I. Dünya Savaşı'nda değil, daha sonraki dönemlerde kullanılmıştır. I. DS'de klorin, fosfor ve hardal gazı kullanılmıştır.",
+  "LD₅₀, deney hayvanlarının %50'sini öldüren median letal dozu ifade eder.",
+  "LD₅₀ < 5 mg/kg olan madde 'son derece toksik' kategorisindedir.",
+  "Botulinum toksini 0.0001 mg/kg ile en düşük LD₅₀ değerine (en yüksek toksisite) sahiptir.",
+  "NOAEL = No Observed Adverse Effect Level (Hiçbir Ters Etki Görülmeyen Doz Seviyesi).",
+  "NOAEL, doz-cevap eğrisinin başlangıcında henüz advers etki gözlenmeyen bölgedir (0-1 arası).",
+  "Doz birimi mg/kg olarak ifade edilir (vücuda giren kimyasalın miktarı).",
+  "Akut toksisite 24 saat gibi kısa sürede maruziyetle ortaya çıkar.",
+  "Kronik toksisite 3 aydan fazla tekrarlanan dozlarla oluşur.",
+  "Benzenin tek dozu MSS depresyonuna, tekrarlanan dozları ise lösemiye neden olur.",
+  "İntravenöz (iv) yol en yüksek etkililiğe sahiptir: iv > inhalasyon > ip > im > oral > topikal.",
+  "Kardiyoloji toksikolojinin bir alt dalı değildir.",
+  "Klinik toksikoloji, ilaç ve kimyasal maddelerle oluşan zehirlenmelerin tedavisiyle ilgilenir.",
+  "Adli toksikoloji, yasal amaçlarla toksikolojinin kullanımıdır.",
+  "FDA ilaç, kozmetik ve gıda katkı maddelerinden sorumludur.",
+  "EPA çevredeki insektisit, fungusit, rodentisit ve diğer kimyasallardan sorumludur.",
+  "Tanımlayıcı toksikoloji doğrudan toksisite testleri ile ilgilenir.",
+  "Mekanistik toksikoloji hücresel, biyokimyasal ve moleküler mekanizmaları aydınlatmayı amaçlar.",
+  "Anne sütünde yaklaşık 100 civarı kimyasal madde bulunur.",
+  "Toksin, biyolojik sistemler (bitki, hayvan, bakteri) tarafından oluşturulan toksik maddelerdir.",
+  "Subkronik toksisite 1-3 ay tekrarlanan doz maruziyetini kapsar."
+];
+
+const letters = ['A','B','C','D'];
+
+// Build quiz
+function buildQuiz() {
+  const container = document.getElementById('quiz-container');
+  container.innerHTML = '';
+  questions.forEach((q, i) => {
+    let html = `<div class="question-block" id="qblock-${i}">
+      <div class="q-text"><span class="q-number">${i+1}</span><span>${q.q}</span></div>
+      <div class="options">`;
+    q.o.forEach((opt, j) => {
+      html += `<div class="option" data-q="${i}" data-o="${j}" onclick="selectOption(this)">${letters[j]}) ${opt}</div>`;
+    });
+    html += `</div></div>`;
+    container.innerHTML += html;
+  });
+}
+
+function selectOption(el) {
+  const qi = el.dataset.q;
+  document.querySelectorAll(`.option[data-q="${qi}"]`).forEach(o => o.classList.remove('selected'));
+  el.classList.add('selected');
+}
+
+function checkAnswers() {
+  let score = 0;
+  questions.forEach((q, i) => {
+    const selected = document.querySelector(`.option[data-q="${i}"].selected`);
+    const correct = document.querySelector(`.option[data-q="${i}"][data-o="${q.a}"]`);
+    correct.classList.add('correct');
+    if (selected) {
+      if (parseInt(selected.dataset.o) === q.a) {
+        score++;
+      } else {
+        selected.classList.add('wrong');
+      }
+    }
+  });
+  const box = document.getElementById('score-box');
+  box.style.display = 'block';
+  document.getElementById('score-num').textContent = `${score}/40`;
+  box.scrollIntoView({ behavior: 'smooth', block: 'center' });
+}
+
+function resetQuiz() {
+  document.querySelectorAll('.option').forEach(o => {
+    o.classList.remove('selected','correct','wrong');
+  });
+  document.getElementById('score-box').style.display = 'none';
+  window.scrollTo({top: 0, behavior: 'smooth'});
+}
+
+// Build answer key
+function buildAnswerKey() {
+  const grid = document.getElementById('answer-grid');
+  const expContainer = document.getElementById('explanations-container');
+  grid.innerHTML = '';
+  expContainer.innerHTML = '';
+  questions.forEach((q, i) => {
+    grid.innerHTML += `<div class="answer-cell"><span class="a-num">Soru ${i+1}</span><span class="a-val">${letters[q.a]}</span></div>`;
+    expContainer.innerHTML += `<div class="explanation"><span class="e-num">S${i+1}.</span> <span class="e-answer">${letters[q.a]}</span> — ${explanations[i]}</div>`;
+  });
+}
+
+// Tab switching
+function switchTab(tab) {
+  document.querySelectorAll('.tab-content').forEach(t => t.classList.remove('active'));
+  document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+  document.getElementById(tab).classList.add('active');
+  event.target.classList.add('active');
+}
+
+buildQuiz();
+buildAnswerKey();
+</script>
+
+</body>
+</html>

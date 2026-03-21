@@ -1,0 +1,850 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Toksikokinetik – Özet & Test</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=Source+Serif+4:ital,wght@0,300;0,400;0,600;1,300&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --navy: #0d1b2a;
+    --teal: #1b6ca8;
+    --gold: #e8a020;
+    --mint: #2ecc9a;
+    --light: #f4f1eb;
+    --card: #ffffff;
+    --text: #1a1a2e;
+    --muted: #5a6070;
+    --correct: #27ae60;
+    --wrong: #c0392b;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: 'Source Serif 4', Georgia, serif;
+    background: var(--light);
+    color: var(--text);
+    line-height: 1.75;
+  }
+
+  /* HEADER */
+  header {
+    background: var(--navy);
+    color: #fff;
+    padding: 3.5rem 2rem 2.5rem;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+  header::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: repeating-linear-gradient(
+      45deg,
+      transparent,
+      transparent 30px,
+      rgba(255,255,255,.025) 30px,
+      rgba(255,255,255,.025) 31px
+    );
+  }
+  header .tag {
+    display: inline-block;
+    background: var(--gold);
+    color: var(--navy);
+    font-size: .7rem;
+    font-family: 'Source Serif 4', serif;
+    font-weight: 600;
+    letter-spacing: .15em;
+    text-transform: uppercase;
+    padding: .3rem .9rem;
+    border-radius: 2px;
+    margin-bottom: 1rem;
+  }
+  header h1 {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(1.8rem, 4vw, 3rem);
+    font-weight: 900;
+    letter-spacing: -.01em;
+    line-height: 1.15;
+  }
+  header h1 span { color: var(--gold); }
+  header p {
+    margin-top: .75rem;
+    color: rgba(255,255,255,.6);
+    font-size: .95rem;
+    font-style: italic;
+  }
+
+  /* NAVIGATION TABS */
+  .tabs {
+    display: flex;
+    justify-content: center;
+    gap: .5rem;
+    padding: 1.25rem 1rem;
+    background: var(--navy);
+    border-top: 1px solid rgba(255,255,255,.1);
+    flex-wrap: wrap;
+  }
+  .tab-btn {
+    background: rgba(255,255,255,.08);
+    color: rgba(255,255,255,.7);
+    border: 1px solid rgba(255,255,255,.15);
+    padding: .5rem 1.4rem;
+    border-radius: 30px;
+    cursor: pointer;
+    font-family: 'Source Serif 4', serif;
+    font-size: .85rem;
+    transition: all .25s;
+  }
+  .tab-btn:hover, .tab-btn.active {
+    background: var(--gold);
+    color: var(--navy);
+    border-color: var(--gold);
+    font-weight: 600;
+  }
+
+  /* SECTIONS */
+  section { display: none; max-width: 860px; margin: 0 auto; padding: 2.5rem 1.25rem 4rem; }
+  section.active { display: block; }
+
+  /* SUMMARY */
+  .summary-block {
+    background: var(--card);
+    border-radius: 12px;
+    padding: 2rem 2.25rem;
+    margin-bottom: 1.75rem;
+    box-shadow: 0 2px 18px rgba(0,0,0,.07);
+    border-left: 5px solid var(--teal);
+    animation: fadeUp .4s ease both;
+  }
+  .summary-block:nth-child(2) { border-left-color: var(--gold); }
+  .summary-block:nth-child(3) { border-left-color: var(--mint); }
+  .summary-block:nth-child(4) { border-left-color: #9b59b6; }
+  .summary-block:nth-child(5) { border-left-color: #e74c3c; }
+  .summary-block:nth-child(6) { border-left-color: var(--teal); }
+  .summary-block:nth-child(7) { border-left-color: var(--gold); }
+
+  .summary-block h2 {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.25rem;
+    font-weight: 700;
+    color: var(--navy);
+    margin-bottom: 1rem;
+    display: flex;
+    align-items: center;
+    gap: .6rem;
+  }
+  .summary-block h2 .num {
+    background: var(--navy);
+    color: var(--gold);
+    width: 28px; height: 28px;
+    border-radius: 50%;
+    font-size: .75rem;
+    display: grid;
+    place-items: center;
+    flex-shrink: 0;
+  }
+  .summary-block p { margin-bottom: .75rem; font-size: .97rem; color: #2c2c3e; }
+  .summary-block ul { padding-left: 1.4rem; }
+  .summary-block li { margin-bottom: .45rem; font-size: .95rem; color: #2c2c3e; }
+  .summary-block li::marker { color: var(--teal); }
+
+  .two-col {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+    margin-top: .75rem;
+  }
+  .col-box {
+    background: var(--light);
+    border-radius: 8px;
+    padding: .9rem 1.1rem;
+  }
+  .col-box h4 { font-size: .82rem; text-transform: uppercase; letter-spacing: .08em; color: var(--muted); margin-bottom: .5rem; }
+  .col-box li { font-size: .88rem; }
+
+  .badge {
+    display: inline-block;
+    padding: .2rem .6rem;
+    border-radius: 4px;
+    font-size: .78rem;
+    font-weight: 600;
+    margin-right: .3rem;
+    margin-bottom: .3rem;
+  }
+  .badge-blue { background: #dbeafe; color: #1d4ed8; }
+  .badge-green { background: #dcfce7; color: #166534; }
+  .badge-orange { background: #fef3c7; color: #92400e; }
+  .badge-purple { background: #ede9fe; color: #5b21b6; }
+
+  table { width: 100%; border-collapse: collapse; margin-top: .75rem; font-size: .9rem; }
+  th { background: var(--navy); color: var(--gold); padding: .6rem .9rem; text-align: left; font-weight: 600; }
+  td { padding: .55rem .9rem; border-bottom: 1px solid #e8e8e8; }
+  tr:nth-child(even) td { background: #f9f7f2; }
+
+  /* TEST */
+  .test-controls {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1.5rem;
+    flex-wrap: wrap;
+    gap: .75rem;
+  }
+  .test-controls h2 {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.35rem;
+    color: var(--navy);
+  }
+  .show-all-btn {
+    background: var(--navy);
+    color: var(--gold);
+    border: none;
+    padding: .6rem 1.4rem;
+    border-radius: 6px;
+    cursor: pointer;
+    font-family: 'Source Serif 4', serif;
+    font-weight: 600;
+    font-size: .88rem;
+    transition: all .2s;
+  }
+  .show-all-btn:hover { background: var(--gold); color: var(--navy); }
+
+  .question-card {
+    background: var(--card);
+    border-radius: 12px;
+    padding: 1.5rem 1.75rem;
+    margin-bottom: 1rem;
+    box-shadow: 0 2px 14px rgba(0,0,0,.06);
+    border-left: 4px solid #ddd;
+    transition: border-color .2s;
+    animation: fadeUp .3s ease both;
+  }
+  .question-card.revealed { border-left-color: var(--correct); }
+
+  .q-header {
+    display: flex;
+    gap: .75rem;
+    align-items: flex-start;
+    margin-bottom: 1rem;
+  }
+  .q-num {
+    background: var(--navy);
+    color: #fff;
+    min-width: 30px; height: 30px;
+    border-radius: 6px;
+    font-size: .8rem;
+    font-weight: 700;
+    display: grid;
+    place-items: center;
+    flex-shrink: 0;
+    margin-top: 2px;
+  }
+  .q-text { font-size: .97rem; font-weight: 600; color: var(--navy); line-height: 1.5; }
+
+  .options { margin-left: 2.6rem; }
+  .option {
+    display: flex;
+    align-items: flex-start;
+    gap: .55rem;
+    padding: .4rem .5rem;
+    border-radius: 6px;
+    margin-bottom: .35rem;
+    font-size: .92rem;
+    cursor: default;
+    transition: background .2s;
+  }
+  .option .letter {
+    font-weight: 700;
+    min-width: 20px;
+    color: var(--muted);
+  }
+  .option.correct-opt {
+    background: #d1fae5;
+    color: #065f46;
+  }
+  .option.correct-opt .letter { color: var(--correct); }
+
+  .answer-reveal {
+    display: none;
+    margin-top: .9rem;
+    margin-left: 2.6rem;
+    background: #f0fdf4;
+    border: 1px solid #86efac;
+    border-radius: 8px;
+    padding: .75rem 1rem;
+    font-size: .88rem;
+    color: #14532d;
+  }
+  .answer-reveal.show { display: block; }
+  .answer-reveal strong { color: var(--correct); }
+
+  .reveal-btn {
+    margin-top: .75rem;
+    margin-left: 2.6rem;
+    background: none;
+    border: 1.5px solid var(--teal);
+    color: var(--teal);
+    padding: .35rem .9rem;
+    border-radius: 20px;
+    cursor: pointer;
+    font-size: .82rem;
+    font-family: 'Source Serif 4', serif;
+    transition: all .2s;
+  }
+  .reveal-btn:hover { background: var(--teal); color: #fff; }
+  .reveal-btn.revealed { display: none; }
+
+  /* ANSWER KEY */
+  .answer-key-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+    gap: .6rem;
+    margin-top: 1rem;
+  }
+  .ak-item {
+    background: var(--card);
+    border-radius: 8px;
+    padding: .65rem 1rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    box-shadow: 0 1px 6px rgba(0,0,0,.07);
+    font-size: .9rem;
+  }
+  .ak-item .ak-num { color: var(--muted); font-size: .82rem; }
+  .ak-item .ak-ans {
+    font-weight: 700;
+    color: var(--correct);
+    font-size: 1rem;
+    font-family: 'Playfair Display', serif;
+  }
+
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(16px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  @media (max-width: 560px) {
+    .two-col { grid-template-columns: 1fr; }
+    .answer-key-grid { grid-template-columns: repeat(3, 1fr); }
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="tag">İstanbul Medipol Üniversitesi · Toksikoloji</div>
+  <h1>Zehirlerin Vücuda <span>Giriş Yolları</span><br>ve Absorbsiyonu</h1>
+  <p>Prof. Dr. Gülden Z. Omurtag &amp; Doç. Dr. Esma Söylemez Yeşilçimen</p>
+</header>
+
+<div class="tabs">
+  <button class="tab-btn active" onclick="switchTab('ozet')">📖 Detaylı Özet</button>
+  <button class="tab-btn" onclick="switchTab('test')">📝 40 Test Sorusu</button>
+  <button class="tab-btn" onclick="switchTab('cevap')">✅ Cevap Anahtarı</button>
+</div>
+
+<!-- ══════════════════════  ÖZET  ══════════════════════ -->
+<section id="ozet" class="active">
+
+  <div class="summary-block">
+    <h2><span class="num">1</span> Toksikokinetik (ADME) Nedir?</h2>
+    <p>Toksikokinetik; organizmaya giren ksenobiyotiklerin vücutta ne gibi süreçlere uğradığını inceleyen bilim dalıdır. Kısaca <strong>"vücudun ksenobiyotiğe ne yaptığı"</strong>nın incelenmesidir. Bir kimyasal maddenin toksisitesi <strong>doza bağlıdır</strong>; toksik etkiyi gösterebilmek için belirli giriş yollarından absorbe olması ve etki yerine belirli konsantrasyonda ulaşması gerekir.</p>
+    <table>
+      <tr><th>Harf</th><th>Terim</th><th>Tanım</th></tr>
+      <tr><td><strong>A</strong></td><td>Absorpsiyon (Emilim)</td><td>Maddenin uygulama yerinden kan/lenf dolaşımına geçişi. Hız ve derece uygulama yoluna bağlıdır.</td></tr>
+      <tr><td><strong>D</strong></td><td>Dağılım</td><td>Kan dolaşımından hedef organlara/hücreler arası alana geri dönüşümlü geçiş.</td></tr>
+      <tr><td><strong>M</strong></td><td>Metabolizma (Biyotransformasyon)</td><td>Enzimlerin etkisiyle yeni kimyasal metabolitlere dönüşüm.</td></tr>
+      <tr><td><strong>E</strong></td><td>Eliminasyon</td><td>Madde veya metabolitlerinin idrar, feçes, dışarı verilen hava ile vücuttan uzaklaştırılması.</td></tr>
+    </table>
+  </div>
+
+  <div class="summary-block">
+    <h2><span class="num">2</span> Maruziyet (Giriş) Yolları</h2>
+    <p>Ksenobiyotikler vücuda dört temel yoldan girer:</p>
+    <div class="two-col">
+      <div class="col-box">
+        <h4>Yollar</h4>
+        <ul>
+          <li><strong>Oral (GI) yol</strong></li>
+          <li><strong>Solunum yolu</strong> (inhalasyon)</li>
+          <li><strong>Ven yolu</strong> (narkotikler)</li>
+          <li><strong>Dermal yol</strong></li>
+        </ul>
+      </div>
+      <div class="col-box">
+        <h4>Hız Sıralaması</h4>
+        <ul>
+          <li>İV &gt; İnhalasyon &gt; İM &gt; Oral &gt; Dermal</li>
+          <li>Dolu mide absorbsiyonu yavaşlatır</li>
+          <li>Boş mide absorbsiyonu hızlandırır</li>
+        </ul>
+      </div>
+    </div>
+    <p style="margin-top:.9rem"><strong>Oral yol:</strong> Gastrik boşalmayı etkileyen faktörler:</p>
+    <div class="two-col">
+      <div class="col-box">
+        <h4>⏱ Geciktiren Durumlar</h4>
+        <ul>
+          <li>Çok sıcak besinler</li>
+          <li>Yağlı besinler</li>
+          <li>Viskoz içecekler</li>
+          <li>Gebelik, yaşlılık</li>
+          <li>Ağır egzersiz, heyecan</li>
+          <li>Antikolinerjik ilaçlar</li>
+          <li>Ülserasyon</li>
+        </ul>
+      </div>
+      <div class="col-box">
+        <h4>⚡ Hızlandıran Durumlar</h4>
+        <ul>
+          <li>Soğuk besinler / içecekler</li>
+          <li>Hafif egzersiz</li>
+          <li>Açlık</li>
+          <li>GI kanal hastalıkları (rezeksiyon vb.)</li>
+        </ul>
+      </div>
+    </div>
+    <p style="margin-top:.9rem"><strong>Dermal yol:</strong> Yalnızca <em>yağda çözünen</em> maddeler (lipofil) ciltten absorplanabilir. Örnekler: pestisitler (insektisit, herbisit, rodentisit, akarisit, fungusit, mollusit) ve nikotin.</p>
+    <p><strong>İnhalasyon:</strong> Üç bölgeden absorpsiyon gerçekleşir: Nazofarengeal → Trakeobronşiyal → Alveolar. Madde kan veya lenf yoluyla ya da GI yola geçerek dolaşıma katılır.</p>
+  </div>
+
+  <div class="summary-block">
+    <h2><span class="num">3</span> Absorbsiyon ve Hız Faktörleri</h2>
+    <p>Absorbsiyon; ksenobiyotiğin temas noktasından başlayarak membranları aşıp kan/lenf dolaşımına geçinceye kadar gerçekleşen <em>tüm membran geçme olaylarıdır.</em></p>
+    <p><strong>İlaçla İlgili Faktörler:</strong></p>
+    <ul>
+      <li><strong>Molekül büyüklüğü:</strong> Büyük moleküller daha yavaş absorbe edilir.</li>
+      <li><strong>Lipofiliklik:</strong> Lipid/su partisyon katsayısı ne kadar yüksekse absorbsiyon o kadar hızlıdır.</li>
+      <li><strong>Farmasötik şekil:</strong> Solüsyon &gt; süspansiyon &gt; emülsiyon &gt; katı formlar. Katı formlar için önce disintegrasyon, sonra dissolüsyon gerekir.</li>
+      <li><strong>Konsantrasyon:</strong> Uygulama yerindeki konsantrasyon yükseldikçe absorpsiyon hızlanır.</li>
+      <li><strong>Farmakolojik özellik:</strong> Vazokonstriktör ilaçlar absorbsiyonu yavaşlatır, vazodilatörler hızlandırır.</li>
+    </ul>
+    <p style="margin-top:.75rem"><strong>Veriliş Yeri ile İlgili Biyolojik Faktörler:</strong></p>
+    <ul>
+      <li>Kan akım hızı (azalınca absorbsiyon da azalır)</li>
+      <li>Absorbe eden yüzeyin genişliği ve geçirgenliği (arttıkça absorbsiyon hızlanır)</li>
+    </ul>
+  </div>
+
+  <div class="summary-block">
+    <h2><span class="num">4</span> Hücre Membranı Yapısı</h2>
+    <p>Hücre zarı <strong>6–10 nm</strong> kalınlığında, dinamik, <em>sıvı mozaik modeline</em> sahip bir yapıdır.</p>
+    <table>
+      <tr><th>Bileşen</th><th>Oran</th><th>Görev</th></tr>
+      <tr><td>Proteinler</td><td>%55</td><td>Koruma ve madde alınması</td></tr>
+      <tr><td>Lipidler (toplam)</td><td>%41</td><td>Esneklik kazandırma</td></tr>
+      <tr><td>— Fosfolipidler</td><td>%25</td><td>Temel yapısal iskelet</td></tr>
+      <tr><td>— Kolesterol</td><td>%12</td><td>Akışkanlık düzenleme</td></tr>
+      <tr><td>— Glikolipidler</td><td>%4</td><td>Hücre tanıma</td></tr>
+      <tr><td>Karbohidratlar</td><td>%4</td><td>Glikolipid / glikoprotein olarak bulunur</td></tr>
+    </table>
+    <p style="margin-top:.75rem">Membran seçici geçirgendir; lipid çözünürlüğü yüksek maddeler kolaylıkla, suda çözünenler ise daha güçlükle geçer.</p>
+  </div>
+
+  <div class="summary-block">
+    <h2><span class="num">5</span> Hücre Membranından Geçiş Mekanizmaları</h2>
+    <p>Dört temel mekanizma vardır:</p>
+
+    <p><span class="badge badge-blue">1. Pasif Difüzyon (Basit Difüzyon)</span></p>
+    <ul>
+      <li>Yüksek → düşük konsantrasyon yönünde hareket</li>
+      <li>Enerji <strong>gerektirmez</strong></li>
+      <li>Membrandan geçişlerin <strong>%90'ı</strong> bu mekanizmayla olur</li>
+      <li>Alt tipi: <em>Filtrasyon</em> – su ve sulu bileşikler (etanol, üre) por büyüklüğüne göre geçer</li>
+      <li>Etkileyen faktörler: lipofiliklik ↑, molekül ağırlığı ↓, iyonize olmayan (noniyonize) oran ↑ → absorbsiyon ↑</li>
+    </ul>
+
+    <p style="margin-top:.65rem"><span class="badge badge-green">2. Aktif Transport</span></p>
+    <ul>
+      <li>Düşük → yüksek konsantrasyon yönünde (konsantrasyon gradyanına karşı)</li>
+      <li>Enerji <strong>(ATP) gerektirir</strong></li>
+      <li>Taşıyıcı protein (anyonik / katyonik) kullanır</li>
+      <li><strong>Doygunluk</strong> söz konusudur</li>
+    </ul>
+
+    <p style="margin-top:.65rem"><span class="badge badge-orange">3. Kolaylaştırılmış Difüzyon</span></p>
+    <ul>
+      <li>Taşıyıcı (carrier) protein aracılığıyla, yüksek → düşük yönünde</li>
+      <li>Enerji <strong>gerektirmez</strong></li>
+      <li>Doygunluk söz konusudur</li>
+    </ul>
+
+    <p style="margin-top:.65rem"><span class="badge badge-purple">4. Endositoz (Pinositoz / Fagositoz)</span></p>
+    <ul>
+      <li>Yüksek molekül ağırlıklı ve koloidal tanecikler için biyomekanik yol</li>
+      <li>Vezikül oluşarak sitoplazma içine alınır</li>
+      <li><em>Ekzositoz:</em> Tersi – hücre içinden dışarıya atılma</li>
+      <li><em>Reseptör aracılıklı endositoz:</em> Coated pits üzerindeki reseptör "anahtar-kilit" ilişkisiyle büyük molekülleri tanır ve içeri alır</li>
+    </ul>
+
+    <p style="margin-top:.75rem"><strong>Taşıyıcı aracılığıyla transport tipleri:</strong> uniport (tek madde, tek yön) · symport (iki madde, aynı yön) · antiport (iki madde, zıt yön)</p>
+  </div>
+
+  <div class="summary-block">
+    <h2><span class="num">6</span> İlaç Uygulama Yolları</h2>
+    <p>İki ana kategori:</p>
+    <p><strong>A) Lokal Uygulama Yolları</strong> – Epidermal, konjonktiva kesesi, intranazal, intravajinal, bukal, rektal, kolon, dış kulak yolu; ayrıca intratekal, intraplevral, intraperitonal, intrakardiyak, intraartiküler, intrauterin, lezyon içi enjeksiyonlar.</p>
+    <p><strong>B) Sistemik Uygulama Yolları</strong></p>
+    <table>
+      <tr><th>Yol</th><th>Alt Tipler / Formlar</th></tr>
+      <tr><td>Enteral → Oral</td><td>Tablet, kapsül, draje, şurup, süspansiyon, enterik kaplı tablet, SR tablet…</td></tr>
+      <tr><td>Enteral → Sublingual/Bukkal</td><td>Dil altı tablet, pastil – ilk geçiş etkisinden kaçar, hızlı etki</td></tr>
+      <tr><td>Enteral → Rektal</td><td>Süpozituvar, enema – ilk geçiş etkisi kısmen azalır</td></tr>
+      <tr><td>Parenteral (SC, IM, IV)</td><td>Enjektabl solüsyon, süspansiyon, emülsiyon, implantasyon peleti</td></tr>
+      <tr><td>İnhalasyon</td><td>Gaz, buhar, aerosol, inhalatör, nebülizör – alveollerden hızlı absorpsiyon</td></tr>
+      <tr><td>Transdermal</td><td>Flaster (TTS), merhem – yağda çözünen moleküller için etkin</td></tr>
+    </table>
+    <p style="margin-top:.75rem"><strong>Biyoyararlanım:</strong> Sistemik etki için verilen bir ilaçtan vücudun ne kadar yararlandığını gösteren; aktif maddenin absorbe edilme ve etki yerine ulaşabilme <em>hız ve derecesinin</em> somut ölçüsüdür.</p>
+  </div>
+
+  <div class="summary-block">
+    <h2><span class="num">7</span> Özet Tablo – Pasif vs Aktif Transport</h2>
+    <table>
+      <tr><th>Özellik</th><th>Pasif Difüzyon</th><th>Aktif Transport</th><th>Kolaylaştırılmış Difüzyon</th></tr>
+      <tr><td>Yön</td><td>Yüksek → Düşük</td><td>Düşük → Yüksek</td><td>Yüksek → Düşük</td></tr>
+      <tr><td>Enerji</td><td>Gerekmez</td><td>Gerekir (ATP)</td><td>Gerekmez</td></tr>
+      <tr><td>Taşıyıcı</td><td>Yok</td><td>Var</td><td>Var</td></tr>
+      <tr><td>Doygunluk</td><td>Yok</td><td>Var</td><td>Var</td></tr>
+      <tr><td>Frekans</td><td>%90 geçiş</td><td>Nadir</td><td>Sınırlı</td></tr>
+    </table>
+  </div>
+
+</section>
+
+<!-- ══════════════════════  TEST  ══════════════════════ -->
+<section id="test">
+  <div class="test-controls">
+    <h2>40 Çoktan Seçmeli Test Sorusu</h2>
+    <button class="show-all-btn" onclick="revealAll()">Tüm Cevapları Göster</button>
+  </div>
+
+  <div id="questions-container"></div>
+</section>
+
+<!-- ══════════════════════  CEVAP ANAHTARI  ══════════════════════ -->
+<section id="cevap">
+  <div class="summary-block" style="border-left-color:var(--mint)">
+    <h2><span class="num">✓</span> Cevap Anahtarı – 40 Soru</h2>
+    <div class="answer-key-grid" id="ak-grid"></div>
+  </div>
+</section>
+
+<script>
+const questions = [
+  {
+    q: "Toksikokinetik (ADME) kavramı aşağıdakilerden hangisini ifade eder?",
+    opts: ["Vücudun ksenobiyotiğe ne yaptığının incelenmesi","Ksenobiyotiğin vücuda ne yaptığının incelenmesi","Yalnızca ilaçların metabolize edilmesi","Toksik maddelerin sentezlenmesi"],
+    ans: 0,
+    exp: "Toksikokinetik, organizmaya giren bileşiklerin organizmada başına gelen olayları inceler; kısaca vücudun ksenobiyotiğe ne yaptığının araştırılmasıdır."
+  },
+  {
+    q: "ADME kısaltmasında 'D' harfi neyi temsil eder?",
+    opts: ["Doz","Dağılım","Detoksifikasyon","Disintegrasyon"],
+    ans: 1,
+    exp: "D = Dağılım (Distribution). Maddenin kan dolaşımından hedef organlara ve hücreler arası/içi alana geri dönüşümlü geçişidir."
+  },
+  {
+    q: "Absorpsiyon en geniş tanımıyla aşağıdakilerden hangisidir?",
+    opts: ["İlacın karaciğerde parçalanması","Temastan itibaren membranları geçerek kan/lenf dolaşımına girme süreci","İlacın böbrekten atılması","İlacın yağ dokusunda depolanması"],
+    ans: 1,
+    exp: "Absorpsiyon; temastan itibaren membran ve/veya membranları geçerek kan ve/veya lenf dolaşımına geçinceye kadar geçirilen tüm membran geçme olaylarıdır."
+  },
+  {
+    q: "Oral yolla alınan bir maddenin toksisitesi hangi faktöre göre değişebilir?",
+    opts: ["Hastanın boy uzunluğu","Dolu veya boş mide durumu","Hastanın cinsiyeti","Maddenin rengi"],
+    ans: 1,
+    exp: "Oral yolla uygulanan maddelerin toksisitesi dolu ve boş mideye göre değişir; mide dolu olduğunda gastrik boşalma yavaşlar, absorpsiyon gecikir."
+  },
+  {
+    q: "Aşağıdakilerden hangisi gastrik boşalmayı YAVAŞLATAN bir durumdur?",
+    opts: ["Açlık","Hafif egzersiz","Yağlı besinler","Soğuk içecekler"],
+    ans: 2,
+    exp: "Yağlı ve sıcak besinler, viskoz içecekler, ağır egzersiz, heyecan, antikolinerjik ilaçlar, gebelik ve yaşlılık gastrik boşalmayı geciktirir."
+  },
+  {
+    q: "Gastrik boşalmayı HIZLANDIRAN durum aşağıdakilerden hangisidir?",
+    opts: ["Antikolinerjik ilaç kullanımı","Gebelik","Açlık","Ülserasyon"],
+    ans: 2,
+    exp: "Açlık, soğuk besinler/içecekler ve hafif egzersiz gastrik boşalmayı hızlandırır."
+  },
+  {
+    q: "Solunum yoluyla absorpsiyonda hangi bölge doğrudan kana geçişi en etkin sağlar?",
+    opts: ["Nazofarengeal bölge","Trakeobronşiyal bölge","Alveolar bölge","Orofarengeal bölge"],
+    ans: 2,
+    exp: "Alveolar bölge, geniş yüzey alanı ve ince membranı sayesinde inhalasyon yoluyla alınan maddelerin doğrudan kana geçişini en etkin biçimde sağlar."
+  },
+  {
+    q: "Dermal yoldan absorbe edilen maddeler hangi özelliğe sahip olmalıdır?",
+    opts: ["Yüksek molekül ağırlıklı","Yağda çözünür (lipofilik)","Suda çözünür (hidrofilik)","İyonize formda"],
+    ans: 1,
+    exp: "Yağda çözünen maddeler ciltten absorplanır. Pestisitler ve nikotin bunun bilinen örnekleridir."
+  },
+  {
+    q: "Hücre membranının sıvı mozaik modelindeki kalınlığı ne kadardır?",
+    opts: ["1–2 nm","3–5 nm","6–10 nm","15–20 nm"],
+    ans: 2,
+    exp: "Hücre membranı 6–10 nm kalınlığında dinamik bir yapıdır ve yapısı sıvı mozaik modelindedir."
+  },
+  {
+    q: "Hücre membranındaki bileşenlerin yaklaşık oranı hangisinde doğru verilmiştir?",
+    opts: ["Proteinler %41, Lipidler %55","Proteinler %55, Lipidler %41","Karbohidratlar %55, Proteinler %41","Lipidler %60, Karbohidratlar %36"],
+    ans: 1,
+    exp: "Hücre membranında proteinler %55, lipidler %41 (fosfolipid %25, kolesterol %12, glikolipid %4), karbohidratlar %4 oranındadır."
+  },
+  {
+    q: "Hücre membranında lipitlerin temel işlevi nedir?",
+    opts: ["Madde alınmasını düzenlemek","Hücreye esneklik kazandırmak","Enerji üretmek","DNA sentezini yönetmek"],
+    ans: 1,
+    exp: "Lipitler hücre zarına esneklik kazandırır; proteinler ise hücreyi koruma ve madde alınması görevlerini üstlenir."
+  },
+  {
+    q: "Membranlardan geçişlerin yaklaşık yüzde kaçı pasif difüzyon yoluyla gerçekleşir?",
+    opts: ["%50","%70","%90","%99"],
+    ans: 2,
+    exp: "Membrandan geçişlerin %90'ı pasif difüzyon (basit difüzyon) şeklinde olmaktadır."
+  },
+  {
+    q: "Pasif difüzyonu etkileyen faktörler arasında doğru olan seçenek hangisidir?",
+    opts: ["Enerji tüketimi arttıkça difüzyon hızlanır","Noniyonize oran arttıkça absorpsiyon oranı artar","Molekül ağırlığı arttıkça absorpsiyon hızlanır","İyonize oran arttıkça lipid çözünürlüğü artar"],
+    ans: 1,
+    exp: "Noniyonize oran arttıkça lipid çözünürlüğü ve dolayısıyla absorpsiyon oranı artar. Molekül ağırlığı küçüldükçe absorpsiyon hızlanır."
+  },
+  {
+    q: "Filtrasyon mekanizması aşağıdakilerden hangisiyle doğrudan ilişkilidir?",
+    opts: ["Yağda çözünen büyük moleküller","Su ve sulu bileşiklerin por arasından süzülmesi","ATP bağımlı taşıyıcı proteinler","Veziküler sarılma işlemi"],
+    ans: 1,
+    exp: "Filtrasyon; su ve sulu bileşiklerin (örn. etanol, üre) porlar arasından süzülmesidir; por büyüklüğü ve molekül büyüklüğü belirleyicidir."
+  },
+  {
+    q: "Aktif transport hangi özelliğiyle pasif difüzyondan ayrılır?",
+    opts: ["Konsantrasyon gradyanına göre hareket eder","Taşıyıcı protein kullanmaz","Enerji (ATP) gerektirir","Doygunluk göstermez"],
+    ans: 2,
+    exp: "Aktif transporatta ksenobiyotik düşük konsantrasyondan yüksek konsantrasyona taşıyıcı yardımıyla taşınır ve bu işlem ATP enerjisi gerektirir."
+  },
+  {
+    q: "Kolaylaştırılmış difüzyon hakkında aşağıdakilerden hangisi doğrudur?",
+    opts: ["ATP gerektirir","Yüksekten düşüğe yönde taşıyıcısız gerçekleşir","Taşıyıcı protein aracılığıyla enerji gerektirmeden, yüksekten düşüğe hareket eder","Doygunluk göstermez"],
+    ans: 2,
+    exp: "Kolaylaştırılmış difüzyon, taşıyıcı protein kullanır; yüksek konsantrasyondan düşük konsantrasyona hareket eder ve enerji gerektirmez. Doygunluk söz konusudur."
+  },
+  {
+    q: "Endositoz mekanizması hangi tür maddeler için özellikle önemlidir?",
+    opts: ["Küçük lipofilik moleküller","Yüksek molekül ağırlıklı ve koloidal tanecikler","İyonize inorganik tuzlar","Serbest radikaller"],
+    ans: 1,
+    exp: "Endositoz (pinositoz/fagositoz); yüksek molekül ağırlıklı ve koloidal taneciklerin biyomekanik olayla hücre membranını geçmesini sağlar."
+  },
+  {
+    q: "Ekzositoz nedir?",
+    opts: ["Maddenin hücre dışından içeri alınması","Membranın yarılması sonucu maddenin hücre içinden dışarı atılması","ATP ile aktif madde taşınması","Maddenin böbrekte süzülmesi"],
+    ans: 1,
+    exp: "Ekzositoz; membranın yarılması sonucu hücre içinden dışarıya madde atılmasıdır (endositozun tersi)."
+  },
+  {
+    q: "Reseptör aracılıklı endositozda reseptörlerin kümelendiği yapı nasıl adlandırılır?",
+    opts: ["Lipid raft","Coated pits","Tight junction","Gap junction"],
+    ans: 1,
+    exp: "Reseptörler, hücre membranı üzerinde 'coated pits' (kaplı çukurlar) adı verilen özel yapılarda kümelenmişlerdir."
+  },
+  {
+    q: "Taşıyıcı aracılığıyla iki maddenin aynı yönde taşınmasına ne ad verilir?",
+    opts: ["Uniport","Antiport","Symport","Cotransport"],
+    ans: 2,
+    exp: "İki maddenin aynı yönde taşınması 'symport' olarak adlandırılır. Tek madde 'uniport', zıt yönde iki madde ise 'antiport'tur."
+  },
+  {
+    q: "İlacın lipid/su partisyon katsayısı yükseldikçe ne olur?",
+    opts: ["Absorpsiyon hızı azalır","Absorpsiyon hızı artar","Metabolizma hızlanır","Eliminasyon yavaşlar"],
+    ans: 1,
+    exp: "İlacın lipid/su partisyon katsayısı ne kadar büyükse hücre membranından difüzyon ve dolayısıyla absorpsiyon hızı o kadar fazladır."
+  },
+  {
+    q: "Katı farmasötik şekillerde (tablet, draje) absorpsiyon için önce hangi süreçler gereklidir?",
+    opts: ["Yalnızca dissolüsyon","Önce disintegrasyon, sonra dissolüsyon","Önce dissolüsyon, sonra disintegrasyon","Yalnızca disintegrasyon"],
+    ans: 1,
+    exp: "Tablet ve benzeri katı formlar için önce şeklin parçalanması (disintegrasyon), ardından ilacın çözünmesi (dissolüsyon) gerekir; bu ön olayların hızı absorpsiyon hızını etkiler."
+  },
+  {
+    q: "Kan akımının azaldığı durumlarda absorpsiyon hızı nasıl değişir?",
+    opts: ["Artar","Değişmez","Azalır","İkiye katlanır"],
+    ans: 2,
+    exp: "Kan akımının azalmasına neden olan durumlarda (şok, hipotansiyon vb.) absorpsiyon hızı azalır."
+  },
+  {
+    q: "İlaç uygulanan yüzeyin genişliği ve geçirgenliği ile absorpsiyon arasındaki ilişki nedir?",
+    opts: ["Yüzey genişledikçe absorpsiyon yavaşlar","Yüzey genişledikçe ve geçirgenlik arttıkça absorpsiyon hızlanır","Geçirgenlik arttıkça absorpsiyon azalır","Aralarında ilişki yoktur"],
+    ans: 1,
+    exp: "İlaç ne kadar geniş bir yüzeye uygulanır ve bu yüzeyin geçirgenliği ne kadar fazlaysa absorpsiyon o kadar hızlı olur."
+  },
+  {
+    q: "Biyoyararlanım kavramı neyi ifade eder?",
+    opts: ["İlacın ne kadar sürede metabolize edildiği","Sistemik etki için verilen ilaçtan vücudun yararlanma hız ve derecesi","İlacın böbrekten atılma oranı","İlacın plazmaya bağlanma kapasitesi"],
+    ans: 1,
+    exp: "Biyoyararlanım; farmasötik şekil içinden aktif maddenin absorbe edilme ve vücuttaki etki yerine erişebilme hız ve derecesi olarak tanımlanır."
+  },
+  {
+    q: "Enteral ilaç uygulama yollarının tamamı hangi şıkta doğru verilmiştir?",
+    opts: ["Oral, sublingual/bukkal, rektal","Oral, intravenöz, transdermal","İnhalasyon, intramüsküler, oral","Sublingual, transdermal, inhalasyon"],
+    ans: 0,
+    exp: "Enteral yollar; ilacın sindirim kanalına verilerek mukozadan absorpsiyona bırakıldığı oral, sublingual ve bukkal ile rektal yollardır."
+  },
+  {
+    q: "Parenteral uygulama tercih edilmesinin başlıca nedeni nedir?",
+    opts: ["Pratik ve ucuz olması","GI kanaldan yetersiz absorbe olan veya ilk geçiş etkisine maruz kalan ilaçlar için gerekli olması","Her ilacın bu yolla uygulanabilmesi","Yan etkisinin az olması"],
+    ans: 1,
+    exp: "Oral yoldan yeterince absorbe olmayan, GI kanalda parçalanan ya da yoğun ilk geçiş etkisine maruz kalan ilaçlar parenteral yolla uygulanır."
+  },
+  {
+    q: "Transdermal ilaç uygulamasında ilacın sistemik dolaşıma giriş yolu nedir?",
+    opts: ["Solunum yoluyla akciğer","Dilaltı mukozası","Cilt üzerinden absorbe edilerek dolaşım","Kas içine injeksiyon"],
+    ans: 2,
+    exp: "Transdermal uygulamada ilaç, özel farmasötik şekil (flaster, TTS) içinde ciltten absorbe edilerek dolaşıma girer."
+  },
+  {
+    q: "İnhalasyonla uygulanan lipofilik gazlar ve uçucu sıvılar hangi yapıdan kana geçer?",
+    opts: ["Bronşlar","Nazofarenks","Alveol membranı","Trakea"],
+    ans: 2,
+    exp: "Gaz veya buhar halindeki lipofilik ilaçlar solunduktan sonra akciğerde alveol membranını aşarak hızla kan dolaşımına geçerler."
+  },
+  {
+    q: "Deri yoluyla absorplanabilen pestisit türü aşağıdakilerden hangisi DEĞİLDİR?",
+    opts: ["İnsektisit","Herbisit","Rodentisit","Antibiyotik"],
+    ans: 3,
+    exp: "Pestisitler (insektisit, herbisit, rodentisit, akarisit, fungusit, mollusit) ve nikotin ciltten absorplanır. Antibiyotikler bu kategoriye dahil değildir."
+  },
+  {
+    q: "Sublingual/bukkal uygulamanın oral uygulamaya göre önemli avantajı nedir?",
+    opts: ["Daha düşük biyoyararlanım","İlk geçiş etkisinden büyük ölçüde kaçınılması","Daha yavaş etki başlangıcı","Daha uzun yarılanma ömrü"],
+    ans: 1,
+    exp: "Sublingual ve bukkal uygulamada ilaç karaciğere uğramadan doğrudan sistemik dolaşıma geçtiğinden ilk geçiş etkisinden büyük ölçüde kaçınılır."
+  },
+  {
+    q: "Karbonhidratların hücre membranında lipid veya proteinlere bağlı hâlde bulunmasıyla oluşan yapılar nasıl adlandırılır?",
+    opts: ["Fosfolipidler ve kolesterol","Glikolipid ve glikoprotein","Sitokrom ve ferritin","Aktin ve miyozin"],
+    ans: 1,
+    exp: "Karbohidratlar lipid veya proteinlere bağlı bulunurlar; buna göre glikolipid veya glikoprotein olarak adlandırılırlar."
+  },
+  {
+    q: "Bir ilaç solüsyon formunda verildiğinde tablet formuna kıyasla absorpsiyon nasıl gerçekleşir?",
+    opts: ["Daha yavaş absorbe edilir","Daha hızlı absorbe edilir","Aynı hızda absorbe edilir","Hiç absorbe edilmez"],
+    ans: 1,
+    exp: "Solüsyonlarda ilaç molekülleri çözücü içinde ayrı hâlde bulunduğundan absorpsiyon, tablet gibi katı formlardan daha hızlıdır."
+  },
+  {
+    q: "Vazokonstriktör özellikli bir ilacın absorpsiyon hızına etkisi nedir?",
+    opts: ["Hızlandırır","Yavaşlatır","Etki etmez","Önce hızlandırır, sonra yavaşlatır"],
+    ans: 1,
+    exp: "Vazokonstriktör ilaçlar uygulama bölgesinde kan damarlarını daraltarak kan akımını azaltır ve dolayısıyla absorpsiyon hızını düşürür."
+  },
+  {
+    q: "İnhalasyon yoluyla absorpsiyonun üç bölgesi doğru sırayla hangi seçenekte verilmiştir?",
+    opts: ["Alveolar – Trakeobronşiyal – Nazofarengeal","Nazofarengeal – Trakeobronşiyal – Alveolar","Trakeobronşiyal – Alveolar – Nazofarengeal","Nazofarengeal – Alveolar – Trakeobronşiyal"],
+    ans: 1,
+    exp: "İnhale edilen madde önce nazofarengeal, ardından trakeobronşiyal, en son alveolar bölgeye ulaşır. Alveolar bölgeden kan/lenfe geçiş en etkin biçimde olur."
+  },
+  {
+    q: "Lokal uygulama yollarından 'intratekal' enjeksiyon nereye yapılır?",
+    opts: ["Eklem içine","Subaraknoid aralığa","Miyokard içine","Vagina içine"],
+    ans: 1,
+    exp: "İntratekal uygulamada steril antibiyotik veya lokal anestezik solüsyonları beyin zarları ya da spinal sinir kökleri üzerinde lokal etki için subaraknoid aralığa enjekte edilir."
+  },
+  {
+    q: "Lokal göz uygulaması için kullanılan preparatların genel adı nedir?",
+    opts: ["Otik damla","Nazal sprey","Kolir","Enema"],
+    ans: 2,
+    exp: "Göze uygulamaya özgü preparatlara kolir adı verilir; genellikle solüsyon, süspansiyon ya da merhem şeklinde hazırlanırlar."
+  },
+  {
+    q: "Aktif transporatta taşıyıcı proteinin işleyiş mekanizması nasıldır?",
+    opts: ["İlaç molekülü membranı kendiliğinden geçer","İlaç molekülü membranın bir tarafındaki transport proteine bağlanır, diğer tarafa bırakılır ve protein eski haline döner","İlaç enerji harcanmadan doğrudan geçer","Vezikül oluşarak ilaç içeri alınır"],
+    ans: 1,
+    exp: "Aktif transporatta ilaç molekülü membranın bir tarafındaki transport proteine bağlanır, bu protein ilacı diğer tarafa bırakır ve tekrar eski haline döner."
+  },
+  {
+    q: "Sistemik ilaç uygulama yollarını en kapsamlı biçimde listeleyen seçenek hangisidir?",
+    opts: ["Oral, sublingual, rektal","Enteral, parenteral, transdermal, inhalasyon","Lokal, topikal, intravenöz","Oral, intravenöz, intramusküler"],
+    ans: 1,
+    exp: "Başlıca sistemik ilaç uygulama yolları: enteral (oral, sublingual/bukkal, rektal), parenteral, transdermal ve inhalasyonla uygulamadır."
+  },
+  {
+    q: "İlaç konsantrasyonu ile absorpsiyon hızı arasındaki ilişki nedir?",
+    opts: ["Konsantrasyon arttıkça absorpsiyon hızı azalır","Konsantrasyon ile absorpsiyon hızı arasında ilişki yoktur","Uygulama yerindeki konsantrasyon yükseldikçe absorpsiyon genellikle hızlanır","Konsantrasyon arttıkça absorpsiyon durur"],
+    ans: 2,
+    exp: "İlacın uygulandığı yerdeki konsantrasyon yüksek olursa absorpsiyonu genellikle hızlı olur."
+  },
+  {
+    q: "Aşağıdaki ifadelerden hangisi YANLIŞTIR?",
+    opts: ["Lipid çözünürlüğü fazla olan maddeler membranları kolaylıkla geçer","Pasif difüzyon enerji gerektirmez","Aktif transport konsantrasyon gradyanına karşı gerçekleşebilir","Endositoz küçük lipid çözünür moleküller için temel geçiş mekanizmasıdır"],
+    ans: 3,
+    exp: "Endositoz; yüksek molekül ağırlıklı ve koloidal tanecikler için kullanılır. Küçük lipofilik moleküllerin temel geçiş mekanizması pasif difüzyondur."
+  }
+];
+
+function renderQuestions() {
+  const container = document.getElementById('questions-container');
+  questions.forEach((q, i) => {
+    const card = document.createElement('div');
+    card.className = 'question-card';
+    card.id = 'qcard-' + i;
+
+    const optsHtml = q.opts.map((o, j) => {
+      const letters = ['A','B','C','D'];
+      return `<div class="option" id="opt-${i}-${j}">
+        <span class="letter">${letters[j]})</span>
+        <span>${o}</span>
+      </div>`;
+    }).join('');
+
+    card.innerHTML = `
+      <div class="q-header">
+        <span class="q-num">${i+1}</span>
+        <span class="q-text">${q.q}</span>
+      </div>
+      <div class="options">${optsHtml}</div>
+      <button class="reveal-btn" id="rbtn-${i}" onclick="revealOne(${i})">Cevabı Göster</button>
+      <div class="answer-reveal" id="ans-${i}">
+        <strong>✔ Doğru cevap: ${['A','B','C','D'][q.ans]})</strong> ${q.opts[q.ans]}<br>
+        <em style="color:#166534;font-size:.85rem;margin-top:.3rem;display:block">${q.exp}</em>
+      </div>`;
+    container.appendChild(card);
+  });
+}
+
+function revealOne(i) {
+  const q = questions[i];
+  document.getElementById(`opt-${i}-${q.ans}`).classList.add('correct-opt');
+  document.getElementById(`ans-${i}`).classList.add('show');
+  document.getElementById(`rbtn-${i}`).classList.add('revealed');
+  document.getElementById(`qcard-${i}`).classList.add('revealed');
+}
+
+function revealAll() {
+  questions.forEach((_, i) => revealOne(i));
+}
+
+function renderAnswerKey() {
+  const grid = document.getElementById('ak-grid');
+  const letters = ['A','B','C','D'];
+  questions.forEach((q, i) => {
+    const item = document.createElement('div');
+    item.className = 'ak-item';
+    item.innerHTML = `<span class="ak-num">Soru ${i+1}</span><span class="ak-ans">${letters[q.ans]}</span>`;
+    grid.appendChild(item);
+  });
+}
+
+function switchTab(id) {
+  document.querySelectorAll('section').forEach(s => s.classList.remove('active'));
+  document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  event.target.classList.add('active');
+}
+
+renderQuestions();
+renderAnswerKey();
+</script>
+</body>
+</html>
