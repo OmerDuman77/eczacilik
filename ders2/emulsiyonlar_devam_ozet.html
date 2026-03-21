@@ -1,0 +1,396 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Emülsiyonlar (Devam) - HLB Hesapları, Hazırlama, Kontroller, Çoklu & Mikro — Detaylı Özet</title>
+<link href="https://fonts.googleapis.com/css2?family=Merriweather:wght@400;700;900&family=Source+Sans+Pro:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #faf9f6;
+    --text: #2c2c2c;
+    --accent: #6c3483;
+    --accent-light: #f3e8ff;
+    --border: #d4d0c8;
+    --section-bg: #fff;
+    --red: #c0392b;
+    --green: #27ae60;
+    --blue: #1a6b8a;
+    --blue-light: #e8f4f8;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { font-family: 'Source Sans Pro', sans-serif; background: var(--bg); color: var(--text); line-height: 1.7; padding: 2rem 1rem; }
+  .container { max-width: 860px; margin: 0 auto; }
+  h1 { font-family: 'Merriweather', serif; font-size: 2rem; color: var(--accent); text-align: center; margin-bottom: 0.3rem; }
+  .subtitle { text-align: center; color: #888; font-size: 0.95rem; margin-bottom: 2.5rem; padding-bottom: 1.5rem; border-bottom: 2px solid var(--border); }
+  .section { background: var(--section-bg); border: 1px solid var(--border); border-left: 4px solid var(--accent); border-radius: 8px; padding: 1.5rem 1.8rem; margin-bottom: 1.5rem; }
+  .section h2 { font-family: 'Merriweather', serif; font-size: 1.3rem; color: var(--accent); margin-bottom: 1rem; padding-bottom: 0.5rem; border-bottom: 2px solid var(--accent-light); }
+  .section h3 { font-size: 1.05rem; color: var(--accent); margin: 1.2rem 0 0.5rem; font-weight: 700; }
+  .section h4 { font-size: 0.95rem; color: #555; margin: 0.8rem 0 0.4rem; font-weight: 700; }
+  p { margin-bottom: 0.7rem; }
+  ul { margin: 0.4rem 0 0.8rem 1.4rem; }
+  li { margin-bottom: 0.35rem; }
+  ol { margin: 0.4rem 0 0.8rem 1.4rem; }
+  ol li { margin-bottom: 0.35rem; }
+  .highlight-box { background: var(--accent-light); border-left: 4px solid var(--accent); padding: 0.8rem 1rem; margin: 0.8rem 0; border-radius: 0 6px 6px 0; }
+  .highlight-box.blue { background: var(--blue-light); border-left-color: var(--blue); }
+  .warning-box { background: #fdf2f2; border-left: 4px solid var(--red); padding: 0.8rem 1rem; margin: 0.8rem 0; border-radius: 0 6px 6px 0; font-weight: 600; }
+  .formula-table { width: 100%; border-collapse: collapse; margin: 0.8rem 0; font-size: 0.92rem; }
+  .formula-table th { background: var(--accent); color: #fff; padding: 0.5rem 0.8rem; text-align: left; }
+  .formula-table td { padding: 0.4rem 0.8rem; border-bottom: 1px solid var(--border); }
+  .formula-table tr:nth-child(even) { background: #f8f8f5; }
+  .formula-box { background: #f5f3ee; border: 1px solid var(--border); padding: 0.8rem 1rem; border-radius: 6px; margin: 0.6rem 0; font-family: monospace; text-align: center; font-size: 1.05rem; }
+  .compare-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin: 0.8rem 0; }
+  .compare-card { padding: 1rem; border-radius: 6px; font-size: 0.93rem; }
+  .compare-card.good { background: #eafaf1; border: 1px solid #a9dfbf; }
+  .compare-card.bad { background: #fdf2f2; border: 1px solid #f5b7b1; }
+  .compare-card strong { display: block; margin-bottom: 0.4rem; font-size: 1rem; }
+  .tag { display: inline-block; background: var(--accent-light); color: var(--accent); padding: 2px 8px; border-radius: 4px; font-size: 0.82rem; font-weight: 600; margin: 2px; }
+  .step-box { background: #f9f7fd; border: 1px solid #e0d4f0; border-radius: 6px; padding: 0.7rem 1rem; margin: 0.5rem 0; }
+  .step-box .step-num { display: inline-block; background: var(--accent); color: #fff; width: 24px; height: 24px; border-radius: 50%; text-align: center; line-height: 24px; font-size: 0.82rem; font-weight: 700; margin-right: 0.5rem; }
+  @media (max-width: 600px) { .compare-grid { grid-template-columns: 1fr; } h1 { font-size: 1.5rem; } .section { padding: 1rem 1.2rem; } }
+</style>
+</head>
+<body>
+<div class="container">
+
+<h1>Emülsiyonlar (Devam)</h1>
+<p class="subtitle">Farmasötik Teknoloji II — Kapsamlı Ders Özeti (Bölüm 3): HLB Hesapları, Hazırlama Teknikleri, Kontroller, Değişmeler, Çoklu Emülsiyonlar & Mikroemülsiyonlar</p>
+
+<!-- 1. YAĞ FAZI HLB DEĞERLERİ -->
+<div class="section">
+  <h2>1. Yağ Fazını Oluşturan Maddelerin Gerekli HLB Değerleri</h2>
+  <p>Her yağ fazı maddesinin, S/Y ve Y/S emülsiyon oluşturmak için ihtiyaç duyduğu belirli bir HLB değeri vardır:</p>
+  <table class="formula-table">
+    <tr><th>Madde</th><th>S/Y Emülsiyonu</th><th>Y/S Emülsiyonu</th></tr>
+    <tr><td>Balmumu</td><td>5</td><td>9</td></tr>
+    <tr><td>Hint yağı</td><td>6</td><td>14</td></tr>
+    <tr><td>Katı parafin</td><td>4</td><td>11</td></tr>
+    <tr><td>Lanolin (susuz)</td><td>8</td><td>12</td></tr>
+    <tr><td>Mineral yağ (hafif)</td><td>4</td><td>12</td></tr>
+    <tr><td>Oleik asit</td><td>–</td><td>17</td></tr>
+    <tr><td>Setil alkol</td><td>–</td><td>15</td></tr>
+    <tr><td>Sıvı parafin</td><td>4</td><td>10</td></tr>
+    <tr><td>Stearik asit</td><td>6</td><td>15</td></tr>
+    <tr><td>Stearil alkol</td><td>–</td><td>14</td></tr>
+    <tr><td>Vazelin</td><td>5</td><td>12</td></tr>
+    <tr><td>Zeytin yağı</td><td>6</td><td>14</td></tr>
+  </table>
+</div>
+
+<!-- 2. HLB HESAPLAMA ÖRNEKLERİ -->
+<div class="section">
+  <h2>2. HLB ile Emülgatör Miktarı Hesaplama Örnekleri</h2>
+
+  <h3>Örnek 1: Tek Yağ Fazlı</h3>
+  <p>Sıvı parafin (HLB 10) 50 g, Emülgatör 5 g (Span 80 HLB 4,3 + Tween 80 HLB 15,0), Distile su km 100 g → Y/S emülsiyon</p>
+  <div class="highlight-box">
+    <strong>Yöntem:</strong> Gerekli HLB = 10 (sıvı parafinin Y/S değeri). İki emülgatörün karışımı bu HLB'yi vermelidir. Ağırlıklı ortalama ile Span 80 ve Tween 80 miktarları hesaplanır.
+  </div>
+
+  <h3>Örnek 2: Çoklu Yağ Fazlı</h3>
+  <p>Zeytin yağı 30 g (HLB 10), Setil alkol 1 g (HLB 15), Lanolin 2 g (HLB 12), Emülgatör 5 g (Tween 80 + Span 60), Su 62 g → Y/S</p>
+  <div class="highlight-box">
+    <strong>Yöntem:</strong> Önce yağ fazı bileşenlerinin ağırlıklı ortalama HLB'si (R<sub>HLB</sub>) hesaplanır, sonra emülgatör oranları belirlenir.
+  </div>
+
+  <h3>Sürfaktan Karışımı Miktarı Formülü</h3>
+  <div class="formula-box">
+    Q<sub>s</sub> = 6 (ρ<sub>s</sub> / ρ) / (10 − 0,5 × R<sub>HLB</sub>) + 4Q / 1000
+  </div>
+  <p>Q<sub>s</sub>: Gerekli sürfaktan karışımı miktarı | ρ<sub>s</sub>: Sürfaktan yoğunluğu | ρ: İç faz yoğunluğu | Q: Dış faz yüzdesi | R<sub>HLB</sub>: Yağ karışımının yeni HLB değeri</p>
+</div>
+
+<!-- 3. HAZIRLAMA TEKNİKLERİ -->
+<div class="section">
+  <h2>3. Emülsiyon Hazırlama Teknikleri</h2>
+
+  <h3>3.1 Kuru Zamk Yöntemi (Geleneksel/Kıta Yöntemi)</h3>
+  <ol>
+    <li>Emülgatör çözünmediği faza (yağ) ilave edilir, homojen dağıtılır</li>
+    <li>Primer su eklenir, hızlıca karıştırılarak <strong>çekirdek emülsiyon</strong> oluşturulur (karakteristik çıtırtı sesi duyulur)</li>
+    <li>Sekonder su yavaş yavaş eklenerek emülsiyon tamamlanır</li>
+  </ol>
+  <div class="highlight-box">
+    <strong>Çekirdek emülsiyon oranları (Yağ / Primer su / Zamk):</strong><br>
+    T.K. (1954): 2 / 1,5 / 1 &nbsp;|&nbsp; USP: 4 / 2 / 1
+  </div>
+
+  <h3>3.2 Yaş Zamk Yöntemi (İngiliz Yöntemi)</h3>
+  <ol>
+    <li>Emülgatör çözündüğü faza eklenir (Y/S → suda; S/Y → yağda)</li>
+    <li>Çözünene kadar karıştırılır</li>
+    <li>İkinci faz ilave edilir</li>
+    <li>Çekirdek emülsiyon oranı: 4/2/1</li>
+  </ol>
+
+  <h3>3.3 Şişe Yöntemi (Vasatta Sabun Oluşturma)</h3>
+  <ol>
+    <li>1 kısım zamk şişeye konur + 2 kısım yağ eklenir</li>
+    <li>İyice çalkalanır</li>
+    <li>2 kısım su eklenir, şiddetle çalkalanır (emülsiyon oluşuncaya kadar)</li>
+    <li>Kalan su ilave edilir</li>
+  </ol>
+
+  <h3>3.4 Homojenizasyon Yöntemi</h3>
+  <p>Mekanik karıştırıcılar ve homojenizatörlerle fazlar çok küçük açıklıktan basınç altında geçirilir. Çok yüksek hızda karıştırma sağlanır.</p>
+</div>
+
+<!-- 4. DİKKAT EDİLMESİ GEREKENLER -->
+<div class="section">
+  <h2>4. Emülsiyon Hazırlamada Dikkat Edilecekler</h2>
+  <ul>
+    <li>Temiz ve kuru malzeme kullanılmalı</li>
+    <li>Emülsiyon türü kullanım amacına göre seçilmeli</li>
+    <li>Uygun yağ ve su fazı belirlenmeli</li>
+    <li>Emülsiyon türüne uygun emülgatör/emülgatör sistemi seçilmeli</li>
+    <li>Faz oranları dikkatle belirlenmeli</li>
+    <li>Karıştırma süresi ve şiddeti yeterli olmalı</li>
+  </ul>
+  <div class="highlight-box blue">
+    <strong>Endüstriyel üretimde:</strong> İç ve dış faz ayrı ayrı ~70°C'ye ısıtılır → sıcak iç faz, dış faz üzerine azar azar sürekli karıştırılarak eklenir → soğuyuncaya kadar karıştırılır.
+  </div>
+</div>
+
+<!-- 5. ALET-CİHAZLAR -->
+<div class="section">
+  <h2>5. Emülsiyon Hazırlamada Kullanılan Alet-Cihazlar</h2>
+
+  <table class="formula-table">
+    <tr><th>Cihaz</th><th>Özellik</th></tr>
+    <tr><td>Havan ve Havaneli</td><td>Küçük ölçekli hazırlama</td></tr>
+    <tr><td>Mekanik karıştırıcılar</td><td>Pervane tipi (düşük viskozite, düşük hız) ve türbin tipi (düşük-orta viskozite, yüksek hız, 8.000 rpm'e kadar). Türbin daha çok tercih edilir.</td></tr>
+    <tr><td>Koloit değirmenler</td><td>Rotor-stator sistemi; açıklık 25 µm; 3.000–20.000 rpm; damlacık 1 µm'ye kadar küçültülebilir</td></tr>
+    <tr><td>Homojenizatörler</td><td>Basınç altında küçük açıklıktan geçiş; 1 nm damlacık çapına kadar; >20.000 rpm. Hem emülsiyon hazırlama hem damlacık küçültme amaçlı.</td></tr>
+    <tr><td>Ultrasonik cihazlar</td><td>Yüksek frekanslı ses dalgaları ile damlacık parçalama; düşük viskoziteli ve hassas maddeler için uygun</td></tr>
+    <tr><td>Mikroporöz membranlar</td><td>İç faz membrandan geçerek dış faza damlacık halinde sevk edilir. Y/S → hidrofilik membran; S/Y → hidrofobik membran. Yöntemler: cross-flow, dead-end, rotating, vibrating, microchannel.</td></tr>
+  </table>
+</div>
+
+<!-- 6. EMÜLSİYON KONTROLLERİ -->
+<div class="section">
+  <h2>6. Emülsiyon Kontrolleri</h2>
+
+  <h3>6.1 Emülsiyon Tipinin Tayini</h3>
+
+  <h4>Boyama Yöntemi</h4>
+  <p>Lam üzerine emülsiyon + boya damlatılır, mikroskopta incelenir:</p>
+  <table class="formula-table">
+    <tr><th>Boya</th><th>S/Y Emülsiyonda</th><th>Y/S Emülsiyonda</th></tr>
+    <tr><td>Metilen mavisi (suda çözünür)</td><td>Beyaz zeminde mavi damlalar</td><td>Mavi zeminde beyaz damlalar</td></tr>
+    <tr><td>Sudan III (yağda çözünür)</td><td>Turuncu zeminde beyaz damlalar</td><td>Beyaz zeminde turuncu damlalar</td></tr>
+  </table>
+
+  <h4>Dilüsyon Testi</h4>
+  <p>Emülsiyondan bir damla suya damlatılır. Su ile kolayca karışırsa → <strong>Y/S</strong>; karışmazsa → <strong>S/Y</strong>.</p>
+
+  <h4>Hidrofilik Ortam Kullanımı</h4>
+  <p>Süzgeç kağıdı/cam üzerine damlatılır. Yayılırsa → <strong>Y/S</strong>; yayılmazsa → <strong>S/Y</strong>.</p>
+
+  <h4>Spatül Yöntemi</h4>
+  <p>Isıtılmış metal spatül emülsiyona batırılır. Islanırsa → <strong>Y/S</strong>; yağlanırsa → <strong>S/Y</strong>.</p>
+
+  <h4>İletkenlik Yöntemi</h4>
+  <p>Elektrotlar emülsiyona daldırılır. Akım geçerse dış faz su → <strong>Y/S</strong>. (Non-iyonik emülgatörlü Y/S'ye uygulanmaz.)</p>
+
+  <h3>6.2 Damlacık Büyüklüğü Tayini</h3>
+  <p>Emülsiyonların raf ömürlerinin değerlendirilmesinde önemli bir ölçüttür.</p>
+</div>
+
+<!-- 7. EMÜLSİYONLARDA DEĞİŞMELER -->
+<div class="section">
+  <h2>7. Emülsiyonlarda Görülen Değişmeler</h2>
+
+  <table class="formula-table">
+    <tr><th>Değişme</th><th>Açıklama</th><th>Geri Dönüşüm</th></tr>
+    <tr><td><strong>Krema oluşumu</strong></td><td>Yoğunluk farkı nedeniyle damlacıklar üstte/altta toplanır</td><td>✅ Geri dönüşümlü</td></tr>
+    <tr><td><strong>Sedimentasyon</strong></td><td>Ağır damlacıklar dibe çöker</td><td>✅ Geri dönüşümlü</td></tr>
+    <tr><td><strong>Flokülasyon</strong></td><td>Damlacıklar gevşek biraraya gelir ama birleşmez</td><td>✅ Geri dönüşümlü</td></tr>
+    <tr><td><strong>Koalesans</strong></td><td>Damlacıklar birleşerek büyür → faz ayrışmasına yol açar</td><td>❌ Geri dönüşümsüz</td></tr>
+    <tr><td><strong>Faz ayrışması</strong></td><td>İki faz tamamen birbirinden ayrılır</td><td>❌ Geri dönüşümsüz</td></tr>
+    <tr><td><strong>İnversiyon (Faz dönüşümü)</strong></td><td>Dış faz iç faz haline dönüşür. Faz hacim oranı değişikliği, elektrolit ilavesi, ısıtma/soğutma neden olabilir</td><td>❌ Geri dönüşümsüz</td></tr>
+    <tr><td><strong>Ostwald olgunlaşması</strong></td><td>&lt;600 nm damlacıklarda küçükler çözünür, büyükler daha da büyür</td><td>❌ Geri dönüşümsüz</td></tr>
+    <tr><td><strong>Mikroorganizma üremesi</strong></td><td>Koku/renk bozunması</td><td>–</td></tr>
+    <tr><td><strong>Oksidasyon</strong></td><td>Doymamış lipidlerin oksidasyonu</td><td>–</td></tr>
+  </table>
+</div>
+
+<!-- 8. KARARLILIK ARTTIRICI MADDELER -->
+<div class="section">
+  <h2>8. Emülsiyonların Kararlılığını Arttırıcı Maddeler</h2>
+
+  <h3>8.1 Antimikrobiyaller</h3>
+  <p>Mikroorganizma üremesi koku/renk bozunmasına neden olur.</p>
+  <div class="highlight-box">
+    <strong>Kendini koruyan formülasyonlar:</strong> >%20 etanol, ~%67 şeker, >%10 polioller, %40–50 gliserin/sorbitol varsa ek antimikrobiyal gerekmez.
+  </div>
+  <ul>
+    <li><strong>Dahili kullanım:</strong> Sorbik asit, benzoik asit, parabenler, kloroform</li>
+    <li><strong>Topikal kullanım:</strong> Klorkrezol, fenoksietanol, kuaterner amonyum bileşikleri, fenil merküri asetat/nitrat</li>
+  </ul>
+
+  <h3>8.2 Antioksidan Maddeler</h3>
+  <p>Etken madde ve doymamış lipidlerin korunması için. Bazen hem polar hem apolar faza eklenir.</p>
+  <ul>
+    <li><strong>Şelat yapıcılar:</strong> Sitrik asit, EDTA, fenilalanin, fosforik asit, tartarik asit, triptofan</li>
+    <li><strong>Önce kendi okside olanlar:</strong> Askorbik asit, Na sülfit, Na bisülfit</li>
+    <li><strong>Serbest radikal zincirini bozanlar (suda çözünen):</strong> Sistein HCl, tiyogliserol, tiyoglikolik asit, tiyosorbitol</li>
+    <li><strong>Serbest radikal zincirini bozanlar (yağda çözünen):</strong> Alkil gallatlar, askorbil palmitat, BHA, BHT, hidrokinon, t-butil hidrokinon, α-tokoferol, NDGA</li>
+  </ul>
+</div>
+
+<!-- 9. EMÜLSİYONLARIN REOLOJİSİ -->
+<div class="section">
+  <h2>9. Emülsiyonların Reolojisi</h2>
+  <h3>Etkileyen Faktörler</h3>
+  <p>İç fazın içeriği ve viskozitesi, damlacık büyüklüğü/dağılımı, damlacık şekillerinin bozulması, dispersiyon ortamının reolojik özellikleri, sıcaklık.</p>
+
+  <ul>
+    <li>Newtonian akıştan viskoelastiğe kadar değişen özellikler</li>
+    <li>Seyreltik olmayanlar düşük kayma geriliminde viskoelastik davranır</li>
+    <li>Deformasyon başlangıcında katı gibi → sonra sıvı gibi</li>
+    <li>Emülsiyonlarda <strong>tiksotropi</strong> görülür</li>
+    <li><strong>Mikroemülsiyonlar:</strong> Düşük viskozite ve Newtonian akış → damlacıklar küresel, agregat yok, iç faz oranı düşük</li>
+  </ul>
+</div>
+
+<!-- 10. ÖRNEK FORMÜLASYONLAR -->
+<div class="section">
+  <h2>10. Emülsiyon Formülasyon Örnekleri</h2>
+
+  <h3>Mineral Yağ Emülsiyonu (USP) — Müshil etkili</h3>
+  <table class="formula-table">
+    <tr><th>Bileşen</th><th>Miktar</th></tr>
+    <tr><td>Mineral yağ</td><td>500 mL</td></tr>
+    <tr><td>Arap zamkı (ince toz)</td><td>125 g</td></tr>
+    <tr><td>Şurup</td><td>100 mL</td></tr>
+    <tr><td>Vanilin</td><td>40 mg</td></tr>
+    <tr><td>Alkol</td><td>60 mL</td></tr>
+    <tr><td>Saf su</td><td>km 1000 mL</td></tr>
+  </table>
+  <p>Kuru zamk yöntemi ile hazırlanır.</p>
+
+  <h3>Sülfadiazin Y/S Oral Emülsiyon</h3>
+  <table class="formula-table">
+    <tr><th>Bileşen</th><th>Miktar</th></tr>
+    <tr><td>Pamuk yağı</td><td>460 g</td></tr>
+    <tr><td>Sülfadiazin</td><td>200 g</td></tr>
+    <tr><td>Span 60</td><td>84 g</td></tr>
+    <tr><td>Tween 60</td><td>36 g</td></tr>
+    <tr><td>Sodyum benzoat</td><td>2 g</td></tr>
+    <tr><td>Saf su</td><td>km 1000 g</td></tr>
+  </table>
+
+  <h3>Stearat Kremi</h3>
+  <table class="formula-table">
+    <tr><th>Bileşen</th><th>Miktar</th></tr>
+    <tr><td>Stearik asit</td><td>16 g</td></tr>
+    <tr><td>Stearil alkol</td><td>0,8 g</td></tr>
+    <tr><td>Setil alkol</td><td>0,8 g</td></tr>
+    <tr><td>Gliserin</td><td>5 g</td></tr>
+    <tr><td>Sodyum hidroksit</td><td>0,2 g</td></tr>
+    <tr><td>Trietanolamin</td><td>1 g</td></tr>
+    <tr><td>Metil paraben</td><td>0,1 g</td></tr>
+    <tr><td>Propil paraben</td><td>0,05 g</td></tr>
+    <tr><td>Distile su</td><td>km 100 g</td></tr>
+  </table>
+</div>
+
+<!-- 11. ÇOKLU EMÜLSİYONLAR -->
+<div class="section">
+  <h2>11. Çoklu Emülsiyonlar</h2>
+  <p>İç içe fazların yer aldığı karmaşık sistemlerdir: <strong>Y/S/Y</strong> veya <strong>S/Y/S</strong>. Birden fazla emülgatöre (düşük HLB + yüksek HLB) ihtiyaç vardır.</p>
+
+  <h3>Hazırlama Koşulları</h3>
+  <ul>
+    <li>Primer emülsiyon: yüksek karıştırma hızı, ~70°C</li>
+    <li>Sekonder emülsiyon: düşük karıştırma hızı, ~25°C</li>
+    <li>Stabilite arttırma: sulu faza elektrolit ilavesi (NaCl, MgCl₂, AlCl₃, CaCl₂), jelasyon sağlayıcılar (mikrokristalize selüloz, karbomerler)</li>
+  </ul>
+
+  <h3>Hazırlama Yöntemleri</h3>
+  <ul>
+    <li><strong>İki basamaklı emülsifikasyon:</strong> Önce primer emülsiyon (S/Y veya Y/S) hazırlanır → sonra sekonder emülgatör içeren dış faz içinde tekrar emülsifiye edilir</li>
+    <li><strong>Tek basamaklı emülsifikasyon:</strong> İç ve dış faz aynı yapıda (S₁/Y/S₁). Daha kolay; yüzey etkin madde içeren faza diğer faz eklenir</li>
+    <li><strong>Faz dönüşümü (inversiyon):</strong> Dış su fazı primer emülsiyona eklenir; sıcaklık etkisiyle non-iyonik sürfaktanlar suda az çözünür hale gelir → faz inversiyonu → S/Y/S oluşur</li>
+  </ul>
+
+  <div class="compare-grid">
+    <div class="compare-card good">
+      <strong>✅ Avantajları</strong>
+      <ul>
+        <li>Hassas maddeler korunabilir</li>
+        <li>Geçimsiz ilaçlar bir arada verilebilir</li>
+        <li>Kolay uygulanabilir</li>
+        <li>Kontrollü ve sürekli salım</li>
+        <li>Hedeflendirme yapılabilir</li>
+      </ul>
+    </div>
+    <div class="compare-card bad">
+      <strong>❌ Dezavantajları</strong>
+      <ul>
+        <li>Fiziksel ve termodinamik olarak dayanıksız</li>
+        <li>Hazırlanmaları zor</li>
+        <li>Üretim tekrarlanabilirliği düşük</li>
+        <li>Salım mekanizmaları tam anlaşılamamıştır</li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+<!-- 12. MİKROEMÜLSİYONLAR -->
+<div class="section">
+  <h2>12. Mikroemülsiyonlar</h2>
+  <p>Termodinamik olarak dayanıklı, düşük viskoziteli, saydam, çok küçük damlacıklı (~10–100 nm) ve <strong>kendiliğinden oluşan</strong> sistemlerdir.</p>
+
+  <h3>Bileşenler</h3>
+  <table class="formula-table">
+    <tr><th>Bileşen</th><th>Örnekler</th></tr>
+    <tr><td>Yağ fazı</td><td>Yağ asidi esterleri, modifiye bitkisel yağlar, silikon yağı</td></tr>
+    <tr><td>Su fazı</td><td>Su, tamponlar, propilen glikol, PEG'ler, gliserin</td></tr>
+    <tr><td>Sürfaktan</td><td>Non-iyonik ve iyonik (Tween, Cremophor, Span, Miglyol)</td></tr>
+    <tr><td>Kosürfaktan</td><td>Etanol, diğer alkoller, glikol türevleri, propilen glikol türevleri</td></tr>
+  </table>
+  <p>Titrasyon yöntemi ile üçgen faz diyagramı kullanılarak hazırlanabilir.</p>
+
+  <h3>Mikroemülsiyon vs. Klasik Emülsiyon</h3>
+  <table class="formula-table">
+    <tr><th>Özellik</th><th>Mikroemülsiyon</th><th>Klasik Emülsiyon</th></tr>
+    <tr><td>Damlacık büyüklüğü</td><td>&lt; 0,2 µm</td><td>0,2 – 10 µm</td></tr>
+    <tr><td>Görünüş</td><td>Saydam</td><td>Süt görünümü</td></tr>
+    <tr><td>Oluşum</td><td>Enerji gerekmez (kendiliğinden)</td><td>Enerji verilmeli</td></tr>
+    <tr><td>Stabilite</td><td>Termodinamik olarak dayanıklı</td><td>Termodinamik olarak dayanıksız</td></tr>
+  </table>
+
+  <h3>SEDDS (Self-Emulsifying Drug Delivery System)</h3>
+  <p>Kosürfaktan olmadan da oluşabilir. Kendileri emülsiyon değil, ancak midede sulu ortamda hafif çalkalama ile emülsiyon oluştururlar. Yağ + sürfaktan karışımıdır; emilimi düşük etken maddelerin biyoyararlanımını arttırır.</p>
+
+  <h3>İlaç Uygulamaları</h3>
+  <ul>
+    <li><strong>Siklosporin</strong> (Sandimmune® Neoral®) — organ nakli sonrası, en başarılı oral mikroemülsiyon örneği</li>
+    <li>Oral, topikal, parenteral, rektal, oküler, pulmoner uygulamalar mevcut</li>
+    <li>Aseklonofenak transdermal mikroemülsiyon</li>
+    <li>Ketoprofen mikroemülsiyon</li>
+    <li>Vajinal jel – Flukonazol</li>
+    <li>Benzokain içeren mikroemülsiyon bazlı hidrojel</li>
+  </ul>
+
+  <h3>Farmasötik Avantajları</h3>
+  <ul>
+    <li>Oda sıcaklığında doğal yollarla hazırlanabilir</li>
+    <li>Yüksek çözünme özelliği sağlar</li>
+    <li>Filtrasyon ile sterilizasyonu kolay</li>
+    <li>Yüksek fiziksel stabilite</li>
+    <li>Biyoyararlanımı arttırır</li>
+    <li>Perkütan uygulamada terapötik konsantrasyona ulaşılabilir</li>
+  </ul>
+
+  <h3>Diğer Kullanım Alanları</h3>
+  <p>Endüstriyel: yağların geri eldesi, petrol temizliği, konsantre içecekler. Kozmetik: uçucu yağların çözünürlüğü, susuz el temizleyicileri, tıraş sonrası losyonlar.</p>
+</div>
+
+<p style="text-align:center; color:#aaa; font-size:0.82rem; margin-top:2rem;">Farmasötik Teknoloji II — Emülsiyonlar (Devam) Ders Notu Özeti (Bölüm 3)</p>
+
+</div>
+</body>
+</html>

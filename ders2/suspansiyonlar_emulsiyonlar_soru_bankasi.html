@@ -1,0 +1,750 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Farmasötik Teknoloji II – Süspansiyonlar & Emülsiyonlar Soru Bankası</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0f1117;
+    --surface: #181b24;
+    --surface2: #1e2230;
+    --border: #2a2f3e;
+    --text: #e4e6ed;
+    --text-muted: #8b90a0;
+    --accent: #6c9bff;
+    --accent2: #a78bfa;
+    --green: #34d399;
+    --red: #f87171;
+    --orange: #fbbf24;
+    --fill: #0d9488;
+    --tf: #7c3aed;
+    --classic: #be185d;
+    --radius: 12px;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: 'Outfit', sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.65;
+    min-height: 100vh;
+  }
+
+  .topbar {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    background: rgba(15,17,23,0.85);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border-bottom: 1px solid var(--border);
+  }
+
+  .topbar-inner {
+    max-width: 920px;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .topbar-title {
+    text-align: center;
+    padding: 1rem 1.5rem 0.5rem;
+    font-family: 'DM Serif Display', serif;
+    font-size: 1.1rem;
+    letter-spacing: 0.02em;
+  }
+
+  .topbar-title span { color: var(--accent); }
+
+  .mode-switch {
+    display: flex;
+    gap: 4px;
+    padding: 6px;
+    margin: 0 auto 8px;
+    background: var(--surface);
+    border-radius: 10px;
+    width: fit-content;
+  }
+
+  .mode-btn {
+    padding: 8px 24px;
+    border: none;
+    border-radius: 8px;
+    background: transparent;
+    color: var(--text-muted);
+    font-family: 'Outfit', sans-serif;
+    font-size: 0.88rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.25s ease;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+
+  .mode-btn:hover { color: var(--text); }
+
+  .mode-btn.active {
+    background: var(--accent);
+    color: #fff;
+    box-shadow: 0 2px 12px rgba(108,155,255,0.3);
+  }
+
+  .section-nav {
+    display: flex;
+    gap: 2px;
+    padding: 0 1.5rem 10px;
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+
+  .section-btn {
+    padding: 6px 16px;
+    border: 1px solid var(--border);
+    border-radius: 20px;
+    background: transparent;
+    color: var(--text-muted);
+    font-family: 'Outfit', sans-serif;
+    font-size: 0.78rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.2s;
+    white-space: nowrap;
+  }
+
+  .section-btn:hover { border-color: var(--accent); color: var(--text); }
+  .section-btn.active-fill { background: var(--fill); border-color: var(--fill); color: #fff; }
+  .section-btn.active-tf { background: var(--tf); border-color: var(--tf); color: #fff; }
+  .section-btn.active-classic { background: var(--classic); border-color: var(--classic); color: #fff; }
+
+  .container {
+    max-width: 920px;
+    margin: 0 auto;
+    padding: 1.5rem;
+  }
+
+  .view { display: none; }
+  .view.active { display: block; }
+
+  .sec-header {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin: 2rem 0 1.2rem;
+    padding-bottom: 0.8rem;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .sec-header:first-child { margin-top: 0; }
+
+  .sec-icon {
+    width: 40px;
+    height: 40px;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 700;
+    font-size: 1.1rem;
+    color: #fff;
+    flex-shrink: 0;
+  }
+
+  .sec-icon.fill { background: var(--fill); }
+  .sec-icon.tf { background: var(--tf); }
+  .sec-icon.classic { background: var(--classic); }
+
+  .sec-title { font-family: 'DM Serif Display', serif; font-size: 1.3rem; }
+  .sec-subtitle { font-size: 0.82rem; color: var(--text-muted); font-weight: 400; }
+
+  .q-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 1.2rem 1.4rem;
+    margin-bottom: 10px;
+    transition: border-color 0.2s;
+  }
+
+  .q-card:hover { border-color: #3a4058; }
+
+  .q-num {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 28px;
+    height: 28px;
+    border-radius: 8px;
+    font-size: 0.78rem;
+    font-weight: 700;
+    color: #fff;
+    margin-right: 10px;
+    flex-shrink: 0;
+    vertical-align: middle;
+  }
+
+  .q-num.fill { background: var(--fill); }
+  .q-num.tf { background: var(--tf); }
+  .q-num.classic { background: var(--classic); }
+
+  .q-text { font-size: 0.95rem; display: inline; }
+
+  .blank {
+    display: inline-block;
+    min-width: 120px;
+    border-bottom: 2px dashed var(--fill);
+    margin: 0 4px;
+    padding: 0 6px;
+    color: var(--fill);
+    font-weight: 600;
+  }
+
+  .tf-options {
+    display: flex;
+    gap: 8px;
+    margin-top: 10px;
+  }
+
+  .tf-opt {
+    padding: 5px 18px;
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    font-size: 0.82rem;
+    font-weight: 500;
+    color: var(--text-muted);
+  }
+
+  .ans-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 0.9rem 1.2rem;
+    margin-bottom: 6px;
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+  }
+
+  .ans-num {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 28px;
+    height: 28px;
+    border-radius: 8px;
+    font-size: 0.75rem;
+    font-weight: 700;
+    color: #fff;
+    flex-shrink: 0;
+  }
+
+  .ans-num.fill { background: var(--fill); }
+  .ans-num.tf { background: var(--tf); }
+  .ans-num.classic { background: var(--classic); }
+
+  .ans-text { font-size: 0.9rem; line-height: 1.6; }
+  .ans-text strong { color: var(--green); font-weight: 600; }
+  .ans-text .tag-d { display: inline-block; background: rgba(248,113,113,0.15); color: var(--red); font-size: 0.75rem; padding: 1px 8px; border-radius: 4px; font-weight: 600; margin-right: 4px; }
+  .ans-text .tag-y { display: inline-block; background: rgba(52,211,153,0.15); color: var(--green); font-size: 0.75rem; padding: 1px 8px; border-radius: 4px; font-weight: 600; margin-right: 4px; }
+
+  .stats {
+    display: flex;
+    gap: 1rem;
+    padding: 1rem 0 0.5rem;
+    flex-wrap: wrap;
+  }
+
+  .stat-chip {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 8px 16px;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    font-size: 0.82rem;
+  }
+
+  .stat-dot { width: 10px; height: 10px; border-radius: 50%; }
+
+  .print-btn {
+    position: fixed;
+    bottom: 1.5rem;
+    right: 1.5rem;
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    border: none;
+    background: var(--accent);
+    color: #fff;
+    font-size: 1.2rem;
+    cursor: pointer;
+    box-shadow: 0 4px 20px rgba(108,155,255,0.4);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: transform 0.2s;
+    z-index: 50;
+  }
+  .print-btn:hover { transform: scale(1.1); }
+
+  @media (max-width: 640px) {
+    .container { padding: 1rem; }
+    .mode-btn { padding: 7px 16px; font-size: 0.82rem; }
+    .section-nav { padding: 0 1rem 8px; gap: 4px; }
+    .section-btn { padding: 5px 12px; font-size: 0.72rem; }
+    .q-card { padding: 1rem; }
+    .topbar-title { font-size: 0.95rem; }
+  }
+
+  @media print {
+    .topbar, .print-btn { display: none !important; }
+    body { background: #fff; color: #111; }
+    .q-card, .ans-card { background: #fff; border: 1px solid #ddd; break-inside: avoid; }
+    .q-num, .ans-num { print-color-adjust: exact; -webkit-print-color-adjust: exact; }
+  }
+</style>
+</head>
+<body>
+
+<div class="topbar">
+  <div class="topbar-inner">
+    <div class="topbar-title">Farmasötik Teknoloji II — <span>Süspansiyonlar & Emülsiyonlar</span></div>
+    <div class="mode-switch">
+      <button class="mode-btn active" onclick="switchMode('questions')">
+        <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 6h10M3 10h7"/></svg>
+        Sorular
+      </button>
+      <button class="mode-btn" onclick="switchMode('answers')">
+        <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 8l3 3 5-6"/></svg>
+        Cevap Anahtarı
+      </button>
+    </div>
+    <div class="section-nav">
+      <button class="section-btn active-fill" onclick="scrollToSection('fill')">Boşluk Doldurma (40)</button>
+      <button class="section-btn" onclick="scrollToSection('tf')">Doğru / Yanlış (40)</button>
+      <button class="section-btn" onclick="scrollToSection('classic')">Klasik (20)</button>
+    </div>
+  </div>
+</div>
+
+<div class="container">
+
+  <div class="stats">
+    <div class="stat-chip"><div class="stat-dot" style="background:var(--fill)"></div> 40 Boşluk Doldurma</div>
+    <div class="stat-chip"><div class="stat-dot" style="background:var(--tf)"></div> 40 Doğru / Yanlış</div>
+    <div class="stat-chip"><div class="stat-dot" style="background:var(--classic)"></div> 20 Klasik</div>
+  </div>
+
+  <!-- ═══════════════════════════════════════════ -->
+  <!-- ═══ QUESTIONS VIEW ═══ -->
+  <!-- ═══════════════════════════════════════════ -->
+  <div class="view active" id="view-questions">
+
+    <!-- ── BOŞLUK DOLDURMA ── -->
+    <div class="sec-header" id="sec-fill-q">
+      <div class="sec-icon fill">✎</div>
+      <div><div class="sec-title">Boşluk Doldurma</div><div class="sec-subtitle">40 Soru — Süspansiyonlar & Emülsiyonlar</div></div>
+    </div>
+
+    <div class="q-card"><span class="q-num fill">1</span><span class="q-text">Süspansiyonlar, çözünmeyen katı partiküllerin bir sıvı ortamda dağıtılmasıyla oluşturulan heterojen, <span class="blank">&nbsp;</span> dispersiyon şeklindeki sıvı ilaç formlarıdır.</span></div>
+
+    <div class="q-card"><span class="q-num fill">2</span><span class="q-text">Süspansiyonlar hazırlandıktan sonra <span class="blank">&nbsp;</span> ve her kullanımdan önce mutlaka çalkalanmalıdır.</span></div>
+
+    <div class="q-card"><span class="q-num fill">3</span><span class="q-text">Rekonstitüye süspansiyonlar kuru toz halinde raf ömrü 1–2 yıl iken, sulandırıldıktan sonra yalnızca <span class="blank">&nbsp;</span> stabil kalır.</span></div>
+
+    <div class="q-card"><span class="q-num fill">4</span><span class="q-text">Parenteral süspansiyonlarda partikül boyutu ağrı ve iritasyonu önlemek için <span class="blank">&nbsp;</span> µm'den küçük olmalıdır.</span></div>
+
+    <div class="q-card"><span class="q-num fill">5</span><span class="q-text">Parenteral süspansiyonlar <span class="blank">&nbsp;</span> ve intratekal yolla uygulanamaz.</span></div>
+
+    <div class="q-card"><span class="q-num fill">6</span><span class="q-text">Oftalmik süspansiyonlarda partikül boyutu <span class="blank">&nbsp;</span> µm'den küçük olmalıdır.</span></div>
+
+    <div class="q-card"><span class="q-num fill">7</span><span class="q-text">Aerosol süspansiyonlarda uygun partikül büyüklüğü <span class="blank">&nbsp;</span> µm arasındadır.</span></div>
+
+    <div class="q-card"><span class="q-num fill">8</span><span class="q-text">Islatma ajanlarında en iyi ıslatıcı özellik HLB değeri <span class="blank">&nbsp;</span> arasında olanlar tarafından gösterilir.</span></div>
+
+    <div class="q-card"><span class="q-num fill">9</span><span class="q-text">Süspansiyonlarda en sık kullanılan non-iyonik ıslatma ajanı <span class="blank">&nbsp;</span>'dur.</span></div>
+
+    <div class="q-card"><span class="q-num fill">10</span><span class="q-text">Bentonit, su alarak <span class="blank">&nbsp;</span> kat şişer ve tiksotropik özellik gösterir.</span></div>
+
+    <div class="q-card"><span class="q-num fill">11</span><span class="q-text">Aerosilin (kolloidal SiO₂) 1 gramı <span class="blank">&nbsp;</span> m² yüzey alanına sahiptir.</span></div>
+
+    <div class="q-card"><span class="q-num fill">12</span><span class="q-text">İyi süspansiyon <span class="blank">&nbsp;</span> olarak hazırlanır; bu sayede kekleşme önlenir.</span></div>
+
+    <div class="q-card"><span class="q-num fill">13</span><span class="q-text">Çökme hacmi tayininde F = Hu / H₀ formülünde ideal süspansiyonda F değeri <span class="blank">&nbsp;</span> olmalıdır.</span></div>
+
+    <div class="q-card"><span class="q-num fill">14</span><span class="q-text">Zeta potansiyel tayininde en sık kullanılan yöntem <span class="blank">&nbsp;</span>'dir.</span></div>
+
+    <div class="q-card"><span class="q-num fill">15</span><span class="q-text">Partikül büyüklüğü tayininde kullanılan Coulter Counter yöntemi, <span class="blank">&nbsp;</span> değişikliğini ölçerek hacim hesabı yapar.</span></div>
+
+    <div class="q-card"><span class="q-num fill">16</span><span class="q-text">Süspansiyon ajanlarında en çok tercih edilen kombinasyon <span class="blank">&nbsp;</span> karışımıdır (hem psödoplastik hem tiksotropik akış).</span></div>
+
+    <div class="q-card"><span class="q-num fill">17</span><span class="q-text">Emilim hızı genel sıralamasında süspansiyonlar, <span class="blank">&nbsp;</span> ile kapsül arasında yer alır.</span></div>
+
+    <div class="q-card"><span class="q-num fill">18</span><span class="q-text">Suda az çözünen ilaçların biyoyararlanım sorununu çözmek için geliştirilen DissoCubes® adlı sistem <span class="blank">&nbsp;</span> olarak adlandırılır.</span></div>
+
+    <div class="q-card"><span class="q-num fill">19</span><span class="q-text">Emülsiyonlarda iç fazın damlacık boyutu >1 µm olduğunda görünüm <span class="blank">&nbsp;</span> şeklindedir.</span></div>
+
+    <div class="q-card"><span class="q-num fill">20</span><span class="q-text">İntravenöz emülsiyonlarda yağ damlacığı boyutu emboli riskini önlemek için <span class="blank">&nbsp;</span> µm'den küçük olmalıdır.</span></div>
+
+    <div class="q-card"><span class="q-num fill">21</span><span class="q-text">Parenteral emülsiyonlarda ana emülgatör olarak <span class="blank">&nbsp;</span> (yumurta sarısı veya soya kaynaklı) kullanılır.</span></div>
+
+    <div class="q-card"><span class="q-num fill">22</span><span class="q-text">Y/S emülsiyonu oluşturan emülgatörlerin HLB değeri <span class="blank">&nbsp;</span> arasındadır.</span></div>
+
+    <div class="q-card"><span class="q-num fill">23</span><span class="q-text">S/Y emülsiyonu oluşturan emülgatörlerin HLB değeri <span class="blank">&nbsp;</span> arasındadır.</span></div>
+
+    <div class="q-card"><span class="q-num fill">24</span><span class="q-text">Anyonik yüzey etkin maddeler <span class="blank">&nbsp;</span> (yüksek/düşük) pH'da aktiftir.</span></div>
+
+    <div class="q-card"><span class="q-num fill">25</span><span class="q-text">Katyonik yüzey etkin maddeler pH <span class="blank">&nbsp;</span> arasında stabildir.</span></div>
+
+    <div class="q-card"><span class="q-num fill">26</span><span class="q-text">Yüzey etkin maddeler arasında en az toksik ve iritan olan grup <span class="blank">&nbsp;</span> yüzey etkin maddelerdir.</span></div>
+
+    <div class="q-card"><span class="q-num fill">27</span><span class="q-text">Sorbitan esterleri <span class="blank">&nbsp;</span> kısaltmasıyla, polisorbatlar ise <span class="blank">&nbsp;</span> kısaltmasıyla bilinir.</span></div>
+
+    <div class="q-card"><span class="q-num fill">28</span><span class="q-text">Griffin formülü ile HLB hesaplanırken kullanılan formül: HLB = 20 × (1 – <span class="blank">&nbsp;</span>) şeklindedir.</span></div>
+
+    <div class="q-card"><span class="q-num fill">29</span><span class="q-text">SLS'nin (sodyum lauril sülfat) HLB değeri <span class="blank">&nbsp;</span>'dır.</span></div>
+
+    <div class="q-card"><span class="q-num fill">30</span><span class="q-text">Kuru zamk yönteminde çekirdek emülsiyon oranı (Yağ / Primer su / Zamk) USP'ye göre <span class="blank">&nbsp;</span>'dır.</span></div>
+
+    <div class="q-card"><span class="q-num fill">31</span><span class="q-text">Emülsiyon tipi tayininde metilen mavisi ile boyanmış S/Y emülsiyonda <span class="blank">&nbsp;</span> zeminde <span class="blank">&nbsp;</span> damlalar görülür.</span></div>
+
+    <div class="q-card"><span class="q-num fill">32</span><span class="q-text">Emülsiyonlarda damlacıkların birleşerek büyümesine <span class="blank">&nbsp;</span> denir ve bu değişim geri dönüşümsüzdür.</span></div>
+
+    <div class="q-card"><span class="q-num fill">33</span><span class="q-text">Emülsiyonlarda dış fazın iç faz haline dönüşmesine <span class="blank">&nbsp;</span> (faz dönüşümü) denir.</span></div>
+
+    <div class="q-card"><span class="q-num fill">34</span><span class="q-text">Çoklu emülsiyonlarda primer emülsiyon <span class="blank">&nbsp;</span> karıştırma hızında, sekonder emülsiyon <span class="blank">&nbsp;</span> karıştırma hızında hazırlanır.</span></div>
+
+    <div class="q-card"><span class="q-num fill">35</span><span class="q-text">Mikroemülsiyonlar termodinamik olarak <span class="blank">&nbsp;</span> ve damlacık boyutu yaklaşık 10–100 nm'dir.</span></div>
+
+    <div class="q-card"><span class="q-num fill">36</span><span class="q-text">SEDDS (Self-Emulsifying Drug Delivery System), midede sulu ortamda hafif çalkalama ile <span class="blank">&nbsp;</span> oluştururlar.</span></div>
+
+    <div class="q-card"><span class="q-num fill">37</span><span class="q-text">Oral mikroemülsiyon formülasyonunun en başarılı ilaç örneği <span class="blank">&nbsp;</span>'dir (organ nakli sonrası).</span></div>
+
+    <div class="q-card"><span class="q-num fill">38</span><span class="q-text">Koloit değirmenlerde rotor hızı <span class="blank">&nbsp;</span> rpm arasındadır.</span></div>
+
+    <div class="q-card"><span class="q-num fill">39</span><span class="q-text">Emülsiyonda krema oluşumu <span class="blank">&nbsp;</span> farkı nedeniyle damlacıkların üstte toplanmasıdır ve geri dönüşümlüdür.</span></div>
+
+    <div class="q-card"><span class="q-num fill">40</span><span class="q-text">Kendini koruyan formülasyonlarda >%20 <span class="blank">&nbsp;</span> bulunması durumunda ek antimikrobiyal gerekmez.</span></div>
+
+
+    <!-- ── DOĞRU / YANLIŞ ── -->
+    <div class="sec-header" id="sec-tf-q">
+      <div class="sec-icon tf">D/Y</div>
+      <div><div class="sec-title">Doğru / Yanlış</div><div class="sec-subtitle">40 Soru</div></div>
+    </div>
+
+    <div class="q-card"><span class="q-num tf">1</span><span class="q-text">Süspansiyonlar hazırlandıktan sonra süzülebilir.</span><div class="tf-options"><span class="tf-opt">Doğru</span><span class="tf-opt">Yanlış</span></div></div>
+
+    <div class="q-card"><span class="q-num tf">2</span><span class="q-text">Süspansiyonların biyoyararlanımı tablet ve kapsüllerden genellikle daha yüksektir.</span><div class="tf-options"><span class="tf-opt">Doğru</span><span class="tf-opt">Yanlış</span></div></div>
+
+    <div class="q-card"><span class="q-num tf">3</span><span class="q-text">Parenteral süspansiyonlar intravenöz olarak uygulanabilir.</span><div class="tf-options"><span class="tf-opt">Doğru</span><span class="tf-opt">Yanlış</span></div></div>
+
+    <div class="q-card"><span class="q-num tf">4</span><span class="q-text">Parenteral süspansiyonlar depo etki sağlayabilir.</span><div class="tf-options"><span class="tf-opt">Doğru</span><span class="tf-opt">Yanlış</span></div></div>
+
+    <div class="q-card"><span class="q-num tf">5</span><span class="q-text">Anyonik ıslatma ajanları pH'ya hassas değildir.</span><div class="tf-options"><span class="tf-opt">Doğru</span><span class="tf-opt">Yanlış</span></div></div>
+
+    <div class="q-card"><span class="q-num tf">6</span><span class="q-text">Arap zamkı anyonik yapıdadır ve süspansiyon ajanı olarak %5–10 oranında kullanılır.</span><div class="tf-options"><span class="tf-opt">Doğru</span><span class="tf-opt">Yanlış</span></div></div>
+
+    <div class="q-card"><span class="q-num tf">7</span><span class="q-text">Metil selüloz (MC) sıcak suda şişerek kolloidal jel oluşturur.</span><div class="tf-options"><span class="tf-opt">Doğru</span><span class="tf-opt">Yanlış</span></div></div>
+
+    <div class="q-card"><span class="q-num tf">8</span><span class="q-text">Floküle süspansiyonda kekleşme gözlenmez ve çalkalandığında kolayca dağılır.</span><div class="tf-options"><span class="tf-opt">Doğru</span><span class="tf-opt">Yanlış</span></div></div>
+
+    <div class="q-card"><span class="q-num tf">9</span><span class="q-text">Defloküle süspansiyonda üst sıvı berrak görünümdedir.</span><div class="tf-options"><span class="tf-opt">Doğru</span><span class="tf-opt">Yanlış</span></div></div>
+
+    <div class="q-card"><span class="q-num tf">10</span><span class="q-text">Flokülasyon ajanları olarak elektrolitler zeta potansiyelini yükselterek çalışır.</span><div class="tf-options"><span class="tf-opt">Doğru</span><span class="tf-opt">Yanlış</span></div></div>
+
+    <div class="q-card"><span class="q-num tf">11</span><span class="q-text">Kristal büyümesi dar partikül büyüklüğü dağılımı kullanılarak önlenebilir.</span><div class="tf-options"><span class="tf-opt">Doğru</span><span class="tf-opt">Yanlış</span></div></div>
+
+    <div class="q-card"><span class="q-num tf">12</span><span class="q-text">Süspansiyonlarda çökme hızı ile viskozite arasında doğru orantı vardır.</span><div class="tf-options"><span class="tf-opt">Doğru</span><span class="tf-opt">Yanlış</span></div></div>
+
+    <div class="q-card"><span class="q-num tf">13</span><span class="q-text">Dispers faz konsantrasyonu arttıkça viskozite azalır.</span><div class="tf-options"><span class="tf-opt">Doğru</span><span class="tf-opt">Yanlış</span></div></div>
+
+    <div class="q-card"><span class="q-num tf">14</span><span class="q-text">Nanosüspansiyonlar otoklav ile sterilize edilebilir.</span><div class="tf-options"><span class="tf-opt">Doğru</span><span class="tf-opt">Yanlış</span></div></div>
+
+    <div class="q-card"><span class="q-num tf">15</span><span class="q-text">Emülsiyonlar homojen görünümlü heterojen sıvı ilaç şekilleridir.</span><div class="tf-options"><span class="tf-opt">Doğru</span><span class="tf-opt">Yanlış</span></div></div>
+
+    <div class="q-card"><span class="q-num tf">16</span><span class="q-text">Y/S tipi emülsiyonlarda dış faz yağdır.</span><div class="tf-options"><span class="tf-opt">Doğru</span><span class="tf-opt">Yanlış</span></div></div>
+
+    <div class="q-card"><span class="q-num tf">17</span><span class="q-text">İntravenöz uygulama için S/Y tipi emülsiyonlar tercih edilir.</span><div class="tf-options"><span class="tf-opt">Doğru</span><span class="tf-opt">Yanlış</span></div></div>
+
+    <div class="q-card"><span class="q-num tf">18</span><span class="q-text">Katyonik yüzey etkin maddeler antimikrobiyal özelliklere sahiptir.</span><div class="tf-options"><span class="tf-opt">Doğru</span><span class="tf-opt">Yanlış</span></div></div>
+
+    <div class="q-card"><span class="q-num tf">19</span><span class="q-text">Katyonik yüzey etkin maddeler en az tahriş edici gruptur.</span><div class="tf-options"><span class="tf-opt">Doğru</span><span class="tf-opt">Yanlış</span></div></div>
+
+    <div class="q-card"><span class="q-num tf">20</span><span class="q-text">Gliseril monostearat tek başına güçlü bir emülsifiyan maddedir.</span><div class="tf-options"><span class="tf-opt">Doğru</span><span class="tf-opt">Yanlış</span></div></div>
+
+    <div class="q-card"><span class="q-num tf">21</span><span class="q-text">Tween 80 hem oral hem parenteral kullanıma uygun non-iyonik bir emülgatördür.</span><div class="tf-options"><span class="tf-opt">Doğru</span><span class="tf-opt">Yanlış</span></div></div>
+
+    <div class="q-card"><span class="q-num tf">22</span><span class="q-text">HLB değeri 20'ye yaklaştıkça lipofilik özellik artar.</span><div class="tf-options"><span class="tf-opt">Doğru</span><span class="tf-opt">Yanlış</span></div></div>
+
+    <div class="q-card"><span class="q-num tf">23</span><span class="q-text">Bentonit hem Y/S hem S/Y emülsiyon oluşturabilir.</span><div class="tf-options"><span class="tf-opt">Doğru</span><span class="tf-opt">Yanlış</span></div></div>
+
+    <div class="q-card"><span class="q-num tf">24</span><span class="q-text">Jelatin A kollajenin alkali hidrolizi ile elde edilir.</span><div class="tf-options"><span class="tf-opt">Doğru</span><span class="tf-opt">Yanlış</span></div></div>
+
+    <div class="q-card"><span class="q-num tf">25</span><span class="q-text">Lesitin yalnızca Y/S tipi emülsiyon hazırlamak için kullanılabilir.</span><div class="tf-options"><span class="tf-opt">Doğru</span><span class="tf-opt">Yanlış</span></div></div>
+
+    <div class="q-card"><span class="q-num tf">26</span><span class="q-text">Yumurta sarısı kurutulduğunda da emülsifiyan özelliğini korur.</span><div class="tf-options"><span class="tf-opt">Doğru</span><span class="tf-opt">Yanlış</span></div></div>
+
+    <div class="q-card"><span class="q-num tf">27</span><span class="q-text">Kuru zamk yönteminde emülgatör, çözünmediği faza (yağ) ilave edilir.</span><div class="tf-options"><span class="tf-opt">Doğru</span><span class="tf-opt">Yanlış</span></div></div>
+
+    <div class="q-card"><span class="q-num tf">28</span><span class="q-text">Yaş zamk yöntemi "İngiliz Yöntemi" olarak da bilinir.</span><div class="tf-options"><span class="tf-opt">Doğru</span><span class="tf-opt">Yanlış</span></div></div>
+
+    <div class="q-card"><span class="q-num tf">29</span><span class="q-text">Dilüsyon testinde su ile kolayca karışan emülsiyon S/Y tipidir.</span><div class="tf-options"><span class="tf-opt">Doğru</span><span class="tf-opt">Yanlış</span></div></div>
+
+    <div class="q-card"><span class="q-num tf">30</span><span class="q-text">Flokülasyon geri dönüşümlü bir emülsiyon değişimidir.</span><div class="tf-options"><span class="tf-opt">Doğru</span><span class="tf-opt">Yanlış</span></div></div>
+
+    <div class="q-card"><span class="q-num tf">31</span><span class="q-text">Koalesans geri dönüşümlü bir değişimdir.</span><div class="tf-options"><span class="tf-opt">Doğru</span><span class="tf-opt">Yanlış</span></div></div>
+
+    <div class="q-card"><span class="q-num tf">32</span><span class="q-text">Ostwald olgunlaşması sadece 600 nm'den büyük damlacıklarda görülür.</span><div class="tf-options"><span class="tf-opt">Doğru</span><span class="tf-opt">Yanlış</span></div></div>
+
+    <div class="q-card"><span class="q-num tf">33</span><span class="q-text">Çoklu emülsiyonlar fiziksel ve termodinamik olarak dayanıklıdır.</span><div class="tf-options"><span class="tf-opt">Doğru</span><span class="tf-opt">Yanlış</span></div></div>
+
+    <div class="q-card"><span class="q-num tf">34</span><span class="q-text">Mikroemülsiyonlar oluşmaları için dışarıdan enerji verilmesini gerektirir.</span><div class="tf-options"><span class="tf-opt">Doğru</span><span class="tf-opt">Yanlış</span></div></div>
+
+    <div class="q-card"><span class="q-num tf">35</span><span class="q-text">Mikroemülsiyonlar Newtonian akış gösterir.</span><div class="tf-options"><span class="tf-opt">Doğru</span><span class="tf-opt">Yanlış</span></div></div>
+
+    <div class="q-card"><span class="q-num tf">36</span><span class="q-text">Florokarbon emülsiyonları yapay kan olarak kullanılabilir.</span><div class="tf-options"><span class="tf-opt">Doğru</span><span class="tf-opt">Yanlış</span></div></div>
+
+    <div class="q-card"><span class="q-num tf">37</span><span class="q-text">Emülsiyonlarda en stabil faz hacim oranı %40–60 arasıdır.</span><div class="tf-options"><span class="tf-opt">Doğru</span><span class="tf-opt">Yanlış</span></div></div>
+
+    <div class="q-card"><span class="q-num tf">38</span><span class="q-text">Kolesterol yağda çözünen steroid yapıda bir emülgatördür ve genellikle Y/S emülsiyonu oluşturur.</span><div class="tf-options"><span class="tf-opt">Doğru</span><span class="tf-opt">Yanlış</span></div></div>
+
+    <div class="q-card"><span class="q-num tf">39</span><span class="q-text">İletkenlik yöntemi ile emülsiyon tipini belirlemek her zaman mümkündür.</span><div class="tf-options"><span class="tf-opt">Doğru</span><span class="tf-opt">Yanlış</span></div></div>
+
+    <div class="q-card"><span class="q-num tf">40</span><span class="q-text">Setostearil alkol, setil alkol (%20-35) ve stearil alkol (%50-70) karışımıdır.</span><div class="tf-options"><span class="tf-opt">Doğru</span><span class="tf-opt">Yanlış</span></div></div>
+
+
+    <!-- ── KLASİK ── -->
+    <div class="sec-header" id="sec-classic-q">
+      <div class="sec-icon classic">?</div>
+      <div><div class="sec-title">Klasik Sorular</div><div class="sec-subtitle">20 Soru</div></div>
+    </div>
+
+    <div class="q-card"><span class="q-num classic">1</span><span class="q-text">Süspansiyonların üstünlüklerini ve sakıncalarını karşılaştırınız.</span></div>
+    <div class="q-card"><span class="q-num classic">2</span><span class="q-text">Uygulama yollarına göre süspansiyon türlerini sayarak her birinin partikül boyutu ve sterilite gereksinimlerini belirtiniz.</span></div>
+    <div class="q-card"><span class="q-num classic">3</span><span class="q-text">Floküle ve defloküle süspansiyonları çökme özellikleri, kekleşme ve yeniden dağılabilirlik açısından karşılaştırınız.</span></div>
+    <div class="q-card"><span class="q-num classic">4</span><span class="q-text">Kontrollü floküle süspansiyon hazırlama aşamalarını sırasıyla açıklayınız.</span></div>
+    <div class="q-card"><span class="q-num classic">5</span><span class="q-text">Süspansiyonlarda kullanılan organik süspansiyon ajanlarından (polisakkaritler) en az dördünü kaynakları ve özellikleriyle birlikte açıklayınız.</span></div>
+    <div class="q-card"><span class="q-num classic">6</span><span class="q-text">Süspansiyonlarda görülen değişmeleri (agregasyon, kristal büyümesi, flotasyon vb.) ve her birinin çözüm yollarını açıklayınız.</span></div>
+    <div class="q-card"><span class="q-num classic">7</span><span class="q-text">Süspansiyonlarda yapılan kontrol parametrelerini (çökme hacmi, flokülasyon derecesi, zeta potansiyel, partikül büyüklüğü tayini vb.) açıklayınız.</span></div>
+    <div class="q-card"><span class="q-num classic">8</span><span class="q-text">Süspansiyonların reolojik özelliklerini etkileyen faktörleri ve süspansiyon ajanlarının akış özelliklerini açıklayınız.</span></div>
+    <div class="q-card"><span class="q-num classic">9</span><span class="q-text">Emülsiyonların tanımını yaparak, avantajlarını sıralayınız.</span></div>
+    <div class="q-card"><span class="q-num classic">10</span><span class="q-text">Emülsiyon tiplerini (Y/S, S/Y), damlacık boyutu-görünüm ilişkisini ve boyut sınıflandırmasını (makro, nano, mikro) açıklayınız.</span></div>
+    <div class="q-card"><span class="q-num classic">11</span><span class="q-text">Emülgatörleri film tiplerine göre (monomoleküler, multimoleküler, katı partikül) sınıflandırarak örnekler veriniz.</span></div>
+    <div class="q-card"><span class="q-num classic">12</span><span class="q-text">Anyonik, katyonik, amfoterik ve non-iyonik yüzey etkin maddelerin özelliklerini karşılaştırınız.</span></div>
+    <div class="q-card"><span class="q-num classic">13</span><span class="q-text">HLB kavramını açıklayarak Griffin tablosundaki HLB değer aralıkları ile kullanım alanlarını yazınız.</span></div>
+    <div class="q-card"><span class="q-num classic">14</span><span class="q-text">Griffin ve Davies-Rideal HLB hesaplama yöntemlerini formülleriyle birlikte açıklayarak birer örnek veriniz.</span></div>
+    <div class="q-card"><span class="q-num classic">15</span><span class="q-text">Kuru zamk (Kıta) ve yaş zamk (İngiliz) emülsiyon hazırlama yöntemlerini adım adım karşılaştırınız.</span></div>
+    <div class="q-card"><span class="q-num classic">16</span><span class="q-text">Emülsiyon tipi tayininde kullanılan yöntemleri (boyama, dilüsyon, iletkenlik, spatül) açıklayınız.</span></div>
+    <div class="q-card"><span class="q-num classic">17</span><span class="q-text">Emülsiyonlarda görülen değişmeleri (krema oluşumu, flokülasyon, koalesans, inversiyon, Ostwald olgunlaşması) geri dönüşümlülükleriyle birlikte açıklayınız.</span></div>
+    <div class="q-card"><span class="q-num classic">18</span><span class="q-text">Çoklu emülsiyonların hazırlama yöntemlerini, avantajlarını ve dezavantajlarını açıklayınız.</span></div>
+    <div class="q-card"><span class="q-num classic">19</span><span class="q-text">Mikroemülsiyonları klasik emülsiyonlardan ayıran özellikleri tablo halinde karşılaştırınız.</span></div>
+    <div class="q-card"><span class="q-num classic">20</span><span class="q-text">Parenteral emülsiyonların hazırlanmasında dikkat edilecek hususları (emülgatör seçimi, sterilizasyon, damlacık boyutu, izotoniklik) açıklayınız.</span></div>
+
+  </div><!-- /view-questions -->
+
+
+  <!-- ═══════════════════════════════════════════ -->
+  <!-- ═══ ANSWERS VIEW ═══ -->
+  <!-- ═══════════════════════════════════════════ -->
+  <div class="view" id="view-answers">
+
+    <!-- ── BOŞLUK DOLDURMA CEVAPLARI ── -->
+    <div class="sec-header" id="sec-fill-a">
+      <div class="sec-icon fill">✎</div>
+      <div><div class="sec-title">Boşluk Doldurma – Cevaplar</div><div class="sec-subtitle">40 Soru</div></div>
+    </div>
+
+    <div class="ans-card"><span class="ans-num fill">1</span><span class="ans-text"><strong>kaba</strong></span></div>
+    <div class="ans-card"><span class="ans-num fill">2</span><span class="ans-text"><strong>süzülmez</strong></span></div>
+    <div class="ans-card"><span class="ans-num fill">3</span><span class="ans-text"><strong>1–2 hafta</strong></span></div>
+    <div class="ans-card"><span class="ans-num fill">4</span><span class="ans-text"><strong>5</strong></span></div>
+    <div class="ans-card"><span class="ans-num fill">5</span><span class="ans-text"><strong>intravenöz (iv)</strong></span></div>
+    <div class="ans-card"><span class="ans-num fill">6</span><span class="ans-text"><strong>10</strong></span></div>
+    <div class="ans-card"><span class="ans-num fill">7</span><span class="ans-text"><strong>3–5</strong></span></div>
+    <div class="ans-card"><span class="ans-num fill">8</span><span class="ans-text"><strong>7–9</strong></span></div>
+    <div class="ans-card"><span class="ans-num fill">9</span><span class="ans-text"><strong>Polisorbat 80 (Tween 80)</strong></span></div>
+    <div class="ans-card"><span class="ans-num fill">10</span><span class="ans-text"><strong>12</strong></span></div>
+    <div class="ans-card"><span class="ans-num fill">11</span><span class="ans-text"><strong>200</strong></span></div>
+    <div class="ans-card"><span class="ans-num fill">12</span><span class="ans-text"><strong>floküle</strong></span></div>
+    <div class="ans-card"><span class="ans-num fill">13</span><span class="ans-text"><strong>1</strong></span></div>
+    <div class="ans-card"><span class="ans-num fill">14</span><span class="ans-text"><strong>elektroforez</strong></span></div>
+    <div class="ans-card"><span class="ans-num fill">15</span><span class="ans-text"><strong>iletkenlik</strong></span></div>
+    <div class="ans-card"><span class="ans-num fill">16</span><span class="ans-text"><strong>CMC + Bentonit</strong></span></div>
+    <div class="ans-card"><span class="ans-num fill">17</span><span class="ans-text"><strong>çözelti</strong></span></div>
+    <div class="ans-card"><span class="ans-num fill">18</span><span class="ans-text"><strong>nanosüspansiyon</strong></span></div>
+    <div class="ans-card"><span class="ans-num fill">19</span><span class="ans-text"><strong>beyaz (süt görünümü)</strong></span></div>
+    <div class="ans-card"><span class="ans-num fill">20</span><span class="ans-text"><strong>0,3</strong></span></div>
+    <div class="ans-card"><span class="ans-num fill">21</span><span class="ans-text"><strong>lesitin</strong></span></div>
+    <div class="ans-card"><span class="ans-num fill">22</span><span class="ans-text"><strong>8–16</strong></span></div>
+    <div class="ans-card"><span class="ans-num fill">23</span><span class="ans-text"><strong>3–8</strong></span></div>
+    <div class="ans-card"><span class="ans-num fill">24</span><span class="ans-text"><strong>yüksek</strong></span></div>
+    <div class="ans-card"><span class="ans-num fill">25</span><span class="ans-text"><strong>4–6</strong></span></div>
+    <div class="ans-card"><span class="ans-num fill">26</span><span class="ans-text"><strong>non-iyonik</strong></span></div>
+    <div class="ans-card"><span class="ans-num fill">27</span><span class="ans-text"><strong>SPAN</strong> / <strong>TWEEN</strong></span></div>
+    <div class="ans-card"><span class="ans-num fill">28</span><span class="ans-text"><strong>S/A</strong> (S: sabunlaşma indisi, A: asit indisi)</span></div>
+    <div class="ans-card"><span class="ans-num fill">29</span><span class="ans-text"><strong>40</strong></span></div>
+    <div class="ans-card"><span class="ans-num fill">30</span><span class="ans-text"><strong>4 / 2 / 1</strong></span></div>
+    <div class="ans-card"><span class="ans-num fill">31</span><span class="ans-text"><strong>beyaz</strong> zeminde <strong>mavi</strong> damlalar (metilen mavisi suda çözündüğü için dış su fazını boyar)</span></div>
+    <div class="ans-card"><span class="ans-num fill">32</span><span class="ans-text"><strong>koalesans</strong></span></div>
+    <div class="ans-card"><span class="ans-num fill">33</span><span class="ans-text"><strong>inversiyon</strong></span></div>
+    <div class="ans-card"><span class="ans-num fill">34</span><span class="ans-text"><strong>yüksek</strong> (~70 °C) / <strong>düşük</strong> (~25 °C)</span></div>
+    <div class="ans-card"><span class="ans-num fill">35</span><span class="ans-text"><strong>dayanıklı (stabil)</strong></span></div>
+    <div class="ans-card"><span class="ans-num fill">36</span><span class="ans-text"><strong>emülsiyon</strong></span></div>
+    <div class="ans-card"><span class="ans-num fill">37</span><span class="ans-text"><strong>Siklosporin (Sandimmune® Neoral®)</strong></span></div>
+    <div class="ans-card"><span class="ans-num fill">38</span><span class="ans-text"><strong>3.000–20.000</strong></span></div>
+    <div class="ans-card"><span class="ans-num fill">39</span><span class="ans-text"><strong>yoğunluk</strong></span></div>
+    <div class="ans-card"><span class="ans-num fill">40</span><span class="ans-text"><strong>etanol</strong></span></div>
+
+
+    <!-- ── DOĞRU / YANLIŞ CEVAPLARI ── -->
+    <div class="sec-header" id="sec-tf-a">
+      <div class="sec-icon tf">D/Y</div>
+      <div><div class="sec-title">Doğru / Yanlış – Cevaplar</div><div class="sec-subtitle">40 Soru</div></div>
+    </div>
+
+    <div class="ans-card"><span class="ans-num tf">1</span><span class="ans-text"><span class="tag-d">YANLIŞ</span> Süspansiyonlar hazırlandıktan sonra süzülmez.</span></div>
+    <div class="ans-card"><span class="ans-num tf">2</span><span class="ans-text"><span class="tag-y">DOĞRU</span> Oral süspansiyonların biyoyararlanımı katı formlardan genellikle daha yüksektir.</span></div>
+    <div class="ans-card"><span class="ans-num tf">3</span><span class="ans-text"><span class="tag-d">YANLIŞ</span> Parenteral süspansiyonlar iv ve intratekal olarak uygulanamaz.</span></div>
+    <div class="ans-card"><span class="ans-num tf">4</span><span class="ans-text"><span class="tag-y">DOĞRU</span> Emilim yavaş olduğu için depo etki sağlar (örn: çinko-insülin, kontraseptif hormonlar).</span></div>
+    <div class="ans-card"><span class="ans-num tf">5</span><span class="ans-text"><span class="tag-d">YANLIŞ</span> Anyonik ıslatma ajanları pH'ya hassastır ve geçimsizlik riski taşır.</span></div>
+    <div class="ans-card"><span class="ans-num tf">6</span><span class="ans-text"><span class="tag-y">DOĞRU</span> Arap zamkı anyonik yapıdadır; süspansiyon ajanı %5–10, emülsiyon ajanı %10–20 kullanılır.</span></div>
+    <div class="ans-card"><span class="ans-num tf">7</span><span class="ans-text"><span class="tag-d">YANLIŞ</span> MC soğuk suda şişerek kolloidal jel oluşturur, sıcak suda değil.</span></div>
+    <div class="ans-card"><span class="ans-num tf">8</span><span class="ans-text"><span class="tag-y">DOĞRU</span> Floküle süspansiyonda gevşek agregatlar oluşur, kekleşme olmaz ve kolayca dağılır.</span></div>
+    <div class="ans-card"><span class="ans-num tf">9</span><span class="ans-text"><span class="tag-d">YANLIŞ</span> Defloküle süspansiyonda üst sıvı bulanık görünümdedir; floküle olanda berraktır.</span></div>
+    <div class="ans-card"><span class="ans-num tf">10</span><span class="ans-text"><span class="tag-d">YANLIŞ</span> Elektrolitler zeta potansiyelini düşürerek (azaltarak) gevşek bağlanma sağlar.</span></div>
+    <div class="ans-card"><span class="ans-num tf">11</span><span class="ans-text"><span class="tag-y">DOĞRU</span> Dar partikül dağılımı kristal büyümesini engellemenin temel yollarından biridir.</span></div>
+    <div class="ans-card"><span class="ans-num tf">12</span><span class="ans-text"><span class="tag-d">YANLIŞ</span> Çökme hızı ile viskozite arasında ters orantı vardır.</span></div>
+    <div class="ans-card"><span class="ans-num tf">13</span><span class="ans-text"><span class="tag-d">YANLIŞ</span> Dispers faz konsantrasyonu arttıkça viskozite artar.</span></div>
+    <div class="ans-card"><span class="ans-num tf">14</span><span class="ans-text"><span class="tag-y">DOĞRU</span> Nanosüspansiyonlar otoklav (buhar), gama ışını veya steril filtrasyon ile sterilize edilebilir.</span></div>
+    <div class="ans-card"><span class="ans-num tf">15</span><span class="ans-text"><span class="tag-y">DOĞRU</span> Emülsiyonlar homojen görünümlü heterojen kaba dispersiyonlardır.</span></div>
+    <div class="ans-card"><span class="ans-num tf">16</span><span class="ans-text"><span class="tag-d">YANLIŞ</span> Y/S'de dış faz sudur. Yağ dış fazda olan sistem S/Y'dir.</span></div>
+    <div class="ans-card"><span class="ans-num tf">17</span><span class="ans-text"><span class="tag-d">YANLIŞ</span> iv uygulama için Y/S tipi emülsiyonlar tercih edilir (dış faz su).</span></div>
+    <div class="ans-card"><span class="ans-num tf">18</span><span class="ans-text"><span class="tag-y">DOĞRU</span> Katyonik yüzey etkin maddeler (setrimid, benzalkonyum klorür) antimikrobiyal özelliklere sahiptir.</span></div>
+    <div class="ans-card"><span class="ans-num tf">19</span><span class="ans-text"><span class="tag-d">YANLIŞ</span> En az tahriş edici grup non-iyonik yüzey etkin maddelerdir; katyonikler en tahriş edici gruptur.</span></div>
+    <div class="ans-card"><span class="ans-num tf">20</span><span class="ans-text"><span class="tag-d">YANLIŞ</span> Gliseril monostearat çok lipofilik olup zayıf emülsifiyan maddedir; kombine kullanılmalıdır.</span></div>
+    <div class="ans-card"><span class="ans-num tf">21</span><span class="ans-text"><span class="tag-y">DOĞRU</span> Tween 80 (PEG-sorbitan monooleat) hem oral hem parenteral kullanıma uygundur.</span></div>
+    <div class="ans-card"><span class="ans-num tf">22</span><span class="ans-text"><span class="tag-d">YANLIŞ</span> HLB değeri 20'ye yaklaştıkça hidrofilik özellik artar.</span></div>
+    <div class="ans-card"><span class="ans-num tf">23</span><span class="ans-text"><span class="tag-y">DOĞRU</span> Bentonit katı partikül emülgatör olarak hem Y/S hem S/Y emülsiyon oluşturabilir.</span></div>
+    <div class="ans-card"><span class="ans-num tf">24</span><span class="ans-text"><span class="tag-d">YANLIŞ</span> Jelatin A asit hidrolizi ile, Jelatin B alkali hidrolizi ile elde edilir.</span></div>
+    <div class="ans-card"><span class="ans-num tf">25</span><span class="ans-text"><span class="tag-d">YANLIŞ</span> Lesitin hem Y/S hem S/Y tipi emülsiyon hazırlamak için kullanılabilir.</span></div>
+    <div class="ans-card"><span class="ans-num tf">26</span><span class="ans-text"><span class="tag-d">YANLIŞ</span> Yumurta sarısı kurutulunca emülsifiyan özelliğini kaybeder; taze kullanılmalıdır.</span></div>
+    <div class="ans-card"><span class="ans-num tf">27</span><span class="ans-text"><span class="tag-y">DOĞRU</span> Kuru zamk (Kıta) yönteminde emülgatör çözünmediği faza ilave edilir.</span></div>
+    <div class="ans-card"><span class="ans-num tf">28</span><span class="ans-text"><span class="tag-y">DOĞRU</span> Yaş zamk yöntemi İngiliz Yöntemi olarak bilinir.</span></div>
+    <div class="ans-card"><span class="ans-num tf">29</span><span class="ans-text"><span class="tag-d">YANLIŞ</span> Su ile kolayca karışan emülsiyon Y/S tipidir (dış faz su); S/Y'de dış faz yağ olduğundan su ile karışmaz.</span></div>
+    <div class="ans-card"><span class="ans-num tf">30</span><span class="ans-text"><span class="tag-y">DOĞRU</span> Flokülasyonda damlacıklar gevşek biraraya gelir ama birleşmez; geri dönüşümlüdür.</span></div>
+    <div class="ans-card"><span class="ans-num tf">31</span><span class="ans-text"><span class="tag-d">YANLIŞ</span> Koalesans geri dönüşümsüzdür; damlacıklar birleşerek büyür.</span></div>
+    <div class="ans-card"><span class="ans-num tf">32</span><span class="ans-text"><span class="tag-d">YANLIŞ</span> Ostwald olgunlaşması 600 nm'den küçük damlacıklarda görülür.</span></div>
+    <div class="ans-card"><span class="ans-num tf">33</span><span class="ans-text"><span class="tag-d">YANLIŞ</span> Çoklu emülsiyonlar fiziksel ve termodinamik olarak dayanıksızdır.</span></div>
+    <div class="ans-card"><span class="ans-num tf">34</span><span class="ans-text"><span class="tag-d">YANLIŞ</span> Mikroemülsiyonlar kendiliğinden oluşur, enerji gerekmez.</span></div>
+    <div class="ans-card"><span class="ans-num tf">35</span><span class="ans-text"><span class="tag-y">DOĞRU</span> Mikroemülsiyonlarda düşük viskozite ve Newtonian akış görülür.</span></div>
+    <div class="ans-card"><span class="ans-num tf">36</span><span class="ans-text"><span class="tag-y">DOĞRU</span> Florokarbon emülsiyonları yapay kan olarak kullanılır.</span></div>
+    <div class="ans-card"><span class="ans-num tf">37</span><span class="ans-text"><span class="tag-y">DOĞRU</span> Pratikte en stabil emülsiyonlar faz hacim oranı %40–60 olanlardır.</span></div>
+    <div class="ans-card"><span class="ans-num tf">38</span><span class="ans-text"><span class="tag-d">YANLIŞ</span> Kolesterol yağda çözünür ve genellikle S/Y emülsiyonu oluşturur (Y/S değil).</span></div>
+    <div class="ans-card"><span class="ans-num tf">39</span><span class="ans-text"><span class="tag-d">YANLIŞ</span> Non-iyonik emülgatörlü Y/S emülsiyonlara iletkenlik yöntemi uygulanamaz.</span></div>
+    <div class="ans-card"><span class="ans-num tf">40</span><span class="ans-text"><span class="tag-y">DOĞRU</span> Setostearil alkol = setil alkol (%20-35) + stearil alkol (%50-70) karışımıdır.</span></div>
+
+
+    <!-- ── KLASİK CEVAPLAR ── -->
+    <div class="sec-header" id="sec-classic-a">
+      <div class="sec-icon classic">?</div>
+      <div><div class="sec-title">Klasik Sorular – Cevaplar</div><div class="sec-subtitle">20 Soru</div></div>
+    </div>
+
+    <div class="ans-card"><span class="ans-num classic">1</span><span class="ans-text"><strong>Üstünlükleri:</strong> Yutma güçlüğü çekenlerde kolay uygulama, kimyasal olarak dayanıksız maddeler için uygun, homojen dozlama, kötü tat giderme, hiçbir çözücüde çözünmeyen maddelerin verilebilmesi, kuru toz halinde uzun raf ömrü. <strong>Sakıncaları:</strong> Katı formlara göre doz homojenliği düşük, çökme ve topaklanma riski, görünüş ve tat sorunları.</span></div>
+
+    <div class="ans-card"><span class="ans-num classic">2</span><span class="ans-text"><strong>Oral:</strong> En sık tür, sterilite gerekmez, partikül boyutu 1–50 µm. <strong>Topikal:</strong> Katı madde >%20, sterilite gerekmez. <strong>Parenteral:</strong> Steril, <5 µm, iv ve it uygulanmaz. <strong>Oftalmik:</strong> Steril, <10 µm, antimikrobiyal içermeli. <strong>Aerosol:</strong> 3–5 µm, itici gazda süspande.</span></div>
+
+    <div class="ans-card"><span class="ans-num classic">3</span><span class="ans-text"><strong>Floküle:</strong> Gevşek agregatlar halinde çöker, çökme hızı yüksek, çökelti gevşek (kekleşme yok), çalkalamada kolayca dağılır, üst sıvı berrak. <strong>Defloküle:</strong> Partiküller ayrı ayrı çöker, çökme yavaş, zamanla sıkı bağlanma → kekleşme, çalkalama ile dönmesi zor, üst sıvı bulanık.</span></div>
+
+    <div class="ans-card"><span class="ans-num classic">4</span><span class="ans-text">1) Etken madde partiküllerinin ıslatıcı ajan içeren ortamda dağıtılması → 2) Flokülasyon ajanlarının ilavesi → 3) Süspansiyon ajanlarının ilavesi → 4) Yeterli su (hidrasyon) ilavesi → 5) Diğer yardımcı maddelerin suda çözülerek ilavesi → 6) Karıştırma ve koloit değirmenden geçirme → 7) Havasının alınması.</span></div>
+
+    <div class="ans-card"><span class="ans-num classic">5</span><span class="ans-text"><strong>Arap zamkı:</strong> Acacia senegal, anyonik, %5–10 süspansiyon ajanı. <strong>Kitre zamkı:</strong> Astragalus türleri, bassorin+tragantin, viskozite arttırıcı. <strong>Aljinatlar:</strong> Deniz algleri, negatif yüklü, Na aljinat suda çözünür, %1–5. <strong>Karragen:</strong> Kırmızı alg, soğukta sol sıcakta jel, %0,1–0,5. <strong>Nişasta:</strong> Amiloz+amilopektin, tiksotropik, sıcakla şişer. <strong>Agar:</strong> Deniz algleri, anyonik, %0,1'de jel, tiksotropik.</span></div>
+
+    <div class="ans-card"><span class="ans-num classic">6</span><span class="ans-text"><strong>Agregasyon/kekleşme:</strong> Kontrollü flokülasyon, viskozite artırma, zeta potansiyel kontrolü. <strong>Flotasyon:</strong> Non-iyonik YEM veya hidrofilik polimer ilavesi ile temas açısı küçültme. <strong>Deflokülasyon:</strong> YEM, polimer, elektrolit konsantrasyonlarının kontrolü. <strong>Kristal büyümesi:</strong> Dar partikül dağılımı, en dayanıklı kristal formu, koruyucu kolloidler, sıcaklık kontrolü. <strong>Zayıf redispersibilite:</strong> Dar dağılım, viskozite ve zeta potansiyel kontrolü.</span></div>
+
+    <div class="ans-card"><span class="ans-num classic">7</span><span class="ans-text"><strong>Çökme hacmi:</strong> F=Hu/H₀, ideal F=1. <strong>Flokülasyon derecesi:</strong> β=F/F∞, en yüksek en iyi. <strong>Zeta potansiyel:</strong> Elektroforez ile, Helmholtz-Smoluchowski eşitliği. <strong>Partikül büyüklüğü:</strong> Mikroskop (0,2–100 µm), Andreasen pipeti (sedimentasyon), Coulter Counter (iletkenlik). <strong>Yeniden dağılabilme:</strong> 20 rpm dönen cihaz. <strong>Viskozite:</strong> Viskometre ile akış uygunluğu.</span></div>
+
+    <div class="ans-card"><span class="ans-num classic">8</span><span class="ans-text"><strong>Etkileyen faktörler:</strong> Dispers faz konsantrasyonu (↑→viskozite ↑), partikül çapı/şekli/dağılımı, dispersiyon ortamının reolojisi, sıcaklık. Dispers faz arttıkça shear thickening, küresel olmayan partiküllerde de shear thickening görülür. Polidispersite arttıkça viskozite azalır. <strong>Akış özellikleri:</strong> Psödoplastik: kitre zamkı, Na aljinat, CMC. Tiksotropik: bentonit, veegum. Her ikisi: CMC+bentonit (en tercih edilen).</span></div>
+
+    <div class="ans-card"><span class="ans-num classic">9</span><span class="ans-text">Emülsiyonlar, birbiriyle karışmayan iki sıvının (su+yağ) emülgatör yardımıyla damlacıklar halinde dağıtılmasıyla oluşturulan homojen görünümlü heterojen kaba dispersiyonlardır. <strong>Avantajları:</strong> Karışmayan sıvıların stabil karışımı, kötü tatın maskelenmesi, sürekli ve kontrollü salım, yüksek emilim, iv yağ uygulaması, makromoleküllerin GİS emilimi artışı, deriden geçişi artırma, krem/losyon gibi haricen kullanım.</span></div>
+
+    <div class="ans-card"><span class="ans-num classic">10</span><span class="ans-text"><strong>Y/S:</strong> İç faz yağ, dış faz su. <strong>S/Y:</strong> İç faz su, dış faz yağ. Ayrıca çoklu (S/Y/S, Y/S/Y) ve mikroemülsiyonlar. <strong>Boyut-görünüm:</strong> >1 µm→beyaz, 0,1–1 µm→mavi-beyaz, 0,05–0,1 µm→yarı saydam, <0,05 µm→saydam. <strong>Sınıflandırma:</strong> Makroemülsiyon >400 nm, nanoemülsiyon 100–400 nm, mikroemülsiyon 10–100 nm.</span></div>
+
+    <div class="ans-card"><span class="ans-num classic">11</span><span class="ans-text"><strong>Monomoleküler film:</strong> Tek tabaka, yüzeylerarası gerilimi belirgin azaltır (sentetik/organik emülgatörler). <strong>Multimoleküler film:</strong> Hidrate liyofilik kolloidler; yüzey gerilimini düşürmez ama koalesansa karşı kuvvetli koruma, viskozite artışı sağlar (doğal emülgatörler: arap zamkı, jelatin). <strong>Katı partikül film:</strong> İnce öğütülmüş partiküller arayüzeyde birikerek film oluşturur (bentonit, veegum, kaolin).</span></div>
+
+    <div class="ans-card"><span class="ans-num classic">12</span><span class="ans-text"><strong>Anyonik:</strong> Negatif yüklü, yüksek pH'da aktif, iyi Y/S emülsiyonu, iritan (SLS, sabunlar). <strong>Katyonik:</strong> Pozitif yüklü, düşük pH'da aktif (pH 4-6), antimikrobiyal, emülsifiyan zayıf, en tahriş edici (setrimid, benzalkonyum klorür). <strong>Amfoterik:</strong> Her iki yük, pH'ya göre davranış değişir. <strong>Non-iyonik:</strong> Yüksüz, en az toksik/iritan, pH'ya dirençli, hem S/Y hem Y/S yapabilir (Span, Tween, poloksamerler).</span></div>
+
+    <div class="ans-card"><span class="ans-num classic">13</span><span class="ans-text">HLB, yüzey etkin maddelerin hidrofil ve lipofil grupları arasındaki dengeyi ifade eder (0-20 arası). <strong>Griffin Tablosu:</strong> 1-3→köpük giderici, 3-8→S/Y emülgatör, 7-9→ıslatıcı, 8-16→Y/S emülgatör, 13-16→deterjan, 16-18→çözünürlük arttırıcı. 20'ye yaklaştıkça hidrofilik özellik artar.</span></div>
+
+    <div class="ans-card"><span class="ans-num classic">14</span><span class="ans-text"><strong>Griffin:</strong> HLB = 20 × (1 – S/A). Örn: Tween 80 (S=50, A=200) → 20 × (1 – 50/200) = 15. <strong>Davies-Rideal:</strong> HLB = ΣHidrofil grup sayısı – ΣLipofil grup sayısı + 7. Örn: SLS → Hidrofil: –SO₄⁻Na = 38,7; Lipofil: 12 × 0,475 = 5,7 → HLB = 38,7 – 5,7 + 7 = 40.</span></div>
+
+    <div class="ans-card"><span class="ans-num classic">15</span><span class="ans-text"><strong>Kuru zamk (Kıta):</strong> 1) Emülgatör çözünmediği faza (yağ) eklenir. 2) Primer su eklenerek hızla karıştırılır (çekirdek emülsiyon, çıtırtı sesi). 3) Sekonder su yavaş yavaş eklenir. Oran: 4/2/1. <strong>Yaş zamk (İngiliz):</strong> 1) Emülgatör çözündüğü faza eklenir (Y/S→suda). 2) Çözünene dek karıştırılır. 3) İkinci faz ilave edilir. Oran: 4/2/1.</span></div>
+
+    <div class="ans-card"><span class="ans-num classic">16</span><span class="ans-text"><strong>Boyama:</strong> Metilen mavisi (suda çözünür) → Y/S'de dış faz mavi, S/Y'de damlalar mavi. Sudan III (yağda çözünür) → tersi. <strong>Dilüsyon:</strong> Su ile karışırsa Y/S, karışmazsa S/Y. <strong>Hidrofilik ortam:</strong> Süzgeç kağıdında yayılırsa Y/S. <strong>Spatül:</strong> Isıtılmış spatül ıslanırsa Y/S, yağlanırsa S/Y. <strong>İletkenlik:</strong> Akım geçerse dış faz su → Y/S (non-iyonik Y/S'ye uygulanmaz).</span></div>
+
+    <div class="ans-card"><span class="ans-num classic">17</span><span class="ans-text"><strong>Krema oluşumu:</strong> Yoğunluk farkı ile toplanma (✅ geri dönüşümlü). <strong>Flokülasyon:</strong> Gevşek biraraya gelme, birleşme yok (✅ geri dönüşümlü). <strong>Sedimentasyon:</strong> Ağır damlacıklar dibe çöker (✅ geri dönüşümlü). <strong>Koalesans:</strong> Damlacıklar birleşip büyür → faz ayrışması (❌). <strong>Faz ayrışması:</strong> İki faz tamamen ayrılır (❌). <strong>İnversiyon:</strong> Dış↔iç faz dönüşümü (❌). <strong>Ostwald olgunlaşması:</strong> <600 nm'de küçükler çözünür, büyükler büyür (❌).</span></div>
+
+    <div class="ans-card"><span class="ans-num classic">18</span><span class="ans-text"><strong>Hazırlama:</strong> İki basamaklı (önce primer, sonra sekonder emülsifikasyon), tek basamaklı (aynı yapı fazlar), veya faz dönüşümü ile. Primer: yüksek hız, ~70 °C; sekonder: düşük hız, ~25 °C. <strong>Avantajlar:</strong> Hassas maddelerin korunması, geçimsiz ilaçlar birlikte, kontrollü/sürekli salım, hedeflendirme. <strong>Dezavantajlar:</strong> Fiziksel/termodinamik dayanıksızlık, zor hazırlanma, düşük tekrarlanabilirlik, salım mekanizmaları tam anlaşılamamış.</span></div>
+
+    <div class="ans-card"><span class="ans-num classic">19</span><span class="ans-text"><strong>Damlacık boyutu:</strong> Mikro: <0,2 µm; Klasik: 0,2–10 µm. <strong>Görünüş:</strong> Mikro: saydam; Klasik: süt beyaz. <strong>Oluşum:</strong> Mikro: kendiliğinden (enerji gerekmez); Klasik: enerji verilmeli. <strong>Stabilite:</strong> Mikro: termodinamik dayanıklı; Klasik: termodinamik dayanıksız. <strong>Viskozite:</strong> Mikro: düşük, Newtonian; Klasik: değişken.</span></div>
+
+    <div class="ans-card"><span class="ans-num classic">20</span><span class="ans-text"><strong>Emülgatör:</strong> Lesitin, soya/yumurta fosfolipitleri, poloksamerler (Pluronic F-68); toksik olmamalı. <strong>Sterilizasyon:</strong> Otoklavda. <strong>Damlacık boyutu:</strong> iv'de <0,3 µm (emboli riski – şilomikronlar). <strong>İzotoniklik:</strong> Sorbitol, glukoz veya gliserin sulu faza eklenir. <strong>Koruyucu:</strong> Tokoferoller. Y/S tipi iv uygulanır; yardımcı maddeler pirojenik, antijenik, iritan, hemolitik olmamalıdır.</span></div>
+
+  </div><!-- /view-answers -->
+
+</div><!-- /container -->
+
+<button class="print-btn" onclick="window.print()" title="Yazdır">🖨</button>
+
+<script>
+  let currentMode = 'questions';
+
+  function switchMode(mode) {
+    currentMode = mode;
+    document.querySelectorAll('.mode-btn').forEach(b => b.classList.remove('active'));
+    document.querySelectorAll('.view').forEach(v => v.classList.remove('active'));
+    if (mode === 'questions') {
+      document.querySelectorAll('.mode-btn')[0].classList.add('active');
+      document.getElementById('view-questions').classList.add('active');
+    } else {
+      document.querySelectorAll('.mode-btn')[1].classList.add('active');
+      document.getElementById('view-answers').classList.add('active');
+    }
+    updateSectionNav();
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+
+  function updateSectionNav() {
+    const btns = document.querySelectorAll('.section-btn');
+    btns.forEach(b => b.className = 'section-btn');
+    btns[0].classList.add('active-fill');
+  }
+
+  function scrollToSection(sec) {
+    const suffix = (currentMode === 'answers') ? 'a' : 'q';
+    const el = document.getElementById('sec-' + sec + '-' + suffix);
+    const btns = document.querySelectorAll('.section-btn');
+    btns.forEach(b => b.className = 'section-btn');
+    const map = { fill: 0, tf: 1, classic: 2 };
+    const cls = { fill: 'active-fill', tf: 'active-tf', classic: 'active-classic' };
+    btns[map[sec]].classList.add(cls[sec]);
+    if (el) {
+      const topbar = document.querySelector('.topbar');
+      const offset = topbar ? topbar.offsetHeight + 12 : 80;
+      const y = el.getBoundingClientRect().top + window.pageYOffset - offset;
+      window.scrollTo({ top: y, behavior: 'smooth' });
+    }
+  }
+
+  updateSectionNav();
+</script>
+
+</body>
+</html>

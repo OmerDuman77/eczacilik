@@ -1,0 +1,1127 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Farmasötik Teknoloji II - Çalışma Rehberi</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=Source+Sans+3:wght@300;400;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0f1419;
+    --surface: #1a2030;
+    --surface2: #222b3d;
+    --accent: #4ecdc4;
+    --accent2: #ff6b6b;
+    --accent3: #ffe66d;
+    --text: #e8edf3;
+    --text-muted: #8899aa;
+    --border: #2a3548;
+    --correct: #4ecdc4;
+    --wrong: #ff6b6b;
+    --radius: 12px;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: 'Source Sans 3', sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.7;
+    min-height: 100vh;
+  }
+
+  /* HEADER */
+  .header {
+    background: linear-gradient(135deg, #1a2030 0%, #0f1419 50%, #1a2535 100%);
+    border-bottom: 1px solid var(--border);
+    padding: 40px 20px 0;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .header::before {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: radial-gradient(circle at 30% 50%, rgba(78,205,196,0.06) 0%, transparent 50%),
+                radial-gradient(circle at 70% 50%, rgba(255,107,107,0.04) 0%, transparent 50%);
+    pointer-events: none;
+  }
+
+  .header h1 {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(1.8rem, 4vw, 2.8rem);
+    font-weight: 900;
+    background: linear-gradient(135deg, var(--accent), var(--accent3));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    margin-bottom: 6px;
+    position: relative;
+  }
+
+  .header .subtitle {
+    color: var(--text-muted);
+    font-size: 0.95rem;
+    margin-bottom: 30px;
+    font-weight: 300;
+    letter-spacing: 0.5px;
+  }
+
+  /* TAB BAR */
+  .tab-bar {
+    display: flex;
+    justify-content: center;
+    gap: 0;
+    position: relative;
+    z-index: 2;
+  }
+
+  .tab-btn {
+    background: transparent;
+    border: none;
+    color: var(--text-muted);
+    font-family: 'Source Sans 3', sans-serif;
+    font-size: 0.95rem;
+    font-weight: 600;
+    padding: 14px 28px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    border-bottom: 3px solid transparent;
+    position: relative;
+    letter-spacing: 0.3px;
+  }
+
+  .tab-btn:hover {
+    color: var(--text);
+    background: rgba(78,205,196,0.05);
+  }
+
+  .tab-btn.active {
+    color: var(--accent);
+    border-bottom-color: var(--accent);
+    background: rgba(78,205,196,0.08);
+  }
+
+  .tab-btn .tab-icon {
+    margin-right: 8px;
+    font-size: 1.1rem;
+  }
+
+  /* CONTENT */
+  .content {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 30px 20px 60px;
+  }
+
+  .tab-panel {
+    display: none;
+    animation: fadeIn 0.4s ease;
+  }
+
+  .tab-panel.active {
+    display: block;
+  }
+
+  @keyframes fadeIn {
+    from { opacity: 0; transform: translateY(12px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  /* SUMMARY STYLES */
+  .section-block {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 28px 30px;
+    margin-bottom: 20px;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .section-block::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 4px;
+    height: 100%;
+    background: linear-gradient(180deg, var(--accent), var(--accent2));
+    border-radius: 4px 0 0 4px;
+  }
+
+  .section-block h2 {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: var(--accent);
+    margin-bottom: 16px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .section-block h3 {
+    font-size: 1.15rem;
+    font-weight: 700;
+    color: var(--accent3);
+    margin: 18px 0 10px;
+  }
+
+  .section-block h4 {
+    font-size: 1.02rem;
+    font-weight: 600;
+    color: var(--accent2);
+    margin: 14px 0 8px;
+  }
+
+  .section-block p {
+    color: var(--text);
+    margin-bottom: 10px;
+    font-weight: 300;
+  }
+
+  .section-block ul {
+    padding-left: 20px;
+    margin-bottom: 10px;
+  }
+
+  .section-block li {
+    margin-bottom: 6px;
+    font-weight: 300;
+    color: var(--text);
+  }
+
+  .section-block li::marker {
+    color: var(--accent);
+  }
+
+  .formula {
+    background: var(--surface2);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 12px 18px;
+    margin: 12px 0;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.95rem;
+    color: var(--accent3);
+    display: inline-block;
+  }
+
+  .table-wrap {
+    overflow-x: auto;
+    margin: 14px 0;
+  }
+
+  .table-wrap table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.9rem;
+  }
+
+  .table-wrap th {
+    background: var(--surface2);
+    color: var(--accent);
+    padding: 10px 14px;
+    text-align: left;
+    font-weight: 600;
+    border-bottom: 2px solid var(--accent);
+  }
+
+  .table-wrap td {
+    padding: 9px 14px;
+    border-bottom: 1px solid var(--border);
+    font-weight: 300;
+  }
+
+  .table-wrap tr:hover td {
+    background: rgba(78,205,196,0.04);
+  }
+
+  /* QUESTION STYLES */
+  .question-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 22px 26px;
+    margin-bottom: 14px;
+    transition: border-color 0.3s;
+  }
+
+  .question-card:hover {
+    border-color: rgba(78,205,196,0.3);
+  }
+
+  .q-number {
+    display: inline-block;
+    background: linear-gradient(135deg, var(--accent), #3db8b0);
+    color: var(--bg);
+    font-weight: 700;
+    font-size: 0.8rem;
+    padding: 3px 10px;
+    border-radius: 20px;
+    margin-bottom: 10px;
+  }
+
+  .q-number.tf { background: linear-gradient(135deg, var(--accent2), #e05555); }
+  .q-number.classic { background: linear-gradient(135deg, var(--accent3), #e6cc00); color: #1a2030; }
+
+  .q-text {
+    font-size: 1rem;
+    font-weight: 400;
+    margin-bottom: 10px;
+    line-height: 1.6;
+  }
+
+  .blank-input {
+    display: inline-block;
+    border: none;
+    border-bottom: 2px dashed var(--accent);
+    background: transparent;
+    color: var(--accent3);
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.9rem;
+    padding: 2px 6px;
+    width: 180px;
+    outline: none;
+    transition: border-color 0.3s;
+  }
+
+  .blank-input:focus {
+    border-bottom-color: var(--accent3);
+  }
+
+  .tf-options {
+    display: flex;
+    gap: 12px;
+    margin-top: 8px;
+  }
+
+  .tf-btn {
+    padding: 7px 22px;
+    border-radius: 8px;
+    border: 1px solid var(--border);
+    background: var(--surface2);
+    color: var(--text);
+    font-family: 'Source Sans 3', sans-serif;
+    font-weight: 600;
+    font-size: 0.9rem;
+    cursor: pointer;
+    transition: all 0.25s;
+  }
+
+  .tf-btn:hover {
+    border-color: var(--accent);
+    background: rgba(78,205,196,0.1);
+  }
+
+  .tf-btn.selected-correct {
+    background: rgba(78,205,196,0.2);
+    border-color: var(--correct);
+    color: var(--correct);
+  }
+
+  .tf-btn.selected-wrong {
+    background: rgba(255,107,107,0.2);
+    border-color: var(--wrong);
+    color: var(--wrong);
+  }
+
+  /* ANSWER KEY */
+  .answer-section {
+    margin-top: 40px;
+  }
+
+  .answer-toggle {
+    width: 100%;
+    padding: 16px 24px;
+    background: linear-gradient(135deg, var(--surface), var(--surface2));
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    color: var(--accent);
+    font-family: 'Source Sans 3', sans-serif;
+    font-size: 1.05rem;
+    font-weight: 700;
+    cursor: pointer;
+    transition: all 0.3s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+  }
+
+  .answer-toggle:hover {
+    border-color: var(--accent);
+    background: rgba(78,205,196,0.08);
+  }
+
+  .answer-content {
+    display: none;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-top: none;
+    border-radius: 0 0 var(--radius) var(--radius);
+    padding: 24px 28px;
+    margin-top: -2px;
+  }
+
+  .answer-content.open {
+    display: block;
+    animation: fadeIn 0.3s ease;
+  }
+
+  .answer-item {
+    display: flex;
+    gap: 10px;
+    padding: 6px 0;
+    border-bottom: 1px solid rgba(42,53,72,0.5);
+    font-size: 0.92rem;
+  }
+
+  .answer-item:last-child { border-bottom: none; }
+
+  .answer-num {
+    color: var(--accent);
+    font-weight: 700;
+    min-width: 30px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.85rem;
+  }
+
+  .answer-val {
+    color: var(--accent3);
+    font-weight: 500;
+  }
+
+  .classic-answer {
+    background: var(--surface2);
+    border-radius: 8px;
+    padding: 16px 20px;
+    margin-bottom: 14px;
+    border-left: 3px solid var(--accent3);
+  }
+
+  .classic-answer .ca-q {
+    color: var(--accent);
+    font-weight: 700;
+    margin-bottom: 8px;
+    font-size: 0.9rem;
+  }
+
+  .classic-answer p {
+    font-weight: 300;
+    font-size: 0.92rem;
+    line-height: 1.65;
+  }
+
+  /* SCORE BAR */
+  .score-bar {
+    position: sticky;
+    bottom: 0;
+    background: var(--surface);
+    border-top: 1px solid var(--border);
+    padding: 12px 24px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 20px;
+    font-weight: 600;
+    font-size: 0.9rem;
+    z-index: 100;
+    backdrop-filter: blur(12px);
+    display: none;
+  }
+
+  .score-bar span { color: var(--accent); }
+
+  /* RESPONSIVE */
+  @media (max-width: 600px) {
+    .tab-btn { padding: 12px 14px; font-size: 0.82rem; }
+    .section-block { padding: 20px 18px; }
+    .content { padding: 20px 14px 50px; }
+    .question-card { padding: 18px 18px; }
+  }
+</style>
+</head>
+<body>
+
+<div class="header">
+  <h1>Farmasötik Teknoloji II</h1>
+  <p class="subtitle">Doç.Dr. Muhammet Davut Arpa — Reoloji · Dispers Sistemler · Yüzeyler Arası Özellikler</p>
+  <div class="tab-bar">
+    <button class="tab-btn active" onclick="switchTab('summary')">
+      <span class="tab-icon">📖</span>Özet
+    </button>
+    <button class="tab-btn" onclick="switchTab('questions')">
+      <span class="tab-icon">✏️</span>Sorular
+    </button>
+    <button class="tab-btn" onclick="switchTab('answers')">
+      <span class="tab-icon">🔑</span>Cevap Anahtarı
+    </button>
+  </div>
+</div>
+
+<div class="content">
+
+<!-- ==================== TAB 1: ÖZET ==================== -->
+<div id="tab-summary" class="tab-panel active">
+
+<div class="section-block">
+  <h2>🔬 1. REOLOJİ — Genel Bilgiler</h2>
+  <p><strong>Reoloji</strong> (Rheos = iş, Logos = bilim), sıvıların akış ve katıların deformasyon özelliklerini inceleyen bilim dalıdır. İlaç şekillerinin formülasyonundan kullanımına kadar her aşamada reolojik özellikler kritik öneme sahiptir.</p>
+  <h3>Eczacılıkta Uygulamalar</h3>
+  <ul>
+    <li>Etken ve yardımcı madde özelliklerinin standardizasyonu</li>
+    <li>Sıvıların karıştırma, aktarma, borulardan akma ve dökülebilirlik optimizasyonu</li>
+    <li>Katı dozaj şekillerinde tozun huniden akması, kapsüllere dolum</li>
+    <li>Yarı-katılarda tüpten/ambalajdan akma, deri üzerinde yayılabilme</li>
+    <li>Parenterallerde enjektör iğnesinden geçebilme</li>
+    <li>Stabilite çalışmalarında akış özelliklerinin takibi</li>
+    <li>Lokal veya sistemik biyoyararlanıma etkisi</li>
+  </ul>
+</div>
+
+<div class="section-block">
+  <h2>💧 2. Viskozite</h2>
+  <p>Viskozite, sıvının akmaya karşı gösterdiği dirençtir. Viskozite arttıkça direnç artar, akışkanlık azalır. Akışkanlık (φ), viskozitenin tersidir:</p>
+  <div class="formula">φ = 1 / η</div>
+
+  <h3>Dinamik Viskozite</h3>
+  <p>Sıvı tabakalarının birbirine göre hareketini engelleyen iç sürtünme kuvvetidir.</p>
+  <div class="formula">τ = η × D</div>
+  <p>τ: Kayma gerilimi (birim alana düşen kuvvet), η: Dinamik viskozite, D: Kayma hızı oranı</p>
+  <p><strong>Birimler:</strong> cgs → Poise (P), centiPoise (cP); SI → Pascal.saniye (Pa.s), mPa.s. Dönüşüm: 1 cP = 1 mPa.s, 1 P = 0,1 Pa.s</p>
+
+  <div class="table-wrap">
+    <table>
+      <tr><th>Madde</th><th>Dinamik Viskozite (mPa.s, 20°C)</th></tr>
+      <tr><td>Etil eter</td><td>0,240</td></tr>
+      <tr><td>Kloroform</td><td>0,580</td></tr>
+      <tr><td>Su</td><td>1,002</td></tr>
+      <tr><td>Etanol</td><td>1,20</td></tr>
+      <tr><td>Propilen glikol</td><td>58,1</td></tr>
+      <tr><td>Gliserin</td><td>1490</td></tr>
+    </table>
+  </div>
+
+  <h3>Kinematik Viskozite (ν)</h3>
+  <p>Dinamik viskozitenin, akışkanın aynı sıcaklıktaki yoğunluğuna bölünmesidir.</p>
+  <div class="formula">ν = η / ρ</div>
+  <p>Birimi: Stoke (St) veya centiStoke (cSt)</p>
+
+  <h3>Viskozite – Sıcaklık İlişkisi</h3>
+  <p>Sıvıların viskozitesi sıcaklık arttıkça <strong>azalır</strong> (akışkanlık artar). Gazlarda ise tam tersi geçerlidir.</p>
+  <div class="formula">η = A · e^(Ev/RT)</div>
+</div>
+
+<div class="section-block">
+  <h2>📊 3. Akış Tipleri</h2>
+
+  <h3>Newtonian Akış</h3>
+  <p>Kayma gerilimi ile kayma hızı doğru orantılıdır. Viskozite sabit kalır. Reogram orijinden geçen bir doğrudur. Örnekler: su, mineral yağ, sıvı silikon, saf çözücüler.</p>
+  <div class="formula">τ = η × D</div>
+
+  <h3>Non-Newtonian Akış</h3>
+  <p>Newtonian eşitliğine uymaz; kayma hızı ile kayma gerilimi doğru orantılı değildir ve viskozite değişkenlik gösterir.</p>
+
+  <h4>a) Plastik (Bingham) Akış</h4>
+  <ul>
+    <li>Eğri orijinden geçmez → belirli bir eşik değeri (yield value) aşılınca akış başlar</li>
+    <li>Eşik altında elastik davranır, üzerinde Newtonian'a benzer</li>
+    <li>Süspansiyonlar, floküle sistemler, diş macunu</li>
+  </ul>
+  <div class="formula">U = (F − f) / G</div>
+
+  <h4>b) Pseudoplastik Akış</h4>
+  <ul>
+    <li>Kayma gerilimi artışıyla viskozite düşer (shear thinning)</li>
+    <li>Reogram orijinden başlar, eşik değeri yok</li>
+    <li>Doğal/sentetik zamklar, CMC/MC dispersiyonları, polimer çözeltileri, emülsiyonlar</li>
+  </ul>
+
+  <h4>c) Dilatan Akış</h4>
+  <ul>
+    <li>Pseudoplastik akışın tersi; kayma gerilimi arttıkça viskozite artar (shear thickening)</li>
+    <li>Karıştırdıkça ortam koyulaşır</li>
+    <li>Yüksek konsantrasyonda (%50+) defloküle küçük partiküller içeren sistemler</li>
+    <li>Islak kum, yağlı boya süspansiyonları</li>
+  </ul>
+</div>
+
+<div class="section-block">
+  <h2>⏱️ 4. Tiksotropi ve Viskoelastisite</h2>
+
+  <h3>Tiksotropi</h3>
+  <p>Zamana bağlı olarak viskozitenin geri dönüşümlü olarak azalmasıdır. Ayrı bir akış tipi değil, mevcut akış tiplerinin zamana bağlı yapısal değişimidir. Gerilim uygulandığında jel→sol, kaldırıldığında sol→jel dönüşümü olur. Reogramda çıkan ve inen eğri yer alır (histerezis döngüsü). Örnekler: jelatin çözeltisi, mayonez, ketçap.</p>
+
+  <h3>Negatif Tiksotropi (Antitiksotropi)</h3>
+  <p>Sabit gerilimde zamana bağlı olarak viskozitenin artmasıdır. Dilatan akıştan farklıdır (dispers faz hacmi %1-10). Kil süspansiyonları örnek verilebilir.</p>
+
+  <h3>Viskoelastisite</h3>
+  <p>Hem katıların hem sıvıların akış davranışını gösteren özellik. Bazı kremler, losyonlar, jeller, kan ve tükürük viskoelastiktir. Hooke formülü ile elastik modül hesaplanır:</p>
+  <div class="formula">E = F / λ</div>
+  <p>Creep eğrisi ve osilasyon yöntemleri ile ölçülür.</p>
+</div>
+
+<div class="section-block">
+  <h2>🔧 5. Viskometreler</h2>
+  <h3>Tek Noktalı Viskometreler (Newton Sistemler İçin)</h3>
+  <h4>Kapiler (Kılcal) Viskometreler</h4>
+  <p>Kılcal tüpte sıvının yerçekimi ile akması için gereken süreye dayanır. Poiseuille eşitliği kullanılır. Ubbelohde, Ostwald ve Cannon-Fenske tipleri mevcuttur.</p>
+  <div class="formula">η = (π·r⁴·t·ΔP) / (8·l·v)</div>
+
+  <h4>Düşen Bilya Viskometreleri</h4>
+  <p>Stokes yasasına dayanır. Cam/çelik bilyanın sıvı içinde düşme hızı ölçülür.</p>
+
+  <h3>Çok Noktalı Viskometreler (Non-Newtonian Sistemler İçin)</h3>
+  <ul>
+    <li><strong>Çift eksenli silindir:</strong> İç içe iki silindir arasında örnek kaydırılır. Couette, Haake, Stormer tipleri.</li>
+    <li><strong>Dönen mil (Brookfield):</strong> Farmasötik alanda en yaygın. Hem Newtonian hem Non-Newtonian ölçülebilir.</li>
+    <li><strong>Koni-tabla (Koni-plak):</strong> Hız gradyanı her noktada sabit, 0,1–0,2 mL ile çalışılabilir.</li>
+    <li><strong>Titreşimli viskometre:</strong> Elektromekanik rezonatör titreşimine dayanır, 100.000 cP'ye kadar ölçer.</li>
+  </ul>
+</div>
+
+<div class="section-block">
+  <h2>🧫 6. DİSPERS SİSTEMLER (KOLLOİDLER)</h2>
+  <p>Dispers faz (dağılan) ile dispersiyon ortamı (sürekli faz) arasında oluşan heterojen sistemlerdir.</p>
+
+  <h3>Partikül Boyutuna Göre Sınıflandırma</h3>
+  <div class="table-wrap">
+    <table>
+      <tr><th>Tip</th><th>Boyut</th><th>Özellik</th><th>Örnek</th></tr>
+      <tr><td>Moleküler dispersiyon</td><td>&lt;1 nm</td><td>Homojen, gerçek çözelti</td><td>O₂, KCl iyonları</td></tr>
+      <tr><td>Kolloidal dispersiyon</td><td>1 nm – 1 µm</td><td>Elektron mikroskobunda görünür</td><td>Gümüş solü, miseller</td></tr>
+      <tr><td>Kaba dispersiyon</td><td>&gt;1 µm</td><td>Işık mikroskobunda görünür</td><td>Emülsiyon, süspansiyon</td></tr>
+    </table>
+  </div>
+
+  <h3>Kolloidal Sistemlerin Tipleri</h3>
+  <h4>Liyofilik Kolloidler</h4>
+  <ul>
+    <li>Dispersiyon ortamı ile geçimli, kendiliğinden oluşur</li>
+    <li>Termodinamik açıdan dayanıklı ve geri dönüşümlü</li>
+    <li>Elektrolitlere dayanıklı</li>
+    <li>Protein, karbonhidrat, jelatin, albümin, selüloz türevleri</li>
+  </ul>
+
+  <h4>Liyofobik Kolloidler</h4>
+  <ul>
+    <li>Dispersiyon ortamını sevmez, etkileşim çok az</li>
+    <li>Termodinamik açıdan dayanıksız, geri dönüşümsüz</li>
+    <li>Elektrolitlere hassas → çökerler</li>
+    <li>İnorganik maddeler (kükürt, gümüş klorür, altın)</li>
+    <li>Hazırlama: Dispersiyon yöntemi & Kondensasyon yöntemi</li>
+  </ul>
+
+  <h4>Asosiasyon Kolloidleri (Amfifilik)</h4>
+  <ul>
+    <li>Hem hidrofilik hem hidrofobik gruplar taşır</li>
+    <li>Belirli konsantrasyonda (CMC) misel oluştururlar</li>
+    <li>Konsantrasyon arttıkça viskozite artar</li>
+  </ul>
+</div>
+
+<div class="section-block">
+  <h2>⚡ 7. Kolloidal Dağılımların Özellikleri</h2>
+
+  <h3>Optik Özellikler</h3>
+  <ul>
+    <li><strong>Faraday-Tyndall etkisi:</strong> Kuvvetli ışık demeti kolloidal solden geçirilince partiküller ışığı dağıtır</li>
+    <li><strong>Elektron mikroskobu:</strong> TEM (2D), SEM (3D) ile kolloidal partikül şekil ve boyutu incelenir</li>
+    <li><strong>Işık saçılımı:</strong> Stokes-Einstein eşitliği ile partikül boyutu ölçülür</li>
+    <li><strong>Türbidite:</strong> Işık saçılımı nedeniyle şiddetteki fraksiyonel azalma</li>
+  </ul>
+
+  <h3>Kinetik Özellikler</h3>
+  <ul>
+    <li><strong>Brown hareketi:</strong> Partiküllerin dispersiyon ortamındaki moleküller tarafından bombardımanı</li>
+    <li><strong>Difüzyon:</strong> Fick'in 1. kanunu; yüksek derişimden düşüğe hareket</li>
+    <li><strong>Osmotik basınç:</strong> Van't Hoff eşitliği ile hesaplanır</li>
+    <li><strong>Sedimentasyon:</strong> Stokes yasası → V = K · (2r²(ρ−ρ₀)g) / (9η₀)</li>
+    <li><strong>Viskozite:</strong> Einstein eşitliği → η = η₀(1 + 2,5φ)</li>
+  </ul>
+
+  <h3>Elektriksel Özellikler</h3>
+  <ul>
+    <li><strong>Zeta potansiyel:</strong> Partikül yüzeyi ile nötral bölge arasındaki potansiyel farkı. Emülsiyonlarda ±30–50 mV istenir.</li>
+    <li>Elektroforez, Elektroosmoz, Akış potansiyeli, Sedimentasyon potansiyeli</li>
+  </ul>
+
+  <h3>Stabilite & Koruyucu Kolloid Etkisi</h3>
+  <p>Hidrofobik kolloidal sisteme hidrofilik kolloid eklenerek koruyucu tabaka oluşturulur. Koruyucu özellik <strong>altın sayısı</strong> ile tanımlanır (jelatin: 0,005–0,01, en iyi koruyucu).</p>
+
+  <h3>Saflaştırma Yöntemleri</h3>
+  <p>Diyaliz, Elektrodiyaliz, Ultrafiltrasyon</p>
+</div>
+
+<div class="section-block">
+  <h2>🌊 8. YÜZEYLER ARASI ÖZELLİKLER</h2>
+
+  <h3>Yüzey Gerilimi</h3>
+  <p>Yüzeyi 1 cm² arttırmak için gereken kuvvet/iş. Birimi dyn/cm veya N/m. Sıcaklık arttıkça azalır. Su'nun yüzey gerilimi 20°C'de 72,8 dyn/cm'dir (farmasötik sıvılar arasında en yüksek).</p>
+
+  <h3>Ölçme Yöntemleri</h3>
+  <ul>
+    <li><strong>Kılcalda yükselme:</strong> En hassas yöntem. γ = ½ · r · h · ρ · g</li>
+    <li><strong>Damla ağırlığı/hacmi:</strong> Stalagmometre veya Donnan pipeti</li>
+    <li><strong>Asılı damla (Pendant drop):</strong> Hassas ve tekrarlanabilir</li>
+    <li><strong>Wilhelmy tablası:</strong> Mikrobalans ile temas açısı ölçümü, biyoadezyon ölçümünde kullanılır</li>
+    <li><strong>Halka koparma (Du Nouy):</strong> Platin-iridyum halka sıvıdan koparılır</li>
+  </ul>
+
+  <h3>Yayılma Katsayısı (S)</h3>
+  <div class="formula">S = γ_su − (γ_yağ + γ_yağ/su)</div>
+  <p>S &gt; 0 → film tabakası oluşur; S &lt; 0 → damlacıklar oluşur. Nonpolarlık arttıkça su üzerinde yayılma azalır.</p>
+
+  <h3>Adsorpsiyon</h3>
+  <ul>
+    <li><strong>Fiziksel adsorpsiyon:</strong> Van der Waals kuvvetleri ile, geri dönüşümlü</li>
+    <li><strong>Kimyasal adsorpsiyon (kemisorpsiyon):</strong> Reaksiyon sonucu, genellikle geri dönüşümsüz</li>
+  </ul>
+  <p><strong>Etkileyen faktörler:</strong> Çözünürlük (ters orantılı), konsantrasyon, sıcaklık, pH, yüzey alanı, adsorban-adsorbat ilgisi, yüzey etkin madde.</p>
+
+  <h3>Adsorpsiyon İzotermleri</h3>
+  <ul>
+    <li><strong>Freundlich:</strong> x/m = k · C^(1/n)</li>
+    <li><strong>Langmuir:</strong> Tek tabakalı adsorpsiyon</li>
+    <li><strong>BET:</strong> Langmuir'in çok tabakalılara uygulanmış hali, yüzey alanı hesaplanabilir</li>
+  </ul>
+
+  <h3>Islanabilirlik & Temas Açısı</h3>
+  <p>θ = 0° → tam ıslanma; θ = 90° → yüzme; θ = 180° → ıslanma yok.</p>
+</div>
+
+</div>
+
+<!-- ==================== TAB 2: SORULAR ==================== -->
+<div id="tab-questions" class="tab-panel">
+
+<h2 style="font-family:'Playfair Display',serif;color:var(--accent);margin-bottom:24px;font-size:1.6rem;">📝 Boşluk Doldurma (20 Soru)</h2>
+
+<div class="question-card">
+  <span class="q-number">B1</span>
+  <p class="q-text">Reoloji, sıvıların akış ve katıların __________ özelliklerini inceleyen bilim dalıdır.</p>
+</div>
+
+<div class="question-card">
+  <span class="q-number">B2</span>
+  <p class="q-text">Sıvının akmaya karşı gösterdiği dirence __________ denir.</p>
+</div>
+
+<div class="question-card">
+  <span class="q-number">B3</span>
+  <p class="q-text">Dinamik viskozitenin SI birim sistemindeki birimi __________'dir.</p>
+</div>
+
+<div class="question-card">
+  <span class="q-number">B4</span>
+  <p class="q-text">Kinematik viskozite, dinamik viskozitenin akışkanın __________'na bölünmesi ile elde edilir.</p>
+</div>
+
+<div class="question-card">
+  <span class="q-number">B5</span>
+  <p class="q-text">Sıvıların viskozitesi sıcaklık arttıkça __________, gazlarda ise __________ .</p>
+</div>
+
+<div class="question-card">
+  <span class="q-number">B6</span>
+  <p class="q-text">Newtonian akışta kayma gerilimi ile kayma hızı arasında __________ orantı vardır.</p>
+</div>
+
+<div class="question-card">
+  <span class="q-number">B7</span>
+  <p class="q-text">Plastik akışta akışın başlaması için gereken minimum kayma gerilimine __________ denir.</p>
+</div>
+
+<div class="question-card">
+  <span class="q-number">B8</span>
+  <p class="q-text">Kayma ile incelen (shear thinning) sistemler __________ akış gösterir.</p>
+</div>
+
+<div class="question-card">
+  <span class="q-number">B9</span>
+  <p class="q-text">Kayma ile kalınlaşan (shear thickening) sistemler __________ akış gösterir.</p>
+</div>
+
+<div class="question-card">
+  <span class="q-number">B10</span>
+  <p class="q-text">Tiksotropi, zamana bağlı olarak viskozitenin geri dönüşümlü olarak __________'dır.</p>
+</div>
+
+<div class="question-card">
+  <span class="q-number">B11</span>
+  <p class="q-text">Farmasötik alanda en çok kullanılan dönen mil viskometresi __________ tipidir.</p>
+</div>
+
+<div class="question-card">
+  <span class="q-number">B12</span>
+  <p class="q-text">Dispers sistemlerde dağılan faza __________, dağıtan faza ise __________ denir.</p>
+</div>
+
+<div class="question-card">
+  <span class="q-number">B13</span>
+  <p class="q-text">Kolloidal dispersiyonların partikül boyutları __________ ile __________ arasındadır.</p>
+</div>
+
+<div class="question-card">
+  <span class="q-number">B14</span>
+  <p class="q-text">Amfifil moleküllerin belirli bir konsantrasyonda bir araya gelerek oluşturdukları yapıya __________ denir.</p>
+</div>
+
+<div class="question-card">
+  <span class="q-number">B15</span>
+  <p class="q-text">Kuvvetli bir ışık demeti kolloidal solden geçirildiğinde partiküllerin ışığı dağıtmasına __________ etkisi denir.</p>
+</div>
+
+<div class="question-card">
+  <span class="q-number">B16</span>
+  <p class="q-text">Partikülün yüzeyi ile nötral bölge arasındaki potansiyel farkına __________ denir ve birimi __________'tur.</p>
+</div>
+
+<div class="question-card">
+  <span class="q-number">B17</span>
+  <p class="q-text">Hidrofobik kolloidal sisteme hidrofilik kolloid eklenerek stabilite sağlama olayına __________ denir.</p>
+</div>
+
+<div class="question-card">
+  <span class="q-number">B18</span>
+  <p class="q-text">Yüzey geriliminin SI birimi __________ veya __________'dir.</p>
+</div>
+
+<div class="question-card">
+  <span class="q-number">B19</span>
+  <p class="q-text">Yayılma katsayısı (S) pozitif ise __________, negatif ise __________ oluşur.</p>
+</div>
+
+<div class="question-card">
+  <span class="q-number">B20</span>
+  <p class="q-text">BET izotermi, __________ izoterminin çok tabakalılara uygulanmış halidir.</p>
+</div>
+
+<!-- DOĞRU/YANLIŞ -->
+<h2 style="font-family:'Playfair Display',serif;color:var(--accent2);margin:40px 0 24px;font-size:1.6rem;">✅ Doğru / Yanlış (20 Soru)</h2>
+
+<div class="question-card">
+  <span class="q-number tf">DY1</span>
+  <p class="q-text">Su, Newtonian akış gösteren bir sıvıdır.</p>
+  <div class="tf-options"><button class="tf-btn" onclick="checkTF(this,'D')">Doğru</button><button class="tf-btn" onclick="checkTF(this,'Y')">Yanlış</button></div>
+</div>
+
+<div class="question-card">
+  <span class="q-number tf">DY2</span>
+  <p class="q-text">Pseudoplastik akışta kayma gerilimi arttıkça viskozite artar.</p>
+  <div class="tf-options"><button class="tf-btn" onclick="checkTF(this,'D')">Doğru</button><button class="tf-btn" onclick="checkTF(this,'Y')">Yanlış</button></div>
+</div>
+
+<div class="question-card">
+  <span class="q-number tf">DY3</span>
+  <p class="q-text">Tiksotropi ayrı bir akış tipidir.</p>
+  <div class="tf-options"><button class="tf-btn" onclick="checkTF(this,'D')">Doğru</button><button class="tf-btn" onclick="checkTF(this,'Y')">Yanlış</button></div>
+</div>
+
+<div class="question-card">
+  <span class="q-number tf">DY4</span>
+  <p class="q-text">1 cP = 1 mPa.s'dir.</p>
+  <div class="tf-options"><button class="tf-btn" onclick="checkTF(this,'D')">Doğru</button><button class="tf-btn" onclick="checkTF(this,'Y')">Yanlış</button></div>
+</div>
+
+<div class="question-card">
+  <span class="q-number tf">DY5</span>
+  <p class="q-text">Dilatan akışta karıştırdıkça ortam inceleşir.</p>
+  <div class="tf-options"><button class="tf-btn" onclick="checkTF(this,'D')">Doğru</button><button class="tf-btn" onclick="checkTF(this,'Y')">Yanlış</button></div>
+</div>
+
+<div class="question-card">
+  <span class="q-number tf">DY6</span>
+  <p class="q-text">Koni-tabla viskometresinde çok düşük örnek miktarlarında (0,1–0,2 mL) çalışılabilir.</p>
+  <div class="tf-options"><button class="tf-btn" onclick="checkTF(this,'D')">Doğru</button><button class="tf-btn" onclick="checkTF(this,'Y')">Yanlış</button></div>
+</div>
+
+<div class="question-card">
+  <span class="q-number tf">DY7</span>
+  <p class="q-text">Liyofobik kolloidler termodinamik açıdan dayanıklıdır.</p>
+  <div class="tf-options"><button class="tf-btn" onclick="checkTF(this,'D')">Doğru</button><button class="tf-btn" onclick="checkTF(this,'Y')">Yanlış</button></div>
+</div>
+
+<div class="question-card">
+  <span class="q-number tf">DY8</span>
+  <p class="q-text">Kolloidal dispersiyonlarda 0,5 µm'den küçük partiküller Brown hareketi ile süspande halde tutulur ve çökmez.</p>
+  <div class="tf-options"><button class="tf-btn" onclick="checkTF(this,'D')">Doğru</button><button class="tf-btn" onclick="checkTF(this,'Y')">Yanlış</button></div>
+</div>
+
+<div class="question-card">
+  <span class="q-number tf">DY9</span>
+  <p class="q-text">Gerçek çözeltiler Faraday-Tyndall etkisi gösterir.</p>
+  <div class="tf-options"><button class="tf-btn" onclick="checkTF(this,'D')">Doğru</button><button class="tf-btn" onclick="checkTF(this,'Y')">Yanlış</button></div>
+</div>
+
+<div class="question-card">
+  <span class="q-number tf">DY10</span>
+  <p class="q-text">Zeta potansiyeli ne kadar yüksek olursa kolloidal dağılım o kadar stabil olur.</p>
+  <div class="tf-options"><button class="tf-btn" onclick="checkTF(this,'D')">Doğru</button><button class="tf-btn" onclick="checkTF(this,'Y')">Yanlış</button></div>
+</div>
+
+<div class="question-card">
+  <span class="q-number tf">DY11</span>
+  <p class="q-text">Yüzey gerilimi sıcaklık arttıkça artar.</p>
+  <div class="tf-options"><button class="tf-btn" onclick="checkTF(this,'D')">Doğru</button><button class="tf-btn" onclick="checkTF(this,'Y')">Yanlış</button></div>
+</div>
+
+<div class="question-card">
+  <span class="q-number tf">DY12</span>
+  <p class="q-text">Su, farmasötik alanda kullanılan sıvılar arasında en yüksek yüzey gerilimine sahip sıvıdır.</p>
+  <div class="tf-options"><button class="tf-btn" onclick="checkTF(this,'D')">Doğru</button><button class="tf-btn" onclick="checkTF(this,'Y')">Yanlış</button></div>
+</div>
+
+<div class="question-card">
+  <span class="q-number tf">DY13</span>
+  <p class="q-text">Fiziksel adsorpsiyon genellikle geri dönüşümsüzdür.</p>
+  <div class="tf-options"><button class="tf-btn" onclick="checkTF(this,'D')">Doğru</button><button class="tf-btn" onclick="checkTF(this,'Y')">Yanlış</button></div>
+</div>
+
+<div class="question-card">
+  <span class="q-number tf">DY14</span>
+  <p class="q-text">Bir çözeltideki maddenin adsorpsiyonu, çözünürlüğü ile ters orantılıdır.</p>
+  <div class="tf-options"><button class="tf-btn" onclick="checkTF(this,'D')">Doğru</button><button class="tf-btn" onclick="checkTF(this,'Y')">Yanlış</button></div>
+</div>
+
+<div class="question-card">
+  <span class="q-number tf">DY15</span>
+  <p class="q-text">Jelatin, altın sayısı en düşük olan koruyucu kolloiddir ve en iyi koruyucu özelliğe sahiptir.</p>
+  <div class="tf-options"><button class="tf-btn" onclick="checkTF(this,'D')">Doğru</button><button class="tf-btn" onclick="checkTF(this,'Y')">Yanlış</button></div>
+</div>
+
+<div class="question-card">
+  <span class="q-number tf">DY16</span>
+  <p class="q-text">Liyofilik kolloidler kendiliğinden oluşur ve elektrolitlere karşı dayanıklıdır.</p>
+  <div class="tf-options"><button class="tf-btn" onclick="checkTF(this,'D')">Doğru</button><button class="tf-btn" onclick="checkTF(this,'Y')">Yanlış</button></div>
+</div>
+
+<div class="question-card">
+  <span class="q-number tf">DY17</span>
+  <p class="q-text">Temas açısı 0° ise tamamen ıslanma söz konusudur.</p>
+  <div class="tf-options"><button class="tf-btn" onclick="checkTF(this,'D')">Doğru</button><button class="tf-btn" onclick="checkTF(this,'Y')">Yanlış</button></div>
+</div>
+
+<div class="question-card">
+  <span class="q-number tf">DY18</span>
+  <p class="q-text">Elektroforez, kolloidal partiküllerin elektrik alan altında hareketsiz kalmasıdır.</p>
+  <div class="tf-options"><button class="tf-btn" onclick="checkTF(this,'D')">Doğru</button><button class="tf-btn" onclick="checkTF(this,'Y')">Yanlış</button></div>
+</div>
+
+<div class="question-card">
+  <span class="q-number tf">DY19</span>
+  <p class="q-text">Negatif tiksotropi ile dilatan akış aynı kavramdır.</p>
+  <div class="tf-options"><button class="tf-btn" onclick="checkTF(this,'D')">Doğru</button><button class="tf-btn" onclick="checkTF(this,'Y')">Yanlış</button></div>
+</div>
+
+<div class="question-card">
+  <span class="q-number tf">DY20</span>
+  <p class="q-text">Kapiler viskometreler Non-Newtonian sistemlerin ölçümü için uygundur.</p>
+  <div class="tf-options"><button class="tf-btn" onclick="checkTF(this,'D')">Doğru</button><button class="tf-btn" onclick="checkTF(this,'Y')">Yanlış</button></div>
+</div>
+
+<!-- KLASİK SORULAR -->
+<h2 style="font-family:'Playfair Display',serif;color:var(--accent3);margin:40px 0 24px;font-size:1.6rem;">📚 Klasik Sorular (10 Soru)</h2>
+
+<div class="question-card">
+  <span class="q-number classic">K1</span>
+  <p class="q-text">Reolojinin tanımını yapınız ve eczacılıktaki uygulama alanlarından dört tanesini açıklayınız.</p>
+</div>
+
+<div class="question-card">
+  <span class="q-number classic">K2</span>
+  <p class="q-text">Newtonian ve Non-Newtonian akış tiplerini karşılaştırınız. Her biri için birer örnek veriniz.</p>
+</div>
+
+<div class="question-card">
+  <span class="q-number classic">K3</span>
+  <p class="q-text">Plastik, pseudoplastik ve dilatan akış tiplerini reogram özelliklerine göre açıklayınız.</p>
+</div>
+
+<div class="question-card">
+  <span class="q-number classic">K4</span>
+  <p class="q-text">Tiksotropi nedir? Tiksotropik sistemlerin reogram özelliğini ve örneklerini yazınız.</p>
+</div>
+
+<div class="question-card">
+  <span class="q-number classic">K5</span>
+  <p class="q-text">Dispers sistemleri partikül boyutuna göre sınıflandırınız. Her bir sınıfın özelliklerini ve örneklerini belirtiniz.</p>
+</div>
+
+<div class="question-card">
+  <span class="q-number classic">K6</span>
+  <p class="q-text">Liyofilik, liyofobik ve asosiasyon kolloidlerini karşılaştırınız. Her birinin en az üç özelliğini yazınız.</p>
+</div>
+
+<div class="question-card">
+  <span class="q-number classic">K7</span>
+  <p class="q-text">Zeta potansiyelin kolloidal stabilitedeki önemini açıklayınız. Emülsiyonlarda istenen zeta potansiyel değeri nedir?</p>
+</div>
+
+<div class="question-card">
+  <span class="q-number classic">K8</span>
+  <p class="q-text">Yüzey gerilimi nedir? Sıcaklık ile ilişkisini ve ölçüm yöntemlerinden üç tanesini açıklayınız.</p>
+</div>
+
+<div class="question-card">
+  <span class="q-number classic">K9</span>
+  <p class="q-text">Fiziksel ve kimyasal adsorpsiyonu karşılaştırınız. Adsorpsiyonu etkileyen faktörlerden dört tanesini açıklayınız.</p>
+</div>
+
+<div class="question-card">
+  <span class="q-number classic">K10</span>
+  <p class="q-text">Freundlich, Langmuir ve BET adsorpsiyon izotermlerini kısaca açıklayınız ve uygulama alanlarını belirtiniz.</p>
+</div>
+
+</div>
+
+<!-- ==================== TAB 3: CEVAP ANAHTARI ==================== -->
+<div id="tab-answers" class="tab-panel">
+
+<h2 style="font-family:'Playfair Display',serif;color:var(--accent);margin-bottom:24px;font-size:1.6rem;">🔑 Boşluk Doldurma — Cevaplar</h2>
+<div class="section-block">
+  <div class="answer-item"><span class="answer-num">B1:</span><span class="answer-val">deformasyon</span></div>
+  <div class="answer-item"><span class="answer-num">B2:</span><span class="answer-val">viskozite</span></div>
+  <div class="answer-item"><span class="answer-num">B3:</span><span class="answer-val">Pascal.saniye (Pa.s)</span></div>
+  <div class="answer-item"><span class="answer-num">B4:</span><span class="answer-val">yoğunluğu (ρ)</span></div>
+  <div class="answer-item"><span class="answer-num">B5:</span><span class="answer-val">azalır / artar</span></div>
+  <div class="answer-item"><span class="answer-num">B6:</span><span class="answer-val">doğru</span></div>
+  <div class="answer-item"><span class="answer-num">B7:</span><span class="answer-val">eşik değeri (yield value)</span></div>
+  <div class="answer-item"><span class="answer-num">B8:</span><span class="answer-val">pseudoplastik</span></div>
+  <div class="answer-item"><span class="answer-num">B9:</span><span class="answer-val">dilatan</span></div>
+  <div class="answer-item"><span class="answer-num">B10:</span><span class="answer-val">azalması</span></div>
+  <div class="answer-item"><span class="answer-num">B11:</span><span class="answer-val">Brookfield</span></div>
+  <div class="answer-item"><span class="answer-num">B12:</span><span class="answer-val">dispers faz / dispersiyon ortamı</span></div>
+  <div class="answer-item"><span class="answer-num">B13:</span><span class="answer-val">1 nm / 1 µm</span></div>
+  <div class="answer-item"><span class="answer-num">B14:</span><span class="answer-val">misel</span></div>
+  <div class="answer-item"><span class="answer-num">B15:</span><span class="answer-val">Faraday-Tyndall</span></div>
+  <div class="answer-item"><span class="answer-num">B16:</span><span class="answer-val">zeta potansiyel / milivolt (mV)</span></div>
+  <div class="answer-item"><span class="answer-num">B17:</span><span class="answer-val">koruyucu kolloid etkisi</span></div>
+  <div class="answer-item"><span class="answer-num">B18:</span><span class="answer-val">dyn/cm / N/m</span></div>
+  <div class="answer-item"><span class="answer-num">B19:</span><span class="answer-val">film tabakası / damlacıklar</span></div>
+  <div class="answer-item"><span class="answer-num">B20:</span><span class="answer-val">Langmuir</span></div>
+</div>
+
+<h2 style="font-family:'Playfair Display',serif;color:var(--accent2);margin:40px 0 24px;font-size:1.6rem;">✅ Doğru / Yanlış — Cevaplar</h2>
+<div class="section-block">
+  <div class="answer-item"><span class="answer-num">DY1:</span><span class="answer-val">DOĞRU</span></div>
+  <div class="answer-item"><span class="answer-num">DY2:</span><span class="answer-val">YANLIŞ — Pseudoplastikte viskozite düşer (shear thinning).</span></div>
+  <div class="answer-item"><span class="answer-num">DY3:</span><span class="answer-val">YANLIŞ — Tiksotropi ayrı bir akış tipi değil, mevcut akış tiplerinin zamana bağlı değişimidir.</span></div>
+  <div class="answer-item"><span class="answer-num">DY4:</span><span class="answer-val">DOĞRU</span></div>
+  <div class="answer-item"><span class="answer-num">DY5:</span><span class="answer-val">YANLIŞ — Dilatan akışta karıştırdıkça ortam koyulaşır (kalınlaşır).</span></div>
+  <div class="answer-item"><span class="answer-num">DY6:</span><span class="answer-val">DOĞRU</span></div>
+  <div class="answer-item"><span class="answer-num">DY7:</span><span class="answer-val">YANLIŞ — Liyofobik kolloidler termodinamik açıdan dayanıklı değildir.</span></div>
+  <div class="answer-item"><span class="answer-num">DY8:</span><span class="answer-val">DOĞRU</span></div>
+  <div class="answer-item"><span class="answer-num">DY9:</span><span class="answer-val">YANLIŞ — Gerçek çözeltilerde Tyndall etkisi görülmez.</span></div>
+  <div class="answer-item"><span class="answer-num">DY10:</span><span class="answer-val">DOĞRU</span></div>
+  <div class="answer-item"><span class="answer-num">DY11:</span><span class="answer-val">YANLIŞ — Yüzey gerilimi sıcaklık arttıkça azalır.</span></div>
+  <div class="answer-item"><span class="answer-num">DY12:</span><span class="answer-val">DOĞRU</span></div>
+  <div class="answer-item"><span class="answer-num">DY13:</span><span class="answer-val">YANLIŞ — Fiziksel adsorpsiyon geri dönüşümlüdür; kimyasal adsorpsiyon geri dönüşümsüzdür.</span></div>
+  <div class="answer-item"><span class="answer-num">DY14:</span><span class="answer-val">DOĞRU</span></div>
+  <div class="answer-item"><span class="answer-num">DY15:</span><span class="answer-val">DOĞRU</span></div>
+  <div class="answer-item"><span class="answer-num">DY16:</span><span class="answer-val">DOĞRU</span></div>
+  <div class="answer-item"><span class="answer-num">DY17:</span><span class="answer-val">DOĞRU</span></div>
+  <div class="answer-item"><span class="answer-num">DY18:</span><span class="answer-val">YANLIŞ — Elektroforez, partiküllerin elektrik alan etkisinde hareket etmesidir.</span></div>
+  <div class="answer-item"><span class="answer-num">DY19:</span><span class="answer-val">YANLIŞ — Negatif tiksotropi (antitiksotropi) dilatan akıştan farklıdır; dispers faz oranları da farklıdır.</span></div>
+  <div class="answer-item"><span class="answer-num">DY20:</span><span class="answer-val">YANLIŞ — Kapiler viskometreler Newtonian (tek noktalı) sistemler için uygundur.</span></div>
+</div>
+
+<h2 style="font-family:'Playfair Display',serif;color:var(--accent3);margin:40px 0 24px;font-size:1.6rem;">📚 Klasik Sorular — Cevaplar</h2>
+
+<div class="classic-answer">
+  <div class="ca-q">K1: Reolojinin tanımı ve eczacılıktaki uygulamaları</div>
+  <p>Reoloji, sıvıların akış ve katıların deformasyon özelliklerini inceleyen bilim dalıdır. Eczacılıktaki uygulamaları: (1) Etken ve yardımcı madde özelliklerinin standardizasyonu, (2) Sıvıların karıştırma, aktarma ve dökülebilirlik optimizasyonu, (3) Yarı-katılarda (merhem, krem, jel) tüpten akma ve deri üzerinde yayılabilme özellikleri, (4) Parenterallerde enjektör iğnesinden geçebilme özelliği, (5) Stabilite çalışmalarında akış özelliklerinin takibi.</p>
+</div>
+
+<div class="classic-answer">
+  <div class="ca-q">K2: Newtonian vs Non-Newtonian akış karşılaştırması</div>
+  <p><strong>Newtonian akış:</strong> Kayma gerilimi ile kayma hızı doğru orantılıdır, viskozite her koşulda sabit kalır. Reogram orijinden geçen bir doğrudur. Örnekler: su, mineral yağ, saf çözücüler. <strong>Non-Newtonian akış:</strong> Kayma hızı ile kayma gerilimi doğru orantılı değildir, viskozite değişkenlik gösterir. Plastik, pseudoplastik ve dilatan olmak üzere üç alt tipe ayrılır. Örnekler: emülsiyonlar, süspansiyonlar, kremler, merhemler.</p>
+</div>
+
+<div class="classic-answer">
+  <div class="ca-q">K3: Plastik, pseudoplastik ve dilatan akış tipleri</div>
+  <p><strong>Plastik akış:</strong> Reogram orijinden geçmez; belirli bir eşik değeri (yield value) aşılmadan akış başlamaz. Eşik altında elastik davranır. Süspansiyonlar ve floküle sistemlerde görülür. <strong>Pseudoplastik akış:</strong> Reogram orijinden başlar, eşik değeri yoktur. Kayma gerilimi artışıyla viskozite düşer (shear thinning). Polimer çözeltileri ve emülsiyonlarda görülür. <strong>Dilatan akış:</strong> Pseudoplastiğin tersi; kayma gerilimi arttıkça viskozite artar (shear thickening). Yüksek konsantrasyonda (%50+) defloküle küçük partiküller içeren sistemlerde (ıslak kum) görülür.</p>
+</div>
+
+<div class="classic-answer">
+  <div class="ca-q">K4: Tiksotropi</div>
+  <p>Tiksotropi, bazı non-Newtonian sistemlerde zamana bağlı olarak viskozitenin geri dönüşümlü olarak azalmasıdır. Ayrı bir akış tipi değil, mevcut akış tiplerinin zamana bağlı yapısal değişimidir. Tiksotropik sistemler izotermal olarak jel-sol-jel dönüşümü gösterir. Gerilim uygulandığında jelden sole, kaldırıldığında solden jele dönüşüm olur. Reogramda çıkan ve inen eğri (histerezis döngüsü) yer alır. Örnekler: jelatin çözeltisi, mayonez, ketçap, prokain penisilin G süspansiyonları.</p>
+</div>
+
+<div class="classic-answer">
+  <div class="ca-q">K5: Dispers sistemlerin sınıflandırılması</div>
+  <p><strong>Moleküler dispersiyonlar (&lt;1 nm):</strong> Homojen, gerçek çözeltilerdir. Yarı geçirgen membrandan geçebilir, hızla difüze olurlar. Örnek: KCl iyonları. <strong>Kolloidal dispersiyonlar (1 nm – 1 µm):</strong> Elektron mikroskobunda görülür, yarı geçirgen membrandan geçemez ancak filtre kağıdından geçer. Yavaş difüze olurlar. Örnek: kolloidal gümüş solü, miseller. <strong>Kaba dispersiyonlar (&gt;1 µm):</strong> Işık mikroskobunda görülür, yarı geçirgen membrandan ve normal filtre kağıdından geçemez. Hızla çökerler. Örnek: emülsiyonlar, süspansiyonlar.</p>
+</div>
+
+<div class="classic-answer">
+  <div class="ca-q">K6: Kolloidal sistem tipleri karşılaştırması</div>
+  <p><strong>Liyofilik:</strong> Dispersiyon ortamı ile geçimli, kendiliğinden oluşur, termodinamik açıdan dayanıklı ve geri dönüşümlü, elektrolitlere dayanıklı. Örnek: jelatin, albümin. <strong>Liyofobik:</strong> Dispersiyon ortamını sevmez, termodinamik açıdan dayanıksız ve geri dönüşümsüz, elektrolitlere hassas. Özel yöntemlerle hazırlanır. Örnek: kolloidal altın, kükürt. <strong>Asosiasyon:</strong> Hem hidrofilik hem hidrofobik gruplar taşır (amfifilik), belirli konsantrasyonda (CMC) misel oluşturur, konsantrasyon arttıkça viskozite artar. Örnek: yüzey etkin madde miselleri.</p>
+</div>
+
+<div class="classic-answer">
+  <div class="ca-q">K7: Zeta potansiyelin kolloidal stabilitedeki önemi</div>
+  <p>Zeta potansiyel, partikül yüzeyi ile nötral bölge arasındaki potansiyel farkıdır ve partikülün yüzeyindeki net etkili yükü ifade eder. Zetametre ile ölçülür, birimi milivolttur. Kolloidal dağılımların stabilitesinin değerlendirilmesinde kritik öneme sahiptir; zeta potansiyel ne kadar yüksek olursa partiküller arası itme kuvveti o kadar büyük olur ve koagülasyon önlenir. Emülsiyonlarda genellikle ±30–50 mV arasında olması istenir. Elektrolitler partiküllerin yüklerini azaltarak zeta potansiyeli düşürür ve çökmeye neden olur.</p>
+</div>
+
+<div class="classic-answer">
+  <div class="ca-q">K8: Yüzey gerilimi ve ölçüm yöntemleri</div>
+  <p>Yüzey gerilimi, yüzeyi 1 cm² arttırmak için birim alana uygulanan kuvvet veya iştir. Birimi dyn/cm veya N/m'dir. Sıcaklık arttıkça moleküller arası kohezyon kuvvetleri azalır, yüzey gerilimi doğrusal olarak düşer; kritik sıcaklıkta sıfır olur. Ölçüm yöntemleri: (1) Kılcalda yükselme yöntemi — en hassas yöntemdir, sıvının kılcal boruda yükselmesine dayanır. (2) Halka koparma (Du Nouy) — platin-iridyum halkanın sıvıdan koparılması. (3) Wilhelmy tablası — plakanın sıvıdan çekilmesi sırasındaki kuvvet ölçümü, biyoadezyon ölçümünde de kullanılır.</p>
+</div>
+
+<div class="classic-answer">
+  <div class="ca-q">K9: Fiziksel ve kimyasal adsorpsiyon karşılaştırması</div>
+  <p><strong>Fiziksel adsorpsiyon:</strong> Zayıf van der Waals kuvvetleri, hidrojen bağları ile gerçekleşir. Geri dönüşümlüdür ve ekzotermiktir. <strong>Kimyasal adsorpsiyon (kemisorpsiyon):</strong> Adsorban ile adsorbat arasında kimyasal reaksiyon sonucu oluşur, bağlar çok daha kuvvetlidir. Aktivasyon enerjisi gerektirir, genellikle geri dönüşümsüzdür. <strong>Etkileyen faktörler:</strong> (1) Çözünürlük — çözünürlükle ters orantılı. (2) Sıcaklık — genellikle adsorpsiyonu azaltır. (3) pH — izoelektrik noktada adsorpsiyon kolaylaşır. (4) Adsorbanın yüzey alanı — büyük yüzey alanı daha fazla adsorpsiyon sağlar.</p>
+</div>
+
+<div class="classic-answer">
+  <div class="ca-q">K10: Adsorpsiyon izotermleri</div>
+  <p><strong>Freundlich izotermi:</strong> x/m = k·C^(1/n). Sabit sıcaklıkta adsorplanan madde miktarı ile denge derişimi arasındaki ampirik ilişkiyi verir. Logaritmik formu doğru vererek k ve n sabitleri bulunur. <strong>Langmuir izotermi:</strong> Sadece tek tabakalı adsorpsiyona uygulanır. Komşu moleküllerin birbirini çekmediği varsayılır ve adsorban doygunluğa ulaşır. <strong>BET (Brunauer-Emmett-Teller) izotermi:</strong> Langmuir izoterminin çok tabakalı adsorpsiyona genişletilmiş halidir. Buharların adsorpsiyonuna uygulanır ve adsorban maddenin yüzey alanı hesaplanabilir. En sağlıklı yöntem olarak kabul edilir.</p>
+</div>
+
+</div>
+
+</div><!-- .content -->
+
+<script>
+function switchTab(tabName) {
+  document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+  document.getElementById('tab-' + tabName).classList.add('active');
+  event.currentTarget.classList.add('active');
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+const tfAnswers = {
+  1:'D', 2:'Y', 3:'Y', 4:'D', 5:'Y', 6:'D', 7:'Y', 8:'D', 9:'Y', 10:'D',
+  11:'Y', 12:'D', 13:'Y', 14:'D', 15:'D', 16:'D', 17:'D', 18:'Y', 19:'Y', 20:'Y'
+};
+
+function checkTF(btn, choice) {
+  const card = btn.closest('.question-card');
+  const num = parseInt(card.querySelector('.q-number').textContent.replace('DY',''));
+  const correct = tfAnswers[num];
+  const buttons = card.querySelectorAll('.tf-btn');
+  buttons.forEach(b => { b.classList.remove('selected-correct','selected-wrong'); b.disabled = true; });
+  if (choice === correct) {
+    btn.classList.add('selected-correct');
+  } else {
+    btn.classList.add('selected-wrong');
+    buttons.forEach(b => {
+      if ((correct === 'D' && b.textContent === 'Doğru') || (correct === 'Y' && b.textContent === 'Yanlış')) {
+        b.classList.add('selected-correct');
+      }
+    });
+  }
+}
+</script>
+
+</body>
+</html>
