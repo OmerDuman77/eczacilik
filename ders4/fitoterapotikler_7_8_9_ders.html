@@ -1,0 +1,434 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Fitoterapötikler 7-8-9. Ders</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700;800&family=Source+Sans+3:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#12100e;--bg-card:#1a1714;--bg-card-alt:#211e19;--accent:#c9a96e;--accent-dim:#8f7440;--accent-glow:rgba(201,169,110,.13);--text:#ede8df;--text-dim:#a69e90;--text-muted:#716a5e;--border:#302b24;--danger:#d46b6b;--teal:#6bbfad;--mauve:#b48ec4}
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'Source Sans 3',sans-serif;background:var(--bg);color:var(--text);line-height:1.7;overflow-x:hidden}
+.topnav{position:fixed;top:0;left:0;right:0;z-index:1000;background:rgba(18,16,14,.93);backdrop-filter:blur(20px);border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:center;height:60px}
+.topnav a{text-decoration:none;color:var(--text-dim);font-weight:600;font-size:.95rem;letter-spacing:.08em;text-transform:uppercase;padding:18px 36px;transition:all .3s;position:relative;cursor:pointer}
+.topnav a::after{content:'';position:absolute;bottom:0;left:50%;transform:translateX(-50%);width:0;height:2px;background:var(--accent);transition:width .3s;border-radius:2px}
+.topnav a:hover,.topnav a.active{color:var(--accent)}
+.topnav a:hover::after,.topnav a.active::after{width:60%}
+.logo-area{position:absolute;left:28px;display:flex;align-items:center;gap:10px}
+.logo-area span{font-family:'Playfair Display',serif;font-weight:700;color:var(--accent);font-size:1rem}
+.section{display:none;padding:90px 20px 60px;max-width:960px;margin:0 auto;animation:fadeIn .4s ease}
+.section.active{display:block}
+@keyframes fadeIn{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:translateY(0)}}
+.hero{text-align:center;margin-bottom:50px;padding:40px 0 30px}
+.hero h1{font-family:'Playfair Display',serif;font-size:2.5rem;font-weight:800;background:linear-gradient(135deg,var(--accent),var(--teal));-webkit-background-clip:text;-webkit-text-fill-color:transparent;margin-bottom:10px}
+.hero .sub{color:var(--text-dim);font-size:1.05rem;font-weight:300}
+.tb{background:var(--bg-card);border:1px solid var(--border);border-radius:14px;padding:32px 36px;margin-bottom:28px;position:relative;overflow:hidden}
+.tb::before{content:'';position:absolute;top:0;left:0;width:4px;height:100%;background:linear-gradient(180deg,var(--accent),var(--accent-dim));border-radius:4px 0 0 4px}
+.tb h2{font-family:'Playfair Display',serif;font-size:1.5rem;font-weight:700;color:var(--accent);margin-bottom:16px;padding-left:8px}
+.tb h3{font-size:1.08rem;font-weight:600;color:var(--teal);margin:18px 0 8px}
+.tb p,.tb li{color:var(--text);font-size:.95rem;line-height:1.8}
+.tb ul{padding-left:20px;margin:6px 0}
+.tb li{margin-bottom:4px}
+.tb li::marker{color:var(--accent-dim)}
+.hl{color:var(--accent);font-weight:600}
+.warn{color:var(--danger);font-weight:600}
+.tl{color:var(--teal);font-weight:600}
+.mv{color:var(--mauve);font-weight:600}
+.tag{display:inline-block;background:var(--accent-glow);color:var(--accent);font-size:.8rem;font-weight:600;padding:3px 10px;border-radius:20px;margin:2px 4px 2px 0}
+.dt{width:100%;border-collapse:collapse;margin:14px 0;font-size:.9rem}
+.dt th{background:var(--bg-card-alt);color:var(--accent);padding:10px 14px;text-align:left;font-weight:600;border-bottom:2px solid var(--border)}
+.dt td{padding:9px 14px;border-bottom:1px solid var(--border)}
+.qc{background:var(--bg-card);border:1px solid var(--border);border-radius:12px;padding:24px 28px;margin-bottom:20px;transition:border-color .3s}
+.qc:hover{border-color:var(--accent-dim)}
+.qn{display:inline-flex;align-items:center;justify-content:center;width:32px;height:32px;background:var(--accent-glow);color:var(--accent);font-weight:700;font-size:.85rem;border-radius:50%;margin-right:10px;flex-shrink:0}
+.qt{font-weight:600;font-size:1rem;margin-bottom:14px;display:flex;align-items:flex-start}
+.qt span{padding-top:4px}
+.opts{padding-left:42px}
+.opts label{display:flex;align-items:flex-start;gap:8px;padding:7px 12px;border-radius:8px;cursor:pointer;transition:background .2s;font-size:.94rem;color:var(--text-dim)}
+.opts label:hover{background:rgba(201,169,110,.06);color:var(--text)}
+.opts input[type="radio"]{accent-color:var(--accent);margin-top:3px;flex-shrink:0}
+.ag{display:grid;grid-template-columns:repeat(auto-fill,minmax(110px,1fr));gap:10px;margin:30px 0}
+.ac{background:var(--bg-card);border:1px solid var(--border);border-radius:10px;padding:12px;text-align:center;transition:transform .2s,border-color .2s}
+.ac:hover{transform:translateY(-2px);border-color:var(--accent-dim)}
+.ac .an{font-size:.75rem;color:var(--text-muted);font-weight:600;margin-bottom:4px}
+.ac .al{font-size:1.2rem;font-weight:700;color:var(--accent)}
+.ei{background:var(--bg-card);border-left:3px solid var(--accent-dim);padding:14px 20px;margin-bottom:12px;border-radius:0 10px 10px 0;font-size:.93rem;color:var(--text-dim)}
+.ei strong{color:var(--accent)}
+@media(max-width:700px){.topnav a{padding:16px 14px;font-size:.78rem}.logo-area{display:none}.hero h1{font-size:1.7rem}.tb{padding:22px 18px}.section{padding:80px 14px 40px}.ag{grid-template-columns:repeat(auto-fill,minmax(80px,1fr))}}
+</style>
+</head>
+<body>
+
+<nav class="topnav">
+<div class="logo-area"><span>🌱 Fitoterapötikler 7-8-9</span></div>
+<a href="#" onclick="S('ozet')" id="nav-ozet" class="active">Özet</a>
+<a href="#" onclick="S('test')" id="nav-test">Test Soruları</a>
+<a href="#" onclick="S('cevap')" id="nav-cevap">Cevap Anahtarı</a>
+</nav>
+
+<!-- ===== ÖZET ===== -->
+<div class="section active" id="sec-ozet">
+<div class="hero">
+<h1>Fitoterapötikler — 7., 8. & 9. Ders</h1>
+<div class="sub">Üriner & Jinekolojik Sistem • Deri & Bağ Dokusu • Adaptojen & İmmünostimülan</div>
+</div>
+
+<!-- 7. DERS - ÜRİNER -->
+<div class="tb"><h2>1. Üriner Sistem — Genel Bakış (7. Ders)</h2>
+<p>Üç ana başlık altında incelenir: (1) İnflamatuvar üriner sistem rahatsızlıklarının tedavisi, (2) İyi huylu prostat büyümesinin (BPH) tedavisi, (3) Jinekolojik rahatsızlıkların tedavisi.</p>
+</div>
+
+<div class="tb"><h2>2. Arctostaphylos uva-ursi (Ayıüzümü — Bearberry)</h2>
+<p><span class="tag">Drog: Uvae ursi folium</span><span class="tag">Familya: Ericaceae</span><span class="tag">Kayıt: ESCOP, Commission E</span></p>
+<p>Drog: Tüm ya da kesilerek kurutulmuş yapraklar. EP: En az <span class="hl">%7 anhidroarbutin</span>.</p>
+<h3>Bileşikler</h3>
+<ul>
+<li>Etkin bileşikler: Hidrokinon yapısında <span class="hl">arbutin (%5-15)</span>, metil arbutin (%4'e kadar), küçük miktarlarda serbest hidrokinon ve metil hidrokinon aglikonları.</li>
+<li>Gallik asit, galloilarbutin, <span class="hl">gallotanenler (%20'ye kadar)</span>; flavonoidler (kersetin, kemferol, mirsetin glikozitleri), triterpenler.</li>
+</ul>
+<h3>Endikasyon / Dozaj</h3>
+<p>Komplike olmayan alt idrar yolları iltihaplanmaları (sistit vb.) tedavisinde. Günlük doz: 400-800 mg arbutin içeren drogun soğuk su infüzyonu. <span class="warn">En fazla 2 hafta kullanılmalı.</span> Tedavide bol su içilmeli, idrarı alkali yapacak diyet katkıları sinerjistik etkilidir.</p>
+<h3>Kontrendikasyon / Uyarılar</h3>
+<p>Böbrek hastalığında kullanılmamalı. Hidrokinon topik iritan ve hepatotoksiktir. <span class="warn">Ağızdan 5-12 g hidrokinon ölüme neden olur.</span> Yüksek tanen nedeniyle mide iritasyonu. Hamile ve emzirenlerde kullanılmamalı. Çocuklarda tavsiye edilmez.</p>
+</div>
+
+<div class="tb"><h2>3. Vaccinium macrocarpon (Cranberry)</h2>
+<p><span class="tag">Drog: Vaccini macrocarpi fructus</span><span class="tag">Familya: Ericaceae</span><span class="tag">Kayıt: ESCOP, Commission E, WHO</span></p>
+<p>Drog: Olgun taze veya kurutulmuş meyveler.</p>
+<h3>Bileşikler</h3>
+<p>Kinik, malik ve sitrik asitler (%2,6-3,6), benzoik asit (%0,5'e kadar), hidroksibenzoik ve hidroksisinnamik asitler; <span class="hl">proantosiyanidinler</span>; antosiyaninler (peonidin-3-arabinozit ve -3-galaktozit); kersetin ve mirisetin glikozitleri; iridoitler (monotropein), ursolik asit türevleri.</p>
+<h3>Endikasyon / Dozaj</h3>
+<p>İdrar yolları enfeksiyonlarına karşı <span class="hl">koruma (profilaksi)</span> amacıyla. Günde 300-750 ml drog suyunu (%25-100) içeren sıvı preparatlar veya 200-500 mg kuru ekstre.</p>
+<h3>Uyarılar</h3>
+<p><span class="warn">Varfarin kullanan hastalar dikkatli olmalı</span> (VKORC1 genotipik hastalara özel etkileşme). İdrar asitliğini artırdığı için böbrek taşı eğilimi olan hastalarda risk.</p>
+</div>
+
+<div class="tb"><h2>4. Betula pendula / B. pubescens (Huş ağacı — Birch)</h2>
+<p><span class="tag">Drog: Betulae folium</span><span class="tag">Familya: Betulaceae</span><span class="tag">Kayıt: ESCOP, Commission E, WHO</span></p>
+<p>Drog: Tüm veya parçalanmış kuru yapraklar. EP: En az %1,5 flavonoid (hiperozit üzerinden).</p>
+<h3>Bileşikler</h3>
+<p>Flavonol glikozitleri (%1-3; ana bileşen <span class="hl">hiperozit</span> + kersetin, mirisetin, kemferol glikozitleri); fenolik bileşikler, triterpen alkoller, dammaran alkol malonil esterleri; monoterpen glikozitleri, <span class="hl">rozeozit</span> (seskiterpen glikozit), tanen, eser UY, potasyum (%4'e kadar).</p>
+<h3>Endikasyon / Dozaj</h3>
+<p>Böbrek taşı ve inflamasyonda <span class="hl">diüretik etki</span> ile idrar yollarını temizleme ve bakteriyel enfeksiyonlara yardımcı tedavi. 2-3 g yapraktan infüzyon günde 2-3 defa. Böbrek/kalp kaynaklı ödemlerde kullanılmaz.</p>
+</div>
+
+<!-- PROSTAT -->
+<div class="tb"><h2>5. Serenoa repens (Cüce palmiye — Saw palmetto)</h2>
+<p><span class="tag">Drog: Serenoae repentis fructus</span><span class="tag">Familya: Arecaceae</span><span class="tag">Kayıt: Commission E, ESCOP, WHO</span></p>
+<p>Drog: Kurutulmuş olgun meyveler.</p>
+<h3>Bileşikler</h3>
+<p>Laurik, miristik, kaprilik, linoleik, stearik gibi çeşitli yağ asitleri; bitkisel steroller (özellikle <span class="hl">β-sitosterol</span> ve 3 glikoziti); terpenler, UY, alkanoller, polisakkaritler, flavonoitler, antranilik asit.</p>
+<h3>Endikasyon / Dozaj</h3>
+<p>İyi huylu prostat büyümesi (BPH) nedeniyle oluşan hafif-orta şiddette <span class="hl">miksiyon rahatsızlıkları (dizüri, pollaküri, noktüri, idrar tutulması)</span>. Günlük 1-2 g drog veya 320 mg lipofilik ekstre. İdrarda kan görülmesi halinde mutlaka hekime danışılmalı.</p>
+</div>
+
+<div class="tb"><h2>6. Urtica dioica / U. urens (Isırgan — Nettle)</h2>
+<p><span class="tag">Drog: Urticae radix</span><span class="tag">Familya: Urticaceae</span><span class="tag">Kayıt: ESCOP, WHO</span></p>
+<p>Drog: Tüm ya da kesilerek kurutulmuş toprak altı kısımları.</p>
+<h3>Bileşikler</h3>
+<p><span class="hl">Urtica dioica agglutinin (UDA)</span> — 6 izolektinden oluşan bir lektin (%0,1); polisakkaritler, β-sitosterol ve fitosterol glikozitleri, fenil etanoit bileşikler (homovanillil alkol), <span class="hl">lignanlar (neo-olivil ve türevleri)</span>, yağ asitleri, monoterpen dioller.</p>
+<h3>Endikasyon / Dozaj</h3>
+<p>BPH semptomatik tedavisi. Günlük 4-6 g drog infüzyonu veya 300-600 mg kuru ekstre.</p>
+</div>
+
+<div class="tb"><h2>7. Cucurbita pepo (Kabak — Pumpkin)</h2>
+<p><span class="tag">Drog: Cucurbitae semen</span><span class="tag">Familya: Cucurbitaceae</span><span class="tag">Kayıt: ESCOP, WHO</span></p>
+<p>Drog: Tüm halde kurutulmuş olgun tohumlar.</p>
+<h3>Bileşikler</h3>
+<p>Etkin bileşikler: <span class="hl">Fitosterollar (ort. %0,16)</span>. Ana bileşikler <span class="hl">spinasterol</span> ve poriferesta-7,22-dien-3β-ol (Δ7 steroller). Az miktarda Δ5 sterol izomerleri (klerosterol, β-sitosterol). Trigliseritler, yağ asitleri, aminoasitler, karotenoitler, selenyum.</p>
+<h3>Endikasyon / Dozaj</h3>
+<p>BPH semptomatik tedavisi. Günlük 10-20 g drog veya eşdeğer ekstre. Uzun süreli kullanım tavsiye edilir.</p>
+</div>
+
+<!-- JİNEKOLOJİ -->
+<div class="tb"><h2>8. Vitex agnus-castus (Hayıt — Chaste tree berry)</h2>
+<p><span class="tag">Drog: Agni casti fructus</span><span class="tag">Familya: Lamiaceae</span><span class="tag">Kayıt: ESCOP, WHO</span></p>
+<p>Drog: Olgunlukta tüm olarak kurutulmuş meyveler. En az <span class="hl">%0,08 kastisin</span>.</p>
+<h3>Bileşikler</h3>
+<p>Labdan ve kloredan tipi diterpenler (rotundifuran %0,3'e kadar); iridoit glikozitleri (agnusit, okubin); lipofilik flavonoitler (<span class="hl">kastisin</span>, penduletin, krizosplenol-D); hidrofilik flavonoitler (orientin, homoorientin, luteolin 7-glikozit, izoviteksin); UY (α-pinen, sabinen, β-karyofillen).</p>
+<h3>Endikasyon / Dozaj</h3>
+<p><span class="hl">PMS ve menstrüal siklus rahatsızlıkları</span>. Günlük 30-40 mg drog; PMS'de 240 mg'a kadar. <span class="warn">Tedavi en az 3 ay sürmelidir.</span> Hamilelikte kullanılmamalı. Dopamin reseptör antagonistlerinin etkisini artırabilir.</p>
+</div>
+
+<div class="tb"><h2>9. Actaea racemosa / Cimicifuga racemosa (Black cohosh)</h2>
+<p><span class="tag">Drog: Cimicifugae rhizoma</span><span class="tag">Familya: Ranunculaceae</span><span class="tag">Kayıt: ESCOP, Commission E, WHO</span></p>
+<p>Drog: Kurutulmuş kök ve rizomlar.</p>
+<h3>Bileşikler</h3>
+<p>Karakteristik bileşikler: <span class="hl">Sikloartan tipi triterpen glikozitleri</span> (30'dan fazla saponozit); ana bileşikler simisifugozit, aktein, 23-epi-26 deoksiaktein. Fukiik ve pisidik asit esterleri (fukinolik asit), hidroksisinnamik asit türevleri, fenilpropanoid esterleri; petasifenol, simisifenol, cimirasemat A-D.</p>
+<h3>Endikasyon / Dozaj</h3>
+<p><span class="hl">Menopoza bağlı şikayetler</span> (sıcaklık basması, aşırı terleme, uyku bozuklukları, sinirlilik). Günlük 40-140 mg droga eşdeğer izopropanolik (%40) veya etanolik ekstre. Etki 2-4 haftada başlar; en az 6-8 hafta devam edilmeli, maksimum etki 3-6 ayda. <span class="warn">Östrojene bağımlı tümörlerde kullanılmamalı. 6 aydan uzun süre kullanılmamalı.</span></p>
+</div>
+
+<div class="tb"><h2>10. Trifolium pratense (Kızıl yonca — Red clover)</h2>
+<p><span class="tag">Drog: Trifolii flos</span><span class="tag">Familya: Fabaceae</span><span class="tag">Kayıt: WHO</span></p>
+<p>Drog: Kurutulmuş çiçek durumları. En az <span class="hl">%0,5 izoflavonoid</span>.</p>
+<h3>Bileşikler</h3>
+<p>Östrojenik aktivite gösteren <span class="hl">izoflavonoitler</span>: Genistein, formononetin, biokanin A ve daidzein.</p>
+<h3>Endikasyon / Dozaj</h3>
+<p>Menopozal şikayetler. Günlük 40-80 mg izoflavonoid karışımına denk gelen 240-480 mg kuru ekstre. <span class="warn">Tamoksifen gibi antiöstrojenik ilaçların etkisini azaltabilir.</span> Östrojene bağlı tümörlerde kullanılmamalı.</p>
+</div>
+
+<!-- 8. DERS - DERİ -->
+<div class="tb"><h2>11. Calendula officinalis (Aynısafa — Calendula flower) [8. Ders]</h2>
+<p><span class="tag">Drog: Calendula flos</span><span class="tag">Familya: Asteraceae</span><span class="tag">Kayıt: ESCOP, Commission E, WHO</span></p>
+<p>Drog: Tüm veya kesilerek kurutulmuş çiçekler. EP: En az <span class="hl">%0,4 flavonoid</span>.</p>
+<h3>Bileşikler</h3>
+<p>Oleanolik asit glikozitleri olan triterpen saponozitler; serbest veya esterleşmiş triterpen alkoller (<span class="hl">faradiol 3-monoester</span>); karotenoitler; kersetin ve izoramnetin türevi flavonoitler; polisakkaritler, steroller, seskiterpenler, UY.</p>
+<h3>Endikasyon / Dozaj</h3>
+<p>Deri ve mukozanın minör inflamasyonları, küçük yaraların iyileşmesi. <span class="hl">Haricen kullanılır.</span> 1-2 g drog/150 ml infüzyon topik. Yarı katı preparatlar %2-10 sıvı ekstre.</p>
+</div>
+
+<div class="tb"><h2>12. Achillea millefolium (Civanperçemi — Yarrow)</h2>
+<p><span class="tag">Drog: Millefolii herba</span><span class="tag">Familya: Asteraceae</span><span class="tag">Kayıt: ESCOP, Commission E, WHO</span></p>
+<p>Drog: Bütün veya kesilmiş kurutulmuş çiçek durumları. EP: En az 2 ml/kg UY ve %0,02 proazulen (kamazulen üzerinden).</p>
+<h3>Bileşikler</h3>
+<p>UY (%0,2-1): α-/β-pinen, ökaliptol, sabinen, kafur, borneol, β-karyofillen, germakran D. Seskiterpenler (%0,5 kadar): Kamazulen karboksilik asit, guayan laktonlar (ahillin), ödesman laktonlar. Flavonoitler, betainler, triterpenler, tanenler, kumarinler.</p>
+<h3>Endikasyon / Dozaj</h3>
+<p>Dahilen: İştahsızlık, dispepsi. Haricen: Küçük yara tedavisi, deri/mukoza inflamasyonları, böcek kaçırıcı. Günde 2-4 g drogla infüzyon. <span class="warn">α-metilen-γ-lakton içeren seskiterpenler kontak dermatite neden olabilir.</span></p>
+</div>
+
+<div class="tb"><h2>13. Viola arvensis / V. tricolor (Yabani menekşe — Wild pansy)</h2>
+<p><span class="tag">Drog: Violae herba cum florae</span><span class="tag">Familya: Violaceae</span><span class="tag">Kayıt: ESCOP, Commission E</span></p>
+<p>Drog: Kurutulmuş çiçekli toprak üstü kısımlar. EP: En az %1,5 flavonoid (violanthin üzerinden).</p>
+<h3>Bileşikler</h3>
+<p>Flavonoitler (%2,9'a kadar): Rutin, violanthin (flavon C-glikozit), antosiyaninler (violanin); fenolik asitler (salisilik asit, metil salisilat); karotenoitler (violaksantin); <span class="hl">müsilaj polisakkaritler (%10-20)</span>; <span class="hl">cyclotidler</span> (30 aminoasitlik makrosiklik peptitler).</p>
+<h3>Endikasyon</h3>
+<p><span class="hl">Ekzema, sebore, impetigo, akne, bebeklerde diyaper kızarıklıkları.</span></p>
+</div>
+
+<div class="tb"><h2>14. Melaleuca alternifolia (Tea tree oil)</h2>
+<p><span class="tag">Drog: Melaleuca aetheroleum</span><span class="tag">Familya: Myrtaceae</span><span class="tag">Kayıt: ESCOP, WHO</span></p>
+<p>Drog: Yaprak ve uç dallardan buhar distilasyonu ile elde edilir.</p>
+<h3>Bileşikler</h3>
+<p>Ana bileşikler monoterpenler: <span class="hl">Terpinen-4-ol (%30'dan fazla)</span>, γ-terpinen (%10-28), 1,8-sineol; α-terpinen, α-terpineol, terpinolen, sabinen, α-pinen, p-simen, limonen; seskiterpen aromadendren.</p>
+<h3>Endikasyon / Dozaj</h3>
+<p>Furunkulozis, <span class="hl">tinea pedis (atlet ayağı), onychomycosis (tırnak mantarı)</span>, saç kepeklenmesi, vajinal enfeksiyonlar (T. vaginalis, candidiasis), <span class="hl">MRSA eradikasyonu</span>. Genel: %5-10 preparatlar; tinea pedis/onychomycosis: %25-50; vajinal: %10. Dilüe edilmeden geniş alanlara tatbik edilmemeli.</p>
+</div>
+
+<div class="tb"><h2>15. Hamamelis virginiana (Cadı fındığı — Witch Hazel)</h2>
+<p><span class="tag">Drog: Hamamelidis folium / cortex</span><span class="tag">Familya: Hamamelidaceae</span><span class="tag">Kayıt: ESCOP, Commission E</span></p>
+<p>Folium: Kurutulmuş yapraklar, EP: en az %3 tanen. Cortex: Kurutulmuş gövde/dal kabukları, en az %4 tanen.</p>
+<h3>Folium Bileşikler</h3>
+<p>Ana etkin bileşikler: <span class="hl">Tanenler (%5-10)</span>. Kondanse tanenler (prosiyanidin oligomerleri), hidrolize olabilen gallotanenler (<span class="hl">hamamelitanen</span>); (+)-gallokateşin, (-)-epikateşin-3-O-gallat, (-)-epigallokateşin-3-O-gallat (EGCG); kemferol, kersetin flavonoitleri.</p>
+<h3>Cortex Bileşikler</h3>
+<p>Karakteristik bileşik: <span class="hl">Hamamelitanen</span> (hamameloz şekerinin iki gallik asitle esteri). Prosiyanidin dimerleri, prodelfinidinler, proantosiyanidin oligomerleri; flavan-3-ol türevleri, pentagalloil glikoz.</p>
+<h3>Endikasyon</h3>
+<p>Folium dahilen: Varikoz ven, hemoroid. Haricen: Morarma, burkulma, küçük yara, <span class="hl">atopik dermatit (ekzema)</span>. Cortex dahilen: Ağız mukozası inflamasyonu, kısa süreli diyare tedavisi. Haricen: Küçük yara, varikoz ven.</p>
+</div>
+
+<!-- TRAVMA -->
+<div class="tb"><h2>16. Arnica montana (Arnica flower)</h2>
+<p><span class="tag">Drog: Arnicae flos</span><span class="tag">Familya: Asteraceae</span><span class="tag">Kayıt: ESCOP, Commission E, WHO</span></p>
+<p>Drog: Tüm/kısmen parçalanarak kurutulmuş kapitulumlar. EP: En az <span class="hl">%0,4 seskiterpen lakton</span> (helenalin tiglat üzerinden).</p>
+<h3>Bileşikler</h3>
+<p><span class="hl">Psödoguayanolid tip seskiterpen laktonlar (%0,2-0,8)</span>: Ana bileşenler helenalin ile 11α,13-dihidrohelenalin ve çeşitli asit esterleri. Diterpenler, triterpenler, flavonoller, poliasetilenik bileşikler, kumarinler, karotenoitler, UY; <span class="warn">pirolizidin alkaloitleri (tusillagin, izotusillagin)</span>.</p>
+<h3>Endikasyon / Dozaj</h3>
+<p>Derideki çürükler, burkulma, böcek sokması inflamasyonları, romatizmal şikayetler. <span class="hl">Haricen kullanılır.</span> %5-25 tentür/sıvı ekstre içeren preparatlar. Asteraceae hassasiyetinde kontrendike.</p>
+</div>
+
+<div class="tb"><h2>17. Symphytum officinale (Karakafes otu — Comfrey root)</h2>
+<p><span class="tag">Drog: Symphyti radix</span><span class="tag">Familya: Boraginaceae</span><span class="tag">Kayıt: ESCOP, Commission E, WHO</span></p>
+<p>Drog: Kurutulmuş kök ve rizomlar.</p>
+<h3>Bileşikler</h3>
+<p><span class="hl">Allantoin (%0,6-4,7)</span>, müsilaj polisakkarit (%29, fruktoz+glukoz ünitelerinden), rozmarinik asit, salisilik asit, kafeik asit; triterpen saponozitler (simfitoksit A); lithospermik asit, aminoasitler. <span class="warn">Pirolizidin alkaloitleri (%0,05-0,08)</span>.</p>
+<h3>Endikasyon / Dozaj</h3>
+<p>Kas incinmesi, burkulma, deride çürüme; osteoartrit, epikondilit (tenisçi dirseği), tendovajinit. Haricen: %35'e kadar kök ekstresi (1:2, %60 EtOH) içeren merhem günde 3-4 defa. <span class="warn">Günlük dozda 100 μg'dan fazla pirolizidin alkaloiti olmamalı; senelik kullanım 4-6 hafta ile sınırlı.</span></p>
+</div>
+
+<div class="tb"><h2>18. Diğer Deri Drogları</h2>
+<ul>
+<li><span class="hl">Matricaria flos</span>: Deri/mukoza minör inflamasyon ve iritasyon</li>
+<li><span class="hl">Melissae folium</span>: Herpes labialis (dudak uçuğu)</li>
+<li><span class="hl">Rosmarini folium</span>: Yara iyileştirici, hafif antiseptik</li>
+<li><span class="hl">Hyperici herba</span>: Zeytinyağında masere edilmiş yağ ekstresi — yara iyileştirici</li>
+<li><span class="hl">Bromelain</span> (Ananas comosum): Proteaz enzimi — travma/ameliyat sonrası ödem ve inflamasyon</li>
+</ul>
+</div>
+
+<!-- EKLEM -->
+<div class="tb"><h2>19. Harpagophytum procumbens (Şeytanpençesi — Devil's claw)</h2>
+<p><span class="tag">Drog: Harpagophyti radix</span><span class="tag">Familya: Pedaliaceae</span><span class="tag">Kayıt: ESCOP, Commission E, WHO</span></p>
+<p>Drog: Kesilerek kurutulmuş tuber şeklindeki ikincil kökler. En az <span class="hl">%1,2 harpagozit</span>.</p>
+<h3>Bileşikler</h3>
+<p>Karakteristik etkin maddeler: <span class="hl">İridoit glikozitleri</span> — ana bileşen harpagozit (%1-3); harpagit, 8-p-kumaroilharpagit, prukumbit. Fenolik glikozitler (akteozit, izoakteozit); <span class="hl">stakiyoz (tetrasakkarit, %46'ya varan miktarlarda)</span>, rafinoz, sakkaroz.</p>
+<h3>Endikasyon / Dozaj</h3>
+<p>Ağrılı osteoartrit ve bel ağrısı semptomatik tedavisi; iştah kaybı ve dispepsi. Osteoartrit: Günlük 2-5 g drog, 2-3 ay. Bel ağrısı: 4,5-9 g drog (30-100 mg harpagozit). <span class="warn">Gastrit/duodenal ülserde kontrendike.</span></p>
+</div>
+
+<div class="tb"><h2>20. Salix purpurea / S. fragilis / S. daphnoides (Söğüt kabuğu — Willow Bark)</h2>
+<p><span class="tag">Drog: Salicis cortex</span><span class="tag">Familya: Salicaceae</span><span class="tag">Kayıt: ESCOP, Commission E, WHO</span></p>
+<p>Drog: Kurutulmuş genç dalların kabukları. En az <span class="hl">%1,5 total salisilik asit türevleri (salisin üzerinden)</span>.</p>
+<h3>Bileşikler</h3>
+<p><span class="hl">Total salisin (%4-8)</span>, salikortin (%9 kadar), tremulasin, salirepozit, syringin; izosalipurpozit (sarı kalkon), eriyodiktiyol-7-glikozit, naringenin-5-glikozit, kateşin, polifenoller (%5 kadar).</p>
+<h3>Endikasyon / Dozaj</h3>
+<p>Bel ağrısı, hafif osteoartrit, romatizmal şikayetler. Günlük 120-240 mg total salisine eşdeğer kurutulmuş ekstre. <span class="warn">Çocuklarda REYE sendromu riski nedeniyle tavsiye edilmez. Salisilatlara hassasiyette kullanılmamalı.</span></p>
+</div>
+
+<div class="tb"><h2>21. Boswellia serrata (Akgünlük — Indian Frankincense)</h2>
+<p><span class="tag">Drog: Olibanum indicum</span><span class="tag">Familya: Burseraceae</span><span class="tag">Kayıt: ESCOP, WHO</span></p>
+<p>Drog: Gövde/daldan sızan reçineli zamkın havada kurutulması. EP: En az <span class="hl">%1 11-keto-β-boswellik asit</span>; triterpenik asitler en az %25.</p>
+<h3>Bileşikler</h3>
+<p><span class="hl">Pentasiklik triterpenik asitler</span>: Asetil β-boswellik asit, <span class="hl">AKBA (asetil-11-keto-β-boswellik asit)</span>, β-boswellik asit, α-boswellik asit. Tetrasiklik tirukallenik asitler. UY (%7,5-15), müsilaj polisakkaritler.</p>
+<h3>Endikasyon / Dozaj</h3>
+<p>Ağrılı osteoartrit ve intestinal inflamasyon semptomatik tedavisi. Osteoartrit: 250-1200 mg kurutulmuş alkolik ekstre günde 3 defa. İntestinal inflamasyon: 900-3600 mg günde 3 defa. Gıdalarla birlikte alınması emilimi kolaylaştırır. <span class="warn">3-6 aydan fazla devam edilmemeli.</span></p>
+</div>
+
+<div class="tb"><h2>22. Capsicum annuum / C. frutescens (Biber — Capsicum)</h2>
+<p><span class="tag">Drog: Capsici fructus</span><span class="tag">Familya: Solanaceae</span><span class="tag">Kayıt: ESCOP, Commission E, WHO</span></p>
+<p>Drog: Kurutulmuş olgun küçük meyveler. EP: En az <span class="hl">%0,4 kapsasinoitler</span>.</p>
+<h3>Bileşikler</h3>
+<p>Etkin maddeler: <span class="hl">Kapsasinoitler</span>. Ana bileşen <span class="hl">kapsaisin (%63-73)</span>, dihidrokapsaisin (%20-32), nordihidrokapsaisin (%1-8). Drogtaki kapsasinoit miktarı %0,3-1. Trigliseritler, karotenoitler, askorbik asit, flavonoitler.</p>
+<h3>Endikasyon / Dozaj</h3>
+<p>Kas ağrıları, osteoartrit, romatizmal ağrılar; <span class="hl">herpes zoster (zona) ve diyabetik nöropati sonrası nöralji</span>. %0,025-0,075 kapsasinoit içeren preparatlar günde 3-4 defa. Flaster: cm²'de 10-40 μg kapsasinoit. <span class="warn">Yaraya/zedelenmiş deriye uygulanmamalı. Göz/mukoza yakınına tatbik edilmemeli.</span></p>
+</div>
+
+<!-- 9. DERS - ADAPTOJEN -->
+<div class="tb"><h2>23. Adaptojen, İmmünostimülan, İmmünomodülatör — Tanımlar (9. Ders)</h2>
+<ul>
+<li><span class="hl">Adaptojen</span>: Vücudun fiziksel, kimyasal ve biyolojik stres faktörlerine karşı direncini artıran ajanlar.</li>
+<li><span class="hl">İmmünostimülan</span>: Viral ve bakteriyel patojenlere karşı vücudun spesifik olmayan savunma mekanizmalarını aktive eden ajanlar.</li>
+<li><span class="hl">İmmünomodülatör</span>: İmmün sistemin işlevini (antikor stimülasyonu, lökosit inhibisyonu vb.) veya immün tepkileri modifiye eden ajanlar.</li>
+</ul>
+</div>
+
+<div class="tb"><h2>24. Panax ginseng (Ginseng)</h2>
+<p><span class="tag">Drog: Ginseng radix</span><span class="tag">Familya: Araliaceae</span><span class="tag">Kayıt: ESCOP, Commission E, WHO</span></p>
+<p>Drog: Bütün/kesilmiş kurutulmuş kökler. EP: <span class="hl">Ginsenozit Rb₁ ve Rg₁ toplam miktarı ≥ %0,4</span>.</p>
+<h3>Bileşikler</h3>
+<p>Etkin bileşikler: <span class="hl">Dammaran tip triterpen saponinler (ginsenozitler)</span>. Aglikonu protopanaksadiol olan: Rb₁, Rb₂, Rb₃, Rc, Rd vb. Aglikonu protopanaksatriol olan: Re, Rf, Rg₁, Rg₂, Rh vb. Az miktarda aglikonu oleanolik asit olan Ro. Peptidoglikan türevi panaksanlar, asetilenik bileşikler, pirazin türevleri, polisakkaritler, fenolik bileşikler.</p>
+<h3>Endikasyon / Dozaj</h3>
+<p><span class="hl">Bitkinlik, zayıflık, yorgunluk, konsantrasyon bozukluğu</span> — azalmış mental ve fiziksel kapasiteyi düzeltmek; nekahat döneminde. Günlük 0,5-2 g kurutulmuş kök. 1 ay tedavi sonrası değerlendirme. Diyabetiklerde dikkat (doktora danışılmalı). Varfarin etkileşmesi bildirilmiş.</p>
+</div>
+
+<div class="tb"><h2>25. Eleutherococcus senticosus (Siberian ginseng)</h2>
+<p><span class="tag">Drog: Eleutherococci radix</span><span class="tag">Familya: Araliaceae</span><span class="tag">Kayıt: ESCOP, Commission E, WHO</span></p>
+<p>Drog: Bütün/kesilmiş kurutulmuş toprak altı kısımları.</p>
+<h3>Bileşikler</h3>
+<p><span class="hl">Lignanlar</span>: Eleutherozid E (%0,1), eleutherozid B₄. <span class="hl">Fenilpropanoitler</span>: Eleutherozid B (%0,5), sinapil alkol, klorojenik asit. Kumarinler, saponinler, polisakkaritler.</p>
+<h3>Endikasyon / Dozaj</h3>
+<p>Ginseng ile aynı endikasyonlar: Azalmış mental/fiziksel kapasite, nekahat dönemi. Günlük 1-2 ml sıvı ekstre (1:1, %40 EtOH) veya 65-195 mg kuru ekstre veya 2-3 g droga eşdeğer preparatlar. <span class="warn">Yüksek tansiyonda kan basıncını artırabilir.</span></p>
+</div>
+
+<div class="tb"><h2>26. Viscum album (Ökse otu — European mistletoe)</h2>
+<p><span class="tag">Drog: Visci herba</span><span class="tag">Familya: Loranthaceae</span><span class="tag">Kayıt: DAB</span></p>
+<p>Drog: Tam veya parçalanarak kurutulmuş yapraklı dallar.</p>
+<h3>Bileşikler</h3>
+<p>Etkin bileşikler: <span class="hl">Lektinler (ML I, ML II, ML III)</span> — ribozomları inaktive eden glikoproteinler; A ve B peptit zincirleri (B zinciri galaktoza spesifik bağlanır). <span class="hl">Viskotoksinler</span> (46 aminoasitli oligopeptitler). Flavonoid glikozitleri, fenilpropanoitler, lignanlar, biyojen aminler (tiramin), polisakkaritler.</p>
+<h3>Endikasyon</h3>
+<p>İnfüzyon halinde yüksek tansiyon. Özel ekstreler: <span class="hl">Kanser dahil tümör tedavisinde destekleyici</span>; dejeneratif eklem inflamasyonunda intradermal injeksiyon. İnjektabl preparatlar. Kontrendike: Protein hipersensitivitesi, tüberküloz, kronik ilerleyen enfeksiyon hastalıkları.</p>
+</div>
+
+</div><!-- /sec-ozet -->
+
+<!-- ===== TEST ===== -->
+<div class="section" id="sec-test">
+<div class="hero"><h1>Test Soruları</h1><div class="sub">40 Soru — Çoktan Seçmeli</div></div>
+<div id="qc"></div>
+</div>
+
+<!-- ===== CEVAP ===== -->
+<div class="section" id="sec-cevap">
+<div class="hero"><h1>Cevap Anahtarı</h1><div class="sub">40 Sorunun Doğru Cevapları ve Açıklamaları</div></div>
+<div class="ag" id="ag"></div>
+<div id="el"></div>
+</div>
+
+<script>
+function S(id){document.querySelectorAll('.section').forEach(s=>s.classList.remove('active'));document.querySelectorAll('.topnav a').forEach(a=>a.classList.remove('active'));document.getElementById('sec-'+id).classList.add('active');document.getElementById('nav-'+id).classList.add('active');window.scrollTo({top:0,behavior:'smooth'})}
+
+const Q=[
+{q:"Uvae ursi folium drogunda EP'ye göre en az ne kadar anhidroarbutin bulunmalıdır?",o:["%3","%5","%7","%10"],a:2},
+{q:"Ayıüzümü drogunun etkin bileşikleri hangi yapıdadır?",o:["Flavonoid","Hidrokinon","Terpenoid","Alkaloid"],a:1},
+{q:"Uvae ursi folium tedavisinde idrarın hangi hale getirilmesi etkiyi artırır?",o:["Asidik","Alkali","Nötral","Hipertonik"],a:1},
+{q:"Uvae ursi folium en fazla ne kadar süre kullanılmalıdır?",o:["1 hafta","2 hafta","4 hafta","6 hafta"],a:1},
+{q:"Cranberry (Vaccinium macrocarpon) hangi amaçla kullanılır?",o:["İdrar yolu enfeksiyonu tedavisi","İdrar yolu enfeksiyonlarına karşı koruma","Böbrek taşı tedavisi","Prostat büyümesi tedavisi"],a:1},
+{q:"Cranberry suyunun etkileşme riski bulunan ilaç hangisidir?",o:["Metformin","Varfarin","Amoksisilin","Omeprazol"],a:1},
+{q:"Betulae folium drogundaki ana flavonoid bileşen hangisidir?",o:["Rutin","Viteksin","Hiperozit","Kersetin"],a:2},
+{q:"Huş ağacı yapraklarının idrar yollarındaki etkisi nedir?",o:["Antiseptik","Diüretik","Spazmolitik","Analjezik"],a:1},
+{q:"İyi huylu prostat büyümesinde kullanılan Serenoa repens hangi familyaya aittir?",o:["Lamiaceae","Arecaceae","Urticaceae","Cucurbitaceae"],a:1},
+{q:"Saw palmetto drogundaki önemli sterol bileşeni hangisidir?",o:["Stigmasterol","Campesterol","β-sitosterol","Ergosterol"],a:2},
+{q:"BPH semptomatik tedavisinde kullanılan miksiyon rahatsızlıkları arasında hangisi YOKTUR?",o:["Dizüri","Pollaküri","Hematüri","Noktüri"],a:2},
+{q:"Urticae radix drogundaki lektin bileşiğinin adı nedir?",o:["UDA (Urtica dioica agglutinin)","URA","Viskotoksin","ML I"],a:0},
+{q:"Cucurbitae semen drogundaki etkin bileşik grubu hangisidir?",o:["Flavonoitler","Alkaloidler","Fitosterollar","Saponinler"],a:2},
+{q:"Kabak çekirdeğindeki ana Δ7 sterol bileşeni hangisidir?",o:["β-sitosterol","Stigmasterol","Spinasterol","Campesterol"],a:2},
+{q:"Vitex agnus-castus hangi rahatsızlıkların tedavisinde kullanılır?",o:["Menopoz şikayetleri","PMS ve menstrüal siklus rahatsızlıkları","İdrar yolu enfeksiyonları","Prostat büyümesi"],a:1},
+{q:"Agni casti fructus drogunda en az ne kadar kastisin bulunmalıdır?",o:["%0,02","%0,05","%0,08","%0,1"],a:2},
+{q:"Hayıt meyvesi tedavisine en az ne kadar süre devam edilmelidir?",o:["1 ay","2 ay","3 ay","6 ay"],a:2},
+{q:"Cimicifugae rhizoma hangi endikasyonda kullanılır?",o:["PMS tedavisi","Menopoza bağlı şikayetler","İdrar yolu enfeksiyonu","Prostat büyümesi"],a:1},
+{q:"Black cohosh drogundaki karakteristik bileşik grubu hangisidir?",o:["İzoflavonoitler","Sikloartan tipi triterpen glikozitler","İridoit glikozitleri","Kumarin türevleri"],a:1},
+{q:"Cimicifuga rhizoma doktor tavsiyesi olmadan en fazla ne kadar süre kullanılmalıdır?",o:["3 ay","6 ay","9 ay","12 ay"],a:1},
+{q:"Trifolium pratense'nin etkin bileşikleri olan izoflavonoitlerden hangisi DEĞİLDİR?",o:["Genistein","Daidzein","Kastisin","Formononetin"],a:2},
+{q:"Kızıl yonca drogunda en az ne kadar izoflavonoid bulunmalıdır?",o:["%0,1","%0,3","%0,5","%1,0"],a:2},
+{q:"Calendula flos drogunun EP'ye göre en az ne kadar flavonoid taşıması gerekir?",o:["%0,2","%0,4","%0,6","%0,8"],a:1},
+{q:"Calendula flos drogundaki triterpen alkol esteri hangisidir?",o:["Helenalin tiglat","Faradiol 3-monoester","Allantoin","Harpagozit"],a:1},
+{q:"Achillea millefolium'un neden olabildiği istenmeyen etki hangisidir?",o:["Hepatotoksisite","Kontak dermatit","Nefrotoksisite","Ototoksisite"],a:1},
+{q:"Tea tree oil'in ana bileşeni hangisidir?",o:["1,8-sineol","Timol","Terpinen-4-ol","Linalool"],a:2},
+{q:"Melaleuca aetheroleum hangi enfeksiyonlarda kullanılır?",o:["Sadece bakteriyel","Sadece viral","Bakteriyel ve fungal","Sadece fungal"],a:2},
+{q:"Hamamelidis folium'un ana etkin bileşik grubu hangisidir?",o:["Alkaloidler","Saponinler","Tanenler","Kumarinler"],a:2},
+{q:"Arnicae flos drogundaki ana seskiterpen lakton bileşeni hangisidir?",o:["Partenolit","Helenalin","Ahillin","Sinaropikrin"],a:1},
+{q:"Arnica çiçeği drogu hangi yolla kullanılır?",o:["Sadece dahilen","Sadece haricen","Hem dahilen hem haricen","İntravenöz"],a:1},
+{q:"Symphyti radix drogundaki karakteristik bileşik hangisidir?",o:["Kapsaisin","Allantoin","Harpagozit","Salisin"],a:1},
+{q:"Karakafes otu drogundaki pirolizidin alkaloiti günlük dozda ne kadardan fazla olmamalıdır?",o:["50 μg","100 μg","200 μg","500 μg"],a:1},
+{q:"Harpagophytum procumbens drogundaki ana etkin madde hangisidir?",o:["Salisin","Kapsaisin","Harpagozit","Boswellik asit"],a:2},
+{q:"Şeytanpençesi drogunda harpagozit hangi bileşik sınıfına aittir?",o:["Flavonoid","Triterpen","İridoit glikozit","Kumarin"],a:2},
+{q:"Salicis cortex drogunda çocuklarda kullanımın tavsiye edilmeme nedeni nedir?",o:["Hepatotoksisite","REYE sendromu riski","Nefrotoksisite","Kardiyotoksisite"],a:1},
+{q:"Boswellia serrata drogundaki AKBA ne tür bir bileşiktir?",o:["Flavonoid","Pentasiklik triterpenik asit","İridoit glikozit","Seskiterpen lakton"],a:1},
+{q:"Capsici fructus'un ana etkin bileşeni hangisidir?",o:["Piperin","Kapsaisin","Kapsantin","Kapsikol"],a:1},
+{q:"Panax ginseng drogundaki etkin bileşikler hangi gruba aittir?",o:["Alkaloidler","Flavonoitler","Dammaran tip triterpen saponinler","Kumarin türevleri"],a:2},
+{q:"Viscum album drogundaki ribozomları inaktive eden glikoproteinlere ne ad verilir?",o:["Viskotoksinler","Lektinler (ML I, II, III)","Panaksanlar","Ginsenozitler"],a:1},
+{q:"Eleutherococcus senticosus için özel uyarı olan durum hangisidir?",o:["Diyabet","Yüksek tansiyon","Böbrek yetmezliği","Karaciğer yetmezliği"],a:1}
+];
+
+const E=[
+"EP'ye göre Uvae ursi folium en az %7 anhidroarbutin taşımalıdır.",
+"Ayıüzümü drogunun etkin bileşikleri hidrokinon yapısında arbutin ve metil arbutin'dir.",
+"Tedavide idrarı alkali hale getirecek diyet katkıları sinerjistik etkilidir.",
+"Uvae ursi folium en fazla 2 hafta kullanılmalıdır.",
+"Cranberry idrar yolları enfeksiyonlarına karşı koruma (profilaksi) amacıyla kullanılır.",
+"Cranberry suyunun varfarin ile etkileşme riski vardır (VKORC1 genotipik hastalara özel).",
+"Betulae folium'un ana flavonoid bileşeni hiperozittir.",
+"Huş ağacı yaprakları diüretik etki ile idrar yollarını temizler.",
+"Serenoa repens (Cüce palmiye) Arecaceae familyasına aittir.",
+"Saw palmetto drogundaki önemli sterol β-sitosteroldür.",
+"Hematüri BPH miksiyon rahatsızlıkları arasında değildir; idrarda kan görülmesi halinde hekime danışılmalıdır.",
+"Urticae radix'teki lektin UDA (Urtica dioica agglutinin) adını taşır.",
+"Cucurbitae semen'in etkin bileşikleri fitosterollardır.",
+"Kabak çekirdeğindeki ana Δ7 sterol spinasteroldür.",
+"Vitex agnus-castus PMS ve menstrüal siklus rahatsızlıklarında kullanılır.",
+"Agni casti fructus en az %0,08 kastisin taşımalıdır.",
+"Hayıt tedavisine en az 3 ay devam edilmelidir.",
+"Cimicifugae rhizoma menopoza bağlı şikayetlerin tedavisinde kullanılır.",
+"Black cohosh'un karakteristik bileşikleri sikloartan tipi triterpen glikozitleridir.",
+"Cimicifuga rhizoma doktor tavsiyesi olmadan 6 aydan uzun süre kullanılmamalıdır.",
+"Kastisin bir lipofilik flavonoittir ve Vitex agnus-castus'a aittir, Trifolium pratense'ye değil.",
+"Trifolii flos en az %0,5 izoflavonoid taşımalıdır.",
+"Calendula flos EP'ye göre en az %0,4 flavonoid taşımalıdır.",
+"Faradiol 3-monoester Calendula flos'taki esterleşmiş triterpen alkoldür.",
+"Achillea millefolium'da α-metilen-γ-lakton içeren seskiterpenler kontak dermatite neden olabilir.",
+"Tea tree oil'in ana bileşeni terpinen-4-ol'dür (%30'dan fazla).",
+"Melaleuca aetheroleum bakteriyel ve fungal deri enfeksiyonlarında kullanılır.",
+"Hamamelidis folium'un ana etkin bileşikleri tanenlerdir (%5-10).",
+"Arnicae flos'un ana seskiterpen lakton bileşeni helenal indir.",
+"Arnica çiçeği sadece haricen kullanılır.",
+"Symphyti radix'in karakteristik bileşiği allantoindir (%0,6-4,7).",
+"Karakafes otu günlük dozunda 100 μg'dan fazla pirolizidin alkaloiti olmamalıdır.",
+"Harpagophyti radix'in ana etkin maddesi harpagozittir (%1-3).",
+"Harpagozit bir iridoit glikozittir.",
+"Salicis cortex'teki salisilik asit türevleri nedeniyle çocuklarda REYE sendromu riski vardır.",
+"AKBA (asetil-11-keto-β-boswellik asit) bir pentasiklik triterpenik asittir.",
+"Capsici fructus'un ana etkin bileşeni kapsaisindir (%63-73).",
+"Panax ginseng'in etkin bileşikleri dammaran tip triterpen saponinler (ginsenozitler) dir.",
+"Viscum album'daki lektinler (ML I, ML II, ML III) ribozomları inaktive eden glikoproteinlerdir.",
+"Eleutherococcus senticosus yüksek tansiyonlu hastalarda kan basıncını artırabilir."
+];
+
+const L=['A','B','C','D'];
+const qc=document.getElementById('qc');
+Q.forEach((item,i)=>{let o='';item.o.forEach((opt,j)=>{o+=`<label><input type="radio" name="q${i}" value="${j}"> <span>${L[j]}) ${opt}</span></label>`});qc.innerHTML+=`<div class="qc"><div class="qt"><div class="qn">${i+1}</div><span>${item.q}</span></div><div class="opts">${o}</div></div>`});
+
+const ag=document.getElementById('ag');
+const el=document.getElementById('el');
+Q.forEach((item,i)=>{ag.innerHTML+=`<div class="ac"><div class="an">Soru ${i+1}</div><div class="al">${L[item.a]}</div></div>`;el.innerHTML+=`<div class="ei"><strong>Soru ${i+1} — ${L[item.a]})</strong> ${E[i]}</div>`});
+</script>
+</body>
+</html>

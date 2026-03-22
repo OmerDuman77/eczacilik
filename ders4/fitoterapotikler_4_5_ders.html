@@ -1,0 +1,633 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Fitoterapötikler 4-5. Ders — KVS & Solunum</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700;800&family=Source+Sans+3:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#10131a;--bg-card:#161b25;--bg-card-alt:#1b2230;--accent:#6db8e8;--accent-dim:#3d7fad;--accent-glow:rgba(109,184,232,.14);--text:#e4eaf0;--text-dim:#97a5b3;--text-muted:#627080;--border:#252f3d;--danger:#e87676;--gold:#d4a853;--rose:#d4739a;--green:#7dd3a0}
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'Source Sans 3',sans-serif;background:var(--bg);color:var(--text);line-height:1.7;overflow-x:hidden}
+.topnav{position:fixed;top:0;left:0;right:0;z-index:1000;background:rgba(16,19,26,.92);backdrop-filter:blur(20px);border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:center;height:60px}
+.topnav a{text-decoration:none;color:var(--text-dim);font-weight:600;font-size:.95rem;letter-spacing:.08em;text-transform:uppercase;padding:18px 36px;transition:all .3s;position:relative;cursor:pointer}
+.topnav a::after{content:'';position:absolute;bottom:0;left:50%;transform:translateX(-50%);width:0;height:2px;background:var(--accent);transition:width .3s;border-radius:2px}
+.topnav a:hover,.topnav a.active{color:var(--accent)}
+.topnav a:hover::after,.topnav a.active::after{width:60%}
+.logo-area{position:absolute;left:28px;display:flex;align-items:center;gap:10px}
+.logo-area span{font-family:'Playfair Display',serif;font-weight:700;color:var(--accent);font-size:1.05rem}
+.section{display:none;padding:90px 20px 60px;max-width:960px;margin:0 auto;animation:fadeIn .4s ease}
+.section.active{display:block}
+@keyframes fadeIn{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:translateY(0)}}
+.hero{text-align:center;margin-bottom:50px;padding:40px 0 30px}
+.hero h1{font-family:'Playfair Display',serif;font-size:2.6rem;font-weight:800;background:linear-gradient(135deg,var(--accent),var(--rose));-webkit-background-clip:text;-webkit-text-fill-color:transparent;margin-bottom:10px}
+.hero .sub{color:var(--text-dim);font-size:1.05rem;font-weight:300}
+.topic-block{background:var(--bg-card);border:1px solid var(--border);border-radius:14px;padding:32px 36px;margin-bottom:28px;position:relative;overflow:hidden}
+.topic-block::before{content:'';position:absolute;top:0;left:0;width:4px;height:100%;background:linear-gradient(180deg,var(--accent),var(--accent-dim));border-radius:4px 0 0 4px}
+.topic-block h2{font-family:'Playfair Display',serif;font-size:1.55rem;font-weight:700;color:var(--accent);margin-bottom:16px;padding-left:8px}
+.topic-block h3{font-size:1.1rem;font-weight:600;color:var(--gold);margin:18px 0 8px}
+.topic-block p,.topic-block li{color:var(--text);font-size:.96rem;line-height:1.8}
+.topic-block ul{padding-left:20px;margin:6px 0}
+.topic-block li{margin-bottom:4px}
+.topic-block li::marker{color:var(--accent-dim)}
+.hl{color:var(--accent);font-weight:600}
+.warn{color:var(--danger);font-weight:600}
+.rose{color:var(--rose);font-weight:600}
+.grn{color:var(--green);font-weight:600}
+.info-tag{display:inline-block;background:var(--accent-glow);color:var(--accent);font-size:.8rem;font-weight:600;padding:3px 10px;border-radius:20px;margin:2px 4px 2px 0;letter-spacing:.02em}
+.drug-table{width:100%;border-collapse:collapse;margin:14px 0;font-size:.9rem}
+.drug-table th{background:var(--bg-card-alt);color:var(--accent);padding:10px 14px;text-align:left;font-weight:600;border-bottom:2px solid var(--border)}
+.drug-table td{padding:9px 14px;border-bottom:1px solid var(--border);color:var(--text)}
+.drug-table tr:hover td{background:rgba(109,184,232,.04)}
+.question-card{background:var(--bg-card);border:1px solid var(--border);border-radius:12px;padding:24px 28px;margin-bottom:20px;transition:border-color .3s}
+.question-card:hover{border-color:var(--accent-dim)}
+.q-number{display:inline-flex;align-items:center;justify-content:center;width:32px;height:32px;background:var(--accent-glow);color:var(--accent);font-weight:700;font-size:.85rem;border-radius:50%;margin-right:10px;flex-shrink:0}
+.q-text{font-weight:600;font-size:1rem;color:var(--text);margin-bottom:14px;display:flex;align-items:flex-start}
+.q-text span{padding-top:4px}
+.options{padding-left:42px}
+.options label{display:flex;align-items:flex-start;gap:8px;padding:7px 12px;border-radius:8px;cursor:pointer;transition:background .2s;font-size:.94rem;color:var(--text-dim)}
+.options label:hover{background:rgba(109,184,232,.06);color:var(--text)}
+.options input[type="radio"]{accent-color:var(--accent);margin-top:3px;flex-shrink:0}
+.answer-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(110px,1fr));gap:10px;margin:30px 0}
+.answer-cell{background:var(--bg-card);border:1px solid var(--border);border-radius:10px;padding:12px;text-align:center;transition:transform .2s,border-color .2s}
+.answer-cell:hover{transform:translateY(-2px);border-color:var(--accent-dim)}
+.answer-cell .anum{font-size:.75rem;color:var(--text-muted);font-weight:600;margin-bottom:4px}
+.answer-cell .aletter{font-size:1.2rem;font-weight:700;color:var(--accent)}
+.exp-item{background:var(--bg-card);border-left:3px solid var(--accent-dim);padding:14px 20px;margin-bottom:12px;border-radius:0 10px 10px 0;font-size:.93rem;color:var(--text-dim)}
+.exp-item strong{color:var(--accent)}
+@media(max-width:700px){.topnav a{padding:16px 16px;font-size:.8rem}.logo-area{display:none}.hero h1{font-size:1.8rem}.topic-block{padding:22px 20px}.section{padding:80px 14px 40px}.answer-grid{grid-template-columns:repeat(auto-fill,minmax(80px,1fr))}}
+</style>
+</head>
+<body>
+
+<nav class="topnav">
+<div class="logo-area"><span>🫀 Fitoterapötikler 4-5</span></div>
+<a href="#" onclick="showSection('ozet')" id="nav-ozet" class="active">Özet</a>
+<a href="#" onclick="showSection('test')" id="nav-test">Test Soruları</a>
+<a href="#" onclick="showSection('cevap')" id="nav-cevap">Cevap Anahtarı</a>
+</nav>
+
+<!-- ==================== ÖZET ==================== -->
+<div class="section active" id="sec-ozet">
+<div class="hero">
+<h1>Fitoterapötikler — 4. & 5. Ders</h1>
+<div class="sub">Kardiyovasküler Sisteme & Solunum Sistemine Etkili Fitoterapötikler</div>
+</div>
+
+<!-- KVS GİRİŞ -->
+<div class="topic-block">
+<h2>1. Kardiyovasküler Sisteme Etkili Fitoterapötikler — Genel</h2>
+<p>Bu ders 3 ana başlık altında incelenir:</p>
+<ul>
+<li><span class="hl">Konjestif kalp yetmezliğinde (KKY)</span> kullanılan fitoterapötikler</li>
+<li><span class="hl">Antiaterosklerotik</span> etkili fitoterapötikler</li>
+<li><span class="hl">Venöz yetersizlikte</span> etkili fitoterapötikler</li>
+</ul>
+
+<h3>Konjestif Kalp Yetmezliği (KKY)</h3>
+<p>Özellikle 65 yaş üstünde en çok hastaneye yatış nedenidir. Kalp fonksiyonlarının giderek azalması sonucu organlara yeterince oksijen sağlanamamasıdır. İlerleyen ventriküler sistolik ve diastolik fonksiyon bozukluğu; solgun görünüm, siyanozis, taşikardi, nefes darlığı, aritmi, kalp büyümesi gibi semptomlarla kendini gösterir.</p>
+<p>Tedavi amacı: Kalbin gücünü artırmak → <span class="hl">pozitif inotropik</span>, diüretik ve vazodilatör etkili droglar kullanılır.</p>
+</div>
+
+<!-- CRATAEGUS -->
+<div class="topic-block">
+<h2>2. Crataegus monogyna / C. laevigata (Alıç — Hawthorn)</h2>
+<p><span class="info-tag">Drog: Crataegi folium cum flores / Crataegi fructus</span> <span class="info-tag">Familya: Rosaceae</span> <span class="info-tag">Kayıt: ESCOP, Commission E, WHO</span></p>
+<p>Drog: Kurutulmuş yapraklı çiçekli dal uçları ve kurutulmuş olgunlaşmamış meyveler.</p>
+
+<h3>Crataegi folium cum flores — Bileşikler</h3>
+<ul>
+<li><span class="hl">Flavonoitler</span> (total %2'ye kadar): Hiperozit, viteksin, viteksin 2''-ramnozit, asetilviteksin-2''-ramnozit, rutin. EP: Drogda en az %1,5 flavonoid (hiperozit üzerinden).</li>
+<li><span class="hl">Prosiyanidinler</span>: Kateşin ve/veya epikateşinin polimerizasyonu ile oluşan oligomerler (2-8 monomerik ünite), miktarları %3'e kadar.</li>
+<li>Triterpenler (ursolik, oleanolik, krategolik asitler), fenolik asitler (kafeik asit).</li>
+</ul>
+
+<h3>Crataegi fructus — Bileşikler</h3>
+<ul>
+<li>Çiçekli dal uçlarına benzer içerik. <span class="hl">Prosiyanidinler</span> (total %3'e kadar, başta epikateşin oligomerleri). EP: En az %1 prosiyanidin (siyanidin klorür üzerinden).</li>
+<li>Epikateşin %1 kadar, flavonoitler total %0,2'ye kadar.</li>
+<li>Triterpenler ve fenolik asitler (klorojenik ve kafeik asit).</li>
+</ul>
+
+<h3>Farmakolojik Etkiler</h3>
+<p>Etkinin kaynağı <span class="hl">flavonoitler, kateşinler ve prosiyanidin türevleridir</span>. Aritmi inhibisyonu, kalp damarlarını genişletir, KKY ve angina pektoris semptomlarını azaltır, periferal kan damarlarını genişleterek tansiyonu düşürür, kan kolesterol ve trigliserit seviyelerini düşürür.</p>
+<p>Kalp kuvvetlendirici etkisi: <span class="hl">Siklik AMP fosfodiesterazı inhibe ederek pozitif inotropik etki</span> oluşturmasından kaynaklanır.</p>
+
+<h3>Endikasyonlar</h3>
+<ul>
+<li><span class="hl">Folium cum flores</span>: Hafif ve orta derece kalp fonksiyonu kayıplarında sulu-alkol ekstreleri; sinirsel kalp rahatsızlıklarında, kalp ve dolaşım fonksiyonlarını desteklemede.</li>
+<li><span class="hl">Fructus</span>: Kalp ile ilgili şikayetlerin tedavisinde kalp ve dolaşım sistemi fonksiyonlarını destekleyici.</li>
+</ul>
+
+<h3>Dozaj (Folium cum flores)</h3>
+<p>Oligomerik prosiyanidinler ya da flavonoid içeriğine göre standardize sulu-alkol ekstrelerinden günde <span class="hl">160-900 mg</span>. Bitkisel çaylar: 1-1,5 g drogdan infüzyon günde 3-4 defa.</p>
+
+<h3>Dozaj (Fructus)</h3>
+<p>Sulu-alkollü ekstreler günde 2-2,5 ml. Toz meyve günde 3 defa 0,3-1 g. Sıvı ekstre (1:1, %25 EtOH) günde 3 defa 0,5-1 ml. Tentür (1:5, %45 EtOH) günde 3 defa 1-2 ml.</p>
+
+<h3>Kullanım Uyarıları</h3>
+<p>Hamileler ve emzirenlerde kullanılmamalı. Kalp rahatsızlığında 6 hafta sonra değişiklik yoksa veya bacaklarda su toplanması gözlenirse hekime danışılmalı. <span class="warn">Kalp krizi belirtilerinde acil tıbbi müdahale!</span></p>
+</div>
+
+<!-- ATEROSKLEROZ -->
+<div class="topic-block">
+<h2>3. Aterosklerozis — Genel Bilgi</h2>
+<p><span class="hl">Hiperlipidemi</span>: Lipit bileşenlerinin kanda normal düzeylerin üzerinde bulunmasıdır. Plazma lipitleri: trigliseritler, fosfolipitler, kolesterol, kolesterol esterleri ve serbest yağ asitleri. Serbest yağ asitleri dışında kalan lipitler proteinlere bağlanarak (lipoproteinler) taşınır.</p>
+<p>Hiperlipidemi sonucu <span class="hl">aterom</span> (lipitçe zengin oluşumlar) arterlerin iç duvarına yerleşir ve kan akışını engeller. Tedavide kolesterolü düşürmek ve <span class="hl">HDL seviyesini artırmak</span> gerekir.</p>
+</div>
+
+<!-- ALLIUM SATIVUM -->
+<div class="topic-block">
+<h2>4. Allium sativum L. (Sarımsak — Garlic)</h2>
+<p><span class="info-tag">Drog: Allii Sativi bulbus</span> <span class="info-tag">Familya: Amaryllidaceae</span> <span class="info-tag">Kayıt: ESCOP, Commission E, WHO</span></p>
+<p>Drog: 65°C'yi geçmeyen sıcaklıkta kurutulmuş (veya liyofilize) soğan veya soğan dişlerinin toz haline getirilmesi ile hazırlanır. EP: En az %0,45 allisin.</p>
+
+<h3>Bileşikler</h3>
+<ul>
+<li>Ana kükürt taşıyan aminoasit: <span class="hl">Alliin</span> [(+)-S-allil-L-sistein sülfoksit] yaklaşık %1 oranında.</li>
+<li>Ayrıca (+)-S-metil-L-sistein sülfoksit, S-allilsistein, γ-L-glutamil peptitler, aminoasitler, steroidler.</li>
+<li><span class="hl">Alliinaz</span> enzimi ile alliin → <span class="hl">allisin</span>'e dönüşür.</li>
+<li>Allisin farklı koşullarda → <span class="hl">ajoen, vinildithiin, oligosülfitler, polisülfit</span> bileşiklerine dönüşür.</li>
+</ul>
+
+<h3>Farmakolojik Etkiler</h3>
+<p>Antiaterojenik, hipolipidemik, antihipertansif, vazodilatör, <span class="hl">platelet agregasyon faktörü inhibitörü</span>, antibakteriyel, antifungal, antiviral, antihepatotoksik ve antioksidan. Etkilerin kaynağı: Allisin ve dönüşüm ürünleri (ajoen, vinildithiin vb.).</p>
+
+<h3>Endikasyonlar</h3>
+<p>Ateroskleroza karşı proflaktik ve diyetle düzenlenemeyen yüksek kan lipit düzeylerini düşürmek. Üst solunum yolları enfeksiyonları tedavisi.</p>
+
+<h3>Dozaj</h3>
+<p>Ateroskleroz önleme: Günlük 6-10 mg alliin'e (≈3-5 mg allisin) karşılık gelen <span class="hl">0,5-1 g drog</span> (≈1 diş sarımsak). ÜSY enfeksiyonlarında: 2-4 g drog veya 2-4 ml tentür günde 3 defa. Uzun süreli kullanım tavsiye edilir.</p>
+<p>Yan etkiler: Nadiren GI iritasyon ve alerjik reaksiyonlar.</p>
+</div>
+
+<!-- CYNARA -->
+<div class="topic-block">
+<h2>5. Cynara scolymus L. (Enginar — Artichoke)</h2>
+<p><span class="info-tag">Drog: Cynarae folium</span> <span class="info-tag">Familya: Asteraceae</span> <span class="info-tag">Kayıt: ESCOP, Commission E, WHO</span></p>
+<p>Drog: Parçalanmış ya da bütün halde kurutulmuş yapraklar. EP: En az %0,8 klorojenik asit.</p>
+
+<h3>Bileşikler</h3>
+<ul>
+<li><span class="hl">Kafeoilkinik asit türevleri</span>: Klorojenik asit, 1,5 dikafeoilkinik asit. Drogda <span class="hl">sinarin</span> (1,3 dikafeoilkinik asit) eser miktarda; sulu ekstre hazırlanırken 1,5 dikafeoilkinik asitin izomerleşmesi ile ekstrede sinarin oluşur.</li>
+<li><span class="hl">Flavonoitler</span>: Luteolin-7-glikozit (sinarozit), luteolin-7-rutinozit (skolimozit), serbest luteolin.</li>
+<li>Acı tadı veren <span class="hl">seskiterpen laktonlar</span> (özellikle sinaropikrin), alifatik hidroksi asitler, kafeik asit.</li>
+</ul>
+
+<h3>Endikasyonlar</h3>
+<p>Sindirim sistemi şikayetleri (karın ağrısı, bulantı, kusma, gaz) ve karaciğer/safra sorunları. Hafif ve orta şiddette hiperlipidemi tedavisinde az yağlı diyetle birlikte destek.</p>
+
+<h3>Dozaj</h3>
+<p>Yetişkinlerde günlük doz: 5-10 g kuru yaprağa tekabül eden kurutulmuş sulu ekstre veya infüzyon, ya da eşdeğer fitofarmasötik. 4 yaş üstü çocuklarda vücut ağırlığına göre. Hamile ve emzirenlerde doktor kontrolünde.</p>
+</div>
+
+<!-- VENÖZ YETERSİZLİK GİRİŞ -->
+<div class="topic-block">
+<h2>6. Venöz Yetersizlikte Kullanılan Fitoterapötikler — Genel</h2>
+<p>Bu grupta kronik venöz yetmezlik, varis, hemoroid tedavisinde kullanılan bitkisel droglar yer alır.</p>
+</div>
+
+<!-- AESCULUS -->
+<div class="topic-block">
+<h2>7. Aesculus hippocastanum L. (Atkestanesi — Horse chestnut)</h2>
+<p><span class="info-tag">Drog: Hippocastani semen</span> <span class="info-tag">Familya: Sapindaceae</span> <span class="info-tag">Kayıt: ESCOP, Commission E, WHO</span></p>
+<p>Drog: Kurutulmuş tohumlar. EP: En az %3 total triterpen glikozitler (anhidro essin üzerinden).</p>
+
+<h3>Bileşikler</h3>
+<ul>
+<li><span class="hl">Essin</span> (%3-10): Açillenmiş triterpen glikozit (saponinler) karışımları. Sapogenin iki ana bileşikten oluşur: <span class="hl">protoessigenin</span> ve <span class="hl">barrintogenol C</span>. Essin karışımı 30'dan fazla glikozit taşır.</li>
+<li>Flavonoitler (kersetin ve kemferol glikozitleri), UY ve yüksek oranda nişasta.</li>
+</ul>
+
+<h3>Endikasyonlar</h3>
+<p><span class="hl">Kronik venöz yetersizlik, hemoroid, varikoz damar tedavisi (Varis).</span></p>
+
+<h3>Dozaj</h3>
+<p>Yetişkinlerde 50-150 mg triterpen glikoziti içeren miktara eşdeğer (essin üzerinden hesaplanmış) drog veya hidroalkolik ekstre. Çocuklarda kullanılmaz. Hamile ve emzirenlerde doktor gözetiminde. Yan etkiler: Nadiren GI iritasyon veya pruritus.</p>
+</div>
+
+<!-- VACCINIUM -->
+<div class="topic-block">
+<h2>8. Vaccinium myrtillus L. (Yaban mersini — Bilberry)</h2>
+<p><span class="info-tag">Drog: Myrtilli fructus</span> <span class="info-tag">Familya: Ericaceae</span> <span class="info-tag">Kayıt: ESCOP, Commission E, WHO</span></p>
+<p>Drog: Taze (veya dondurulmuş) ya da kurutulmuş olgun meyveler. EP: Taze meyvede en az %0,3 antosiyanin (siyanidin 3-glikozit klorür üzerinden); kuru meyvede en az %1 tanen (pirogallol üzerinden).</p>
+
+<h3>Bileşikler</h3>
+<ul>
+<li><span class="hl">Antosiyaninler</span>: Kurutulmuş meyvede %0,5 antosiyanozitler.</li>
+<li>Tanenler, hidroksisinnamik ve benzoik asitler, <span class="hl">flavonol glikozitleri</span> (kersetin, kemferol), flavan-3-ol türevleri, iridoitler, terpenler, pektinler.</li>
+</ul>
+
+<h3>Endikasyonlar</h3>
+<p>Antosiyanin zenginleştirilmiş ekstreler: Varis ve venöz yetersizlikten kaynaklanan bacak ağrılarının semptomatik tedavisi, <span class="hl">diyabetik retinopati</span> tedavisi. Kurutulmuş meyve: Akut diyare desteği. Haricen: Orta dereceli ağız ve boğaz inflamasyonu.</p>
+
+<h3>Dozaj</h3>
+<p>Günde 320-480 mg standardize yaban mersini meyvesi ekstresi (%36 antosiyanin içeren). Kurutulmuş meyve günde 20-60 g. Haricen: %10'luk dekoksiyon.</p>
+</div>
+
+<!-- RUSCUS -->
+<div class="topic-block">
+<h2>9. Ruscus aculeatus L. (Tavşan kirazı — Butcher's broom)</h2>
+<p><span class="info-tag">Drog: Rusci rhizoma</span> <span class="info-tag">Familya: Asparagaceae</span> <span class="info-tag">Kayıt: ESCOP, Commission E, WHO</span></p>
+<p>Drog: Kurutulmuş toprak altı kısımları. EP: Total sapogeninler (ruskogenin + neoruskogenin karışımı) en az %1.</p>
+
+<h3>Bileşikler</h3>
+<p>Karakteristik etkin maddeler: <span class="hl">Ruskogenin ve neoruskogenin</span> olan ruskozit, ruskin, deglukoruskozit ve deglukoruskin gibi <span class="hl">saponinler</span>. Drogda az miktarda flavonoitler, antrakinonlar, benzofuran bileşikleri, UY ve steroller.</p>
+
+<h3>Endikasyonlar / Dozaj</h3>
+<p>Kronik venöz yetersizlikten kaynaklanan ağrılı, şişmiş bacaklar ve hemoroid semptomları. Yetişkinlerde günlük doz: 7-11 mg total ruskogenin miktarına karşılık gelen sıvı veya ekstre. Uzun süreli kullanım tavsiye edilir.</p>
+</div>
+
+<!-- CENTELLA -->
+<div class="topic-block">
+<h2>10. Centella asiatica (L.) Urban (Gotu kola)</h2>
+<p><span class="info-tag">Drog: Centella Asiaticae herba</span> <span class="info-tag">Familya: Apiaceae</span></p>
+<p>Drog: Kurutulmuş ve parçalanmış toprak üstü kısımlar. EP: En az %6 total triterpenoit türevleri (asiatikozit üzerinden).</p>
+
+<h3>Bileşikler</h3>
+<ul>
+<li>Ana etkin bileşikler: <span class="hl">Asiatik asit ve madekasik asit</span> gibi triterpen asitler ve bunların şekerlerle yaptığı <span class="hl">asiatikozit</span> ve <span class="hl">madekasozit</span> gibi esterler.</li>
+<li>Triterpenlerin miktarı %1'den %8'e kadar değişir.</li>
+<li>UY (%0,1), flavonoitler ve fitosterroller.</li>
+</ul>
+
+<h3>Endikasyonlar / Dozaj</h3>
+<p>Kronik venöz yetmezlik, varis tedavisi ve <span class="hl">yara iyileştirici</span>. Dahilen: 0,6 g kurutulmuş drog infüzyon veya ekstre halinde günde 4 defaya kadar. Haricen: %1 ekstre veya tentür içeren yarı katı preparatlar.</p>
+</div>
+
+<!-- MELILOTUS -->
+<div class="topic-block">
+<h2>11. Melilotus officinalis Desr. (Sarı yonca — Melilot)</h2>
+<p><span class="info-tag">Drog: Meliloti herba</span> <span class="info-tag">Familya: Fabaceae</span> <span class="info-tag">Kayıt: Fransız Farmakopesi</span></p>
+<p>Drog: Dal uçlarındaki çiçek durumlarının kurutulması ile elde edilir.</p>
+
+<h3>Bileşikler</h3>
+<ul>
+<li>Ana karakteristik bileşikler: <span class="hl">Kumarin türevleri</span>. Özellikle <span class="hl">melilozit</span> (drogda ≈%0,5). Bu bileşiğin hidroliz olup laktona dönüşmesi ile serbest kumarin oluşur.</li>
+<li><span class="hl">3,4-dihidrokumarin (melilotin), skopoletin ve umbelliferon</span>.</li>
+<li>Flavonol glikozitleri, triterpen saponinler, fenolik asitler.</li>
+<li>Dikkatli kurutulmuş drogda pterokarpan türevi <span class="warn">medikarpin ile dikumarol bulunmaz</span>.</li>
+</ul>
+
+<h3>Endikasyonlar / Dozaj</h3>
+<p>Kronik venöz yetersizlik, varis semptomları, bacaklarda gece krampları, kaşıntı ve şişlikler. Dahilen: Günde 3-30 mg kumarin içeren drog veya eşdeğer preparat. Haricen: Ekstre içeren yarı katı preparatlar. <span class="warn">Drog kumarin içerdiğinden antikoagülan ilaçlarla alındığında etkilerini artırabilir.</span></p>
+</div>
+
+<!-- SOLUNUM SİSTEMİ GİRİŞ -->
+<div class="topic-block">
+<h2>12. Solunum Sistemi Rahatsızlıklarında Kullanılan Fitoterapötikler — Genel</h2>
+<p>Solunum sistemi rahatsızlıkları genellikle virüslerin (grip, soğuk algınlığı), bazen bakterilerin neden olduğu; burun tıkanıklığı/akıntısı, boğaz ağrısı, öksürük (kuru/balgamlı), ateş, üşüme, titreme gibi semptomlarla kendini gösterir.</p>
+<p>Fitoterapide kullanılan yaklaşımlar:</p>
+<ul>
+<li>Antimikrobiyal-Antiviral</li>
+<li><span class="hl">Ekspektoran-Mukolitik</span></li>
+<li>Antiinflamatuvar-Dekonjestan</li>
+<li>Ateş düşürücü-Diyaforetik (terletici)</li>
+<li><span class="hl">İmmün sistemi uyaran (İmmünostimülan)</span> droglar</li>
+</ul>
+</div>
+
+<!-- GLYCYRRHIZA -->
+<div class="topic-block">
+<h2>13. Glycyrrhiza glabra L. (Meyan — Liquorice)</h2>
+<p><span class="info-tag">Drog: Liquiritiae radix</span> <span class="info-tag">Familya: Fabaceae</span> <span class="info-tag">Kayıt: ESCOP, Commission E, WHO</span></p>
+<p>Drog: Kabuğu soyulmuş veya soyulmadan kurutulmuş kök ve stolonlar.</p>
+
+<h3>Bileşikler</h3>
+<ul>
+<li>Ana etkin maddeler: <span class="hl">Triterpen glikozitler (saponinler %2-15)</span>. Ana bileşik <span class="hl">glisirizin</span> (glisiretik asitin 3-β-diglukuronid türevinin kalsiyum ve potasyum tuzları). EP: En az %4 glisirizik asit.</li>
+<li><span class="hl">Flavonoitler</span> (%1-2): Likuritin, glabrin gibi flavanon türevleri, izolikuritin gibi kalkon türevleri, izoflavonlar (glabren) ve glabridin (izoflavan).</li>
+<li>Kumarinler, polisakkaritler, az miktarda UY.</li>
+</ul>
+
+<h3>Endikasyonlar</h3>
+<ul>
+<li><span class="hl">Ekspektoran</span>: Aşırı mukus salgısı ile dolu bronşların tedavisi ve öksürük kesici.</li>
+<li>Gastrik ve duodenal ülserlerin, gastrit tedavisinde yardımcı.</li>
+</ul>
+
+<h3>Dozaj</h3>
+<p>Ekspektoran: Günlük 60-200 mg glisirizik asite karşılık gelen 1,5-5 g drog veya Standardize Meyan Etanolik Ekstresi. Ülser/gastrit: 200-600 mg glisirizik aside karşılık gelen 5-15 g drog. Çocuklarda (4+) sadece ekspektoran amaçla.</p>
+
+<h3>Kontrendikasyonlar</h3>
+<p><span class="warn">Doktor tavsiyesi olmadan 4-6 haftadan fazla kullanılmamalı!</span> Kardiyovasküler sorunlar, hipertansiyon, böbrek/karaciğer sorunları, hipokalemi ve aşırı kilolu bireylerde kullanılmamalı. Hamile ve emzirenlerde kullanılmamalı.</p>
+</div>
+
+<!-- HEDERA -->
+<div class="topic-block">
+<h2>14. Hedera helix L. (Duvar sarmaşığı — Ivy leaf)</h2>
+<p><span class="info-tag">Drog: Hedera Helicis folium</span> <span class="info-tag">Familya: Araliaceae</span> <span class="info-tag">Kayıt: ESCOP, Commission E</span></p>
+<p>Drog: Kurutulmuş yapraklar. Fransız Farmakopesine göre en az %2,5 hederasaponin C.</p>
+
+<h3>Bileşikler</h3>
+<ul>
+<li>Ana etkin bileşikler: <span class="hl">Triterpenik saponinler (%2,5-6)</span>. Özellikle hederageninin bidesmozidik glikozitleri: <span class="hl">Hederasaponin C (hederakozit C)</span>, hederasaponin B ve D.</li>
+<li>Fitosteroller, poliasetilenik bileşikler, UY, flavonoitler, fenolik asitler.</li>
+</ul>
+
+<h3>Endikasyonlar</h3>
+<p>Öksürük tedavisi, özellikle aşırı ve koyu mukus salgısı olan hallerde. Bronş rahatsızlıklarında yardımcı tedavi. Preparatlar çoğunlukla kurutulmuş hidroetanolik ekstrelerden hazırlanan şurup veya suppozituvar.</p>
+
+<h3>Dozaj</h3>
+<p>Oral kullanımda (drog miktarı üzerinden): Yetişkinlerde 250-420 mg. Çocuklarda yaş grubuna göre ayarlanır (1 yaş altı: 20-25 mg). Yan etkiler: Alerjik reaksiyon olabilir.</p>
+</div>
+
+<!-- PRIMULA -->
+<div class="topic-block">
+<h2>15. Primula veris L. / P. elatior (Çuha çiçeği — Cowslip)</h2>
+<p><span class="info-tag">Drog: Primulae radix</span> <span class="info-tag">Familya: Primulaceae</span> <span class="info-tag">Kayıt: EP, Commission E, WHO</span></p>
+<p>Drog: Kesilmiş ya da kurutulmuş rizom ve kökler.</p>
+
+<h3>Bileşikler</h3>
+<ul>
+<li>Karakteristik etkin maddeler: <span class="hl">Triterpen saponinler (%3-10)</span> ve fenolik glikozitler.</li>
+<li>Triterpen saponinler: Aglikonları protoprimulagenin ve benzer yapıda dallanmış tetrasakkarit türevleri.</li>
+<li><span class="hl">Fenolik glikozitler</span>: Aglikonu salisilik asitin 4- veya 5-metoksi türevi olan glikozitler; şeker kısmı <span class="hl">primverozit</span> adlı disakkarit.</li>
+</ul>
+
+<h3>Endikasyonlar / Dozaj</h3>
+<p>Kronik bronşit, üst solunum yollarının aşırı salgı nedeniyle tıkanıklığı ve balgamlı öksürük. Yetişkinlerde günlük 0,5-1,5 g drog dekoksiyon. Çocuklarda yaşa göre (4-10 yaş: 0,5-1 g). <span class="warn">Kontrendikasyon: Gastrit ve gastrik ülser.</span></p>
+</div>
+
+<!-- POLYGALA -->
+<div class="topic-block">
+<h2>16. Polygala senega L. (Yılan yoncası — Seneca snakeroot)</h2>
+<p><span class="info-tag">Drog: Polygalae radix</span> <span class="info-tag">Familya: Polygalaceae</span> <span class="info-tag">Kayıt: ESCOP, Commission E, WHO</span></p>
+<p>Drog: Kurutulmuş parçalanmış kökler.</p>
+
+<h3>Bileşikler</h3>
+<ul>
+<li>Karakteristik etkin bileşikler: <span class="hl">Bisdesmozidik saponinler</span> (presenegenin). Drogda %6-12 oranında. Sapogeninin C3 hidroksil grubuna glikozidik bağ ile β-glikoz, C-28 karboksil grubuna 4-6 oz molekülünden oluşan oligoholozit esterleşmiştir.</li>
+<li><span class="hl">Senegoz</span> denen oligosakkarit ve %0,2 oranında %25-45 <span class="hl">metil salisilattan</span> oluşan UY.</li>
+</ul>
+
+<h3>Endikasyonlar / Dozaj</h3>
+<p>Balgamlı öksürüğün aşırı salgı nedeniyle tıkanmış üst solunum yollarının ve kronik bronşitin tedavisi. Yetişkinlerde günlük 1,5-3 g drog. Çocuklarda sadece alkolsüz preparatlar. <span class="warn">Kontrendikasyon: Gastrit ve gastrik ülser.</span> Hamile ve emzirenlerde kullanılmaz.</p>
+</div>
+
+<!-- ANTİİNFLAMATUVAR -->
+<div class="topic-block">
+<h2>17. Althaea officinalis L. (Hatmi — Marshmallow root)</h2>
+<p><span class="info-tag">Drog: Althaeae radix</span> <span class="info-tag">Familya: Malvaceae</span> <span class="info-tag">Kayıt: ESCOP, Commission E, WHO</span></p>
+<p>Drog: Kabuğu soyulmuş veya soyulmadan kurutulmuş kökler.</p>
+
+<h3>Bileşikler</h3>
+<ul>
+<li>Karakteristik etkin bileşikler: <span class="hl">Müsilaj karakterinde polisakkaritler</span> (%5-11, 2 yıllık köklerde daha fazla; sonbahar-kış döneminde en yüksek). Yapı: Galaktoramnan, arabinan, glukan ve arabinogalaktanların karışımı olan asidik polisakkaritler.</li>
+<li><span class="hl">Flavon glikozitleri</span>: Hipolaetin 8-glukozit, izoskutellarein-4'-metil eter 8-glikozit-2''-sülfat esteri.</li>
+<li>Fenolik asitler, kumarin (skopoletin), nişasta, pektin, tanen.</li>
+</ul>
+
+<h3>Farmakolojik Etkiler</h3>
+<p>Müsilaj ağız ve boğaz mukozasını kaplayarak lokal iritasyona karşı korur. Müsilaj polisakkaritler hayvan deneylerinde öksürük kesici etki göstermiştir. <span class="hl">Hipolaetin 8-glukozit 5-lipoksijenazı kuvvetli inhibe eder</span> → lökotrienlerin biyosentezini engelleyerek inflamasyon ve alerjik reaksiyonları engeller.</p>
+
+<h3>Endikasyonlar / Dozaj</h3>
+<p>Kuru öksürük, ağız, farinks ve mide mukozası iritasyonu. Yetişkinlerde: 0,5-3 g drogdan soğuk su ile hazırlanan maserat veya 2-8 ml şurup. GI iritasyon için 3-5 g drogtan soğuk su ile maserat günde 3 defa. <span class="hl">Birlikte alındığı diğer ilaçların absorbsiyonunu azaltabilir!</span></p>
+</div>
+
+<!-- MALVA -->
+<div class="topic-block">
+<h2>18. Malva sylvestris L. (Ebegümeci — Mallow flower)</h2>
+<p><span class="info-tag">Drog: Malvae flos</span> <span class="info-tag">Familya: Malvaceae</span> <span class="info-tag">Kayıt: ESCOP, Commission E</span></p>
+<p>Drog: Tam veya parçalanmış kurutulmuş çiçekler.</p>
+
+<h3>Bileşikler</h3>
+<ul>
+<li><span class="hl">Müsilaj polisakkaritler</span> (%6-10 veya daha fazla): Ramnoz, galaktoz, galakturonik ve glukuronik asitlerin polimerize olması.</li>
+<li><span class="hl">Antosiyaninler</span> (%6-7): Malvidin 3,5-diglikozit, malvidin 3-glukozit vb.</li>
+</ul>
+
+<h3>Endikasyonlar / Dozaj</h3>
+<p>Kuru öksürük, oral, farinks ve mukoza iritasyonları. Yetişkinlerde 1,5-2 g drogtan soğukta maserat veya sıcak infüzyon. Haricen: %5'lik dekoksiyon gargara olarak.</p>
+</div>
+
+<!-- PLANTAGO -->
+<div class="topic-block">
+<h2>19. Plantago lanceolata L. (Sinirli ot — Ribwort Plantain)</h2>
+<p><span class="info-tag">Drog: Plantaginis Lanceolatae folium/herba</span> <span class="info-tag">Familya: Plantaginaceae</span> <span class="info-tag">Kayıt: ESCOP, Commission E</span></p>
+<p>Yaprak drog: Kurutulmuş yapraklar. Herba drog: Kurutulmuş çiçek durumları ve toprak üstü kısımlar. EP: Yaprak drogda en az %1,5 <em>o</em>-hidroksi sinnamik asit türevleri (akteozit üzerinden).</p>
+
+<h3>Bileşikler</h3>
+<p>Ana etkin bileşikler: <span class="hl">Müsilaj polisakkaritler, iridoit glikozitleri</span> (okubin, katalpol) ve feniletanoid (akteozit, izoakteozit, plantamajozit) bileşikler.</p>
+
+<h3>Endikasyonlar / Dozaj</h3>
+<p>Solunum yollarının aşırı salgı nedeniyle tıkanıklığının ve ağız/faringeal mukozanın hafif inflamasyonunun tedavisi. Yetişkinlerde ortalama günlük doz 3-6 g. Çocuklarda yaş grubuna göre.</p>
+</div>
+
+<!-- ANTİBAKTERİYEL/ANTİVİRAL -->
+<div class="topic-block">
+<h2>20. Sambucus nigra L. (Mürver — Elder flower/fruit)</h2>
+<p><span class="info-tag">Drog: Sambuci flos / Sambuci fructus</span> <span class="info-tag">Familya: Adoxaceae</span> <span class="info-tag">Kayıt: EP, Commission E, WHO</span></p>
+<p>Drog: Kurutulmuş çiçek durumları ve meyveler. EP: Sambuci flos en az %0,8 flavonoid.</p>
+
+<h3>Bileşikler</h3>
+<ul>
+<li><span class="hl">Flos</span>: Flavonoitler (%0,7-3,5 aglikon ve glikozitler), fenolik bileşikler (%5,1 civarı hidroksisinnamik asit türevleri; klorojenik asit %2,5-3), sambunigrin (siyanojeni glikozit), triterpenler, müsilaj, tanen, az UY.</li>
+<li><span class="hl">Fructus</span>: Antosiyan glikozitleri, flavonoid bileşikler. Özellikle kersetin-3',4',5,7-tetrametil eter ve kersetin-3-(3'',4'',5''-trihidroksi-siklohekzanoat) bileşiklerinin <span class="hl">influenza virüsünün hücrelere girişini bloke ettiği</span> kanıtlanmıştır.</li>
+</ul>
+
+<h3>Endikasyonlar</h3>
+<ul>
+<li><span class="hl">Flos</span>: Soğuk algınlığının erken semptomlarını tedavi amacı ile ateşli üst solunum yolları tıkanıklığı tedavisinde ve diyaforetik olarak.</li>
+<li><span class="hl">Fructus</span>: Soğuk algınlığı ve grip rahatsızlıklarının önlenmesi ve süresini kısaltma amacı ile standardize ekstre olarak.</li>
+</ul>
+
+<h3>Dozaj</h3>
+<p>Flos: 2-5 g drogla infüzyon günde 3 defa. Fructus: Sıvı ekstre (1:1, %25 EtOH) 3×3-5 ml; tentür (1:5, %25 EtOH) 3×10-25 ml. <span class="warn">Drog ve preparatlar 1 haftadan fazla kullanılmamalı.</span> 12 yaş altında tavsiye edilmez.</p>
+</div>
+
+<!-- THYMUS -->
+<div class="topic-block">
+<h2>21. Thymus vulgaris L. (Kekik — Thyme)</h2>
+<p><span class="info-tag">Drog: Thymi herba</span> <span class="info-tag">Familya: Lamiaceae</span> <span class="info-tag">Kayıt: ESCOP, Commission E, WHO</span></p>
+<p>Drog: Kurutulmuş gövdelerden ayrılmış yaprak ve çiçekler. Drogda en az 12 ml/kg UY ve UY içeriğinde en az %40 <span class="hl">timol-karvakrol</span> karışımı.</p>
+
+<h3>Bileşikler</h3>
+<p>Etkin bileşenler: <span class="hl">Fenolik (timol ve karvakrol) ve terpenler olan UY</span>, fenolik monoterpenlerin glikozitleri, öjenol, asetofenonlar, flavonoitler (timonin, sirsisineol), bifenil bileşikler, kafeik ve rozmarinik asitler, saponinler, arabinogalaktan polisakkaritler.</p>
+
+<h3>Endikasyonlar / Dozaj</h3>
+<p>ÜSY ve bronşların aşırı salgısı nedeniyle tıkanıklığın tedavisi, boğmacanın destekleyici tedavisi, stomatit ve halitozis. Yetişkinlerde ve 1 yaş üstü çocuklarda 1-2 g kurutulmuş drogla infüzyon günde birkaç defa. Tentür günde (1:10, %70 EtOH) 3 defaya kadar 40 damla.</p>
+</div>
+
+<!-- EUCALYPTUS -->
+<div class="topic-block">
+<h2>22. Eucalyptus globulus Labill. (Sıtma ağacı — Eucalyptus)</h2>
+<p><span class="info-tag">Drog: Eucalypti aetheroleum</span> <span class="info-tag">Familya: Myrtaceae</span> <span class="info-tag">Kayıt: ESCOP, Commission E, WHO</span></p>
+<p>Drog: Taze yapraklardan buhar distilasyonu ve rektifikasyonu ile elde edilen UY.</p>
+
+<h3>Bileşikler</h3>
+<p>UY en az <span class="hl">%70 ökaliptol (1,8 sineol)</span>, limonen, α-pinen, az miktarda β-pinen, α-fellandren ve kafur gibi monoterpenler. Rektifikasyonla globulol ve aromadandren gibi seskiterpenler uzaklaştırılır.</p>
+
+<h3>Endikasyonlar</h3>
+<p>Bronşit, bronşiyal astım, kronik solunum yolları tıkanıklığı hastalıklarının destekleyici tedavisi. Soğuk algınlığı ve aşırı salgı nedeniyle ÜSY tıkanıklığının semptomatik tedavisinde <span class="hl">hem dahilen hem haricen</span> kullanılır.</p>
+
+<h3>Dozaj</h3>
+<p>Dahilen: Her dozda 0,05-0,3 ml, günde 0,3-0,6 ml; kapsül 100-200 mg, günde 2-5 defa. Haricen: İnhalasyon (150 ml kaynar suya 12 damla), liniment (%25 v/v), merhem (%1,3 v/m), pastil (0,2-15 mg), gargara.</p>
+
+<h3>Kontrendikasyonlar</h3>
+<p><span class="warn">GI ve safra kesesi inflamasyonlarında KC fonksiyon bozukluğunda kullanılmamalı.</span> Bebeklerde ve küçük çocuklarda yüze tatbik edilmemeli. Drog KC mikrozomal enzimlerin aktivitesini artırdığından diğer ilaçların etkisini azaltabilir.</p>
+</div>
+
+<!-- SALVIA -->
+<div class="topic-block">
+<h2>23. Salvia officinalis L. (Adaçayı — Sage)</h2>
+<p><span class="info-tag">Drog: Salviae Officinalis folium</span> <span class="info-tag">Familya: Lamiaceae</span> <span class="info-tag">Kayıt: ESCOP, Commission E, WHO</span></p>
+<p>Drog: Bütün veya kesilmiş kurutulmuş yapraklar. EP: Bütün yapraklarda en az 15 ml/kg UY, kesilmiş yapraklarda en az 10 ml/kg UY.</p>
+
+<h3>Bileşikler</h3>
+<ul>
+<li><span class="hl">UY (%2,5'e kadar)</span>: α- ve β-tuyon (%63 ve %13'e varan oranlarda), kafur, ökaliptol gibi monoterpenler.</li>
+<li>Diterpenler: Karnosol, karnosik asit türevleri.</li>
+<li>Triterpenler: Ursolik asit, oleanolik asit. Flavonoid (5-metoksi-salvigenin), fenolik bileşikler (rozmarinik asit).</li>
+</ul>
+
+<h3>Endikasyonlar</h3>
+<p>Stomatit, farenjit, gingivit gibi ağız ve boğaz inflamasyonları ve <span class="hl">hiperhidrozis (aşırı terleme)</span>. Haricen: Ağız yıkama ve gargara. Dahilen: Tentür, infüzyon veya kuru ekstre.</p>
+
+<h3>Uyarılar</h3>
+<p><span class="warn">Bitkide tuyon bulunduğundan alkollü ekstrelerinin kullanılmasında çok dikkatli olunmalı.</span> UY'daki zehirli bileşikler nedeniyle hamile ve emziren kadınlarda kullanılmamalı.</p>
+</div>
+
+<!-- ECHINACEA -->
+<div class="topic-block">
+<h2>24. Echinacea purpurea (L.) Moench (Ekinezya — Purple Coneflower)</h2>
+<p><span class="info-tag">Drog: Echinaceae Purpureae herba / radix</span> <span class="info-tag">Familya: Asteraceae</span> <span class="info-tag">Kayıt: ESCOP, Commission E, WHO</span></p>
+<p>Drog: Taze veya kurutulmuş çiçekli toprak üstü kısımlar (herba) veya taze/kurutulmuş toprak altı kısımlar (radix).</p>
+
+<h3>Bileşikler</h3>
+<ul>
+<li><span class="hl">Herba</span>: İzomerik dodekatetraenoik asit izobütiramid türevleri (<span class="hl">alkamidler</span>), ana bileşeni kikorik asit olan <span class="hl">kafeik asit türevleri</span> (ekinakozitler), <span class="hl">polisakkaritler</span> (PS I, PS II, ksiloglukan türevi, inülin tipi fruktan, pektine benzer polisakkaritler), flavonoitler, az UY ve poliasetilenler.</li>
+<li><span class="hl">Kök</span>: Ana bileşikleri <span class="hl">kikorik asit</span> (%0,6-2,3), alkamidler, poliasetilen türevleri, polisakkaritler, glukoproteinler, az UY.</li>
+</ul>
+
+<h3>Endikasyonlar</h3>
+<p>Herba ve radix preparatları dahilen ÜSY sık tekrarlayan enfeksiyonlarını (soğuk algınlığı vb.) önlemek veya destekleyici tedavi amacıyla. Herba preparatları haricen ürogenital enfeksiyonlar ve yüzeysel yaraların tedavisinde.</p>
+
+<h3>Dozaj</h3>
+<p>Herba dahilen: Bitkinin sıkılması ile elde edilmiş usareden günlük 6-9 ml veya eşdeğer preparatlar. Radix dahilen: 3×300 mg kurutulmuş drog miktarına denk gelen %55 EtOH 1:5 oranında tentürden 3×60 damla.</p>
+
+<h3>Kontrendikasyonlar</h3>
+<p><span class="warn">Tedavi süresi 8 haftayı geçmemeli!</span> Tüberküloz, multiple skleroz, AIDS veya HIV enfeksiyonlarında kullanılması önerilmez (tüm immünostimülan preparatlarda olduğu gibi). Hamile ve emzirenlerde doktor gözetiminde.</p>
+</div>
+
+</div><!-- /sec-ozet -->
+
+
+<!-- ==================== TEST ==================== -->
+<div class="section" id="sec-test">
+<div class="hero">
+<h1>Test Soruları</h1>
+<div class="sub">40 Soru — Çoktan Seçmeli</div>
+</div>
+<div id="questions-container"></div>
+</div>
+
+<!-- ==================== CEVAP ==================== -->
+<div class="section" id="sec-cevap">
+<div class="hero">
+<h1>Cevap Anahtarı</h1>
+<div class="sub">40 Sorunun Doğru Cevapları ve Açıklamaları</div>
+</div>
+<div class="answer-grid" id="answer-grid"></div>
+<div class="explanation-list" id="explanation-list"></div>
+</div>
+
+<script>
+function showSection(id){document.querySelectorAll('.section').forEach(s=>s.classList.remove('active'));document.querySelectorAll('.topnav a').forEach(a=>a.classList.remove('active'));document.getElementById('sec-'+id).classList.add('active');document.getElementById('nav-'+id).classList.add('active');window.scrollTo({top:0,behavior:'smooth'})}
+
+const questions=[
+{q:"KKY tedavisinde amaç nedir?",o:["Kalp hızını azaltmak","Kalbin kasılma gücünü (pozitif inotropik etki) artırmak","Kan basıncını yükseltmek","Periferal direnç artırmak"],a:1},
+{q:"Crataegus monogyna hangi familyaya aittir?",o:["Asteraceae","Fabaceae","Rosaceae","Lamiaceae"],a:2},
+{q:"Crataegi folium cum flores drogunda EP'ye göre en az ne kadar flavonoid bulunmalıdır?",o:["%0,5","%1,0","%1,5","%2,0"],a:2},
+{q:"Alıç drogunun kardiyovasküler etkisinden sorumlu bileşikler hangileridir?",o:["Triterpenler ve kumarinler","Alkaloidler ve saponinler","Flavonoitler, kateşinler ve prosiyanidinler","Antosiyaninler ve tanenler"],a:2},
+{q:"Alıcın kalp kuvvetlendirici etkisi hangi mekanizma ile oluşur?",o:["Na/K ATPaz inhibisyonu","Siklik AMP fosfodiesteraz inhibisyonu","MAO inhibisyonu","Asetilkolin esteraz inhibisyonu"],a:1},
+{q:"Hiperlipidemi sonucu arterlerin iç duvarına yerleşen lipitçe zengin oluşumlara ne ad verilir?",o:["Trombus","Embolus","Aterom","Plak"],a:2},
+{q:"Allium sativum drogunda bulunan ana kükürt taşıyan aminoasit hangisidir?",o:["Allisin","Ajoen","Alliin","Vinildithiin"],a:2},
+{q:"Alliin hangi enzim aracılığıyla allisine dönüşür?",o:["Lipaz","Proteaz","Alliinaz","Amilaz"],a:2},
+{q:"Sarımsak drogunun EP'ye göre en az ne kadar allisin taşıması gerekir?",o:["%0,25","%0,45","%0,65","%1,0"],a:1},
+{q:"Aşağıdakilerden hangisi sarımsağın farmakolojik etkilerinden DEĞİLDİR?",o:["Antiaterojenik","Hipolipidemik","Pozitif inotropik","Platelet agregasyon faktörü inhibitörü"],a:2},
+{q:"Cynara scolymus drogunda EP'ye göre en az ne kadar klorojenik asit bulunmalıdır?",o:["%0,4","%0,6","%0,8","%1,0"],a:2},
+{q:"Enginar yapraklarının sulu ekstresi hazırlanırken 1,5 dikafeoilkinik asitin izomerleşmesi ile oluşan bileşik hangisidir?",o:["Sinaropikrin","Sinarin","Klorojenik asit","Luteolin"],a:1},
+{q:"Enginar drogunda acı tadı veren seskiterpen lakton hangisidir?",o:["Partenolit","Artemisinin","Sinaropikrin","Absinthin"],a:2},
+{q:"Hippocastani semen drogundaki ana etkin bileşik grubu hangisidir?",o:["Flavonoitler","Alkaloidler","Triterpen glikozitler (Essin — saponinler)","Kumarinler"],a:2},
+{q:"Atkestanesi drogu (Essin) hangi endikasyonda kullanılır?",o:["Depresyon","Kronik venöz yetersizlik ve varis","Migren profilaksisi","Hiperlipidemi"],a:1},
+{q:"Vaccinium myrtillus'un ana etkin bileşik grubu hangisidir?",o:["Saponinler","Alkaloidler","Antosiyaninler","Kumarinler"],a:2},
+{q:"Yaban mersini ekstreleri hangi göz hastalığının tedavisinde kullanılır?",o:["Glokom","Katarakt","Diyabetik retinopati","Maküla dejenerasyonu"],a:2},
+{q:"Ruscus aculeatus drogundaki karakteristik sapogeninler hangileridir?",o:["Protoessigenin ve barrintogenol C","Ruskogenin ve neoruskogenin","Asiatikazit ve madekasozit","Glisiretik asit ve glisirizin"],a:1},
+{q:"Centella asiatica'nın ana etkin triterpen asitleri hangileridir?",o:["Ursolik asit ve oleanolik asit","Asiatik asit ve madekasik asit","Krategolik asit ve tormentik asit","Glisiretik asit ve maslinik asit"],a:1},
+{q:"Centella asiatica'nın venöz yetersizlik dışında ek endikasyonu nedir?",o:["Migren profilaksisi","Yara iyileştirici","Öksürük kesici","Antidepresan"],a:1},
+{q:"Melilotus officinalis'in ana karakteristik bileşik grubu hangisidir?",o:["Saponinler","Kumarin türevleri","Flavonoitler","Alkaloidler"],a:1},
+{q:"Meliloti herba drogunda dikkatli kurutma yapılmazsa oluşabilecek tehlikeli bileşik hangisidir?",o:["Medikarpin","Dikumarol","Her ikisi de","Hiçbiri"],a:2},
+{q:"Glycyrrhiza glabra'nın ana etkin triterpen glikozit bileşiği hangisidir?",o:["Essin","Glisirizin","Hederasaponin C","Asiatikozit"],a:1},
+{q:"Meyan kökü drogunda EP'ye göre en az ne kadar glisirizik asit bulunmalıdır?",o:["%2","%4","%6","%8"],a:1},
+{q:"Meyan kökü drogunda bulunan flavanon türevi bileşik hangisidir?",o:["Kersetin","Likuritin","Apigenin","Viteksin"],a:1},
+{q:"Meyan kökünün doktor tavsiyesi olmadan en fazla ne kadar süre kullanılması uygundur?",o:["1-2 hafta","4-6 hafta","8-10 hafta","12 hafta"],a:1},
+{q:"Hedera helix drogundaki ana etkin bileşik grubu hangisidir?",o:["Flavonoitler","Kumarin türevleri","Triterpenik saponinler","Alkaloidler"],a:2},
+{q:"Primulae radix drogundaki fenolik glikozitlerin şeker kısmına ne ad verilir?",o:["Rutinoz","Primverozit","Soforozit","Gentiobiozit"],a:1},
+{q:"Primulae radix için kontrendikasyon olan durum hangisidir?",o:["Bronşit","Gastrit ve gastrik ülser","Soğuk algınlığı","Öksürük"],a:1},
+{q:"Althaea officinalis kökünde bulunan müsilaj polisakkaritlerin en yüksek olduğu dönem hangisidir?",o:["İlkbahar-yaz","Yaz-sonbahar","Sonbahar-kış","Kış-ilkbahar"],a:2},
+{q:"Hatmi kökünde bulunan hangi bileşik 5-lipoksijenazı kuvvetli inhibe eder?",o:["Skopoletin","Hipolaetin 8-glukozit","Rozmarinik asit","Timol"],a:1},
+{q:"Althaea officinalis preparatlarının birlikte kullanıldığı ilaçlar üzerindeki etkisi nedir?",o:["Etkilerini artırır","Absorbsiyonlarını azaltabilir","Metabolizmalarını hızlandırır","Hiçbir etkisi yoktur"],a:1},
+{q:"Malva sylvestris çiçeklerindeki müsilaj polisakkarit oranı ne kadardır?",o:["%1-3","%3-5","%6-10 veya daha fazla","%15-20"],a:2},
+{q:"Plantaginis Lanceolatae folium drogundaki ana etkin bileşik grupları hangileridir?",o:["Saponinler ve kumarinler","Müsilaj polisakkaritler, iridoit glikozitleri ve feniletanoidler","Alkaloidler ve flavonoitler","Antosiyaninler ve tanenler"],a:1},
+{q:"Sambucus nigra meyvesindeki hangi bileşiklerin influenza virüsünün hücrelere girişini bloke ettiği kanıtlanmıştır?",o:["Antosiyaninler","Triterpenler","Kersetin türevi flavonoidler","Müsilaj polisakkaritler"],a:2},
+{q:"Sambucus nigra drog ve preparatları en fazla ne kadar süre kullanılmalıdır?",o:["3 gün","1 hafta","2 hafta","4 hafta"],a:1},
+{q:"Thymus vulgaris drogunda UY içeriğindeki en az %40 oranında bulunması gereken bileşik karışımı hangisidir?",o:["Linalool-linalil asetat","Timol-karvakrol","Mentol-menton","Ökaliptol-kafur"],a:1},
+{q:"Eucalyptus globulus UY'ında en az %70 oranında bulunan bileşik hangisidir?",o:["Timol","Linalool","Ökaliptol (1,8 sineol)","Kafur"],a:2},
+{q:"Salvia officinalis drogunda UY'daki toksik potansiyeli olan bileşik hangisidir?",o:["Karnosol","Tuyon","Ökaliptol","Rozmarinik asit"],a:1},
+{q:"Echinacea purpurea preparatlarının tedavi süresi en fazla kaç haftayı geçmemelidir?",o:["4 hafta","6 hafta","8 hafta","12 hafta"],a:2}
+];
+
+const explanations=[
+"KKY tedavisinde amaç kalbin kasılma gücünü artırmaktır (pozitif inotropik etki).",
+"Crataegus monogyna Rosaceae familyasına aittir.",
+"EP'ye göre Crataegi folium cum flores drogda en az %1,5 flavonoid (hiperozit üzerinden) bulunmalıdır.",
+"Alıç drogunun etkisinin kaynağı flavonoitler, kateşinler ve prosiyanidin türevleridir.",
+"Alıcın kalp kuvvetlendirici etkisi siklik AMP fosfodiesterazı inhibe ederek pozitif inotropik etki oluşturmasından kaynaklanır.",
+"Hiperlipidemi sonucu arterlerin iç duvarına yerleşen lipitçe zengin oluşumlara aterom denir.",
+"Allium sativum drogundaki ana kükürt taşıyan aminoasit alliin'dir (%1 oranında).",
+"Alliin, alliinaz enzimi aracılığıyla allisine dönüşür.",
+"EP'ye göre sarımsak drogu en az %0,45 allisin taşımalıdır.",
+"Pozitif inotropik etki sarımsağın değil, alıcın özelliğidir. Sarımsak antiaterojenik, hipolipidemik ve PAF inhibitörüdür.",
+"EP'ye göre Cynarae folium en az %0,8 klorojenik asit taşımalıdır.",
+"1,5 dikafeoilkinik asitin izomerleşmesi ile ekstrede sinarin oluşur.",
+"Enginar drogunda acı tadı veren seskiterpen lakton sinaropikrindir.",
+"Hippocastani semen'in ana etkin bileşiği Essin adlı triterpen glikozit (saponin) karışımıdır.",
+"Atkestanesi (Essin) kronik venöz yetersizlik, hemoroid ve varis tedavisinde kullanılır.",
+"Vaccinium myrtillus'un ana etkin bileşikleri antosiyaninlerdir.",
+"Yaban mersini ekstreleri diyabetik retinopati tedavisinde kullanılır.",
+"Ruscus aculeatus drogundaki karakteristik sapogeninler ruskogenin ve neoruskogenindir.",
+"Centella asiatica'nın ana etkin triterpen asitleri asiatik asit ve madekasik asittir.",
+"Centella asiatica venöz yetersizlik ve varis tedavisinin yanı sıra yara iyileştirici olarak da kullanılır.",
+"Melilotus officinalis'in ana karakteristik bileşikleri kumarin türevleridir.",
+"Dikkatli kurutulmuş drogda medikarpin ile dikumarol bulunmaz; ancak kötü kurutma koşullarında dikumarol oluşabilir.",
+"Glycyrrhiza glabra'nın ana etkin bileşiği glisirizindir (triterpen glikozit).",
+"EP'ye göre meyan kökü drogunda en az %4 glisirizik asit bulunmalıdır.",
+"Likuritin meyan kökünde bulunan bir flavanon türevi bileşiktir.",
+"Meyan kökü doktor tavsiyesi olmadan 4-6 haftadan fazla kullanılmamalıdır.",
+"Hedera helix drogundaki ana etkin bileşikler triterpenik saponinlerdir (hederasaponin C vb.).",
+"Primulae radix'teki fenolik glikozitlerin şeker kısmına primverozit adı verilir.",
+"Primulae radix için kontrendikasyon gastrit ve gastrik ülserdir.",
+"Hatmi kökündeki müsilaj polisakkaritler sonbahar-kış döneminde en yüksek miktara ulaşır.",
+"Hipolaetin 8-glukozit 5-lipoksijenazı kuvvetli inhibe ederek lökotrien biyosentezini engeller.",
+"Althaea officinalis preparatları birlikte alındığı diğer ilaçların absorbsiyonunu azaltabilir.",
+"Malva sylvestris çiçeklerinde müsilaj polisakkarit %6-10 veya daha fazla oranında bulunur.",
+"Plantago lanceolata'nın ana etkin bileşikleri müsilaj polisakkaritler, iridoit glikozitleri ve feniletanoidlerdir.",
+"Sambucus nigra meyvesindeki kersetin türevi flavonoidlerin influenza virüsünün hücrelere girişini bloke ettiği kanıtlanmıştır.",
+"Sambucus nigra drog ve preparatları 1 haftadan fazla kullanılmamalıdır.",
+"Thymus vulgaris UY'ında en az %40 timol-karvakrol karışımı bulunmalıdır.",
+"Eucalyptus globulus UY'ında en az %70 ökaliptol (1,8 sineol) bulunur.",
+"Salvia officinalis UY'ında bulunan tuyon toksik potansiyele sahiptir; bu nedenle alkollü ekstrelerinde dikkat gerekir.",
+"Echinacea purpurea preparatlarının tedavi süresi 8 haftayı geçmemelidir."
+];
+
+const letters=['A','B','C','D'];
+const qC=document.getElementById('questions-container');
+questions.forEach((item,i)=>{let opts='';item.o.forEach((opt,j)=>{opts+=`<label><input type="radio" name="q${i}" value="${j}"> <span>${letters[j]}) ${opt}</span></label>`});qC.innerHTML+=`<div class="question-card"><div class="q-text"><div class="q-number">${i+1}</div><span>${item.q}</span></div><div class="options">${opts}</div></div>`});
+
+const aG=document.getElementById('answer-grid');
+const eL=document.getElementById('explanation-list');
+questions.forEach((item,i)=>{aG.innerHTML+=`<div class="answer-cell"><div class="anum">Soru ${i+1}</div><div class="aletter">${letters[item.a]}</div></div>`;eL.innerHTML+=`<div class="exp-item"><strong>Soru ${i+1} — ${letters[item.a]})</strong> ${explanations[i]}</div>`});
+</script>
+</body>
+</html>
