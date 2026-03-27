@@ -1,0 +1,677 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Diyabet Sınavı - 40 Soru</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=Source+Sans+3:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #eef2f7;
+  --card: #ffffff;
+  --primary: #1a5276;
+  --primary-light: #21618c;
+  --accent: #2e86c1;
+  --text: #1c2833;
+  --text-muted: #5d6d7e;
+  --border: #d5dbdb;
+  --correct: #1e8449;
+  --correct-bg: #e8f8f0;
+  --wrong: #b03a2e;
+  --wrong-bg: #fdedec;
+  --selected: #d6eaf8;
+  --shadow: 0 2px 12px rgba(28,40,51,0.06);
+}
+
+* { margin:0; padding:0; box-sizing:border-box; }
+
+body {
+  font-family: 'Source Sans 3', sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  line-height: 1.6;
+  min-height: 100vh;
+}
+
+.hero {
+  background: linear-gradient(135deg, #1a5276 0%, #154360 50%, #0e2f44 100%);
+  padding: 60px 24px 50px;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+}
+.hero::before {
+  content: '';
+  position: absolute;
+  top: -40%; left: -20%;
+  width: 140%; height: 180%;
+  background: radial-gradient(ellipse at 30% 50%, rgba(46,134,193,0.18) 0%, transparent 60%),
+              radial-gradient(ellipse at 70% 30%, rgba(255,255,255,0.04) 0%, transparent 50%);
+  pointer-events: none;
+}
+.hero h1 {
+  font-family: 'DM Serif Display', serif;
+  font-size: clamp(28px, 5vw, 42px);
+  color: #fff;
+  position: relative;
+  letter-spacing: 0.5px;
+}
+.hero p {
+  color: rgba(255,255,255,0.7);
+  font-size: 16px;
+  margin-top: 10px;
+  position: relative;
+  font-weight: 300;
+}
+.hero .badge {
+  display: inline-block;
+  margin-top: 16px;
+  padding: 6px 18px;
+  border: 1px solid rgba(255,255,255,0.25);
+  border-radius: 20px;
+  color: rgba(255,255,255,0.85);
+  font-size: 13px;
+  font-weight: 500;
+  position: relative;
+}
+
+.container {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 30px 20px 60px;
+}
+
+.progress-bar {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  background: var(--card);
+  border-bottom: 1px solid var(--border);
+  padding: 12px 24px;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+}
+.progress-bar .track {
+  flex: 1;
+  height: 6px;
+  background: var(--border);
+  border-radius: 3px;
+  overflow: hidden;
+}
+.progress-bar .fill {
+  height: 100%;
+  background: var(--primary);
+  border-radius: 3px;
+  transition: width 0.4s ease;
+  width: 0%;
+}
+.progress-bar .counter {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--text-muted);
+  white-space: nowrap;
+}
+
+.question-card {
+  background: var(--card);
+  border-radius: 12px;
+  padding: 28px 28px 24px;
+  margin-bottom: 20px;
+  border: 1px solid var(--border);
+  box-shadow: var(--shadow);
+  transition: border-color 0.3s;
+}
+.question-card.answered-correct { border-color: var(--correct); }
+.question-card.answered-wrong { border-color: var(--wrong); }
+
+.q-header {
+  display: flex;
+  align-items: flex-start;
+  gap: 14px;
+  margin-bottom: 18px;
+}
+.q-num {
+  flex-shrink: 0;
+  width: 36px; height: 36px;
+  background: var(--primary);
+  color: #fff;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 14px;
+  font-weight: 700;
+}
+.q-text {
+  font-size: 16px;
+  font-weight: 600;
+  color: var(--text);
+  padding-top: 5px;
+}
+
+.options { display: flex; flex-direction: column; gap: 8px; }
+
+.option {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  padding: 12px 16px;
+  border: 1.5px solid var(--border);
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.2s;
+  font-size: 15px;
+  user-select: none;
+}
+.option:hover { background: var(--selected); border-color: #afc6d9; }
+.option .letter {
+  flex-shrink: 0;
+  width: 26px; height: 26px;
+  border: 1.5px solid var(--border);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--text-muted);
+  transition: all 0.2s;
+}
+.option.selected { background: var(--selected); border-color: var(--primary); }
+.option.selected .letter { background: var(--primary); color: #fff; border-color: var(--primary); }
+.option.correct { background: var(--correct-bg); border-color: var(--correct); }
+.option.correct .letter { background: var(--correct); color: #fff; border-color: var(--correct); }
+.option.wrong { background: var(--wrong-bg); border-color: var(--wrong); }
+.option.wrong .letter { background: var(--wrong); color: #fff; border-color: var(--wrong); }
+.option.disabled { pointer-events: none; opacity: 0.6; }
+.option.correct.disabled { opacity: 1; }
+
+.actions {
+  text-align: center;
+  margin-top: 36px;
+}
+
+button.submit-btn {
+  font-family: 'Source Sans 3', sans-serif;
+  background: var(--primary);
+  color: #fff;
+  border: none;
+  padding: 14px 48px;
+  font-size: 16px;
+  font-weight: 600;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background 0.2s, transform 0.1s;
+  box-shadow: 0 4px 14px rgba(26,82,118,0.25);
+}
+button.submit-btn:hover { background: var(--primary-light); transform: translateY(-1px); }
+button.submit-btn:active { transform: translateY(0); }
+
+.result-panel {
+  display: none;
+  background: var(--card);
+  border-radius: 16px;
+  padding: 40px 32px;
+  text-align: center;
+  border: 1px solid var(--border);
+  box-shadow: var(--shadow);
+  margin-bottom: 30px;
+}
+.result-panel.show { display: block; }
+.result-panel h2 {
+  font-family: 'DM Serif Display', serif;
+  font-size: 28px;
+  margin-bottom: 8px;
+}
+.result-panel .score {
+  font-size: 52px;
+  font-weight: 700;
+  color: var(--primary);
+  margin: 16px 0;
+}
+.result-panel .score span { font-size: 22px; color: var(--text-muted); font-weight: 400; }
+.result-panel .verdict {
+  font-size: 16px;
+  color: var(--text-muted);
+  margin-bottom: 20px;
+}
+
+.answer-key-toggle {
+  font-family: 'Source Sans 3', sans-serif;
+  background: none;
+  border: 2px solid var(--primary);
+  color: var(--primary);
+  padding: 10px 28px;
+  font-size: 14px;
+  font-weight: 600;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.2s;
+  margin-top: 12px;
+}
+.answer-key-toggle:hover { background: var(--primary); color: #fff; }
+
+.answer-key {
+  display: none;
+  margin-top: 30px;
+  background: var(--card);
+  border-radius: 12px;
+  padding: 28px;
+  border: 1px solid var(--border);
+  box-shadow: var(--shadow);
+}
+.answer-key.show { display: block; }
+.answer-key h3 {
+  font-family: 'DM Serif Display', serif;
+  font-size: 22px;
+  margin-bottom: 16px;
+  color: var(--primary);
+}
+.key-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+  gap: 6px;
+}
+.key-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 10px;
+  font-size: 14px;
+  border-radius: 6px;
+  background: #eaf2f8;
+}
+.key-item strong {
+  color: var(--primary);
+  min-width: 40px;
+}
+
+@media (max-width: 600px) {
+  .question-card { padding: 20px 18px 18px; }
+  .hero { padding: 40px 18px 36px; }
+  .container { padding: 20px 14px 40px; }
+  .key-grid { grid-template-columns: repeat(auto-fill, minmax(110px, 1fr)); }
+}
+</style>
+</head>
+<body>
+
+<div class="hero">
+  <h1>İnsülin, Diyabet ve Tanı Testleri Sınavı</h1>
+  <p>Diyabet Tipleri, Laboratuvar Analizleri ve Klinik Vakalar</p>
+  <div class="badge">40 Soru &middot; 5 Seçenek &middot; Doç. Dr. Ozan Emre Eyupoğlu</div>
+</div>
+
+<div class="progress-bar" id="progressBar">
+  <div class="track"><div class="fill" id="progressFill"></div></div>
+  <div class="counter" id="progressCounter">0 / 40</div>
+</div>
+
+<div class="container">
+  <div class="result-panel" id="resultPanel">
+    <h2>Sınav Sonucunuz</h2>
+    <div class="score" id="scoreDisplay">0 <span>/ 40</span></div>
+    <div class="verdict" id="verdict"></div>
+    <button class="answer-key-toggle" onclick="toggleAnswerKey()">Cevap Anahtarını Göster</button>
+    <div class="answer-key" id="answerKey">
+      <h3>Cevap Anahtarı</h3>
+      <div class="key-grid" id="keyGrid"></div>
+    </div>
+  </div>
+
+  <div id="questionsContainer"></div>
+
+  <div class="actions">
+    <button class="submit-btn" id="submitBtn" onclick="submitQuiz()">Sınavı Tamamla</button>
+  </div>
+</div>
+
+<script>
+const questions = [
+  {
+    q: "Diyabet hastalığının temel karakteristik özelliği aşağıdakilerden hangisidir?",
+    o: ["Hipoglisemi","Hiperglisemi","Hipotansiyon","Hiperlipidemi","Hiponatremi"],
+    a: 1
+  },
+  {
+    q: "Diyabet hangi metabolizma bozukluklarıyla seyreder?",
+    o: ["Yalnızca karbonhidrat metabolizması","Yalnızca lipid metabolizması","Karbonhidrat, lipid ve protein metabolizması","Yalnızca protein metabolizması","Yalnızca elektrolit metabolizması"],
+    a: 2
+  },
+  {
+    q: "İnsülinin yapısı ile ilgili aşağıdakilerden hangisi doğrudur?",
+    o: ["Tek polipeptit zincirinden oluşur","İki polipeptit zincirinden oluşur ve disülfit bağlarıyla aktif hale gelir","Steroid yapısındadır","Lipid yapısında bir hormondur","Glikoprotein yapısındadır"],
+    a: 1
+  },
+  {
+    q: "İnsülinin glukoz metabolizmasındaki temel rolü nedir?",
+    o: ["Glukoneogenezi artırır","Glikojenolizi uyarır","Glukozun kas ve yağ hücrelerine girişini sağlar","Glukagon salınımını artırır","Hepatik glukoz üretimini artırır"],
+    a: 2
+  },
+  {
+    q: "İnsülin eksikliği veya direnci sonucunda aşağıdakilerden hangisi gelişir?",
+    o: ["Hipoglisemi","Hiperglisemi ve metabolik dengesizlikler","Hipotermi","Metabolik alkaloz","Hipotansiyon"],
+    a: 1
+  },
+  {
+    q: "Aşağıdakilerden hangisi diyabetin klasik semptomlarından biri DEĞİLDİR?",
+    o: ["Poliüri","Polidipsi","Polifaji","Bradikardi","Halsizlik ve çabuk yorulma"],
+    a: 3
+  },
+  {
+    q: "Diyabetin daha az görülen semptomları arasında aşağıdakilerden hangisi yer alır?",
+    o: ["Poliüri","Polidipsi","Bulanık görme ve açıklanamayan kilo kaybı","Agız kuruluğu","Polifaji"],
+    a: 2
+  },
+  {
+    q: "Tip 1 diyabetin temel patogenezi aşağıdakilerden hangisidir?",
+    o: ["İnsülin direnci","Pankreas beta hücrelerinin otoimmün tahribi sonucu mutlak insülin eksikliği","Karaciğer yetmezliği","Böbrek yetmezliği","Tiroid fonksiyon bozukluğu"],
+    a: 1
+  },
+  {
+    q: "Tip 1 diyabet en sık hangi yaş grubunda ortaya çıkar?",
+    o: ["Yaşlılarda","Orta yaş grubunda","Çocuk ve adolesan çağlarında","Yalnızca yenidoğanlarda","Yalnızca 50 yaş üstünde"],
+    a: 2
+  },
+  {
+    q: "Tip 1 diyabetli hastalar için aşağıdakilerden hangisi doğrudur?",
+    o: ["Hastalar genellikle obezdir","Hastalar sıklıkla zayıf ya da normal kilodadır","Başlangıç yavaştır","İnsülin tedavisi gerekli değildir","Otoantikor saptanmaz"],
+    a: 1
+  },
+  {
+    q: "Tip 1 diyabetli hastaların yaşaması için aşağıdakilerden hangisi kaçınılmazdır?",
+    o: ["Oral antidiyabetik tedavi","İnsülin tedavisi","Yalnızca diyet tedavisi","Yalnızca egzersiz","Bitkisel tedavi"],
+    a: 1
+  },
+  {
+    q: "Tip 1 diyabetli hastalar en çok hangi akut komplikasyona yatkındır?",
+    o: ["Hiperosmolar hiperglisemik durum","Diyabetik ketoasidoz","Laktik asidoz","Hipoglisemik koma","Septik şok"],
+    a: 1
+  },
+  {
+    q: "Tip 2 diyabetin temel patofizyolojik mekanizmaları hangileridir?",
+    o: ["Mutlak insülin eksikliği ve otoimmünite","İnsülin direnci ve relatif insülin eksikliği","Pankreas beta hücre tahribatı","Glukagon eksikliği","Tiroid hormon fazlalığı"],
+    a: 1
+  },
+  {
+    q: "Tip 2 diyabet genellikle kaç yaş sonrasında başlar?",
+    o: ["10 yaş","20 yaş","30 yaş","50 yaş","70 yaş"],
+    a: 2
+  },
+  {
+    q: "Tip 2 diyabetli hastalar sıklıkla hangi vücut kitle indeksine sahiptir?",
+    o: ["BKİ < 18.5 kg/m²","BKİ 18.5-20 kg/m²","BKİ > 25 kg/m²","BKİ < 15 kg/m²","BKİ 20-22 kg/m²"],
+    a: 2
+  },
+  {
+    q: "Tip 2 diyabetli hastaların yaklaşık yüzde kaçında ailede diyabet öyküsü pozitiftir?",
+    o: ["%10","%20","%30","%50","%80"],
+    a: 3
+  },
+  {
+    q: "Tip 2 diyabet tedavisinde ilk basamak yaklaşım aşağıdakilerden hangisidir?",
+    o: ["Doğrudan insülin tedavisi","Cerrahi müdahale","Tıbbi beslenme tedavisi ve egzersiz","Yalnızca ilaç tedavisi","Pankreas nakli"],
+    a: 2
+  },
+  {
+    q: "Gestasyonel diyabet aşağıdakilerden hangisidir?",
+    o: ["Çocukluk çağında başlayan diyabet","Gebelik sırasında ortaya çıkan glukoz intoleransı","Tip 1 diyabetin alt tipi","İlaçlara bağlı diyabet","Pankreatite bağlı diyabet"],
+    a: 1
+  },
+  {
+    q: "Gestasyonel diyabette doğum sonrasında kan şekeri genellikle nasıl seyreder?",
+    o: ["Sürekli yüksek kalır","Normal seviyelere iner","Daha da yükselir","Hipoglisemi gelişir","Değişmez"],
+    a: 1
+  },
+  {
+    q: "Gestasyonel diyabet geçiren hastaların ilerleyen yıllarda gelişme riski en yüksek olan durum hangisidir?",
+    o: ["Tip 1 diyabet ve Tip 2 diyabet","Yalnızca hipoglisemi","Yalnızca hipertansiyon","Yalnızca anemi","Yalnızca osteoporoz"],
+    a: 0
+  },
+  {
+    q: "Gestasyonel diyabet riski olmayan gebelerde OGTT hangi haftalarda yapılmalıdır?",
+    o: ["8-12. haftalarda","12-16. haftalarda","16-20. haftalarda","24-28. haftalarda","32-36. haftalarda"],
+    a: 3
+  },
+  {
+    q: "Gestasyonel diyabet taramasının amaçları arasında aşağıdakilerden hangisi yer ALMAZ?",
+    o: ["Fetüste makrozomi riskini azaltmak","Anne adayının sağlığını korumak","İleride Tip 2 diyabet riskini değerlendirmek","Fetüste kemik kırıklarını önlemek","İnsülin rezistansı açısından kadınları izlemek"],
+    a: 3
+  },
+  {
+    q: "Sekonder diyabet nedenleri arasında aşağıdakilerden hangisi yer alır?",
+    o: ["Otoimmün beta hücre yıkımı","Pankreas hastalıkları, endokrin bozukluklar, ilaç kullanımı","Genetik yatkınlık","Obezite","Sedanter yaşam"],
+    a: 1
+  },
+  {
+    q: "Diyabet tanısında kullanılan temel testler arasında aşağıdakilerden hangisi yer ALMAZ?",
+    o: ["Açlık kan şekeri","HbA1c","OGTT","Rastgele kan şekeri","Tam kan sayımı"],
+    a: 4
+  },
+  {
+    q: "Açlık kan şekeri (AKŞ) testi için en az kaç saat açlık gereklidir?",
+    o: ["4 saat","6 saat","8 saat","10 saat","12 saat"],
+    a: 2
+  },
+  {
+    q: "Normal açlık kan şekeri değeri aşağıdakilerden hangisidir?",
+    o: ["50-69 mg/dL","70-99 mg/dL","100-125 mg/dL","126-140 mg/dL","140-200 mg/dL"],
+    a: 1
+  },
+  {
+    q: "Prediyabet tanısı için açlık kan şekeri hangi aralıkta olmalıdır?",
+    o: ["70-99 mg/dL","100-125 mg/dL","126-140 mg/dL","140-200 mg/dL","> 200 mg/dL"],
+    a: 1
+  },
+  {
+    q: "Açlık kan şekeri kaç mg/dL ve üzeri olduğunda diyabet tanısı konur?",
+    o: ["100 mg/dL","110 mg/dL","120 mg/dL","126 mg/dL","140 mg/dL"],
+    a: 3
+  },
+  {
+    q: "HbA1c testi son kaç aylık kan şekeri ortalamasını yansıtır?",
+    o: ["1 ay","2 ay","3 ay","6 ay","12 ay"],
+    a: 2
+  },
+  {
+    q: "HbA1c değeri yüzde kaç ve üzerinde diyabet tanısı konur?",
+    o: ["%5.0","%5.5","%5.7","%6.5","%7.0"],
+    a: 3
+  },
+  {
+    q: "HbA1c değeri %5.7-6.4 aralığında olması neyi gösterir?",
+    o: ["Normal","Prediyabet","Diyabet","Hipoglisemi","Metabolik alkaloz"],
+    a: 1
+  },
+  {
+    q: "HbA1c sonuçlarını etkileyerek yanlış düşük gösterebilen durumlar arasında hangisi vardır?",
+    o: ["Demir eksikliği anemisi","Hemolitik anemi ve gebelik","Kronik böbrek yetmezliği","Hipotiroidizm","Polistemia vera"],
+    a: 1
+  },
+  {
+    q: "Diyabetli hastalarda GHb konsantrasyonu yüzde kaçın altında tutulmalıdır?",
+    o: ["%5","%6","%7","%8","%9"],
+    a: 2
+  },
+  {
+    q: "GHb değeri yüzde kaçın üzerinde olduğunda tedavi protokolü yeniden değerlendirilmelidir?",
+    o: ["%6","%7","%8","%9","%10"],
+    a: 2
+  },
+  {
+    q: "OGTT'de 75 gram glukoz yüklemesinden 2 saat sonra kan şekeri kaç mg/dL üzerinde olursa diyabet tanısı konur?",
+    o: ["126 mg/dL","140 mg/dL","160 mg/dL","180 mg/dL","200 mg/dL"],
+    a: 4
+  },
+  {
+    q: "Semptomlarla birlikte rastgele kan şekeri kaç mg/dL üzerinde olursa diyabet tanısı konabilir?",
+    o: ["126 mg/dL","140 mg/dL","160 mg/dL","180 mg/dL","200 mg/dL"],
+    a: 4
+  },
+  {
+    q: "Keton cisimleri (asetoasetat, aseton, β-hidroksibütirik asit) hangi durumun tanı ve izlenmesi için tayin edilir?",
+    o: ["Hipoglisemi","Diyabetik ketoasidoz","Metabolik alkaloz","Respiratuar asidoz","Laktik asidoz"],
+    a: 1
+  },
+  {
+    q: "Diyabetlilerde plazma glukozu kaç mg/dL üzerinde olduğunda idrarda keton cismi tayini yapılmalıdır?",
+    o: ["100 mg/dL","150 mg/dL","200 mg/dL","300 mg/dL","400 mg/dL"],
+    a: 3
+  },
+  {
+    q: "Mikroalbüminürili Tip 1 diyabetli hastaların yüzde kaçında üriner albümin atılımı her yıl %10-20 artar?",
+    o: ["%20","%40","%60","%80","%100"],
+    a: 3
+  },
+  {
+    q: "Mikroalbüminürili Tip 2 diyabetli hastaların yaklaşık yüzde kaçında nefropati gelişir?",
+    o: ["%5-10","%10-15","%20-40","%50-60","%70-80"],
+    a: 2
+  },
+  {
+    q: "Diyabette potansiyel önemi olan ancak rutin test olarak kullanılmayan analitler arasında hangisi yer alır?",
+    o: ["HbA1c","Açlık kan şekeri","İnsülin, C-peptid ve proinsülin","OGTT","Rastgele kan şekeri"],
+    a: 2
+  },
+  {
+    q: "Amilinin diyabetteki rolü aşağıdakilerden hangisidir?",
+    o: ["İnsülin yapımını artırır","Mide boşalmasını geciktirir ve glukagon oluşmasını azaltır","Karaciğerde glikojen sentezini artırır","Böbreklerde glukoz geri emilimini artırır","Kas dokusunda protein sentezini artırır"],
+    a: 1
+  },
+  {
+    q: "Leptin hangi dokuda sentezlenir ve temel işlevi nedir?",
+    o: ["Karaciğerde sentezlenir, glukoz üretimini düzenler","Adipoz dokuda sentezlenir, iştah ve enerji alımını düzenler","Böbrekte sentezlenir, elektrolit dengesini sağlar","Pankreasta sentezlenir, insülin salınımını artırır","Kas dokusunda sentezlenir, protein sentezini uyarır"],
+    a: 1
+  },
+  {
+    q: "Hiperglisemi gelişim mekanizması olarak aşağıdakilerden hangisi doğrudur?",
+    o: ["Glukozun hücre içine aşırı girişi","İnsülin eksikliği veya direnci nedeniyle glukozun hücre içine alınamaması","Glukoneogenezin azalması","Glikojen sentezinin artması","İnsülin duyarlılığının artması"],
+    a: 1
+  },
+  {
+    q: "Tip 1 diyabette hiperglisemiye yol açan temel mekanizma aşağıdakilerden hangisidir?",
+    o: ["İnsülin direnci","Beta hücre tahribatı","Glukagon eksikliği","Karaciğer yetmezliği","Böbrek yetmezliği"],
+    a: 1
+  },
+  {
+    q: "OGTT'de 2. saat glukoz değeri 140-199 mg/dL arasında ise tanı aşağıdakilerden hangisidir?",
+    o: ["Normal","Bozulmuş glukoz toleransı (prediyabet)","Diyabet","Hipoglisemi","Metabolik sendrom"],
+    a: 1
+  },
+  {
+    q: "VAKA: 55 yaşında obez erkek, AKŞ 146 mg/dL, HbA1c %7.2, rastgele glukoz 268 mg/dL. En uygun tanı hangisidir?",
+    o: ["Normal","Prediyabet","Tip 1 diyabet","Tip 2 diyabet","Gestasyonel diyabet"],
+    a: 3
+  },
+  {
+    q: "VAKA: 16 yaşında erkek, kilo kaybı, poliüri, AKŞ 288 mg/dL, HbA1c %11.4, C-peptid düşük. En olası tanı hangisidir?",
+    o: ["Tip 2 diyabet","Tip 1 diyabet","Gestasyonel diyabet","Prediyabet","Sekonder diyabet"],
+    a: 1
+  },
+  {
+    q: "VAKA: 38 yaşında kadın, OGTT açlık 102 mg/dL, 2. saat 168 mg/dL. Bu hasta için en uygun tanı hangisidir?",
+    o: ["Normal","Prediyabet (bozulmuş açlık glukozu + bozulmuş glukoz toleransı)","Tip 1 diyabet","Tip 2 diyabet","Gestasyonel diyabet"],
+    a: 1
+  },
+  {
+    q: "VAKA: 62 yaşında erkek, AKŞ 98 mg/dL (normal), HbA1c %6.6, sedanter yaşam, HT öyküsü. Bu bulgulara göre en doğru yorum hangisidir?",
+    o: ["Tamamen normaldir, takip gerekmez","HbA1c ≥%6.5 olduğundan diyabet tanısı konabilir","Yalnızca prediyabet düşünülür","Tip 1 diyabet düşünülür","Gestasyonel diyabet düşünülür"],
+    a: 1
+  }
+];
+
+const letters = ['A','B','C','D','E'];
+
+function buildQuiz() {
+  const container = document.getElementById('questionsContainer');
+  questions.forEach((q, i) => {
+    const card = document.createElement('div');
+    card.className = 'question-card';
+    card.id = `q${i}`;
+    let optionsHTML = q.o.map((opt, j) => `
+      <div class="option" data-q="${i}" data-o="${j}" onclick="selectOption(${i},${j})">
+        <div class="letter">${letters[j]}</div>
+        <div>${opt}</div>
+      </div>
+    `).join('');
+    card.innerHTML = `
+      <div class="q-header">
+        <div class="q-num">${i+1}</div>
+        <div class="q-text">${q.q}</div>
+      </div>
+      <div class="options">${optionsHTML}</div>
+    `;
+    container.appendChild(card);
+  });
+}
+
+function selectOption(qi, oi) {
+  const card = document.getElementById(`q${qi}`);
+  if (card.classList.contains('answered-correct') || card.classList.contains('answered-wrong')) return;
+  const opts = card.querySelectorAll('.option');
+  opts.forEach(o => o.classList.remove('selected'));
+  opts[oi].classList.add('selected');
+  updateProgress();
+}
+
+function updateProgress() {
+  const selected = document.querySelectorAll('.option.selected').length;
+  const pct = (selected / questions.length) * 100;
+  document.getElementById('progressFill').style.width = pct + '%';
+  document.getElementById('progressCounter').textContent = `${selected} / ${questions.length}`;
+}
+
+function submitQuiz() {
+  let score = 0;
+  questions.forEach((q, i) => {
+    const card = document.getElementById(`q${i}`);
+    const opts = card.querySelectorAll('.option');
+    const selected = card.querySelector('.option.selected');
+    const correctIdx = q.a;
+
+    opts[correctIdx].classList.add('correct');
+    opts.forEach(o => o.classList.add('disabled'));
+
+    if (selected) {
+      const selIdx = parseInt(selected.dataset.o);
+      if (selIdx === correctIdx) {
+        score++;
+        card.classList.add('answered-correct');
+      } else {
+        selected.classList.add('wrong');
+        card.classList.add('answered-wrong');
+      }
+    } else {
+      card.classList.add('answered-wrong');
+    }
+  });
+
+  document.getElementById('scoreDisplay').innerHTML = `${score} <span>/ ${questions.length}</span>`;
+  const pct = Math.round((score / questions.length) * 100);
+  let verdict = '';
+  if (pct >= 90) verdict = 'Mükemmel! Konuya hakimsiniz.';
+  else if (pct >= 70) verdict = 'Başarılı! Birkaç konuyu tekrar gözden geçirebilirsiniz.';
+  else if (pct >= 50) verdict = 'Orta düzey. Daha fazla çalışma gerekli.';
+  else verdict = 'Konuları tekrar etmeniz önerilir.';
+  document.getElementById('verdict').textContent = `%${pct} başarı — ${verdict}`;
+
+  const keyGrid = document.getElementById('keyGrid');
+  keyGrid.innerHTML = questions.map((q, i) =>
+    `<div class="key-item"><strong>S${i+1}:</strong> ${letters[q.a]}</div>`
+  ).join('');
+
+  document.getElementById('resultPanel').classList.add('show');
+  document.getElementById('submitBtn').style.display = 'none';
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+function toggleAnswerKey() {
+  document.getElementById('answerKey').classList.toggle('show');
+}
+
+buildQuiz();
+</script>
+</body>
+</html>
