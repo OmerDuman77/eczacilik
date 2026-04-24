@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tabletler III — Tablet Tipleri - Sınav Soruları &amp; Cevaplar</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Source+Sans+3:wght@400;500;600&display=swap" rel="stylesheet">
+    <style>
+        *,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+        :root{--bg:#f7f5f0;--card-bg:#fff;--text:#2c2c2c;--text-muted:#6b6b6b;--accent:#1a6b4e;--accent-light:#e8f5ee;--border:#e2ddd5;--answer-bg:#fdf8f0;--answer-border:#e8c87a;--tf-true:#1a6b4e;--tf-false:#b5442d}
+        body{font-family:'Source Sans 3',sans-serif;background:var(--bg);color:var(--text);min-height:100vh;line-height:1.55}
+        .hero{width:100%;padding:3rem 1.5rem 2rem;text-align:center;background:linear-gradient(135deg,#1a6b4e 0%,#0d3d2d 100%);color:#fff;position:relative}
+        .hero::after{content:'';position:absolute;inset:0;background:url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.04'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");pointer-events:none}
+        .back-link{display:inline-flex;align-items:center;gap:.4rem;color:rgba(255,255,255,.75);text-decoration:none;font-size:.9rem;margin-bottom:1rem;transition:color .2s}
+        .back-link:hover{color:#fff}
+        .hero h1{font-family:'Playfair Display',serif;font-size:2rem;font-weight:700}
+        .hero p{font-size:1rem;opacity:.85;margin-top:.4rem}
+        .container{max-width:860px;margin:0 auto;padding:2rem 1.5rem 4rem}
+        .controls{display:flex;gap:.75rem;flex-wrap:wrap;margin-bottom:2rem;position:sticky;top:0;z-index:10;background:var(--bg);padding:1rem 0}
+        .btn{padding:.6rem 1.2rem;border:2px solid var(--accent);border-radius:8px;font-weight:600;font-size:.9rem;cursor:pointer;transition:all .2s;font-family:inherit;background:#fff;color:var(--accent)}
+        .btn:hover{background:var(--accent-light)}
+        .btn.active{background:var(--accent);color:#fff}
+        .btn-answer{border-color:#c8951a;color:#a07415}
+        .btn-answer:hover{background:#fdf3dc}
+        .btn-answer.active{background:#c8951a;color:#fff;border-color:#c8951a}
+        .section-title{font-family:'Playfair Display',serif;font-size:1.3rem;font-weight:700;color:var(--accent);margin:2.5rem 0 1rem;padding-bottom:.5rem;border-bottom:2px solid var(--accent-light)}
+        .section-desc{font-size:.9rem;color:var(--text-muted);margin-bottom:1rem;font-style:italic}
+        .q-table{width:100%;border-collapse:collapse;margin-bottom:1.5rem;background:var(--card-bg);border-radius:10px;overflow:hidden;border:1px solid var(--border)}
+        .q-table thead th{background:var(--accent-light);color:var(--accent);font-weight:600;text-align:left;padding:.75rem 1rem;font-size:.85rem;text-transform:uppercase;letter-spacing:.05em}
+        .q-table tbody td{padding:.7rem 1rem;border-top:1px solid var(--border);font-size:.93rem;vertical-align:top}
+        .q-table tbody tr:hover{background:#fafaf7}
+        .num{color:var(--accent);font-weight:700;width:42px;text-align:center;white-space:nowrap}
+        .question-cell{width:62%}
+        .answer-cell{position:relative;min-height:1.4em;cursor:pointer;width:38%}
+        .blank{color:var(--text-muted);font-style:italic;user-select:none}
+        .answer-text{display:none;color:#5a3e00;background:var(--answer-bg);border-left:3px solid var(--answer-border);padding:.35rem .65rem;border-radius:0 4px 4px 0;line-height:1.5;font-size:.9rem}
+        .revealed .blank{display:none}
+        .revealed .answer-text{display:block}
+        .blank-mark{display:inline-block;min-width:120px;border-bottom:1.5px dashed #b5aa98;padding:0 .3rem;margin:0 .15rem;color:var(--text-muted)}
+        .tf-answer{display:flex;flex-direction:column;gap:.35rem}
+        .tf-badge{display:inline-block;padding:.15rem .55rem;border-radius:4px;font-weight:700;font-size:.85rem;letter-spacing:.03em;align-self:flex-start}
+        .tf-badge.true{background:#dff3e7;color:var(--tf-true)}
+        .tf-badge.false{background:#f9e3dc;color:var(--tf-false)}
+        .klasik-card{background:var(--card-bg);border:1px solid var(--border);border-radius:10px;margin-bottom:1rem;overflow:hidden;transition:box-shadow .2s}
+        .klasik-card:hover{box-shadow:0 2px 8px rgba(0,0,0,.04)}
+        .klasik-header{padding:1rem 1.25rem;cursor:pointer;display:flex;gap:.75rem;align-items:flex-start;user-select:none}
+        .klasik-header:hover{background:#fafaf7}
+        .klasik-num{color:var(--accent);font-weight:700;font-size:1rem;min-width:28px}
+        .klasik-q{flex:1;font-size:.95rem;font-weight:500}
+        .klasik-toggle{color:var(--accent);font-size:.85rem;transition:transform .2s;flex-shrink:0;margin-top:.15rem}
+        .revealed .klasik-toggle{transform:rotate(180deg)}
+        .klasik-puan{display:inline-block;background:var(--accent-light);color:var(--accent);font-size:.75rem;font-weight:600;padding:.1rem .45rem;border-radius:4px;margin-left:.4rem;white-space:nowrap}
+        .klasik-answer{display:none;padding:0 1.25rem 1.25rem;border-top:1px solid var(--accent-light);background:var(--answer-bg)}
+        .klasik-answer-inner{padding-top:1rem;color:#3d2f0a;font-size:.92rem;line-height:1.65}
+        .klasik-answer-inner h4{font-family:'Playfair Display',serif;color:var(--accent);font-size:1rem;margin:1rem 0 .4rem}
+        .klasik-answer-inner h4:first-child{margin-top:0}
+        .klasik-answer-inner ul,.klasik-answer-inner ol{margin:.4rem 0 .6rem 1.4rem}
+        .klasik-answer-inner li{margin-bottom:.3rem}
+        .klasik-answer-inner p{margin-bottom:.5rem}
+        .klasik-answer-inner table{width:100%;border-collapse:collapse;margin:.5rem 0;font-size:.88rem;background:#fff}
+        .klasik-answer-inner th,.klasik-answer-inner td{border:1px solid var(--border);padding:.4rem .55rem;text-align:left;vertical-align:top}
+        .klasik-answer-inner th{background:var(--accent-light);color:var(--accent);font-weight:600}
+        .klasik-answer-inner strong{color:#4a3208}
+        .revealed .klasik-answer{display:block}
+        .toc{background:#fff;border:1px solid var(--border);border-radius:10px;padding:1rem 1.25rem;margin-bottom:1.5rem}
+        .toc h3{font-family:'Playfair Display',serif;color:var(--accent);font-size:1rem;margin-bottom:.5rem}
+        .toc ul{list-style:none;display:flex;flex-wrap:wrap;gap:.5rem}
+        .toc a{display:inline-block;padding:.3rem .7rem;background:var(--accent-light);color:var(--accent);text-decoration:none;border-radius:6px;font-size:.85rem;font-weight:500;transition:all .2s}
+        .toc a:hover{background:var(--accent);color:#fff}
+        footer{text-align:center;padding:2rem 1rem;font-size:.82rem;color:var(--text-muted);border-top:1px solid var(--border)}
+        @media(max-width:600px){.hero h1{font-size:1.45rem}.q-table tbody td{padding:.55rem .6rem;font-size:.85rem}.controls{flex-direction:column}.klasik-header{padding:.85rem 1rem}.klasik-q{font-size:.88rem}}
+        @media print{.controls,.toc{display:none}.hero{padding:1.5rem}.answer-text,.klasik-answer{display:block!important;color:#333!important;border:none!important;background:none!important;padding:.3rem 0!important}.blank{display:none!important}.klasik-card{page-break-inside:avoid;border:1px solid #ccc;margin-bottom:.8rem}}
+    </style>
+</head>
+<body>
+<header class="hero">
+    <a href="./" class="back-link">← Ana Sayfa</a>
+    <h1>Tabletler III — Tablet Tipleri</h1>
+    <p>50 soru · 20 Boşluk Doldurma + 20 Doğru/Yanlış + 10 Klasik · Prof. Dr. Julide Akbuğa</p>
+</header>
+<main class="container">
+    <div class="controls">
+        <button class="btn btn-answer" id="toggleAll" onclick="toggleAllAnswers()">Tüm Cevapları Göster</button>
+        <button class="btn" onclick="hideAllAnswers()">Tüm Cevapları Gizle</button>
+        <span style="font-size:.82rem;color:var(--text-muted);align-self:center">veya ilgili satıra/karta tıklayın</span>
+    </div>
+
+    <div class="toc">
+        <h3>Bölümler</h3>
+        <ul>
+            <li><a href="#bolum-a">A — Boşluk Doldurma (20)</a></li>
+            <li><a href="#bolum-b">B — Doğru / Yanlış (20)</a></li>
+            <li><a href="#bolum-c">C — Klasik Sorular (10)</a></li>
+        </ul>
+    </div>
+<section id="bolum-a"><h2 class="section-title">A — Boşluk Doldurma (20 Soru)</h2><p class="section-desc">Aşağıdaki cümlelerdeki boşlukları uygun kavramlarla doldurunuz.</p><table class="q-table"><thead><tr><th>#</th><th>Soru</th><th>Cevap</th></tr></thead><tbody><tr><td class="num">1</td><td class="question-cell">İlaç salımına göre tabletler; hemen salım, uzun süreli salım, atınımlı salım ve <span class="blank-mark">_______</span> salım olmak üzere dört gruba ayrılır.</td><td class="answer-cell" onclick="this.classList.toggle('revealed')"><span class="blank">. . . . . .</span><span class="answer-text"><strong>geciktirilmiş (delayed)</strong></span></td></tr><tr><td class="num">2</td><td class="question-cell">Uzun süreli salım, atınımlı salım ve geciktirilmiş salım yapan tabletler birlikte <span class="blank-mark">_______</span> salımlı tabletler olarak adlandırılır.</td><td class="answer-cell" onclick="this.classList.toggle('revealed')"><span class="blank">. . . . . .</span><span class="answer-text"><strong>modifiye</strong></span></td></tr><tr><td class="num">3</td><td class="question-cell">En yaygın tablet tipi <span class="blank-mark">_______</span> (immediate release) tabletlerdir.</td><td class="answer-cell" onclick="this.classList.toggle('revealed')"><span class="blank">. . . . . .</span><span class="answer-text"><strong>hemen salım</strong></span></td></tr><tr><td class="num">4</td><td class="question-cell">Konvansiyonel tabletlerde ilacın dissolüsyon hızı, ilaç serbestleşmede genellikle <span class="blank-mark">_______</span> kademedir.</td><td class="answer-cell" onclick="this.classList.toggle('revealed')"><span class="blank">. . . . . .</span><span class="answer-text"><strong>hız-kısıtlayıcı</strong></span></td></tr><tr><td class="num">5</td><td class="question-cell">Çiğneme tabletlerinin en önemli avantajı <span class="blank-mark">_______</span> ihtiyaç duymadan ilacın alınabilmesidir.</td><td class="answer-cell" onclick="this.classList.toggle('revealed')"><span class="blank">. . . . . .</span><span class="answer-text"><strong>suya</strong></span></td></tr><tr><td class="num">6</td><td class="question-cell">Çiğneme tabletlerinde en çok kullanılan dolgu maddeleri <span class="blank-mark">_______</span> ve <span class="blank-mark">_______</span> dir.</td><td class="answer-cell" onclick="this.classList.toggle('revealed')"><span class="blank">. . . . . .</span><span class="answer-text"><strong>sorbitol / mannitol</strong></span></td></tr><tr><td class="num">7</td><td class="question-cell">Çiğneme tabletleri konvansiyonel tabletlere benzer, ancak <span class="blank-mark">_______</span> madde içermez.</td><td class="answer-cell" onclick="this.classList.toggle('revealed')"><span class="blank">. . . . . .</span><span class="answer-text"><strong>dağıtıcı (disintegrant)</strong></span></td></tr><tr><td class="num">8</td><td class="question-cell">Efervesan tabletlerde CO₂ çıkışı, karbonat/bikarbonat tuzlarının <span class="blank-mark">_______</span> ve <span class="blank-mark">_______</span> gibi zayıf asitlerle reaksiyonu sonucu oluşur.</td><td class="answer-cell" onclick="this.classList.toggle('revealed')"><span class="blank">. . . . . .</span><span class="answer-text"><strong>sitrik asit / tartarik asit</strong></span></td></tr><tr><td class="num">9</td><td class="question-cell">Efervesan tabletler dissolüsyondan sonra tamponlanmış çözelti oluşturarak mide <span class="blank-mark">_______</span> yükseltir.</td><td class="answer-cell" onclick="this.classList.toggle('revealed')"><span class="blank">. . . . . .</span><span class="answer-text"><strong>pH&#x27;sını</strong></span></td></tr><tr><td class="num">10</td><td class="question-cell">Efervesan tabletler normal olarak <span class="blank-mark">_______</span> içermez ve suda çözünen lubrikantlar kullanılır.</td><td class="answer-cell" onclick="this.classList.toggle('revealed')"><span class="blank">. . . . . .</span><span class="answer-text"><strong>bağlayıcı</strong></span></td></tr><tr><td class="num">11</td><td class="question-cell">Pastil tabletlerde (lozanj) en yaygın kullanılan bağlayıcı <span class="blank-mark">_______</span> dir.</td><td class="answer-cell" onclick="this.classList.toggle('revealed')"><span class="blank">. . . . . .</span><span class="answer-text"><strong>jelatin</strong></span></td></tr><tr><td class="num">12</td><td class="question-cell">Pastil tabletler yavaş çözünebilmesi için sertliği yüksek, porozitesi düşük olacak şekilde <span class="blank-mark">_______</span> basınç uygulanarak basılır.</td><td class="answer-cell" onclick="this.classList.toggle('revealed')"><span class="blank">. . . . . .</span><span class="answer-text"><strong>yüksek</strong></span></td></tr><tr><td class="num">13</td><td class="question-cell">Dilaltı ve bukal tabletlerde <span class="blank-mark">_______</span> karaciğer metabolizması olmadığından hızlı sistemik etki elde edilir.</td><td class="answer-cell" onclick="this.classList.toggle('revealed')"><span class="blank">. . . . . .</span><span class="answer-text"><strong>first-pass</strong></span></td></tr><tr><td class="num">14</td><td class="question-cell">Dilaltı tabletlerin klasik örneği <span class="blank-mark">_______</span> tabletidir.</td><td class="answer-cell" onclick="this.classList.toggle('revealed')"><span class="blank">. . . . . .</span><span class="answer-text"><strong>nitrogliserin</strong></span></td></tr><tr><td class="num">15</td><td class="question-cell">Bukal tabletler uygulama bölgesinde <span class="blank-mark">_______</span> saat aynı pozisyonda kalarak ilacı serbestleştirir.</td><td class="answer-cell" onclick="this.classList.toggle('revealed')"><span class="blank">. . . . . .</span><span class="answer-text"><strong>1–2</strong></span></td></tr><tr><td class="num">16</td><td class="question-cell">Bukal tabletler yüksek molekül ağırlıklı hidrofilik polimerler ve zamklarla hazırlanır ve uygulama bölgesinde <span class="blank-mark">_______</span> yapışır.</td><td class="answer-cell" onclick="this.classList.toggle('revealed')"><span class="blank">. . . . . .</span><span class="answer-text"><strong>jelleşerek</strong></span></td></tr><tr><td class="num">17</td><td class="question-cell">Anında salınan tabletler (RDT) ağızda <span class="blank-mark">_______</span> saniyede dissolüsyon tamamlanır.</td><td class="answer-cell" onclick="this.classList.toggle('revealed')"><span class="blank">. . . . . .</span><span class="answer-text"><strong>15–30</strong></span></td></tr><tr><td class="num">18</td><td class="question-cell">Anında salınan tabletlerin hazırlanmasında kullanılan yöntemlerden biri olan liyofilizasyon ile üretilen ticari ürün örneği <span class="blank-mark">_______</span> dir.</td><td class="answer-cell" onclick="this.classList.toggle('revealed')"><span class="blank">. . . . . .</span><span class="answer-text"><strong>Zydis</strong></span></td></tr><tr><td class="num">19</td><td class="question-cell">Çoklu basım uygulanmış tabletlerde her tabaka farklı renkle üretilerek tablete <span class="blank-mark">_______</span> kazandırılır.</td><td class="answer-cell" onclick="this.classList.toggle('revealed')"><span class="blank">. . . . . .</span><span class="answer-text"><strong>ayırt edicilik</strong></span></td></tr><tr><td class="num">20</td><td class="question-cell">Çoklu basım tabletlerde tabakalar arasına gerektiğinde <span class="blank-mark">_______</span> bir tabaka yerleştirilebilir.</td><td class="answer-cell" onclick="this.classList.toggle('revealed')"><span class="blank">. . . . . .</span><span class="answer-text"><strong>inert</strong></span></td></tr></tbody></table></section><section id="bolum-b"><h2 class="section-title">B — Doğru / Yanlış (20 Soru)</h2><p class="section-desc">Aşağıdaki ifadelerin doğru (D) veya yanlış (Y) olduğunu belirtiniz.</p><table class="q-table"><thead><tr><th>#</th><th>İfade</th><th>Cevap</th></tr></thead><tbody><tr><td class="num">1</td><td class="question-cell">Hemen ilaç salan tabletler (immediate release) en nadir tablet tipidir.</td><td class="answer-cell" onclick="this.classList.toggle('revealed')"><span class="blank">. . . . . .</span><span class="answer-text"><div class="tf-answer"><span class="tf-badge false">YANLIŞ</span><span>Hemen salan tabletler en yaygın tablet tipidir, en nadir değil.</span></div></span></td></tr><tr><td class="num">2</td><td class="question-cell">Konvansiyonel tabletler tek tabakalı veya çok tabakalı formda hazırlanabilir.</td><td class="answer-cell" onclick="this.classList.toggle('revealed')"><span class="blank">. . . . . .</span><span class="answer-text"><div class="tf-answer"><span class="tf-badge true">DOĞRU</span><span>Konvansiyonel tabletler tek tabakalı, konsantrik veya paralel çok tabakalı formda hazırlanabilir.</span></div></span></td></tr><tr><td class="num">3</td><td class="question-cell">Çiğneme tabletlerinde ilaç ağızda çözünür ve ağız mukozasından emilir.</td><td class="answer-cell" onclick="this.classList.toggle('revealed')"><span class="blank">. . . . . .</span><span class="answer-text"><div class="tf-answer"><span class="tf-badge false">YANLIŞ</span><span>İlaç ağızda çözünmez; mekanik olarak dağıldıktan sonra yutulur ve mide/barsakta çözünür.</span></div></span></td></tr><tr><td class="num">4</td><td class="question-cell">Çiğneme tabletlerinin klasik örnekleri antasit ve vitamin tabletleridir.</td><td class="answer-cell" onclick="this.classList.toggle('revealed')"><span class="blank">. . . . . .</span><span class="answer-text"><div class="tf-answer"><span class="tf-badge true">DOĞRU</span><span>Antasit tabletler ve vitamin tabletleri çiğneme tabletlerinin klasik örnekleridir.</span></div></span></td></tr><tr><td class="num">5</td><td class="question-cell">Efervesan tabletlerde karbon dioksit çıkışı tabletin dağılmasını ve dissolüsyonunu yavaşlatır.</td><td class="answer-cell" onclick="this.classList.toggle('revealed')"><span class="blank">. . . . . .</span><span class="answer-text"><div class="tf-answer"><span class="tf-badge false">YANLIŞ</span><span>CO₂ çıkışı tam tersine dağılmayı ve dissolüsyonu hızlandırır.</span></div></span></td></tr><tr><td class="num">6</td><td class="question-cell">Efervesan tabletler midede kalış süresini kısaltarak gastrik irritan etkiyi azaltır.</td><td class="answer-cell" onclick="this.classList.toggle('revealed')"><span class="blank">. . . . . .</span><span class="answer-text"><div class="tf-answer"><span class="tf-badge true">DOĞRU</span><span>Tamponlanmış çözelti mide boşalmasını hızlandırır; kısa kalış süresi gastrik irritasyonu azaltır.</span></div></span></td></tr><tr><td class="num">7</td><td class="question-cell">Efervesan tabletlerde sodyum bikarbonat miktarı düşüktür (yaklaşık 50 mg).</td><td class="answer-cell" onclick="this.classList.toggle('revealed')"><span class="blank">. . . . . .</span><span class="answer-text"><div class="tf-answer"><span class="tf-badge false">YANLIŞ</span><span>Efervesan tabletlerde sodyum bikarbonat miktarı yüksektir (yaklaşık 1 g).</span></div></span></td></tr><tr><td class="num">8</td><td class="question-cell">Efervesan tabletler neme karşı korunmuş şekilde ambalajlanmalıdır.</td><td class="answer-cell" onclick="this.classList.toggle('revealed')"><span class="blank">. . . . . .</span><span class="answer-text"><div class="tf-answer"><span class="tf-badge true">DOĞRU</span><span>Neme karşı koruma şarttır; desikantlı kaplar, blister veya alüminyum folyo kullanılır.</span></div></span></td></tr><tr><td class="num">9</td><td class="question-cell">Pastil tabletlerde (lozanj) dağıtıcı madde kullanılır.</td><td class="answer-cell" onclick="this.classList.toggle('revealed')"><span class="blank">. . . . . .</span><span class="answer-text"><div class="tf-answer"><span class="tf-badge false">YANLIŞ</span><span>Pastil tabletlerde dağıtıcı kullanılmaz; ağızda yavaş çözünme istenir.</span></div></span></td></tr><tr><td class="num">10</td><td class="question-cell">Pastil tabletler oral boşlukta yavaş çözünerek lokal etki gösterir.</td><td class="answer-cell" onclick="this.classList.toggle('revealed')"><span class="blank">. . . . . .</span><span class="answer-text"><div class="tf-answer"><span class="tf-badge true">DOĞRU</span><span>Pastiller oral boşlukta yavaş çözünerek lokal etki gösterir (bazıları sistemik).</span></div></span></td></tr><tr><td class="num">11</td><td class="question-cell">Dilaltı tabletler küçük ve poroz yapıdadır.</td><td class="answer-cell" onclick="this.classList.toggle('revealed')"><span class="blank">. . . . . .</span><span class="answer-text"><div class="tf-answer"><span class="tf-badge true">DOĞRU</span><span>Poroz yapı tabletin hızla dağılmasını ve ilacın serbestleşmesini sağlar.</span></div></span></td></tr><tr><td class="num">12</td><td class="question-cell">Bukal tabletler dilin altına yerleştirilir.</td><td class="answer-cell" onclick="this.classList.toggle('revealed')"><span class="blank">. . . . . .</span><span class="answer-text"><div class="tf-answer"><span class="tf-badge false">YANLIŞ</span><span>Bukal tabletler yanağın iç bölgesine veya üst dudak ile dişeti arasına yerleştirilir; dil altına yerleştirilen dilaltı tabletlerdir.</span></div></span></td></tr><tr><td class="num">13</td><td class="question-cell">Dilaltı ve bukal tabletlerde first-pass karaciğer metabolizması olmadığından biyoyararlanım yüksektir.</td><td class="answer-cell" onclick="this.classList.toggle('revealed')"><span class="blank">. . . . . .</span><span class="answer-text"><div class="tf-answer"><span class="tf-badge true">DOĞRU</span><span>First-pass metabolizması olmadığından oral mukozadan emilen ilacın biyoyararlanımı yüksektir.</span></div></span></td></tr><tr><td class="num">14</td><td class="question-cell">Tablet trituratları yüksek basınçla basılan sert tabletlerdir.</td><td class="answer-cell" onclick="this.classList.toggle('revealed')"><span class="blank">. . . . . .</span><span class="answer-text"><div class="tf-answer"><span class="tf-badge false">YANLIŞ</span><span>Tablet trituratları suda çok hızlı çözünmeleri için minimal basınçla basılır.</span></div></span></td></tr><tr><td class="num">15</td><td class="question-cell">Hipodermik tabletler parenteral çözelti hazırlamada kullanılır.</td><td class="answer-cell" onclick="this.classList.toggle('revealed')"><span class="blank">. . . . . .</span><span class="answer-text"><div class="tf-answer"><span class="tf-badge true">DOĞRU</span><span>Hipodermik tabletler çözücüde çözündürülüp sterilize edilerek parenteral enjeksiyon için kullanılır.</span></div></span></td></tr><tr><td class="num">16</td><td class="question-cell">Dispensing tabletler doğrudan hastaya verilen tabletlerdir.</td><td class="answer-cell" onclick="this.classList.toggle('revealed')"><span class="blank">. . . . . .</span><span class="answer-text"><div class="tf-answer"><span class="tf-badge false">YANLIŞ</span><span>Dispensing tabletler hastaya verilmez; eczacı tarafından preparat hazırlamada kullanılır.</span></div></span></td></tr><tr><td class="num">17</td><td class="question-cell">Vajinal tabletler sistemik etki amacıyla kullanılır.</td><td class="answer-cell" onclick="this.classList.toggle('revealed')"><span class="blank">. . . . . .</span><span class="answer-text"><div class="tf-answer"><span class="tf-badge false">YANLIŞ</span><span>Vajinal tabletler lokal etki amacıyla (antibakteriyel, antifungal) kullanılır, sistemik değil.</span></div></span></td></tr><tr><td class="num">18</td><td class="question-cell">Anında salınan tabletlerde (RDT) friabilite önemli bir sorundur.</td><td class="answer-cell" onclick="this.classList.toggle('revealed')"><span class="blank">. . . . . .</span><span class="answer-text"><div class="tf-answer"><span class="tf-badge true">DOĞRU</span><span>Kendiliğinden çözünen yapıda friabilite yüksek olur; bu önemli bir sorundur.</span></div></span></td></tr><tr><td class="num">19</td><td class="question-cell">Anında salınan tabletlerde tat maskeleme kolaydır.</td><td class="answer-cell" onclick="this.classList.toggle('revealed')"><span class="blank">. . . . . .</span><span class="answer-text"><div class="tf-answer"><span class="tf-badge false">YANLIŞ</span><span>RDT&#x27;lerde tat maskeleme güçtür; mikro/nanoenkapsülasyonla çözülmeye çalışılır.</span></div></span></td></tr><tr><td class="num">20</td><td class="question-cell">Çoklu basım tabletlerde her tabaka aynı etkin maddeyi aynı dozda içermelidir.</td><td class="answer-cell" onclick="this.classList.toggle('revealed')"><span class="blank">. . . . . .</span><span class="answer-text"><div class="tf-answer"><span class="tf-badge false">YANLIŞ</span><span>Her tabaka farklı etkin madde içerebilir; ayrımın nedeni geçimsizlik, farklı salım kademeleri veya görünümdür.</span></div></span></td></tr></tbody></table></section><section id="bolum-c"><h2 class="section-title">C — Klasik Sorular (10 Soru)</h2><p class="section-desc">Soruya tıklayarak açıklamalı cevabı görebilirsiniz.</p><div class="klasik-card"><div class="klasik-header" onclick="this.parentElement.classList.toggle('revealed')"><span class="klasik-num">1.</span><span class="klasik-q">Tabletleri ilaç salımına göre sınıflandırınız. Her salım tipini kısaca tanımlayınız. Modifiye salımlı tabletler hangi tipleri kapsar?<span class="klasik-puan">10 puan</span></span><span class="klasik-toggle">▼</span></div><div class="klasik-answer"><div class="klasik-answer-inner">
+        <h4>Dört ana salım tipi</h4>
+        <ol>
+            <li><strong>Hemen salım (Immediate release):</strong> İlaç alındıktan hemen sonra hızla serbestleşir. En yaygın tablet tipidir. Dağılan, çiğneme, efervesan, dilaltı ve bukal tabletler bu gruba girer.</li>
+            <li><strong>Uzun süreli salım (Prolonged release):</strong> İlaç önceden belirlenmiş şekilde uzun bir süre boyunca kontrollü olarak serbest bırakılır.</li>
+            <li><strong>Atınımlı salım (Pulsatile release):</strong> İlaç belirli aralıklarla pulslar halinde salınır.</li>
+            <li><strong>Geciktirilmiş salım (Delayed release):</strong> İlaç belirli bir süre geçtikten sonra veya belirli bir GİT bölgesinde (ör. barsak) serbestleşir.</li>
+        </ol>
+        <p><strong>Modifiye salımlı tabletler:</strong> Son üç tipi (uzun süreli, atınımlı, geciktirilmiş) kapsar. USP ise modifiye formları extended-release ve delayed-release olarak ikiye ayırır.</p>
+    </div></div></div><div class="klasik-card"><div class="klasik-header" onclick="this.parentElement.classList.toggle('revealed')"><span class="klasik-num">2.</span><span class="klasik-q">Konvansiyonel (düz) tabletlerin özelliklerini, içerdiği eksipiyan tiplerini ve ilaç serbestleşme prosesini açıklayınız. Dissolüsyon hızının &#x27;hız-kısıtlayıcı kademe&#x27; olması ne anlama gelir?<span class="klasik-puan">15 puan</span></span><span class="klasik-toggle">▼</span></div><div class="klasik-answer"><div class="klasik-answer-inner">
+        <p>En yaygın kullanılan tablet tipidir. Yutularak kullanılır ve kısa sürede dağılıp ilaç dissolüsyonu sağlanır. Formülasyonun amacı in vivo hızlı ve tam ilaç serbestleşmesidir.</p>
+        <p><strong>Eksipiyan tipleri:</strong> Dolgu maddesi (seyreltici), dağıtıcı (disintegrant), bağlayıcı, glidant, lubrikant ve anti-adherent.</p>
+        <p><strong>İlaç serbestleşme prosesi:</strong> Tablet → dağılma (disintegrasyon) → granül/parçacıklar → dissolüsyon → absorpsiyon. Dağıtıcı seçimi kritiktir; seyrelticiler ve lubrikantlar da dağılmayı etkiler.</p>
+        <p><strong>Hız-kısıtlayıcı kademe:</strong> İlacın dissolüsyon hızı, tüm serbestleşme sürecindeki en yavaş adımdır ve toplam süreci belirler. Özellikle suda güç çözünen fakat barsakta hızla absorbe edilen ilaçlarda dissolüsyon hız-kısıtlayıcıdır; tablet ne kadar hızlı dağılırsa dağılsın, ilaç çözünmeden emilim başlayamaz.</p>
+    </div></div></div><div class="klasik-card"><div class="klasik-header" onclick="this.parentElement.classList.toggle('revealed')"><span class="klasik-num">3.</span><span class="klasik-q">Çiğneme tabletlerinin tanımını yapınız. Kullanım amaçlarını, hedef hasta gruplarını, formülasyon özelliklerini (dağıtıcı durumu, dolgu maddeleri) ve en önemli avantajını açıklayınız.<span class="klasik-puan">10 puan</span></span><span class="klasik-toggle">▼</span></div><div class="klasik-answer"><div class="klasik-answer-inner">
+        <p><strong>Tanım:</strong> Ağızda çiğnenerek mekanik olarak dağılan tabletlerdir. İlaç ağızda çözünmez; dağıldıktan sonra yutulur ve mide/barsakta çözünür.</p>
+        <p><strong>Kullanım amaçları:</strong> Hızlı ilaç etkisi elde etmek ve tablet alımını kolaylaştırmak.</p>
+        <p><strong>Hedef hasta grupları:</strong> Yaşlılar ve çocuklar gibi yutma güçlüğü çekenler.</p>
+        <h4>Formülasyon özellikleri</h4>
+        <ul>
+            <li>Konvansiyonel tabletlere benzer ancak dağıtıcı madde içermez (çiğneme mekanik dağılmayı sağlar)</li>
+            <li>Tat verici ve renk maddeleri eklenir</li>
+            <li>En çok kullanılan dolgu maddeleri: sorbitol ve mannitol (hoş tat; mannitol soğutma hissi verir)</li>
+        </ul>
+        <p><strong>En önemli avantajı:</strong> Suya ihtiyaç duymadan ilacın alınabilmesi. Örnekler: Antasit tabletler, vitamin tabletleri.</p>
+    </div></div></div><div class="klasik-card"><div class="klasik-header" onclick="this.parentElement.classList.toggle('revealed')"><span class="klasik-num">4.</span><span class="klasik-q">Efervesan tabletlerin çalışma prensibini (CO₂ oluşum reaksiyonu) açıklayınız. Farmakolojik avantajlarını (mide pH, boşalma hızı, gastrik irritasyon) detaylı olarak anlatınız. Formülasyon ve ambalajlama özelliklerini belirtiniz.<span class="klasik-puan">15 puan</span></span><span class="klasik-toggle">▼</span></div><div class="klasik-answer"><div class="klasik-answer-inner">
+        <p><strong>Çalışma prensibi:</strong> Su ile temas ettığında karbonat/bikarbonat tuzlarının zayıf asitlerle (sitrik asit, tartarik asit) reaksiyonu sonucu CO₂ gazı oluşur. Bu 'kabarcık etkisi' tabletin dağılmasını hızlandırır ve dissolüsyon birkaç dakikada tamamlanır.</p>
+        <h4>Farmakolojik avantajları</h4>
+        <ul>
+            <li>Dissolüsyondan sonra tamponlanmış sulu çözelti oluşur</li>
+            <li>Mide pH'sını yükseltir (sodyum bikarbonat ~1 g)</li>
+            <li>Mide boşalmasını hızlandırır → ilacın midede kalma süresi kısalır</li>
+            <li>Kısa kalış süresi gastrik irritan etkiyi engeller (ör. aspirin gibi mide tahrişi yapan ilaçlar)</li>
+        </ul>
+        <h4>Formülasyon özellikleri</h4>
+        <ul>
+            <li>Tat verici ve renk verici maddeler içerir</li>
+            <li>Suda çözünen lubrikantlar kullanılır (hidrofobik lubrikantlar kullanılmaz)</li>
+            <li>Normal olarak bağlayıcı içermez</li>
+            <li>Direk basım veya granülasyon yöntemiyle hazırlanır</li>
+        </ul>
+        <p><strong>Ambalajlama:</strong> Neme karşı korunma zorunludur — desikant eklenmiş su geçirmez kaplar, blister veya alüminyum folyo ambalajlar kullanılır.</p>
+    </div></div></div><div class="klasik-card"><div class="klasik-header" onclick="this.parentElement.classList.toggle('revealed')"><span class="klasik-num">5.</span><span class="klasik-q">Pastil tabletlerin (lozanj) tanımını, kullanım amaçlarını ve formülasyon özelliklerini açıklayınız. Pastil tabletler neden yüksek basınçla basılır? Dağıtıcı madde neden kullanılmaz?<span class="klasik-puan">10 puan</span></span><span class="klasik-toggle">▼</span></div><div class="klasik-answer"><div class="klasik-answer-inner">
+        <p><strong>Tanım:</strong> İlaç yanında genellikle tat verici madde içeren disk şeklinde katı dozaj formlarıdır. Oral boşlukta yavaş çözünerek lokal etki gösterir (bazıları sistemik). Ağız ve boğazda tıbbi tedavi amaçlı kullanılır (lokal anestezikler, antibiyotikler).</p>
+        <h4>Formülasyon özellikleri</h4>
+        <ul>
+            <li>Seyreltici ve bağlayıcı suda çözünmeli ve iyi tada sahip olmalıdır</li>
+            <li>Dolgu maddeleri: glukoz, sorbitol, mannitol</li>
+            <li>En yaygın bağlayıcı: jelatin</li>
+        </ul>
+        <p><strong>Neden yüksek basınçla basılır?</strong> Ağızda yavaş çözünebilmesi için sertliği yüksek, porozitesi düşük tabletler gerekir. Yüksek basınç bu özellikleri sağlar.</p>
+        <p><strong>Neden dağıtıcı kullanılmaz?</strong> Pastil tabletlerin hızla dağılması değil, yavaş ve kontrollü çözünmesi istenir. Dağıtıcı madde tabletin erken parçalanmasına neden olarak lokal etki süresini kısaltır.</p>
+    </div></div></div><div class="klasik-card"><div class="klasik-header" onclick="this.parentElement.classList.toggle('revealed')"><span class="klasik-num">6.</span><span class="klasik-q">Dilaltı ve bukal tabletleri karşılaştırmalı olarak açıklayınız. Uygulama yerleri, salım hızları, tasarım özellikleri ve örnekleri nelerdir? First-pass metabolizmasının olmamasının klinik önemi nedir?<span class="klasik-puan">15 puan</span></span><span class="klasik-toggle">▼</span></div><div class="klasik-answer"><div class="klasik-answer-inner">
+        <table>
+            <thead><tr><th>Özellik</th><th>Dilaltı Tablet</th><th>Bukal Tablet</th></tr></thead>
+            <tbody>
+                <tr><td>Uygulama yeri</td><td>Dilin altı</td><td>Yanağın iç bölgesi veya üst dudak-dişeti arası</td></tr>
+                <tr><td>Salım hızı</td><td>Hızlı</td><td>Yavaş</td></tr>
+                <tr><td>Yapı</td><td>Küçük, poroz (hızlı dağılma)</td><td>Hidrofilik polimer/zamkla jelleşerek yapışır</td></tr>
+                <tr><td>Etki süresi</td><td>Kısa, anlık etki</td><td>1–2 saat boyunca sürekli salım</td></tr>
+                <tr><td>Örnek</td><td>Nitrogliserin</td><td>Proklorperazin (bulantı, araç tutması)</td></tr>
+            </tbody>
+        </table>
+        <h4>First-pass metabolizmasının klinik önemi</h4>
+        <p>İlaç oral mukozadan direkt sistemik dolaşıma geçer; karaciğerden ilk geçiş metabolizması olmaz. Bu sayede:</p>
+        <ul>
+            <li>İlacın biyoyararlanımı önemli ölçüde artar</li>
+            <li>Oral yoldan alındığında karaciğerde yıkılan ilaçlar etkili dozda kullanılabilir</li>
+            <li>Daha düşük dozla aynı terapötik etki elde edilir</li>
+            <li>Hızlı sistemik etki sağlanır (özellikle acil durumlarda, ör. nitrogliserin-anjina)</li>
+        </ul>
+    </div></div></div><div class="klasik-card"><div class="klasik-header" onclick="this.parentElement.classList.toggle('revealed')"><span class="klasik-num">7.</span><span class="klasik-q">Bukal ilaç taşınmasının avantajlarını en az 6 madde halinde sıralayınız. Bu yolun hangi tip ilaçlar için özellikle uygun olduğunu açıklayınız.<span class="klasik-puan">10 puan</span></span><span class="klasik-toggle">▼</span></div><div class="klasik-answer"><div class="klasik-answer-inner">
+        <ol>
+            <li>Uygulaması kolaydır</li>
+            <li>Tedavi kolaylıkla sonlandırılabilir</li>
+            <li>Oral boşlukta belli bir bölgede uzun süre ilaç salımı sağlanır</li>
+            <li>Bilinç kaybı olan hastalara da uygulanabilir</li>
+            <li>İlaç biyoyararlanımı çok yüksektir (first-pass metabolizması yok)</li>
+            <li>Yan etki oluştuğunda tedavi hemen sonlandırılabilir</li>
+            <li>Asit ortamda dayanıksız, GİT'te parçalanan ilaçlar için ideal bir yoldur</li>
+            <li>Oral uygulandığında biyoyararlanımı düşük olan ilaçlar için iyi bir alternatiftir</li>
+        </ol>
+        <h4>Özellikle uygun olduğu ilaçlar</h4>
+        <ul>
+            <li>Mide asidinde inaktive olan ilaçlar</li>
+            <li>GİT'ten absorpsiyonu düşük olan ilaçlar</li>
+            <li>First-pass metabolizmasıyla büyük ölçüde yıkılan ilaçlar</li>
+            <li>Asit ortamda dayanıksız ilaçlar</li>
+        </ul>
+    </div></div></div><div class="klasik-card"><div class="klasik-header" onclick="this.parentElement.classList.toggle('revealed')"><span class="klasik-num">8.</span><span class="klasik-q">Anında salınan tabletlerin (RDT) tanımını, hedef hasta grubunu, hazırlama yöntemlerini ve dissolüsyon standartlarını açıklayınız. Bu tabletlerin dezavantajlarını tartışınız.<span class="klasik-puan">15 puan</span></span><span class="klasik-toggle">▼</span></div><div class="klasik-answer"><div class="klasik-answer-inner">
+        <p><strong>Tanım:</strong> Ağızda 1 dakika içinde (bazen 10 saniyede) dağılan veya çözünen tabletlerdir. Dil üzerinde sıvılaşıp yutulur.</p>
+        <p><strong>Hedef hasta grubu:</strong> Çocuklar, yaşlılar, yutkunma zorluğu çeken hastalar.</p>
+        <h4>Hazırlama yöntemleri</h4>
+        <ul>
+            <li>Liyofilizasyon (dondurarak kurutma) — ör. Zydis</li>
+            <li>Direk basım — ör. Wow-Tab</li>
+            <li>Diğer yöntemler — ör. Quicksolv</li>
+        </ul>
+        <p><strong>Dissolüsyon standartları:</strong> Kesin standart bulunmamakla birlikte ağızda 15–30 saniyede dissolüsyon tamamlanmalıdır.</p>
+        <h4>Dezavantajları</h4>
+        <ul>
+            <li><strong>Tat maskeleme güçtür:</strong> Mikro/nanoenkapsülasyon veya tat verici kaplama ile çözülmeye çalışılır</li>
+            <li><strong>Friabilite (kırılganlık) önemli bir sorundur:</strong> Kendiliğinden çözünen yapıda mekanik dayanıklılık düşüktür</li>
+            <li>İlaç yükleme kapasitesi sınırlıdır</li>
+            <li>Maliyet yüksektir</li>
+            <li>Ürün stabilitesi sorunlu olabilir</li>
+            <li>Kabarcık tipi (blister) özel ambalajlar gerekir</li>
+            <li>Tabletler genellikle yumuşaktır</li>
+        </ul>
+    </div></div></div><div class="klasik-card"><div class="klasik-header" onclick="this.parentElement.classList.toggle('revealed')"><span class="klasik-num">9.</span><span class="klasik-q">Vajinal tabletlerin tanımını, şekillerini ve kullanım alanlarını açıklayınız. Hangi mikroorganizmalara karşı kullanılır?<span class="klasik-puan">10 puan</span></span><span class="klasik-toggle">▼</span></div><div class="klasik-answer"><div class="klasik-answer-inner">
+        <p><strong>Tanım:</strong> Vajinal insert olarak da adlandırılan, kapsız, mermi şeklinde veya oval, lokal etki için vajinaya uygulanan tabletlerdir. Basınç uygulanarak hazırlanır ve plastik inserte (takma aygıtına) yerleşecek boyutta üretilir.</p>
+            <h4>Kullanım alanları</h4>
+        <ul>
+            <li><strong>Antibakteriyel tedavi:</strong> <em>Haemophilus vaginalis</em>'in neden olduğu nonspesifik vajinit tedavisi</li>
+            <li><strong>Antifungal tedavi:</strong> <em>Candida albicans</em> ve benzeri türlerin neden olduğu vulvovaginit tedavisi</li>
+        </ul>
+    </div></div></div><div class="klasik-card"><div class="klasik-header" onclick="this.parentElement.classList.toggle('revealed')"><span class="klasik-num">10.</span><span class="klasik-q">Çoklu basım uygulanmış tabletlerin (çok katlı ve tablet içinde tablet) hazırlanış prensiplerini açıklayınız. Bu tabletlerde tabakalara ayırmanın nedenleri nelerdir? Her tabaka neden farklı renkte olabilir?<span class="klasik-puan">15 puan</span></span><span class="klasik-toggle">▼</span></div><div class="klasik-answer"><div class="klasik-answer-inner">
+        <h4>İki farklı form</h4>
+        <ol>
+            <li><strong>Çok katlı (multi-layer) tabletler:</strong>
+                <ul>
+                    <li>Mühreyi dolduran tozlara basınç uygulanarak ilk tabaka oluşur</li>
+                    <li>Üzerine farklı toz eklenerek tekrar basım uygulanır → 2 tabakalı tablet</li>
+                    <li>İşlem tekrarlanarak 3 veya daha fazla tabakalı tablet oluşturulabilir</li>
+                </ul>
+            </li>
+            <li><strong>Tablet içinde tablet (core tablet):</strong>
+                <ul>
+                    <li>İç tablet (çekirdek) basılır, çevresine farklı toz eklenerek kabuk tabaka oluşturulur</li>
+                    <li>Özel çekirdek tablet basım makinaları gerekir (ör. Norgesic tablet)</li>
+                </ul>
+            </li>
+        </ol>
+        <h4>Tabakalara ayırmanın nedenleri</h4>
+        <ul>
+            <li><strong>Fiziksel veya kimyasal geçimsizlik:</strong> Birbiriyle uyumsuz etkin maddeler ayrı tabakalarda tutulur</li>
+            <li><strong>Farklı ilaç salım kademeleri:</strong> Bir tabaka hemen salım, diğeri sürekli salım yapabilir; gerekirse araya inert tabaka yerleştirilir</li>
+            <li><strong>Görünüm farklılaştırma:</strong> Her tabaka farklı renkle üretilerek ürün tanımlanabilirliği ve ayırt ediciliği artırılır</li>
+        </ul>
+    </div></div></div></section></main>
+<footer>Eczacılık Dersleri — Kaynak: Prof. Dr. Julide Akbuğa &copy; 2026</footer>
+<script>
+function toggleAllAnswers(){
+    const btn=document.getElementById('toggleAll');
+    const all=document.querySelectorAll('.answer-cell, .klasik-card');
+    const allRevealed=[...all].every(c=>c.classList.contains('revealed'));
+    all.forEach(c=>{if(allRevealed)c.classList.remove('revealed');else c.classList.add('revealed')});
+    btn.classList.toggle('active',!allRevealed);
+}
+function hideAllAnswers(){
+    document.querySelectorAll('.answer-cell, .klasik-card').forEach(c=>c.classList.remove('revealed'));
+    document.getElementById('toggleAll').classList.remove('active');
+}
+</script>
+</body>
+</html>

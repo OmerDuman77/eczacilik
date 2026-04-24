@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mikromeritik - Sınav Soruları &amp; Cevaplar</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Source+Sans+3:wght@400;500;600&display=swap" rel="stylesheet">
+    <style>
+        *,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+        :root{--bg:#f7f5f0;--card-bg:#fff;--text:#2c2c2c;--text-muted:#6b6b6b;--accent:#1a6b4e;--accent-light:#e8f5ee;--border:#e2ddd5;--answer-bg:#fdf8f0;--answer-border:#e8c87a;--tf-true:#1a6b4e;--tf-false:#b5442d}
+        body{font-family:'Source Sans 3',sans-serif;background:var(--bg);color:var(--text);min-height:100vh;line-height:1.55}
+        .hero{width:100%;padding:3rem 1.5rem 2rem;text-align:center;background:linear-gradient(135deg,#1a6b4e 0%,#0d3d2d 100%);color:#fff;position:relative}
+        .hero::after{content:'';position:absolute;inset:0;background:url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.04'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");pointer-events:none}
+        .back-link{display:inline-flex;align-items:center;gap:.4rem;color:rgba(255,255,255,.75);text-decoration:none;font-size:.9rem;margin-bottom:1rem;transition:color .2s}
+        .back-link:hover{color:#fff}
+        .hero h1{font-family:'Playfair Display',serif;font-size:2rem;font-weight:700}
+        .hero p{font-size:1rem;opacity:.85;margin-top:.4rem}
+        .container{max-width:860px;margin:0 auto;padding:2rem 1.5rem 4rem}
+        .controls{display:flex;gap:.75rem;flex-wrap:wrap;margin-bottom:2rem;position:sticky;top:0;z-index:10;background:var(--bg);padding:1rem 0}
+        .btn{padding:.6rem 1.2rem;border:2px solid var(--accent);border-radius:8px;font-weight:600;font-size:.9rem;cursor:pointer;transition:all .2s;font-family:inherit;background:#fff;color:var(--accent)}
+        .btn:hover{background:var(--accent-light)}
+        .btn.active{background:var(--accent);color:#fff}
+        .btn-answer{border-color:#c8951a;color:#a07415}
+        .btn-answer:hover{background:#fdf3dc}
+        .btn-answer.active{background:#c8951a;color:#fff;border-color:#c8951a}
+        .section-title{font-family:'Playfair Display',serif;font-size:1.3rem;font-weight:700;color:var(--accent);margin:2.5rem 0 1rem;padding-bottom:.5rem;border-bottom:2px solid var(--accent-light)}
+        .section-desc{font-size:.9rem;color:var(--text-muted);margin-bottom:1rem;font-style:italic}
+        .q-table{width:100%;border-collapse:collapse;margin-bottom:1.5rem;background:var(--card-bg);border-radius:10px;overflow:hidden;border:1px solid var(--border)}
+        .q-table thead th{background:var(--accent-light);color:var(--accent);font-weight:600;text-align:left;padding:.75rem 1rem;font-size:.85rem;text-transform:uppercase;letter-spacing:.05em}
+        .q-table tbody td{padding:.7rem 1rem;border-top:1px solid var(--border);font-size:.93rem;vertical-align:top}
+        .q-table tbody tr:hover{background:#fafaf7}
+        .num{color:var(--accent);font-weight:700;width:42px;text-align:center;white-space:nowrap}
+        .question-cell{width:62%}
+        .answer-cell{position:relative;min-height:1.4em;cursor:pointer;width:38%}
+        .blank{color:var(--text-muted);font-style:italic;user-select:none}
+        .answer-text{display:none;color:#5a3e00;background:var(--answer-bg);border-left:3px solid var(--answer-border);padding:.35rem .65rem;border-radius:0 4px 4px 0;line-height:1.5;font-size:.9rem}
+        .revealed .blank{display:none}
+        .revealed .answer-text{display:block}
+        .blank-mark{display:inline-block;min-width:120px;border-bottom:1.5px dashed #b5aa98;padding:0 .3rem;margin:0 .15rem;color:var(--text-muted)}
+        .tf-answer{display:flex;flex-direction:column;gap:.35rem}
+        .tf-badge{display:inline-block;padding:.15rem .55rem;border-radius:4px;font-weight:700;font-size:.85rem;letter-spacing:.03em;align-self:flex-start}
+        .tf-badge.true{background:#dff3e7;color:var(--tf-true)}
+        .tf-badge.false{background:#f9e3dc;color:var(--tf-false)}
+        .klasik-card{background:var(--card-bg);border:1px solid var(--border);border-radius:10px;margin-bottom:1rem;overflow:hidden;transition:box-shadow .2s}
+        .klasik-card:hover{box-shadow:0 2px 8px rgba(0,0,0,.04)}
+        .klasik-header{padding:1rem 1.25rem;cursor:pointer;display:flex;gap:.75rem;align-items:flex-start;user-select:none}
+        .klasik-header:hover{background:#fafaf7}
+        .klasik-num{color:var(--accent);font-weight:700;font-size:1rem;min-width:28px}
+        .klasik-q{flex:1;font-size:.95rem;font-weight:500}
+        .klasik-toggle{color:var(--accent);font-size:.85rem;transition:transform .2s;flex-shrink:0;margin-top:.15rem}
+        .revealed .klasik-toggle{transform:rotate(180deg)}
+        .klasik-puan{display:inline-block;background:var(--accent-light);color:var(--accent);font-size:.75rem;font-weight:600;padding:.1rem .45rem;border-radius:4px;margin-left:.4rem;white-space:nowrap}
+        .klasik-answer{display:none;padding:0 1.25rem 1.25rem;border-top:1px solid var(--accent-light);background:var(--answer-bg)}
+        .klasik-answer-inner{padding-top:1rem;color:#3d2f0a;font-size:.92rem;line-height:1.65}
+        .klasik-answer-inner h4{font-family:'Playfair Display',serif;color:var(--accent);font-size:1rem;margin:1rem 0 .4rem}
+        .klasik-answer-inner h4:first-child{margin-top:0}
+        .klasik-answer-inner ul,.klasik-answer-inner ol{margin:.4rem 0 .6rem 1.4rem}
+        .klasik-answer-inner li{margin-bottom:.3rem}
+        .klasik-answer-inner p{margin-bottom:.5rem}
+        .klasik-answer-inner table{width:100%;border-collapse:collapse;margin:.5rem 0;font-size:.88rem;background:#fff}
+        .klasik-answer-inner th,.klasik-answer-inner td{border:1px solid var(--border);padding:.4rem .55rem;text-align:left;vertical-align:top}
+        .klasik-answer-inner th{background:var(--accent-light);color:var(--accent);font-weight:600}
+        .klasik-answer-inner strong{color:#4a3208}
+        .revealed .klasik-answer{display:block}
+        .toc{background:#fff;border:1px solid var(--border);border-radius:10px;padding:1rem 1.25rem;margin-bottom:1.5rem}
+        .toc h3{font-family:'Playfair Display',serif;color:var(--accent);font-size:1rem;margin-bottom:.5rem}
+        .toc ul{list-style:none;display:flex;flex-wrap:wrap;gap:.5rem}
+        .toc a{display:inline-block;padding:.3rem .7rem;background:var(--accent-light);color:var(--accent);text-decoration:none;border-radius:6px;font-size:.85rem;font-weight:500;transition:all .2s}
+        .toc a:hover{background:var(--accent);color:#fff}
+        footer{text-align:center;padding:2rem 1rem;font-size:.82rem;color:var(--text-muted);border-top:1px solid var(--border)}
+        @media(max-width:600px){.hero h1{font-size:1.45rem}.q-table tbody td{padding:.55rem .6rem;font-size:.85rem}.controls{flex-direction:column}.klasik-header{padding:.85rem 1rem}.klasik-q{font-size:.88rem}}
+        @media print{.controls,.toc{display:none}.hero{padding:1.5rem}.answer-text,.klasik-answer{display:block!important;color:#333!important;border:none!important;background:none!important;padding:.3rem 0!important}.blank{display:none!important}.klasik-card{page-break-inside:avoid;border:1px solid #ccc;margin-bottom:.8rem}}
+    </style>
+</head>
+<body>
+<header class="hero">
+    <a href="./" class="back-link">← Ana Sayfa</a>
+    <h1>Mikromeritik</h1>
+    <p>50 soru · 20 Boşluk Doldurma + 20 Doğru/Yanlış + 10 Klasik · Prof. Dr. Julide Akbuğa</p>
+</header>
+<main class="container">
+    <div class="controls">
+        <button class="btn btn-answer" id="toggleAll" onclick="toggleAllAnswers()">Tüm Cevapları Göster</button>
+        <button class="btn" onclick="hideAllAnswers()">Tüm Cevapları Gizle</button>
+        <span style="font-size:.82rem;color:var(--text-muted);align-self:center">veya ilgili satıra/karta tıklayın</span>
+    </div>
+
+    <div class="toc">
+        <h3>Bölümler</h3>
+        <ul>
+            <li><a href="#bolum-a">A — Boşluk Doldurma (20)</a></li>
+            <li><a href="#bolum-b">B — Doğru / Yanlış (20)</a></li>
+            <li><a href="#bolum-c">C — Klasik Sorular (10)</a></li>
+        </ul>
+    </div>
+<section id="bolum-a"><h2 class="section-title">A — Boşluk Doldurma (20 Soru)</h2><p class="section-desc">Aşağıdaki cümlelerdeki boşlukları uygun kavramlarla doldurunuz.</p><table class="q-table"><thead><tr><th>#</th><th>Soru</th><th>Cevap</th></tr></thead><tbody><tr><td class="num">1</td><td class="question-cell">Mikromeritik, <span class="blank-mark">_______</span> bilimi ve teknolojisidir.</td><td class="answer-cell" onclick="this.classList.toggle('revealed')"><span class="blank">. . . . . .</span><span class="answer-text"><strong>küçük parçacıkların</strong></span></td></tr><tr><td class="num">2</td><td class="question-cell">Partikül boyutu genellikle <span class="blank-mark">_______</span> (µm) birimi ile ifade edilir.</td><td class="answer-cell" onclick="this.classList.toggle('revealed')"><span class="blank">. . . . . .</span><span class="answer-text"><strong>mikrometre</strong></span></td></tr><tr><td class="num">3</td><td class="question-cell">Bir ilacın fiziksel, kimyasal ve farmakolojik özellikleri, partikülün boyutu ve <span class="blank-mark">_______</span> ile ilişkilidir.</td><td class="answer-cell" onclick="this.classList.toggle('revealed')"><span class="blank">. . . . . .</span><span class="answer-text"><strong>yüzey alanı</strong></span></td></tr><tr><td class="num">4</td><td class="question-cell">Elek analizi basit ve ucuz bir yöntemdir, ancak çok <span class="blank-mark">_______</span> partiküllerin tayini zordur.</td><td class="answer-cell" onclick="this.classList.toggle('revealed')"><span class="blank">. . . . . .</span><span class="answer-text"><strong>küçük</strong></span></td></tr><tr><td class="num">5</td><td class="question-cell">Küresel partiküllerin temas yüzeyleri <span class="blank-mark">_______</span> olduğu için optimal akıcılık gösterirler.</td><td class="answer-cell" onclick="this.classList.toggle('revealed')"><span class="blank">. . . . . .</span><span class="answer-text"><strong>minimum</strong></span></td></tr><tr><td class="num">6</td><td class="question-cell">Gerçek dansitenin belirlenmesinde <span class="blank-mark">_______</span> piknometresi kullanılır.</td><td class="answer-cell" onclick="this.classList.toggle('revealed')"><span class="blank">. . . . . .</span><span class="answer-text"><strong>helyum</strong></span></td></tr><tr><td class="num">7</td><td class="question-cell">Küme dansitesi, tozun ağırlığının (m) <span class="blank-mark">_______</span> (v) bölünmesiyle elde edilir.</td><td class="answer-cell" onclick="this.classList.toggle('revealed')"><span class="blank">. . . . . .</span><span class="answer-text"><strong>hacmine</strong></span></td></tr><tr><td class="num">8</td><td class="question-cell">Sıkıştırılmış dansite ölçümünde toz kümesine mekanik <span class="blank-mark">_______</span> (tapping) uygulanır.</td><td class="answer-cell" onclick="this.classList.toggle('revealed')"><span class="blank">. . . . . .</span><span class="answer-text"><strong>vurma</strong></span></td></tr><tr><td class="num">9</td><td class="question-cell">Görünür dansite ölçümünde toz, <span class="blank-mark">_______</span> mesh elekten geçirildikten sonra silindire boşaltılır.</td><td class="answer-cell" onclick="this.classList.toggle('revealed')"><span class="blank">. . . . . .</span><span class="answer-text"><strong>40</strong></span></td></tr><tr><td class="num">10</td><td class="question-cell">Yığın açısı <span class="blank-mark">_______</span> dereceden küçük olan tozlar iyi akış gösterirler.</td><td class="answer-cell" onclick="this.classList.toggle('revealed')"><span class="blank">. . . . . .</span><span class="answer-text"><strong>30</strong></span></td></tr><tr><td class="num">11</td><td class="question-cell">Yığın açısı 40 dereceden büyük olan tozlar <span class="blank-mark">_______</span> gösterirler.</td><td class="answer-cell" onclick="this.classList.toggle('revealed')"><span class="blank">. . . . . .</span><span class="answer-text"><strong>akış problemi</strong></span></td></tr><tr><td class="num">12</td><td class="question-cell">Yığın açısı formülü: tan φ = <span class="blank-mark">_______</span> şeklindedir.</td><td class="answer-cell" onclick="this.classList.toggle('revealed')"><span class="blank">. . . . . .</span><span class="answer-text"><strong>h / r</strong></span></td></tr><tr><td class="num">13</td><td class="question-cell">Porozite, toplam hacimdeki <span class="blank-mark">_______</span> hacminin fraksiyonudur.</td><td class="answer-cell" onclick="this.classList.toggle('revealed')"><span class="blank">. . . . . .</span><span class="answer-text"><strong>boşluk</strong></span></td></tr><tr><td class="num">14</td><td class="question-cell">Porozite formülü ε = Vv / <span class="blank-mark">_______</span> şeklinde ifade edilir.</td><td class="answer-cell" onclick="this.classList.toggle('revealed')"><span class="blank">. . . . . .</span><span class="answer-text"><strong>Vt (toplam hacim)</strong></span></td></tr><tr><td class="num">15</td><td class="question-cell">Por büyüklüğü tayininde tercih edilen yöntem <span class="blank-mark">_______</span> porozimetresidir.</td><td class="answer-cell" onclick="this.classList.toggle('revealed')"><span class="blank">. . . . . .</span><span class="answer-text"><strong>cıva (merkür)</strong></span></td></tr><tr><td class="num">16</td><td class="question-cell">Cıva porozimetresinin prensibi <span class="blank-mark">_______</span> yükselme olayına dayanmaktadır.</td><td class="answer-cell" onclick="this.classList.toggle('revealed')"><span class="blank">. . . . . .</span><span class="answer-text"><strong>kılcal</strong></span></td></tr><tr><td class="num">17</td><td class="question-cell">Spesifik yüzey alanının belirlenmesinde gaz adsorpsiyonu ve <span class="blank-mark">_______</span> yöntemleri kullanılır.</td><td class="answer-cell" onclick="this.classList.toggle('revealed')"><span class="blank">. . . . . .</span><span class="answer-text"><strong>permeabilite (geçirgenlik)</strong></span></td></tr><tr><td class="num">18</td><td class="question-cell">Amorf katıların belirgin bir <span class="blank-mark">_______</span> noktası yoktur.</td><td class="answer-cell" onclick="this.classList.toggle('revealed')"><span class="blank">. . . . . .</span><span class="answer-text"><strong>erime</strong></span></td></tr><tr><td class="num">19</td><td class="question-cell">Kristal yapının belirlenmesinde en yaygın kullanılan yöntem <span class="blank-mark">_______</span> difraktometresidir.</td><td class="answer-cell" onclick="this.classList.toggle('revealed')"><span class="blank">. . . . . .</span><span class="answer-text"><strong>X-ışını</strong></span></td></tr><tr><td class="num">20</td><td class="question-cell">100 µm&#x27;den küçük parçacıklarda <span class="blank-mark">_______</span> genellikle bir problemdir.</td><td class="answer-cell" onclick="this.classList.toggle('revealed')"><span class="blank">. . . . . .</span><span class="answer-text"><strong>akış</strong></span></td></tr></tbody></table></section><section id="bolum-b"><h2 class="section-title">B — Doğru / Yanlış (20 Soru)</h2><p class="section-desc">Aşağıdaki ifadelerin doğru (D) veya yanlış (Y) olduğunu belirtiniz.</p><table class="q-table"><thead><tr><th>#</th><th>İfade</th><th>Cevap</th></tr></thead><tbody><tr><td class="num">1</td><td class="question-cell">Mikromeritik, yalnızca büyük parçacıkların incelenmesiyle ilgilenir.</td><td class="answer-cell" onclick="this.classList.toggle('revealed')"><span class="blank">. . . . . .</span><span class="answer-text"><div class="tf-answer"><span class="tf-badge false">YANLIŞ</span><span>Mikromeritik küçük parçacıkların bilimi ve teknolojisidir.</span></div></span></td></tr><tr><td class="num">2</td><td class="question-cell">Partikül boyutu, ilacın oral, parenteral, rektal ve topikal dozaj formlarından salımını etkileyebilir.</td><td class="answer-cell" onclick="this.classList.toggle('revealed')"><span class="blank">. . . . . .</span><span class="answer-text"><div class="tf-answer"><span class="tf-badge true">DOĞRU</span><span>Partikül boyutu tüm bu dozaj formlarından ilacın salımını etkiler.</span></div></span></td></tr><tr><td class="num">3</td><td class="question-cell">Elek analizi, tüm sistemlere uygulanabilen hatasız bir yöntemdir.</td><td class="answer-cell" onclick="this.classList.toggle('revealed')"><span class="blank">. . . . . .</span><span class="answer-text"><div class="tf-answer"><span class="tf-badge false">YANLIŞ</span><span>Elek analizi basit ve ucuz olmakla birlikte kesin ve hatasız değildir, tüm sistemlere uygulanamaz.</span></div></span></td></tr><tr><td class="num">4</td><td class="question-cell">Pulsu (flaky) partiküllerin yüzey/hacim oranları düşüktür ve iyi akıcılık gösterirler.</td><td class="answer-cell" onclick="this.classList.toggle('revealed')"><span class="blank">. . . . . .</span><span class="answer-text"><div class="tf-answer"><span class="tf-badge false">YANLIŞ</span><span>Pulsu partiküllerin yüzey/hacim oranları yüksektir ve akıcılıkları zayıftır.</span></div></span></td></tr><tr><td class="num">5</td><td class="question-cell">Helyum piknometresi, gerçek dansitenin belirlenmesinde kullanılır.</td><td class="answer-cell" onclick="this.classList.toggle('revealed')"><span class="blank">. . . . . .</span><span class="answer-text"><div class="tf-answer"><span class="tf-badge true">DOĞRU</span><span>Helyum piknometresi, gerçek dansite tayininde kullanılan temel yöntemdir.</span></div></span></td></tr><tr><td class="num">6</td><td class="question-cell">Helyum gazı, küçük gözeneklere kolaylıkla nüfuz edebilir.</td><td class="answer-cell" onclick="this.classList.toggle('revealed')"><span class="blank">. . . . . .</span><span class="answer-text"><div class="tf-answer"><span class="tf-badge true">DOĞRU</span><span>Helyum gazı küçük gözeneklere kolaylıkla nüfuz edebilir.</span></div></span></td></tr><tr><td class="num">7</td><td class="question-cell">Küme dansitesi ölçümünde toz sıkıştırılarak ölçülür.</td><td class="answer-cell" onclick="this.classList.toggle('revealed')"><span class="blank">. . . . . .</span><span class="answer-text"><div class="tf-answer"><span class="tf-badge false">YANLIŞ</span><span>Küme dansitesinde toz sıkıştırılmadan, silindire boşaltılarak gevşek haliyle ölçülür.</span></div></span></td></tr><tr><td class="num">8</td><td class="question-cell">Sıkıştırılmış dansite ölçümünde vurma sayısı arttıkça toz hacmi artar.</td><td class="answer-cell" onclick="this.classList.toggle('revealed')"><span class="blank">. . . . . .</span><span class="answer-text"><div class="tf-answer"><span class="tf-badge false">YANLIŞ</span><span>Vurma sayısı arttıkça toz hacmi azalır, artmaz.</span></div></span></td></tr><tr><td class="num">9</td><td class="question-cell">Civa, çoğu maddeyi ıslatır ve kendiliğinden gözeneklere nüfuz eder.</td><td class="answer-cell" onclick="this.classList.toggle('revealed')"><span class="blank">. . . . . .</span><span class="answer-text"><div class="tf-answer"><span class="tf-badge false">YANLIŞ</span><span>Civa çoğu maddeyi ıslatmaz ve kendiliğinden gözeneklere nüfuz edemez; basınç uygulamak gerekir.</span></div></span></td></tr><tr><td class="num">10</td><td class="question-cell">Düşük görünür dansiteli ve büyük hacimli tozlar hafif tozlar olarak kabul edilir.</td><td class="answer-cell" onclick="this.classList.toggle('revealed')"><span class="blank">. . . . . .</span><span class="answer-text"><div class="tf-answer"><span class="tf-badge true">DOĞRU</span><span>Düşük görünür dansiteli ve büyük hacimli tozlar hafif tozlar olarak kabul edilir.</span></div></span></td></tr><tr><td class="num">11</td><td class="question-cell">Tozların akış özelliği yalnızca partikül büyüklüğüne bağlıdır; başka faktörlerden etkilenmez.</td><td class="answer-cell" onclick="this.classList.toggle('revealed')"><span class="blank">. . . . . .</span><span class="answer-text"><div class="tf-answer"><span class="tf-badge false">YANLIŞ</span><span>Akış özelliği; dansite, partikül şekli, elektrostatik yük ve adsorbe olan nemden de etkilenir.</span></div></span></td></tr><tr><td class="num">12</td><td class="question-cell">Küresel parçacıklar, iğnemsi parçacıklardan daha iyi akış gösterir.</td><td class="answer-cell" onclick="this.classList.toggle('revealed')"><span class="blank">. . . . . .</span><span class="answer-text"><div class="tf-answer"><span class="tf-badge true">DOĞRU</span><span>Küresel parçacıklar iğnemsi olanlardan daha iyi akış gösterir.</span></div></span></td></tr><tr><td class="num">13</td><td class="question-cell">Yığın açısı 25° olan bir toz, zayıf akış özelliği gösterir.</td><td class="answer-cell" onclick="this.classList.toggle('revealed')"><span class="blank">. . . . . .</span><span class="answer-text"><div class="tf-answer"><span class="tf-badge false">YANLIŞ</span><span>25° &lt; 30° olduğu için bu toz iyi akış özelliği gösterir.</span></div></span></td></tr><tr><td class="num">14</td><td class="question-cell">250–2000 µm arasındaki parçacıklar, şekilleri uygunsa serbestçe akabilir.</td><td class="answer-cell" onclick="this.classList.toggle('revealed')"><span class="blank">. . . . . .</span><span class="answer-text"><div class="tf-answer"><span class="tf-badge true">DOĞRU</span><span>Bu boyut aralığındaki parçacıklar uygun şekle sahipse serbestçe akabilir.</span></div></span></td></tr><tr><td class="num">15</td><td class="question-cell">Porozite değeri 0 ile 1 arasında veya %0 ile %100 arasında olabilir.</td><td class="answer-cell" onclick="this.classList.toggle('revealed')"><span class="blank">. . . . . .</span><span class="answer-text"><div class="tf-answer"><span class="tf-badge true">DOĞRU</span><span>Porozite 0–1 veya %0–%100 arasında değer alır.</span></div></span></td></tr><tr><td class="num">16</td><td class="question-cell">Gaz adsorpsiyonu yöntemi, geniş bir por çapı aralığı için uygundur.</td><td class="answer-cell" onclick="this.classList.toggle('revealed')"><span class="blank">. . . . . .</span><span class="answer-text"><div class="tf-answer"><span class="tf-badge false">YANLIŞ</span><span>Gaz adsorpsiyonu dar bir por çapı aralığı için uygundur.</span></div></span></td></tr><tr><td class="num">17</td><td class="question-cell">Cıva porozimetresinde küçük porlara girmek için daha yüksek basınç gerekir.</td><td class="answer-cell" onclick="this.classList.toggle('revealed')"><span class="blank">. . . . . .</span><span class="answer-text"><div class="tf-answer"><span class="tf-badge true">DOĞRU</span><span>Küçük porlara cıvanın girmesi için daha yüksek basınç gereklidir.</span></div></span></td></tr><tr><td class="num">18</td><td class="question-cell">Amorf katılar düzenli 3 boyutlu kristal yapıya sahiptir.</td><td class="answer-cell" onclick="this.classList.toggle('revealed')"><span class="blank">. . . . . .</span><span class="answer-text"><div class="tf-answer"><span class="tf-badge false">YANLIŞ</span><span>Amorf katılar rastgele düzenlenmiştir; düzenli kristal yapıya sahip değildir.</span></div></span></td></tr><tr><td class="num">19</td><td class="question-cell">DSC (Diferansiyel Tarama Kalorimetresi), kristal ve amorf durumu belirlemek için kullanılan termal analiz yöntemlerinden biridir.</td><td class="answer-cell" onclick="this.classList.toggle('revealed')"><span class="blank">. . . . . .</span><span class="answer-text"><div class="tf-answer"><span class="tf-badge true">DOĞRU</span><span>DSC, kristal ve amorf durumu belirlemek için sıklıkla kullanılan termal analiz yöntemidir.</span></div></span></td></tr><tr><td class="num">20</td><td class="question-cell">Tozun çözünme hızı, yüzey alanından bağımsızdır.</td><td class="answer-cell" onclick="this.classList.toggle('revealed')"><span class="blank">. . . . . .</span><span class="answer-text"><div class="tf-answer"><span class="tf-badge false">YANLIŞ</span><span>Tozun çözünme hızı kısmen yüzey alanından etkilenir.</span></div></span></td></tr></tbody></table></section><section id="bolum-c"><h2 class="section-title">C — Klasik Sorular (10 Soru)</h2><p class="section-desc">Soruya tıklayarak açıklamalı cevabı görebilirsiniz.</p><div class="klasik-card"><div class="klasik-header" onclick="this.parentElement.classList.toggle('revealed')"><span class="klasik-num">1.</span><span class="klasik-q">Mikromeritiğin kapsamına giren konuları sıralayınız ve mikromeritiğin eczacılıktaki önemini açıklayınız.<span class="klasik-puan">15 puan</span></span><span class="klasik-toggle">▼</span></div><div class="klasik-answer"><div class="klasik-answer-inner">
+            <h4>Kapsam</h4>
+            <p>Partikül büyüklüğü ve büyüklük dağılımı, partikül boyutu tayin yöntemleri, parçacık şekli ve yüzey alanı, por büyüklüğü ve porozite, yığın açısı, tozun hakiki ve yığın hacmi, görünür dansite, sıkıştırılmış dansite ve hacimliliği.</p>
+            <h4>Önemi</h4>
+            <p>Bir ilacın fiziksel, kimyasal ve farmakolojik özellikleri partikül boyutu ve yüzey alanı ile doğrudan ilişkilidir. Partikül boyutu; oral, parenteral, rektal ve topikal dozaj formlarından ilacın salımını, çözünme hızını, emilimi, fiziksel stabiliteyi ve doz düzgünlüğünü etkiler. Tablet ve kapsül üretiminde tozun akıcılığı ve volümetrik dolum doğruluğu partikül özelliklerine bağlıdır.</p>
+        </div></div></div><div class="klasik-card"><div class="klasik-header" onclick="this.parentElement.classList.toggle('revealed')"><span class="klasik-num">2.</span><span class="klasik-q">Tozların dört farklı dansite tipini (gerçek, küme, görünür, sıkıştırılmış) tanımlayınız ve aralarındaki farkları açıklayınız.<span class="klasik-puan">15 puan</span></span><span class="klasik-toggle">▼</span></div><div class="klasik-answer"><div class="klasik-answer-inner">
+            <ul>
+                <li><strong>Gerçek dansite:</strong> Partiküller arasındaki tüm porlar ve boşluklar çıkarıldıktan sonra hesaplanan dansitedir. Kütle/gerçek hacim oranıdır. Helyum piknometresi ile ölçülür.</li>
+                <li><strong>Küme dansitesi:</strong> Partikül hacmi ve por hacmini kapsar. Tozun silindire gevşek olarak boşaltılmasından sonra ölçülür. m/v formülü ile hesaplanır.</li>
+                <li><strong>Görünür dansite:</strong> 40-mesh elekten geçirilmiş tozun huni ile silindire boşaltılması sonucu ölçülen dansitedir. Görünür dansite = küme dansitesi / gerçek dansite.</li>
+                <li><strong>Sıkıştırılmış dansite:</strong> Toz kümesine mekanik vurma uygulanarak partiküller arası boşlukların doldurulmasından sonra ölçülen dansitedir. Ağırlık/sıkıştırılmış hacim oranıdır.</li>
+            </ul>
+            <p><strong>Farklar:</strong> Gerçek dansite en yüksek değeri verir (boşluklar hariç). Küme dansitesi gevşek haldeki ölçümdür. Sıkıştırılmış dansite vurma sonrası daha kompakt haldeki ölçümdür. Görünür dansite, küme ve gerçek dansitenin oranıdır.</p>
+        </div></div></div><div class="klasik-card"><div class="klasik-header" onclick="this.parentElement.classList.toggle('revealed')"><span class="klasik-num">3.</span><span class="klasik-q">Helyum piknometresi yöntemi ile gerçek dansite nasıl belirlenir? Bu yöntemin avantajları nelerdir?<span class="klasik-puan">10 puan</span></span><span class="klasik-toggle">▼</span></div><div class="klasik-answer"><div class="klasik-answer-inner">
+            <p>Helyum piknometresi, gaz yer değiştirme yöntemi kullanarak hacmi ölçer. İnert gazlar (helyum veya azot) kullanılır. Helyum kolaylıkla küçük gözeneklere nüfuz edebildiği için toz partiküllerinin gerçek hacmini doğru şekilde belirler.</p>
+            <h4>Avantajları</h4>
+            <ul>
+                <li>Toza zarar vermez</li>
+                <li>Çok doğru ve tekrarlanabilir sonuçlar verir</li>
+                <li>İnert gaz kullanıldığı için kimyasal etkileşim olmaz</li>
+            </ul>
+        </div></div></div><div class="klasik-card"><div class="klasik-header" onclick="this.parentElement.classList.toggle('revealed')"><span class="klasik-num">4.</span><span class="klasik-q">Yığın açısı (angle of repose) nedir? Nasıl ölçülür? Yığın açısı değerlerine göre tozların akış özellikleri nasıl değerlendirilir?<span class="klasik-puan">15 puan</span></span><span class="klasik-toggle">▼</span></div><div class="klasik-answer"><div class="klasik-answer-inner">
+            <p><strong>Tanım:</strong> Toz bir huniden yatay bir düzlem üzerine boşaltıldığında oluşan koni şeklinin yan yüzeyinin oturduğu düzlemle yaptığı açıdır.</p>
+            <p><strong>Ölçüm:</strong> Koninin yüksekliği (h) ve yarıçapı (r) ölçülür. tan φ = h / r formülü ile hesaplanır.</p>
+            <h4>Değerlendirme</h4>
+            <ul>
+                <li>φ &lt; 30° → iyi akış</li>
+                <li>30° &lt; φ &lt; 40° → orta düzey akış</li>
+                <li>φ &gt; 40° → kötü akış, akış problemi vardır</li>
+            </ul>
+        </div></div></div><div class="klasik-card"><div class="klasik-header" onclick="this.parentElement.classList.toggle('revealed')"><span class="klasik-num">5.</span><span class="klasik-q">Aşağıdaki veriler için gerçek hacmi, boşluk hacmini, poroziteyi, görünür yoğunluğu ve hacimliliği hesaplayınız: Tozun gerçek yoğunluğu (ρ) = 4,0 g/cc; Toz miktarı = 3,0 g; Mezürde ölçülen hacim = 50 mL.<span class="klasik-puan">15 puan</span></span><span class="klasik-toggle">▼</span></div><div class="klasik-answer"><div class="klasik-answer-inner">
+            <ul>
+                <li><strong>Gerçek hacim:</strong> 3,0 g / 4,0 g/cc = <strong>0,75 cc</strong></li>
+                <li><strong>Boşluk hacmi:</strong> (50 − 0,75) / 50 = <strong>0,985</strong></li>
+                <li><strong>Porozite:</strong> 0,985 × 100 = <strong>%98,5</strong></li>
+                <li><strong>Görünür yoğunluk:</strong> 3,0 g / 50 mL = <strong>0,06 g/mL</strong></li>
+                <li><strong>Hacimliliği:</strong> 1 / 0,06 = <strong>16,67 mL/g</strong></li>
+            </ul>
+        </div></div></div><div class="klasik-card"><div class="klasik-header" onclick="this.parentElement.classList.toggle('revealed')"><span class="klasik-num">6.</span><span class="klasik-q">Partikül şeklinin tozların akış özelliklerine etkisini açıklayınız. Küresel ve pulsu partiküller arasındaki farkları tartışınız.<span class="klasik-puan">10 puan</span></span><span class="klasik-toggle">▼</span></div><div class="klasik-answer"><div class="klasik-answer-inner">
+            <p>Partikül şekli akış davranışını doğrudan etkiler. Küresel partiküller minimum temas yüzeyine sahip olduğundan optimal akıcılık gösterirler. Pulsu partiküllerin yüzey/hacim oranları yüksektir, birbirleriyle geniş yüzeylerde temas ederek kenetlenme eğilimi gösterirler ve akıcılıkları zayıftır. İğnemsi partiküller de birbirine takılarak akışı engelleyebilir. Genel olarak düzenli geometrik şekle yakın partiküller daha iyi akış sergiler.</p>
+        </div></div></div><div class="klasik-card"><div class="klasik-header" onclick="this.parentElement.classList.toggle('revealed')"><span class="klasik-num">7.</span><span class="klasik-q">Cıva (merkür) porozimetresi yönteminin prensibini açıklayınız. Bu yöntemde basınç ile por büyüklüğü arasındaki ilişkiyi formülle ifade ediniz.<span class="klasik-puan">15 puan</span></span><span class="klasik-toggle">▼</span></div><div class="klasik-answer"><div class="klasik-answer-inner">
+            <p><strong>Prensip:</strong> Cıva çoğu maddeyi ıslatmaz ve kendiliğinden kılcal etkiyle gözeneklere nüfuz edemez. Bu nedenle basınç uygulanarak gözeneklere girmesi sağlanır. Küçük porlar için daha yüksek basınç gerekir.</p>
+            <p><strong>İşlem:</strong> Numune hücreye tartılır, gazı giderilir, cıva ile çevrilir, basınç kademeli olarak artırılır ve her basınç değerinde giren cıva hacmi okunur.</p>
+            <p><strong>Formül:</strong> ΔP = −(2γ / r) cos θ → r = 89,5 / P</p>
+            <p>Burada r: gözenek yarıçapı, P: uygulanan basınç, γ: cıva yüzey gerilimi (480 dyne/cm²), θ: temas açısı (cıva için 140°).</p>
+        </div></div></div><div class="klasik-card"><div class="klasik-header" onclick="this.parentElement.classList.toggle('revealed')"><span class="klasik-num">8.</span><span class="klasik-q">Kristalin ve amorf katı halleri arasındaki farkları açıklayınız. Kristal yapının belirlenmesinde kullanılan analiz yöntemlerini sınıflandırınız.<span class="klasik-puan">15 puan</span></span><span class="klasik-toggle">▼</span></div><div class="klasik-answer"><div class="klasik-answer-inner">
+            <table>
+                <thead><tr><th>Özellik</th><th>Kristalin</th><th>Amorf</th></tr></thead>
+                <tbody>
+                    <tr><td>Yapı</td><td>Düzenli 3B moleküler düzen</td><td>Rastgele düzenlenmiş</td></tr>
+                    <tr><td>Paketlenme</td><td>Sabit düzen</td><td>Sabit olmayan paketlenme</td></tr>
+                    <tr><td>Erime noktası</td><td>Belirgin erime noktası var</td><td>Belirgin erime noktası yok</td></tr>
+                </tbody>
+            </table>
+            <h4>Analiz yöntemleri sınıflandırması</h4>
+            <ul>
+                <li><strong>Kristalografik:</strong> Tek-kristal X-ışını difraktometresi, toz X-ışını difraktometresi</li>
+                <li><strong>Termal analiz:</strong> DSC/DTA, TGA, çözelti kalorimetresi, izotermal kalorimetri</li>
+                <li><strong>Spektroskopik:</strong> IR/FT-IR, NIR, Raman, katı hal NMR</li>
+                <li><strong>Mikroskopi:</strong> Polarize mikroskop, sıcak tablalı mikroskop, SEM</li>
+            </ul>
+        </div></div></div><div class="klasik-card"><div class="klasik-header" onclick="this.parentElement.classList.toggle('revealed')"><span class="klasik-num">9.</span><span class="klasik-q">Porozite kavramını tanımlayınız. Poroziteyi etkileyen faktörleri ve por büyüklüğü tayininde kullanılan iki temel yöntemi açıklayınız.<span class="klasik-puan">10 puan</span></span><span class="klasik-toggle">▼</span></div><div class="klasik-answer"><div class="klasik-answer-inner">
+            <p><strong>Tanım:</strong> Bir tozdaki boşlukların ölçüsüdür; toplam hacimdeki boşluk hacminin fraksiyonudur. ε = Vv / Vt. Değeri 0–1 (%0–%100) arasındadır.</p>
+            <p><strong>Etkileyen faktörler:</strong> Parçacık şekli, parçacık boyutu ve yüzey özellikleri.</p>
+            <h4>İki temel yöntem</h4>
+            <ol>
+                <li><strong>Gaz adsorpsiyonu:</strong> Belirli sıcaklıkta adsorbe/desorbe olan gaz hacmi ölçülerek BET izotermleri saptanır. Dar por çapı aralığı için uygundur.</li>
+                <li><strong>Cıva porozimetresi:</strong> Kılcal yükselme prensibine dayanır. Basınç uygulanarak cıvanın gözeneklere girmesi sağlanır. Geniş por çapı aralığında ölçüm yapılabilir; por boyutu tayininde tercih edilir.</li>
+            </ol>
+        </div></div></div><div class="klasik-card"><div class="klasik-header" onclick="this.parentElement.classList.toggle('revealed')"><span class="klasik-num">10.</span><span class="klasik-q">Spesifik yüzey alanı nedir ve eczacılık açısından neden önemlidir? Spesifik yüzey alanının belirlenmesinde kullanılan yöntemleri yazınız.<span class="klasik-puan">10 puan</span></span><span class="klasik-toggle">▼</span></div><div class="klasik-answer"><div class="klasik-answer-inner">
+            <p><strong>Tanım:</strong> Tozun temel bir özelliği olup parçacıkların veya aglomeratların yüzeyindeki boşlukları ifade eder.</p>
+            <p><strong>Eczacılık açısından önemi:</strong> Bir tozun çözünme hızı kısmen yüzey alanından etkilenir. Yüzey alanı arttıkça çözünme hızı ve biyoyararlanım artabilir.</p>
+            <h4>Belirleme yöntemleri</h4>
+            <ol>
+                <li><strong>Gaz adsorpsiyonu yöntemi:</strong> BET izotermleri kullanılarak belirli sıcaklıkta adsorbe edilen gaz hacmi ölçülür.</li>
+                <li><strong>Permeabilite (geçirgenlik) yöntemi:</strong> Toz tabakasından geçen gaz veya sıvının akış hızı ölçülerek yüzey alanı hesaplanır.</li>
+            </ol>
+        </div></div></div></section></main>
+<footer>Eczacılık Dersleri — Kaynak: Prof. Dr. Julide Akbuğa &copy; 2026</footer>
+<script>
+function toggleAllAnswers(){
+    const btn=document.getElementById('toggleAll');
+    const all=document.querySelectorAll('.answer-cell, .klasik-card');
+    const allRevealed=[...all].every(c=>c.classList.contains('revealed'));
+    all.forEach(c=>{if(allRevealed)c.classList.remove('revealed');else c.classList.add('revealed')});
+    btn.classList.toggle('active',!allRevealed);
+}
+function hideAllAnswers(){
+    document.querySelectorAll('.answer-cell, .klasik-card').forEach(c=>c.classList.remove('revealed'));
+    document.getElementById('toggleAll').classList.remove('active');
+}
+</script>
+</body>
+</html>

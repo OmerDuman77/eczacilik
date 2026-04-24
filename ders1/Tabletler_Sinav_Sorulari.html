@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tabletler - Sınav Soruları &amp; Cevaplar</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Source+Sans+3:wght@400;500;600&display=swap" rel="stylesheet">
+    <style>
+        *,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+        :root{--bg:#f7f5f0;--card-bg:#fff;--text:#2c2c2c;--text-muted:#6b6b6b;--accent:#1a6b4e;--accent-light:#e8f5ee;--border:#e2ddd5;--answer-bg:#fdf8f0;--answer-border:#e8c87a;--tf-true:#1a6b4e;--tf-false:#b5442d}
+        body{font-family:'Source Sans 3',sans-serif;background:var(--bg);color:var(--text);min-height:100vh;line-height:1.55}
+        .hero{width:100%;padding:3rem 1.5rem 2rem;text-align:center;background:linear-gradient(135deg,#1a6b4e 0%,#0d3d2d 100%);color:#fff;position:relative}
+        .hero::after{content:'';position:absolute;inset:0;background:url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.04'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");pointer-events:none}
+        .back-link{display:inline-flex;align-items:center;gap:.4rem;color:rgba(255,255,255,.75);text-decoration:none;font-size:.9rem;margin-bottom:1rem;transition:color .2s}
+        .back-link:hover{color:#fff}
+        .hero h1{font-family:'Playfair Display',serif;font-size:2rem;font-weight:700}
+        .hero p{font-size:1rem;opacity:.85;margin-top:.4rem}
+        .container{max-width:860px;margin:0 auto;padding:2rem 1.5rem 4rem}
+        .controls{display:flex;gap:.75rem;flex-wrap:wrap;margin-bottom:2rem;position:sticky;top:0;z-index:10;background:var(--bg);padding:1rem 0}
+        .btn{padding:.6rem 1.2rem;border:2px solid var(--accent);border-radius:8px;font-weight:600;font-size:.9rem;cursor:pointer;transition:all .2s;font-family:inherit;background:#fff;color:var(--accent)}
+        .btn:hover{background:var(--accent-light)}
+        .btn.active{background:var(--accent);color:#fff}
+        .btn-answer{border-color:#c8951a;color:#a07415}
+        .btn-answer:hover{background:#fdf3dc}
+        .btn-answer.active{background:#c8951a;color:#fff;border-color:#c8951a}
+        .section-title{font-family:'Playfair Display',serif;font-size:1.3rem;font-weight:700;color:var(--accent);margin:2.5rem 0 1rem;padding-bottom:.5rem;border-bottom:2px solid var(--accent-light)}
+        .section-desc{font-size:.9rem;color:var(--text-muted);margin-bottom:1rem;font-style:italic}
+        .q-table{width:100%;border-collapse:collapse;margin-bottom:1.5rem;background:var(--card-bg);border-radius:10px;overflow:hidden;border:1px solid var(--border)}
+        .q-table thead th{background:var(--accent-light);color:var(--accent);font-weight:600;text-align:left;padding:.75rem 1rem;font-size:.85rem;text-transform:uppercase;letter-spacing:.05em}
+        .q-table tbody td{padding:.7rem 1rem;border-top:1px solid var(--border);font-size:.93rem;vertical-align:top}
+        .q-table tbody tr:hover{background:#fafaf7}
+        .num{color:var(--accent);font-weight:700;width:42px;text-align:center;white-space:nowrap}
+        .question-cell{width:62%}
+        .answer-cell{position:relative;min-height:1.4em;cursor:pointer;width:38%}
+        .blank{color:var(--text-muted);font-style:italic;user-select:none}
+        .answer-text{display:none;color:#5a3e00;background:var(--answer-bg);border-left:3px solid var(--answer-border);padding:.35rem .65rem;border-radius:0 4px 4px 0;line-height:1.5;font-size:.9rem}
+        .revealed .blank{display:none}
+        .revealed .answer-text{display:block}
+        .blank-mark{display:inline-block;min-width:120px;border-bottom:1.5px dashed #b5aa98;padding:0 .3rem;margin:0 .15rem;color:var(--text-muted)}
+        .tf-answer{display:flex;flex-direction:column;gap:.35rem}
+        .tf-badge{display:inline-block;padding:.15rem .55rem;border-radius:4px;font-weight:700;font-size:.85rem;letter-spacing:.03em;align-self:flex-start}
+        .tf-badge.true{background:#dff3e7;color:var(--tf-true)}
+        .tf-badge.false{background:#f9e3dc;color:var(--tf-false)}
+        .klasik-card{background:var(--card-bg);border:1px solid var(--border);border-radius:10px;margin-bottom:1rem;overflow:hidden;transition:box-shadow .2s}
+        .klasik-card:hover{box-shadow:0 2px 8px rgba(0,0,0,.04)}
+        .klasik-header{padding:1rem 1.25rem;cursor:pointer;display:flex;gap:.75rem;align-items:flex-start;user-select:none}
+        .klasik-header:hover{background:#fafaf7}
+        .klasik-num{color:var(--accent);font-weight:700;font-size:1rem;min-width:28px}
+        .klasik-q{flex:1;font-size:.95rem;font-weight:500}
+        .klasik-toggle{color:var(--accent);font-size:.85rem;transition:transform .2s;flex-shrink:0;margin-top:.15rem}
+        .revealed .klasik-toggle{transform:rotate(180deg)}
+        .klasik-puan{display:inline-block;background:var(--accent-light);color:var(--accent);font-size:.75rem;font-weight:600;padding:.1rem .45rem;border-radius:4px;margin-left:.4rem;white-space:nowrap}
+        .klasik-answer{display:none;padding:0 1.25rem 1.25rem;border-top:1px solid var(--accent-light);background:var(--answer-bg)}
+        .klasik-answer-inner{padding-top:1rem;color:#3d2f0a;font-size:.92rem;line-height:1.65}
+        .klasik-answer-inner h4{font-family:'Playfair Display',serif;color:var(--accent);font-size:1rem;margin:1rem 0 .4rem}
+        .klasik-answer-inner h4:first-child{margin-top:0}
+        .klasik-answer-inner ul,.klasik-answer-inner ol{margin:.4rem 0 .6rem 1.4rem}
+        .klasik-answer-inner li{margin-bottom:.3rem}
+        .klasik-answer-inner p{margin-bottom:.5rem}
+        .klasik-answer-inner table{width:100%;border-collapse:collapse;margin:.5rem 0;font-size:.88rem;background:#fff}
+        .klasik-answer-inner th,.klasik-answer-inner td{border:1px solid var(--border);padding:.4rem .55rem;text-align:left;vertical-align:top}
+        .klasik-answer-inner th{background:var(--accent-light);color:var(--accent);font-weight:600}
+        .klasik-answer-inner strong{color:#4a3208}
+        .revealed .klasik-answer{display:block}
+        .toc{background:#fff;border:1px solid var(--border);border-radius:10px;padding:1rem 1.25rem;margin-bottom:1.5rem}
+        .toc h3{font-family:'Playfair Display',serif;color:var(--accent);font-size:1rem;margin-bottom:.5rem}
+        .toc ul{list-style:none;display:flex;flex-wrap:wrap;gap:.5rem}
+        .toc a{display:inline-block;padding:.3rem .7rem;background:var(--accent-light);color:var(--accent);text-decoration:none;border-radius:6px;font-size:.85rem;font-weight:500;transition:all .2s}
+        .toc a:hover{background:var(--accent);color:#fff}
+        footer{text-align:center;padding:2rem 1rem;font-size:.82rem;color:var(--text-muted);border-top:1px solid var(--border)}
+        @media(max-width:600px){.hero h1{font-size:1.45rem}.q-table tbody td{padding:.55rem .6rem;font-size:.85rem}.controls{flex-direction:column}.klasik-header{padding:.85rem 1rem}.klasik-q{font-size:.88rem}}
+        @media print{.controls,.toc{display:none}.hero{padding:1.5rem}.answer-text,.klasik-answer{display:block!important;color:#333!important;border:none!important;background:none!important;padding:.3rem 0!important}.blank{display:none!important}.klasik-card{page-break-inside:avoid;border:1px solid #ccc;margin-bottom:.8rem}}
+    </style>
+</head>
+<body>
+<header class="hero">
+    <a href="./" class="back-link">← Ana Sayfa</a>
+    <h1>Tabletler</h1>
+    <p>50 soru · 20 Boşluk Doldurma + 20 Doğru/Yanlış + 10 Klasik · Prof. Dr. Julide Akbuğa</p>
+</header>
+<main class="container">
+    <div class="controls">
+        <button class="btn btn-answer" id="toggleAll" onclick="toggleAllAnswers()">Tüm Cevapları Göster</button>
+        <button class="btn" onclick="hideAllAnswers()">Tüm Cevapları Gizle</button>
+        <span style="font-size:.82rem;color:var(--text-muted);align-self:center">veya ilgili satıra/karta tıklayın</span>
+    </div>
+
+    <div class="toc">
+        <h3>Bölümler</h3>
+        <ul>
+            <li><a href="#bolum-a">A — Boşluk Doldurma (20)</a></li>
+            <li><a href="#bolum-b">B — Doğru / Yanlış (20)</a></li>
+            <li><a href="#bolum-c">C — Klasik Sorular (10)</a></li>
+        </ul>
+    </div>
+<section id="bolum-a"><h2 class="section-title">A — Boşluk Doldurma (20 Soru)</h2><p class="section-desc">Aşağıdaki cümlelerdeki boşlukları uygun kavramlarla doldurunuz.</p><table class="q-table"><thead><tr><th>#</th><th>Soru</th><th>Cevap</th></tr></thead><tbody><tr><td class="num">1</td><td class="question-cell">Tabletler, etkin madde ve/veya eksipiyan içeren, <span class="blank-mark">_______</span> ile hazırlanan katı dozaj şekilleridir.</td><td class="answer-cell" onclick="this.classList.toggle('revealed')"><span class="blank">. . . . . .</span><span class="answer-text"><strong>basınçla (kompresyon)</strong></span></td></tr><tr><td class="num">2</td><td class="question-cell">&#x27;Tablet&#x27; kelimesi Latince <span class="blank-mark">_______</span> kelimesinden türetilmiştir.</td><td class="answer-cell" onclick="this.classList.toggle('revealed')"><span class="blank">. . . . . .</span><span class="answer-text"><strong>tabuletta</strong></span></td></tr><tr><td class="num">3</td><td class="question-cell">Avrupa Farmakopesinde tabletin Latince adı <span class="blank-mark">_______</span> olup tozun sıkıştırılarak üretilmesini yansıtır.</td><td class="answer-cell" onclick="this.classList.toggle('revealed')"><span class="blank">. . . . . .</span><span class="answer-text"><strong>compressi</strong></span></td></tr><tr><td class="num">4</td><td class="question-cell">Tabletler normalde en az <span class="blank-mark">_______</span> mg ağırlığında olmalıdır.</td><td class="answer-cell" onclick="this.classList.toggle('revealed')"><span class="blank">. . . . . .</span><span class="answer-text"><strong>50</strong></span></td></tr><tr><td class="num">5</td><td class="question-cell">Tabletlerde en çok kullanılan seyreltici madde <span class="blank-mark">_______</span> dir.</td><td class="answer-cell" onclick="this.classList.toggle('revealed')"><span class="blank">. . . . . .</span><span class="answer-text"><strong>laktoz</strong></span></td></tr><tr><td class="num">6</td><td class="question-cell">Amorf laktoz, laktoz çözeltisinin <span class="blank-mark">_______</span> yöntemiyle hazırlanır ve başlıca direk basımda kullanılır.</td><td class="answer-cell" onclick="this.classList.toggle('revealed')"><span class="blank">. . . . . .</span><span class="answer-text"><strong>sprey kurutma (spray drying)</strong></span></td></tr><tr><td class="num">7</td><td class="question-cell">Tablet formülasyonunda en yaygın kullanılan selüloz tozu tipi <span class="blank-mark">_______</span> (MCC) dir.</td><td class="answer-cell" onclick="this.classList.toggle('revealed')"><span class="blank">. . . . . .</span><span class="answer-text"><strong>mikrokristal selüloz / Avicel</strong></span></td></tr><tr><td class="num">8</td><td class="question-cell">Mannitol negatif çözelti ısısına sahip olduğundan ağızda <span class="blank-mark">_______</span> hissi oluşturur.</td><td class="answer-cell" onclick="this.classList.toggle('revealed')"><span class="blank">. . . . . .</span><span class="answer-text"><strong>soğutma</strong></span></td></tr><tr><td class="num">9</td><td class="question-cell">Disintegrantlar, uygulamadan sonra tabletin <span class="blank-mark">_______</span> sağlayan maddelerdir.</td><td class="answer-cell" onclick="this.classList.toggle('revealed')"><span class="blank">. . . . . .</span><span class="answer-text"><strong>dağılmasını</strong></span></td></tr><tr><td class="num">10</td><td class="question-cell">En bilinen ve yaygın kullanılan dağıtıcı madde <span class="blank-mark">_______</span> olup tipik konsantrasyonu %10&#x27;a kadardır.</td><td class="answer-cell" onclick="this.classList.toggle('revealed')"><span class="blank">. . . . . .</span><span class="answer-text"><strong>nişasta(lar)</strong></span></td></tr><tr><td class="num">11</td><td class="question-cell">Dağıtıcının kurutulmuş granüle karıştırılmasına <span class="blank-mark">_______</span> ilave denir ve tabletin daha küçük parçalara ayrılmasında daha etkilidir.</td><td class="answer-cell" onclick="this.classList.toggle('revealed')"><span class="blank">. . . . . .</span><span class="answer-text"><strong>ekstragranüler</strong></span></td></tr><tr><td class="num">12</td><td class="question-cell">Efervesan tabletlerde dağılma, asidik suyun bikarbonat veya karbonat tuzları ile reaksiyonu sonucu <span class="blank-mark">_______</span> gazının serbestleşmesiyle sağlanır.</td><td class="answer-cell" onclick="this.classList.toggle('revealed')"><span class="blank">. . . . . .</span><span class="answer-text"><strong>karbon dioksit (CO₂)</strong></span></td></tr><tr><td class="num">13</td><td class="question-cell">Bağlayıcılar formüle genellikle ağırlığın %<span class="blank-mark">_______</span> oranında ilave edilir.</td><td class="answer-cell" onclick="this.classList.toggle('revealed')"><span class="blank">. . . . . .</span><span class="answer-text"><strong>2–10</strong></span></td></tr><tr><td class="num">14</td><td class="question-cell">Bugün en çok tercih edilen bağlayıcı polimerler <span class="blank-mark">_______</span> ve selüloz türevleridir (özellikle HPMC).</td><td class="answer-cell" onclick="this.classList.toggle('revealed')"><span class="blank">. . . . . .</span><span class="answer-text"><strong>PVP (polivinilpirolidon)</strong></span></td></tr><tr><td class="num">15</td><td class="question-cell">Günümüzde en çok kullanılan glidant <span class="blank-mark">_______</span> olup formüle yaklaşık %0,2 oranında eklenir.</td><td class="answer-cell" onclick="this.classList.toggle('revealed')"><span class="blank">. . . . . .</span><span class="answer-text"><strong>kolloidal silika</strong></span></td></tr><tr><td class="num">16</td><td class="question-cell">Lubrikantlar, tabletin oluşması ve makinadan <span class="blank-mark">_______</span> sırasında sürtünmeyi azaltan maddelerdir.</td><td class="answer-cell" onclick="this.classList.toggle('revealed')"><span class="blank">. . . . . .</span><span class="answer-text"><strong>ejeksiyon(u)</strong></span></td></tr><tr><td class="num">17</td><td class="question-cell">Tablet formülasyonunda en yaygın kullanılan lubrikasyon mekanizması <span class="blank-mark">_______</span> lubrikasyonudur.</td><td class="answer-cell" onclick="this.classList.toggle('revealed')"><span class="blank">. . . . . .</span><span class="answer-text"><strong>sınır</strong></span></td></tr><tr><td class="num">18</td><td class="question-cell">Lubrikantlar hidrofobik yapıda oldukları için tabletin dağılmasını ve ilacın <span class="blank-mark">_______</span> geciktirebilir.</td><td class="answer-cell" onclick="this.classList.toggle('revealed')"><span class="blank">. . . . . .</span><span class="answer-text"><strong>çözünmesini (dissolüsyonunu)</strong></span></td></tr><tr><td class="num">19</td><td class="question-cell">Toz parçacıklarının zımba yüzeylerine yapışmasını önleyen maddelere <span class="blank-mark">_______</span> denir.</td><td class="answer-cell" onclick="this.classList.toggle('revealed')"><span class="blank">. . . . . .</span><span class="answer-text"><strong>anti-adherent (yapışma önleyici)</strong></span></td></tr><tr><td class="num">20</td><td class="question-cell">Kurutma sırasında granülasyon sıvısında çözünen boyanın tablette homojen olmayan dağılımına <span class="blank-mark">_______</span> denir.</td><td class="answer-cell" onclick="this.classList.toggle('revealed')"><span class="blank">. . . . . .</span><span class="answer-text"><strong>boya göçü</strong></span></td></tr></tbody></table></section><section id="bolum-b"><h2 class="section-title">B — Doğru / Yanlış (20 Soru)</h2><p class="section-desc">Aşağıdaki ifadelerin doğru (D) veya yanlış (Y) olduğunu belirtiniz.</p><table class="q-table"><thead><tr><th>#</th><th>İfade</th><th>Cevap</th></tr></thead><tbody><tr><td class="num">1</td><td class="question-cell">İlk tablet patenti 1900 yılında verilmiştir.</td><td class="answer-cell" onclick="this.classList.toggle('revealed')"><span class="blank">. . . . . .</span><span class="answer-text"><div class="tf-answer"><span class="tf-badge false">YANLIŞ</span><span>İlk tablet patenti 1843 yılında verilmiştir, 1900 değil.</span></div></span></td></tr><tr><td class="num">2</td><td class="question-cell">Tabletler tüm oral dozaj formları içinde maliyeti en düşük olanıdır.</td><td class="answer-cell" onclick="this.classList.toggle('revealed')"><span class="blank">. . . . . .</span><span class="answer-text"><div class="tf-answer"><span class="tf-badge true">DOĞRU</span><span>Tabletler tüm oral dozaj formları içinde en düşük maliyetlidir.</span></div></span></td></tr><tr><td class="num">3</td><td class="question-cell">Amorf ve düşük yoğunluklu maddelerle tablet hazırlamak kolaydır.</td><td class="answer-cell" onclick="this.classList.toggle('revealed')"><span class="blank">. . . . . .</span><span class="answer-text"><div class="tf-answer"><span class="tf-badge false">YANLIŞ</span><span>Amorf ve düşük yoğunluklu maddelerle tablet hazırlamak güçtür.</span></div></span></td></tr><tr><td class="num">4</td><td class="question-cell">Laktoz higroskopik bir maddedir ve tabletlerde kullanımı uygun değildir.</td><td class="answer-cell" onclick="this.classList.toggle('revealed')"><span class="blank">. . . . . .</span><span class="answer-text"><div class="tf-answer"><span class="tf-badge false">YANLIŞ</span><span>Laktoz higroskopik değildir ve tabletlerde en çok kullanılan seyrelticidir.</span></div></span></td></tr><tr><td class="num">5</td><td class="question-cell">Amorf laktoz kristalin laktozdan daha hızlı çözünür ve daha iyi sıkıştırılabilirlik gösterir.</td><td class="answer-cell" onclick="this.classList.toggle('revealed')"><span class="blank">. . . . . .</span><span class="answer-text"><div class="tf-answer"><span class="tf-badge true">DOĞRU</span><span>Amorf laktoz daha hızlı çözünür ve daha iyi sıkıştırılabilirlik gösterir; ancak higroskopiktir ve fiziksel olarak stabil değildir.</span></div></span></td></tr><tr><td class="num">6</td><td class="question-cell">Mikrokristal selüloz (MCC-Avicel), selülozun hidrolizi ve ardından sprey kurutma ile hazırlanır.</td><td class="answer-cell" onclick="this.classList.toggle('revealed')"><span class="blank">. . . . . .</span><span class="answer-text"><div class="tf-answer"><span class="tf-badge true">DOĞRU</span><span>MCC, selülozun hidrolizi ve ardından sprey kurutma ile hazırlanır.</span></div></span></td></tr><tr><td class="num">7</td><td class="question-cell">Dikalsiyum fosfat dihidrat hafif asidik yapıdadır ve aside duyarlı ilaçlarla uyuşmaz.</td><td class="answer-cell" onclick="this.classList.toggle('revealed')"><span class="blank">. . . . . .</span><span class="answer-text"><div class="tf-answer"><span class="tf-badge false">YANLIŞ</span><span>Dikalsiyum fosfat dihidrat hafif alkalin yapıdadır ve alkaliye duyarlı ilaçlarla uyuşmaz.</span></div></span></td></tr><tr><td class="num">8</td><td class="question-cell">Sorbitol ve mannitol özellikle çiğneme tabletlerinde hoş tadı nedeniyle tercih edilir.</td><td class="answer-cell" onclick="this.classList.toggle('revealed')"><span class="blank">. . . . . .</span><span class="answer-text"><div class="tf-answer"><span class="tf-badge true">DOĞRU</span><span>Sorbitol ve mannitol hoş tatları nedeniyle çiğneme tabletleri ve lozangeslerde tercih edilir.</span></div></span></td></tr><tr><td class="num">9</td><td class="question-cell">Tabletin dağılması tek kademeli bir işlemdir.</td><td class="answer-cell" onclick="this.classList.toggle('revealed')"><span class="blank">. . . . . .</span><span class="answer-text"><div class="tf-answer"><span class="tf-badge false">YANLIŞ</span><span>Tabletin dağılması iki kademeli bir işlemdir: önce sıvı penetrasyonu ve fragmantasyon, sonra deagregasyon.</span></div></span></td></tr><tr><td class="num">10</td><td class="question-cell">Nişasta parçacıkları su ile temas ettiğinde şişerek tableti dağıtır.</td><td class="answer-cell" onclick="this.classList.toggle('revealed')"><span class="blank">. . . . . .</span><span class="answer-text"><div class="tf-answer"><span class="tf-badge true">DOĞRU</span><span>Nişasta su ile temas ettiğinde şişer ve parçacık itmesi (repulsion) ile de dağılmayı kolaylaştırır.</span></div></span></td></tr><tr><td class="num">11</td><td class="question-cell">Ekstragranüler dağıtıcı ilavesi, intragranüler ilaveden daha az etkilidir.</td><td class="answer-cell" onclick="this.classList.toggle('revealed')"><span class="blank">. . . . . .</span><span class="answer-text"><div class="tf-answer"><span class="tf-badge false">YANLIŞ</span><span>Ekstragranüler ilave, intragranülerden daha etkilidir.</span></div></span></td></tr><tr><td class="num">12</td><td class="question-cell">Efervesan tabletlerde dağılma karbon dioksit gazının serbestleşmesiyle sağlanır.</td><td class="answer-cell" onclick="this.classList.toggle('revealed')"><span class="blank">. . . . . .</span><span class="answer-text"><div class="tf-answer"><span class="tf-badge true">DOĞRU</span><span>Efervesan tabletlerde asit-bikarbonat reaksiyonuyla CO₂ açığa çıkar ve dağılma sağlanır.</span></div></span></td></tr><tr><td class="num">13</td><td class="question-cell">Bağlayıcılar formüle %20–30 oranında ilave edilir.</td><td class="answer-cell" onclick="this.classList.toggle('revealed')"><span class="blank">. . . . . .</span><span class="answer-text"><div class="tf-answer"><span class="tf-badge false">YANLIŞ</span><span>Bağlayıcılar %2–10 oranında ilave edilir, %20–30 değil.</span></div></span></td></tr><tr><td class="num">14</td><td class="question-cell">PVP ve HPMC günümüzde en çok tercih edilen bağlayıcı polimerlerdir.</td><td class="answer-cell" onclick="this.classList.toggle('revealed')"><span class="blank">. . . . . .</span><span class="answer-text"><div class="tf-answer"><span class="tf-badge true">DOĞRU</span><span>PVP ve HPMC (selüloz türevi) günümüzde en çok tercih edilen bağlayıcı polimerlerdir.</span></div></span></td></tr><tr><td class="num">15</td><td class="question-cell">Kolloidal silika formüle %5–10 oranında eklenen bir glidanttır.</td><td class="answer-cell" onclick="this.classList.toggle('revealed')"><span class="blank">. . . . . .</span><span class="answer-text"><div class="tf-answer"><span class="tf-badge false">YANLIŞ</span><span>Kolloidal silika çok düşük oranda (~%0,2) eklenir, %5–10 değil.</span></div></span></td></tr><tr><td class="num">16</td><td class="question-cell">Lubrikantlar tablet sertliğini artırır ve dissolüsyonu hızlandırır.</td><td class="answer-cell" onclick="this.classList.toggle('revealed')"><span class="blank">. . . . . .</span><span class="answer-text"><div class="tf-answer"><span class="tf-badge false">YANLIŞ</span><span>Tam tersi: lubrikantlar tablet sertliğini azaltır ve hidrofobik yapıları nedeniyle dissolüsyonu geciktirir.</span></div></span></td></tr><tr><td class="num">17</td><td class="question-cell">Hidrofobik lubrikantlara alternatif olarak hidrofilik lubrikantlar (PEG, yüzey-etken maddeler) önerilmektedir.</td><td class="answer-cell" onclick="this.classList.toggle('revealed')"><span class="blank">. . . . . .</span><span class="answer-text"><div class="tf-answer"><span class="tf-badge true">DOĞRU</span><span>Hidrofilik lubrikantlar (PEG, yüzey-etken maddeler) hidrofobik olanların olumsuz etkilerini gidermek için alternatif olarak önerilmektedir.</span></div></span></td></tr><tr><td class="num">18</td><td class="question-cell">Magnezyum stearat hem lubrikant hem de anti-adherent özelliğe sahiptir.</td><td class="answer-cell" onclick="this.classList.toggle('revealed')"><span class="blank">. . . . . .</span><span class="answer-text"><div class="tf-answer"><span class="tf-badge true">DOĞRU</span><span>Magnezyum stearat çok fonksiyonlu bir maddedir: lubrikant, anti-adherent ve düşük konsantrasyonda glidant özelliği gösterir.</span></div></span></td></tr><tr><td class="num">19</td><td class="question-cell">Tatlandırıcı maddeler termostabil olup ısı içeren işlemlerden önce formüle eklenebilir.</td><td class="answer-cell" onclick="this.classList.toggle('revealed')"><span class="blank">. . . . . .</span><span class="answer-text"><div class="tf-answer"><span class="tf-badge false">YANLIŞ</span><span>Tatlandırıcılar termolabil (ısıya hassas) olduğundan ısı içeren işlemlerden önce formüle eklenemez.</span></div></span></td></tr><tr><td class="num">20</td><td class="question-cell">Adsorban maddeler sıvıyı adsorbe ederek tozun kuru halde kalmasını sağlar.</td><td class="answer-cell" onclick="this.classList.toggle('revealed')"><span class="blank">. . . . . .</span><span class="answer-text"><div class="tf-answer"><span class="tf-badge true">DOĞRU</span><span>Adsorban maddeler (MCC, silika) sıvıyı adsorbe ederek tozun kuru kalmasını sağlar.</span></div></span></td></tr></tbody></table></section><section id="bolum-c"><h2 class="section-title">C — Klasik Sorular (10 Soru)</h2><p class="section-desc">Soruya tıklayarak açıklamalı cevabı görebilirsiniz.</p><div class="klasik-card"><div class="klasik-header" onclick="this.parentElement.classList.toggle('revealed')"><span class="klasik-num">1.</span><span class="klasik-q">Tablet dozaj formunun avantajlarını en az 6 madde halinde yazınız.<span class="klasik-puan">10 puan</span></span><span class="klasik-toggle">▼</span></div><div class="klasik-answer"><div class="klasik-answer-inner">
+            <ol>
+                <li>Birim dozaj formunda en yüksek doz doğruluğu ve en az içerik değişkenliği</li>
+                <li>Tüm oral dozaj formları içinde maliyeti en düşüktür</li>
+                <li>Daha hafif ve kompakt; paketleme ve taşınması en kolay ve ucuz</li>
+                <li>Yutması kolaydır</li>
+                <li>Sürekli salımlı (controlled release) ürün üretimi mümkündür</li>
+                <li>İstenmeyen koku ve acı tat kaplama tekniği ile maskelenebilir</li>
+                <li>Büyük ölçekli üretime uygundur</li>
+                <li>Tüm oral dozaj formları içinde en iyi kimyasal ve mikrobiyal stabiliteye sahiptir</li>
+                <li>Ürün tanımlaması kolay; yüzeyine baskı veya monogram uygulanabilir</li>
+            </ol>
+        </div></div></div><div class="klasik-card"><div class="klasik-header" onclick="this.parentElement.classList.toggle('revealed')"><span class="klasik-num">2.</span><span class="klasik-q">Tablet formülasyonunda kullanılan temel eksipiyan gruplarını sıralayınız. Her birinin fonksiyonunu bir cümle ile açıklayınız.<span class="klasik-puan">15 puan</span></span><span class="klasik-toggle">▼</span></div><div class="klasik-answer"><div class="klasik-answer-inner">
+            <ul>
+                <li><strong>Seyreltici (Diluent):</strong> Tozun bulk hacmini artırarak tabletin uygun boyutta olmasını sağlar</li>
+                <li><strong>Disintegrant (Dağıtıcı):</strong> Uygulamadan sonra tabletin dağılmasını sağlayarak ilacı dissolüsyona hazır hale getirir</li>
+                <li><strong>Bağlayıcı:</strong> Toz parçacıklarının bağlanmasını sağlayarak granül oluşumunu ve tablet bütünlüğünü devam ettirir</li>
+                <li><strong>Glidant:</strong> Tozun akıcılığını artırır</li>
+                <li><strong>Lubrikant:</strong> Tablet-mühür arası sürtünmeyi azaltarak ejeksiyonu kolaylaştırır</li>
+                <li><strong>Anti-adherent:</strong> Tozun zımba yüzeylerine yapışmasını önler</li>
+                <li><strong>Tatlandırıcı:</strong> Hoş olmayan tadı maskeler</li>
+                <li><strong>Renk verici:</strong> Preparatın teşhisini ve hasta uyuncunu sağlar</li>
+                <li><strong>Adsorban:</strong> Sıvıyı adsorbe ederek tozun kuru kalmasını sağlar</li>
+            </ul>
+        </div></div></div><div class="klasik-card"><div class="klasik-header" onclick="this.parentElement.classList.toggle('revealed')"><span class="klasik-num">3.</span><span class="klasik-q">Laktozu seyreltici olarak açıklayınız. Kristalin ve amorf laktoz arasındaki farkları, amorf laktozun avantaj ve dezavantajlarını belirtiniz.<span class="klasik-puan">15 puan</span></span><span class="klasik-toggle">▼</span></div><div class="klasik-answer"><div class="klasik-answer-inner">
+            <p><strong>Laktoz:</strong> Tabletlerde en çok kullanılan seyrelticidir. Suda kolay çözünür, hoş tadı vardır, higroskopik değildir, çoğunlukla reaksiyoner değildir ve iyi basılabilirlik özelliğine sahiptir. Başlıca sınırlaması laktoz intoleransıdır.</p>
+            <p><strong>Kristalin laktoz:</strong> Presipitasyon ile oluşur. Kristalizasyon koşullarına bağlı olarak α-monohidrat veya β-laktoz (susuz form) şeklinde elde edilir.</p>
+            <p><strong>Amorf laktoz:</strong> Sprey kurutma (spray drying) ile hazırlanır.</p>
+            <table>
+                <thead><tr><th>Özellik</th><th>Kristalin</th><th>Amorf</th></tr></thead>
+                <tbody>
+                    <tr><td>Çözünme hızı</td><td>Daha yavaş</td><td>Daha hızlı</td></tr>
+                    <tr><td>Sıkıştırılabilirlik</td><td>Daha düşük</td><td>Daha iyi</td></tr>
+                    <tr><td>Higroskopik mi?</td><td>Hayır</td><td>Evet</td></tr>
+                    <tr><td>Fiziksel stabilite</td><td>Stabil</td><td>Stabil değil</td></tr>
+                    <tr><td>Başlıca kullanım</td><td>Yaş granülasyon</td><td>Direk basım</td></tr>
+                </tbody>
+            </table>
+        </div></div></div><div class="klasik-card"><div class="klasik-header" onclick="this.parentElement.classList.toggle('revealed')"><span class="klasik-num">4.</span><span class="klasik-q">Disintegrantların (dağıtıcı maddelerin) etki mekanizmalarını açıklayınız. Tabletin dağılmasındaki iki kademeli işlemi ve üç farklı dağıtıcı tipini (su alımı kolaylaştıran, şişme mekanizması, efervesan) anlatınız.<span class="klasik-puan">15 puan</span></span><span class="klasik-toggle">▼</span></div><div class="klasik-answer"><div class="klasik-answer-inner">
+            <h4>İki kademeli dağılma işlemi</h4>
+            <ol>
+                <li>Sıvı tabletin yüzey porlarından içine penetre olur ve tableti küçük fragmanlara böler</li>
+                <li>Primer agregatlar deagrege olarak primer ilaç partiküllerine bölünür</li>
+            </ol>
+            <h4>Üç farklı dağıtıcı tipi</h4>
+            <ol>
+                <li><strong>Su alımını kolaylaştıran dağıtıcılar:</strong> Tabletin porlarından suyun taşınmasını kolaylaştırarak dağılmayı sağlar. Sıvının kapiler kuvvetlerle çekilmesi esastır.</li>
+                <li><strong>Şişme mekanizmasıyla çalışan dağıtıcılar:</strong> Su emilimi sırasında dağıtıcı parçacıklar şişerek tabletin yırtılmasına neden olur. Nişasta ve değiştirilmiş nişasta/selüloz türevleri bu mekanizmayla çalışır. Şişmeyen dağıtıcılar ise parçacıkların birbirini itmesi (repulsion) ile etki eder.</li>
+                <li><strong>Efervesan tip dağıtıcılar:</strong> Sitrik veya tartarik asitlerin bikarbonat/karbonat tuzlarıyla reaksiyonu sonucu CO₂ gazı çıkışı ile tablet dağılır. Yalnızca efervesan tabletlerde kullanılır.</li>
+            </ol>
+        </div></div></div><div class="klasik-card"><div class="klasik-header" onclick="this.parentElement.classList.toggle('revealed')"><span class="klasik-num">5.</span><span class="klasik-q">İntragranüler ve ekstragranüler dağıtıcı ilavesi arasındaki farkı açıklayınız. Hangisi daha etkilidir ve neden?<span class="klasik-puan">10 puan</span></span><span class="klasik-toggle">▼</span></div><div class="klasik-answer"><div class="klasik-answer-inner">
+            <p><strong>İntragranüler ilave:</strong> Dağıtıcı madde granülasyon öncesi diğer maddelerle karıştırılarak granüller içerisinde yer alır. Granül içinde kalan dağıtıcı, granülün kendi içinde dağılmasını sağlar.</p>
+            <p><strong>Ekstragranüler ilave:</strong> Dağıtıcı madde kurutulmuş granüle sonradan karıştırılır. Granüller arasında bulunan dağıtıcı tableti granüllere ayırır.</p>
+            <p><strong>Ekstragranüler ilave daha etkilidir</strong> çünkü granüller arası konumlanan dağıtıcı, tableti önce granül boyutuna kadar küçük parçalara hızla ayırır. İntragranüler dağıtıcı ise ancak granülün içine su penetrasyonundan sonra etki edebilir. En ideal yaklaşım her iki yöntemin kombine edilmesidir.</p>
+        </div></div></div><div class="klasik-card"><div class="klasik-header" onclick="this.parentElement.classList.toggle('revealed')"><span class="klasik-num">6.</span><span class="klasik-q">Bağlayıcı maddelerin fonksiyonunu açıklayınız. Çözelti tipi bağlayıcı ve kuru toz bağlayıcı arasındaki farkları, örnekleriyle birlikte belirtiniz.<span class="klasik-puan">15 puan</span></span><span class="klasik-toggle">▼</span></div><div class="klasik-answer"><div class="klasik-answer-inner">
+            <p><strong>Fonksiyon:</strong> Toz parçacıklarının adhezyonunu (bağlanmasını) sağlayarak granül oluşumunu ve tablet bütünlüğünün devamını sağlarlar. Formüle genellikle %2–10 oranında eklenir.</p>
+            <p><strong>Çözelti tipi bağlayıcı:</strong> Bağlayıcı madde aglomerasyon sıvısında çözünerek granülasyon sırasında toz parçacıklarını bağlar. Örnekler: jelatin, PVP, HPMC, PEG, nişasta ve sukroz çözeltileri.</p>
+            <p><strong>Kuru toz bağlayıcı:</strong> Bağlayıcı madde toz halinde karışıma doğrudan eklenir (slugging yönteminde). Daha sonra sıvı ile aktifleştirilebilir. Örnekler: selüloz, MC, PVP ve PEG.</p>
+            <p><strong>Güncel eğilim:</strong> Geleneksel bağlayıcılar yerine adhesif özelliği artırılmış polimerler tercih edilmektedir: PVP ve selüloz türevleri (özellikle HPMC).</p>
+        </div></div></div><div class="klasik-card"><div class="klasik-header" onclick="this.parentElement.classList.toggle('revealed')"><span class="klasik-num">7.</span><span class="klasik-q">Lubrikantların tablet formülasyonundaki rolünü, lubrikasyon mekanizmalarını (sıvı ve sınır lubrikasyonu) ve lubrikantların tablet kalitesi üzerindeki olumsuz etkilerini açıklayınız.<span class="klasik-puan">15 puan</span></span><span class="klasik-toggle">▼</span></div><div class="klasik-answer"><div class="klasik-answer-inner">
+            <p><strong>Rol:</strong> Tabletin oluşması ve makinadan ejeksiyonu sırasında katı ile mühür arasındaki sürtünmeyi azaltır. Sürtünmenin yüksek olması kapak atma, ejeksiyon sırasında parçalanma, kenar çizikleri ve üretim durmasına neden olabilir.</p>
+            <h4>Lubrikasyon mekanizmaları</h4>
+            <ul>
+                <li><strong>Sıvı lubrikasyon:</strong> Katı yüzeyler birbirinden sıvı tabakası ile ayrılır. Tablet formülasyonunda çok nadir kullanılır.</li>
+                <li><strong>Sınır lubrikasyonu:</strong> Kayan yüzeyler çok ince bir lubrikant filmle kaplanır. En yaygın kullanılan mekanizmadır.</li>
+            </ul>
+            <h4>Olumsuz etkiler</h4>
+            <ul>
+                <li>Parçacıklar arası bağlanmayı etkileyerek tablet sertliğini azaltır</li>
+                <li>Hidrofobik yapı nedeniyle tabletin dağılmasını ve ilacın çözünmesini geciktirir</li>
+                <li>Bu etkiler lubrikant miktarı ve karıştırma süresiyle doğru orantılıdır</li>
+            </ul>
+            <h4>Önerilen çözümler</h4>
+            <ul>
+                <li>Lubrikantlar minimum miktarda (%1 veya daha az) kullanılmalı</li>
+                <li>Hidrofobik lubrikantlar yerine hidrofilik alternatifler (PEG, yüzey-etken maddeler) kullanılmalı</li>
+                <li>Hidrofobik-hidrofilik kombinasyonları tercih edilebilir</li>
+            </ul>
+        </div></div></div><div class="klasik-card"><div class="klasik-header" onclick="this.parentElement.classList.toggle('revealed')"><span class="klasik-num">8.</span><span class="klasik-q">Glidant, lubrikant ve anti-adherent kavramlarını tanımlayınız. Bu üç yardımcı madde grubunun fonksiyonlarını karşılaştırınız. Magnezyum stearatın bu gruplar içindeki yerini tartışınız.<span class="klasik-puan">15 puan</span></span><span class="klasik-toggle">▼</span></div><div class="klasik-answer"><div class="klasik-answer-inner">
+            <table>
+                <thead><tr><th>Özellik</th><th>Glidant</th><th>Lubrikant</th><th>Anti-adherent</th></tr></thead>
+                <tbody>
+                    <tr><td>Fonksiyon</td><td>Toz akıcılığını artırır</td><td>Tablet-mühür arası sürtünmeyi azaltır</td><td>Tozun zımbalara yapışmasını önler</td></tr>
+                    <tr><td>Etki yeri</td><td>Toz parçacıkları arası</td><td>Tablet yüzeyi – kalıp duvarı arası</td><td>Toz – zımba yüzeyi arası</td></tr>
+                    <tr><td>Örnekler</td><td>Kolloidal silika (%0,2), talk (%1–2)</td><td>Mg stearat (≤%1), PEG</td><td>Mg stearat, talk, nişasta</td></tr>
+                </tbody>
+            </table>
+            <p><strong>Magnezyum stearatın yeri:</strong> Çok fonksiyonlu bir maddedir. Temel olarak lubrikant olarak kullanılır (≤%1). Aynı zamanda anti-adherent özelliğe sahiptir. Düşük konsantrasyonlarda (&lt;%1) glidant olarak da toz akışını artırabilir. Ancak hidrofobik yapısı nedeniyle aşırı kullanıldığında tablet sertliğini azaltır ve dissolüsyonu geciktirir.</p>
+        </div></div></div><div class="klasik-card"><div class="klasik-header" onclick="this.parentElement.classList.toggle('revealed')"><span class="klasik-num">9.</span><span class="klasik-q">Mikrokristal selülozun (MCC-Avicel) hazırlanışını, özelliklerini ve tablet formülasyonundaki çoklu fonksiyonlarını açıklayınız.<span class="klasik-puan">10 puan</span></span><span class="klasik-toggle">▼</span></div><div class="klasik-answer"><div class="klasik-answer-inner">
+            <p><strong>Hazırlanış:</strong> Selülozun hidrolizi ve ardından sprey kurutma ile hazırlanır. Oluşan parçacıklar daha küçük selüloz elyaflarının agregatlarıdır. Kristal ve amorf bölgelerin her ikisine de sahiptir. Avicel'in 101, 102 gibi farklı tipleri mevcuttur.</p>
+            <p><strong>Özellikleri:</strong> Biyolojik olarak uyumlu, kimyasal olarak inert. Birçok ilaçla uyumludur; ancak higroskopik eğilimi nedeniyle bazı ilaçlarla uyumsuz olabilir.</p>
+            <h4>Çoklu fonksiyonları</h4>
+            <ul>
+                <li><strong>Seyreltici (diluent):</strong> Tozun bulk hacmini artırır</li>
+                <li><strong>Bağlayıcı:</strong> Toz halinde kuru bağlayıcı olarak kullanılır</li>
+                <li><strong>Disintegrant:</strong> İyi tablet dağıtıcı özellik gösterir</li>
+                <li><strong>Adsorban:</strong> Sıvıları adsorbe ederek tozun kuru kalmasını sağlar</li>
+                <li>Direk basım formülasyonlarında tercih edilen bir maddedir</li>
+            </ul>
+        </div></div></div><div class="klasik-card"><div class="klasik-header" onclick="this.parentElement.classList.toggle('revealed')"><span class="klasik-num">10.</span><span class="klasik-q">Tablet formülasyonunda renk verici maddelerin kullanım amaçlarını, ilave yöntemlerini ve &#x27;boya göçü&#x27; problemini açıklayınız.<span class="klasik-puan">10 puan</span></span><span class="klasik-toggle">▼</span></div><div class="klasik-answer"><div class="klasik-answer-inner">
+            <h4>Kullanım amaçları</h4>
+            <ul>
+                <li>Preparatın kolay teşhis edilmesi (farklı ilaçların ayırt edilmesi)</li>
+                <li>Hasta uyuncunun artırılması</li>
+                <li>Ürün kimliğinin ve marka tanınırlığının sağlanması</li>
+            </ul>
+            <h4>İlave yöntemleri</h4>
+            <ol>
+                <li>Kaplama sırasında ekleme (en yaygın)</li>
+                <li>Basım öncesi formülasyona toz olarak ekleme</li>
+                <li>Granülasyon sıvısında çözünmüş halde ekleme</li>
+            </ol>
+            <h4>Boya göçü problemi</h4>
+            <p>Renklendirici granülasyon sıvısında çözünmüş halde kullanıldığında, kurutma aşamasında çözünen boya granülün iç kısmından yüzeyine doğru göç eder. Bu durum tablette homojen olmayan renk dağılımına neden olur. Bu problemi önlemek için boya toz halinde kullanılabilir veya suda çözünmeyen pigmentler (lake boyalar) tercih edilebilir.</p>
+        </div></div></div></section></main>
+<footer>Eczacılık Dersleri — Kaynak: Prof. Dr. Julide Akbuğa &copy; 2026</footer>
+<script>
+function toggleAllAnswers(){
+    const btn=document.getElementById('toggleAll');
+    const all=document.querySelectorAll('.answer-cell, .klasik-card');
+    const allRevealed=[...all].every(c=>c.classList.contains('revealed'));
+    all.forEach(c=>{if(allRevealed)c.classList.remove('revealed');else c.classList.add('revealed')});
+    btn.classList.toggle('active',!allRevealed);
+}
+function hideAllAnswers(){
+    document.querySelectorAll('.answer-cell, .klasik-card').forEach(c=>c.classList.remove('revealed'));
+    document.getElementById('toggleAll').classList.remove('active');
+}
+</script>
+</body>
+</html>

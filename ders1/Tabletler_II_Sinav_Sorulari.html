@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tabletler II — Üretim Yöntemleri - Sınav Soruları &amp; Cevaplar</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Source+Sans+3:wght@400;500;600&display=swap" rel="stylesheet">
+    <style>
+        *,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+        :root{--bg:#f7f5f0;--card-bg:#fff;--text:#2c2c2c;--text-muted:#6b6b6b;--accent:#1a6b4e;--accent-light:#e8f5ee;--border:#e2ddd5;--answer-bg:#fdf8f0;--answer-border:#e8c87a;--tf-true:#1a6b4e;--tf-false:#b5442d}
+        body{font-family:'Source Sans 3',sans-serif;background:var(--bg);color:var(--text);min-height:100vh;line-height:1.55}
+        .hero{width:100%;padding:3rem 1.5rem 2rem;text-align:center;background:linear-gradient(135deg,#1a6b4e 0%,#0d3d2d 100%);color:#fff;position:relative}
+        .hero::after{content:'';position:absolute;inset:0;background:url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.04'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");pointer-events:none}
+        .back-link{display:inline-flex;align-items:center;gap:.4rem;color:rgba(255,255,255,.75);text-decoration:none;font-size:.9rem;margin-bottom:1rem;transition:color .2s}
+        .back-link:hover{color:#fff}
+        .hero h1{font-family:'Playfair Display',serif;font-size:2rem;font-weight:700}
+        .hero p{font-size:1rem;opacity:.85;margin-top:.4rem}
+        .container{max-width:860px;margin:0 auto;padding:2rem 1.5rem 4rem}
+        .controls{display:flex;gap:.75rem;flex-wrap:wrap;margin-bottom:2rem;position:sticky;top:0;z-index:10;background:var(--bg);padding:1rem 0}
+        .btn{padding:.6rem 1.2rem;border:2px solid var(--accent);border-radius:8px;font-weight:600;font-size:.9rem;cursor:pointer;transition:all .2s;font-family:inherit;background:#fff;color:var(--accent)}
+        .btn:hover{background:var(--accent-light)}
+        .btn.active{background:var(--accent);color:#fff}
+        .btn-answer{border-color:#c8951a;color:#a07415}
+        .btn-answer:hover{background:#fdf3dc}
+        .btn-answer.active{background:#c8951a;color:#fff;border-color:#c8951a}
+        .section-title{font-family:'Playfair Display',serif;font-size:1.3rem;font-weight:700;color:var(--accent);margin:2.5rem 0 1rem;padding-bottom:.5rem;border-bottom:2px solid var(--accent-light)}
+        .section-desc{font-size:.9rem;color:var(--text-muted);margin-bottom:1rem;font-style:italic}
+        .q-table{width:100%;border-collapse:collapse;margin-bottom:1.5rem;background:var(--card-bg);border-radius:10px;overflow:hidden;border:1px solid var(--border)}
+        .q-table thead th{background:var(--accent-light);color:var(--accent);font-weight:600;text-align:left;padding:.75rem 1rem;font-size:.85rem;text-transform:uppercase;letter-spacing:.05em}
+        .q-table tbody td{padding:.7rem 1rem;border-top:1px solid var(--border);font-size:.93rem;vertical-align:top}
+        .q-table tbody tr:hover{background:#fafaf7}
+        .num{color:var(--accent);font-weight:700;width:42px;text-align:center;white-space:nowrap}
+        .question-cell{width:62%}
+        .answer-cell{position:relative;min-height:1.4em;cursor:pointer;width:38%}
+        .blank{color:var(--text-muted);font-style:italic;user-select:none}
+        .answer-text{display:none;color:#5a3e00;background:var(--answer-bg);border-left:3px solid var(--answer-border);padding:.35rem .65rem;border-radius:0 4px 4px 0;line-height:1.5;font-size:.9rem}
+        .revealed .blank{display:none}
+        .revealed .answer-text{display:block}
+        .blank-mark{display:inline-block;min-width:120px;border-bottom:1.5px dashed #b5aa98;padding:0 .3rem;margin:0 .15rem;color:var(--text-muted)}
+        .tf-answer{display:flex;flex-direction:column;gap:.35rem}
+        .tf-badge{display:inline-block;padding:.15rem .55rem;border-radius:4px;font-weight:700;font-size:.85rem;letter-spacing:.03em;align-self:flex-start}
+        .tf-badge.true{background:#dff3e7;color:var(--tf-true)}
+        .tf-badge.false{background:#f9e3dc;color:var(--tf-false)}
+        .klasik-card{background:var(--card-bg);border:1px solid var(--border);border-radius:10px;margin-bottom:1rem;overflow:hidden;transition:box-shadow .2s}
+        .klasik-card:hover{box-shadow:0 2px 8px rgba(0,0,0,.04)}
+        .klasik-header{padding:1rem 1.25rem;cursor:pointer;display:flex;gap:.75rem;align-items:flex-start;user-select:none}
+        .klasik-header:hover{background:#fafaf7}
+        .klasik-num{color:var(--accent);font-weight:700;font-size:1rem;min-width:28px}
+        .klasik-q{flex:1;font-size:.95rem;font-weight:500}
+        .klasik-toggle{color:var(--accent);font-size:.85rem;transition:transform .2s;flex-shrink:0;margin-top:.15rem}
+        .revealed .klasik-toggle{transform:rotate(180deg)}
+        .klasik-puan{display:inline-block;background:var(--accent-light);color:var(--accent);font-size:.75rem;font-weight:600;padding:.1rem .45rem;border-radius:4px;margin-left:.4rem;white-space:nowrap}
+        .klasik-answer{display:none;padding:0 1.25rem 1.25rem;border-top:1px solid var(--accent-light);background:var(--answer-bg)}
+        .klasik-answer-inner{padding-top:1rem;color:#3d2f0a;font-size:.92rem;line-height:1.65}
+        .klasik-answer-inner h4{font-family:'Playfair Display',serif;color:var(--accent);font-size:1rem;margin:1rem 0 .4rem}
+        .klasik-answer-inner h4:first-child{margin-top:0}
+        .klasik-answer-inner ul,.klasik-answer-inner ol{margin:.4rem 0 .6rem 1.4rem}
+        .klasik-answer-inner li{margin-bottom:.3rem}
+        .klasik-answer-inner p{margin-bottom:.5rem}
+        .klasik-answer-inner table{width:100%;border-collapse:collapse;margin:.5rem 0;font-size:.88rem;background:#fff}
+        .klasik-answer-inner th,.klasik-answer-inner td{border:1px solid var(--border);padding:.4rem .55rem;text-align:left;vertical-align:top}
+        .klasik-answer-inner th{background:var(--accent-light);color:var(--accent);font-weight:600}
+        .klasik-answer-inner strong{color:#4a3208}
+        .revealed .klasik-answer{display:block}
+        .toc{background:#fff;border:1px solid var(--border);border-radius:10px;padding:1rem 1.25rem;margin-bottom:1.5rem}
+        .toc h3{font-family:'Playfair Display',serif;color:var(--accent);font-size:1rem;margin-bottom:.5rem}
+        .toc ul{list-style:none;display:flex;flex-wrap:wrap;gap:.5rem}
+        .toc a{display:inline-block;padding:.3rem .7rem;background:var(--accent-light);color:var(--accent);text-decoration:none;border-radius:6px;font-size:.85rem;font-weight:500;transition:all .2s}
+        .toc a:hover{background:var(--accent);color:#fff}
+        footer{text-align:center;padding:2rem 1rem;font-size:.82rem;color:var(--text-muted);border-top:1px solid var(--border)}
+        @media(max-width:600px){.hero h1{font-size:1.45rem}.q-table tbody td{padding:.55rem .6rem;font-size:.85rem}.controls{flex-direction:column}.klasik-header{padding:.85rem 1rem}.klasik-q{font-size:.88rem}}
+        @media print{.controls,.toc{display:none}.hero{padding:1.5rem}.answer-text,.klasik-answer{display:block!important;color:#333!important;border:none!important;background:none!important;padding:.3rem 0!important}.blank{display:none!important}.klasik-card{page-break-inside:avoid;border:1px solid #ccc;margin-bottom:.8rem}}
+    </style>
+</head>
+<body>
+<header class="hero">
+    <a href="./" class="back-link">← Ana Sayfa</a>
+    <h1>Tabletler II — Üretim Yöntemleri</h1>
+    <p>50 soru · 20 Boşluk Doldurma + 20 Doğru/Yanlış + 10 Klasik · Prof. Dr. Julide Akbuğa</p>
+</header>
+<main class="container">
+    <div class="controls">
+        <button class="btn btn-answer" id="toggleAll" onclick="toggleAllAnswers()">Tüm Cevapları Göster</button>
+        <button class="btn" onclick="hideAllAnswers()">Tüm Cevapları Gizle</button>
+        <span style="font-size:.82rem;color:var(--text-muted);align-self:center">veya ilgili satıra/karta tıklayın</span>
+    </div>
+
+    <div class="toc">
+        <h3>Bölümler</h3>
+        <ul>
+            <li><a href="#bolum-a">A — Boşluk Doldurma (20)</a></li>
+            <li><a href="#bolum-b">B — Doğru / Yanlış (20)</a></li>
+            <li><a href="#bolum-c">C — Klasik Sorular (10)</a></li>
+        </ul>
+    </div>
+<section id="bolum-a"><h2 class="section-title">A — Boşluk Doldurma (20 Soru)</h2><p class="section-desc">Aşağıdaki cümlelerdeki boşlukları uygun kavramlarla doldurunuz.</p><table class="q-table"><thead><tr><th>#</th><th>Soru</th><th>Cevap</th></tr></thead><tbody><tr><td class="num">1</td><td class="question-cell">Tozların tablet haline gelebilmesi için sahip olması gereken iki temel özellik toz akışkanlığı ve toz <span class="blank-mark">_______</span> dir.</td><td class="answer-cell" onclick="this.classList.toggle('revealed')"><span class="blank">. . . . . .</span><span class="answer-text"><strong>sıkıştırılabilirliği (compressibility)</strong></span></td></tr><tr><td class="num">2</td><td class="question-cell">Basınç uygulandığında stabil ve sağlam bir kompakt oluşturma özelliğine <span class="blank-mark">_______</span> (compressibility) denir.</td><td class="answer-cell" onclick="this.classList.toggle('revealed')"><span class="blank">. . . . . .</span><span class="answer-text"><strong>sıkıştırılabilirlik</strong></span></td></tr><tr><td class="num">3</td><td class="question-cell">Direk basım yönteminde yalnızca iki proses uygulanır: toz karıştırma ve <span class="blank-mark">_______</span>.</td><td class="answer-cell" onclick="this.classList.toggle('revealed')"><span class="blank">. . . . . .</span><span class="answer-text"><strong>tablet basımı (kompresyon)</strong></span></td></tr><tr><td class="num">4</td><td class="question-cell">Direk basımda farklı boyuttaki parçacıkların ayrışma eğilimine <span class="blank-mark">_______</span> denir.</td><td class="answer-cell" onclick="this.classList.toggle('revealed')"><span class="blank">. . . . . .</span><span class="answer-text"><strong>segregasyon</strong></span></td></tr><tr><td class="num">5</td><td class="question-cell">Kuru granülasyon yönteminin diğer adları çift basım ve <span class="blank-mark">_______</span> dir.</td><td class="answer-cell" onclick="this.classList.toggle('revealed')"><span class="blank">. . . . . .</span><span class="answer-text"><strong>pre-kompresyon</strong></span></td></tr><tr><td class="num">6</td><td class="question-cell">Kuru granülasyonda tozun büyük mührelerde basılarak oluşturulan kompakt kütleye <span class="blank-mark">_______</span> denir.</td><td class="answer-cell" onclick="this.classList.toggle('revealed')"><span class="blank">. . . . . .</span><span class="answer-text"><strong>slug</strong></span></td></tr><tr><td class="num">7</td><td class="question-cell">Slug tipik olarak <span class="blank-mark">_______</span> mm çapında ve 10–15 mm yüksekliğindedir.</td><td class="answer-cell" onclick="this.classList.toggle('revealed')"><span class="blank">. . . . . .</span><span class="answer-text"><strong>25</strong></span></td></tr><tr><td class="num">8</td><td class="question-cell">Kuru granülasyon yönteminin uygulandığı klasik ilaç örneği <span class="blank-mark">_______</span> dir.</td><td class="answer-cell" onclick="this.classList.toggle('revealed')"><span class="blank">. . . . . .</span><span class="answer-text"><strong>aspirin</strong></span></td></tr><tr><td class="num">9</td><td class="question-cell">Kuru granülasyonda aktif madde veya diluentten birinin <span class="blank-mark">_______</span> özellikte olması gerekir.</td><td class="answer-cell" onclick="this.classList.toggle('revealed')"><span class="blank">. . . . . .</span><span class="answer-text"><strong>kohesif</strong></span></td></tr><tr><td class="num">10</td><td class="question-cell">Yaş granülasyonda kullanılan granülasyon sıvısının sıvı fazı <span class="blank-mark">_______</span> ve toksik olmamalıdır.</td><td class="answer-cell" onclick="this.classList.toggle('revealed')"><span class="blank">. . . . . .</span><span class="answer-text"><strong>uçucu</strong></span></td></tr><tr><td class="num">11</td><td class="question-cell">Yaş granülasyonda granülasyon sıvısı, kurutma sonrası parçacıkların adhezyonunu sağlayacak bir <span class="blank-mark">_______</span> içerir.</td><td class="answer-cell" onclick="this.classList.toggle('revealed')"><span class="blank">. . . . . .</span><span class="answer-text"><strong>bağlayıcı</strong></span></td></tr><tr><td class="num">12</td><td class="question-cell">İki veya daha fazla granülün birleşerek daha büyük bir granül oluşturmasına <span class="blank-mark">_______</span> denir.</td><td class="answer-cell" onclick="this.classList.toggle('revealed')"><span class="blank">. . . . . .</span><span class="answer-text"><strong>koalesans</strong></span></td></tr><tr><td class="num">13</td><td class="question-cell">Toz parçacıklarının granül yüzeyine yapışarak boyutu artırmasına <span class="blank-mark">_______</span> (layering) mekanizması denir.</td><td class="answer-cell" onclick="this.classList.toggle('revealed')"><span class="blank">. . . . . .</span><span class="answer-text"><strong>tabakalanma</strong></span></td></tr><tr><td class="num">14</td><td class="question-cell">İlaç endüstrisinde en çok kullanılan yaş granülatör tipi <span class="blank-mark">_______</span> mixer/granülatörlerdir.</td><td class="answer-cell" onclick="this.classList.toggle('revealed')"><span class="blank">. . . . . .</span><span class="answer-text"><strong>high-speed (yüksek hızlı)</strong></span></td></tr><tr><td class="num">15</td><td class="question-cell">High-speed mixer/granülatörde ana pervanenin (impeller) dönüş hızı yaklaşık <span class="blank-mark">_______</span> rpm&#x27;dir.</td><td class="answer-cell" onclick="this.classList.toggle('revealed')"><span class="blank">. . . . . .</span><span class="answer-text"><strong>150–300</strong></span></td></tr><tr><td class="num">16</td><td class="question-cell">High-speed mixer/granülatörde yardımcı kıyıcı bıçağın (chopper) dönüş hızı yaklaşık <span class="blank-mark">_______</span> rpm arasındadır.</td><td class="answer-cell" onclick="this.classList.toggle('revealed')"><span class="blank">. . . . . .</span><span class="answer-text"><strong>1500–3000</strong></span></td></tr><tr><td class="num">17</td><td class="question-cell">Akışkan yatak tipi granülatörlerde granülasyon sıvısı toz yatağına bir <span class="blank-mark">_______</span> dan püskürtülür.</td><td class="answer-cell" onclick="this.classList.toggle('revealed')"><span class="blank">. . . . . .</span><span class="answer-text"><strong>nozzle (nozül/püskürtücü uç)</strong></span></td></tr><tr><td class="num">18</td><td class="question-cell">Akışkan yatak tipi granülatörlerin en önemli avantajı tüm granülasyon işleminin <span class="blank-mark">_______</span> ekipmanda yapılmasıdır.</td><td class="answer-cell" onclick="this.classList.toggle('revealed')"><span class="blank">. . . . . .</span><span class="answer-text"><strong>tek</strong></span></td></tr><tr><td class="num">19</td><td class="question-cell">Sprey kurutucularda çözelti veya süspansiyondan kolay akan, <span class="blank-mark">_______</span> şekilli granüleler oluşur.</td><td class="answer-cell" onclick="this.classList.toggle('revealed')"><span class="blank">. . . . . .</span><span class="answer-text"><strong>küresel</strong></span></td></tr><tr><td class="num">20</td><td class="question-cell">Sprey kurutma yönteminin en önemli avantajı kurutma süresinin kısa olması ve <span class="blank-mark">_______</span> hassas maddelerin parçalanmasının çok düşük olmasıdır.</td><td class="answer-cell" onclick="this.classList.toggle('revealed')"><span class="blank">. . . . . .</span><span class="answer-text"><strong>ısıya</strong></span></td></tr></tbody></table></section><section id="bolum-b"><h2 class="section-title">B — Doğru / Yanlış (20 Soru)</h2><p class="section-desc">Aşağıdaki ifadelerin doğru (D) veya yanlış (Y) olduğunu belirtiniz.</p><table class="q-table"><thead><tr><th>#</th><th>İfade</th><th>Cevap</th></tr></thead><tbody><tr><td class="num">1</td><td class="question-cell">Tabletlerin büyük çoğunluğu kalıplama (molding) tekniği ile üretilir.</td><td class="answer-cell" onclick="this.classList.toggle('revealed')"><span class="blank">. . . . . .</span><span class="answer-text"><div class="tf-answer"><span class="tf-badge false">YANLIŞ</span><span>Tabletlerin büyük çoğunluğu basınçla üretilir; kalıplama çok sınırlı sayıda tablet için kullanılır.</span></div></span></td></tr><tr><td class="num">2</td><td class="question-cell">Toz akışı mekanik vibratör kullanılarak ve glidant ilavesi ile iyileştirilebilir.</td><td class="answer-cell" onclick="this.classList.toggle('revealed')"><span class="blank">. . . . . .</span><span class="answer-text"><div class="tf-answer"><span class="tf-badge true">DOĞRU</span><span>Toz akışı vibratör ve glidant ilavesiyle iyileştirilebilir.</span></div></span></td></tr><tr><td class="num">3</td><td class="question-cell">Direk basım yönteminde ıslak veya kuru granülasyon prosedürleri uygulanır.</td><td class="answer-cell" onclick="this.classList.toggle('revealed')"><span class="blank">. . . . . .</span><span class="answer-text"><div class="tf-answer"><span class="tf-badge false">YANLIŞ</span><span>Direk basımda granülasyon uygulanmaz; yalnızca toz karıştırma ve tablet basımı yapılır.</span></div></span></td></tr><tr><td class="num">4</td><td class="question-cell">Direk basım, tüm tablet üretim yöntemleri içinde en ekonomik olanıdır.</td><td class="answer-cell" onclick="this.classList.toggle('revealed')"><span class="blank">. . . . . .</span><span class="answer-text"><div class="tf-answer"><span class="tf-badge true">DOĞRU</span><span>Daha az proses, ekipman, işgücü ve güç tüketimi ile en ekonomik yöntemdir.</span></div></span></td></tr><tr><td class="num">5</td><td class="question-cell">Direk basım yönteminde renk vericilerle homojen renkli tablet hazırlamak kolaydır.</td><td class="answer-cell" onclick="this.classList.toggle('revealed')"><span class="blank">. . . . . .</span><span class="answer-text"><div class="tf-answer"><span class="tf-badge false">YANLIŞ</span><span>Direk basımda renk vericilerle homojen renkli tablet hazırlamak güçtür.</span></div></span></td></tr><tr><td class="num">6</td><td class="question-cell">Potasyum klorür, direk basım yönteminde kullanılabilen granüler bir maddedir.</td><td class="answer-cell" onclick="this.classList.toggle('revealed')"><span class="blank">. . . . . .</span><span class="answer-text"><div class="tf-answer"><span class="tf-badge true">DOĞRU</span><span>KCl iyi akıcılık ve kohesif özelliklere sahip olup doğrudan basılabilir.</span></div></span></td></tr><tr><td class="num">7</td><td class="question-cell">Kuru granülasyon yönteminde su veya alkol gibi çözücüler granülasyon sıvısı olarak kullanılır.</td><td class="answer-cell" onclick="this.classList.toggle('revealed')"><span class="blank">. . . . . .</span><span class="answer-text"><div class="tf-answer"><span class="tf-badge false">YANLIŞ</span><span>Kuru granülasyonda granülasyon sıvısı kullanılmaz; toz doğrudan basınçla sıkıştırılır.</span></div></span></td></tr><tr><td class="num">8</td><td class="question-cell">Kuru granülasyonda çift lubrikasyon ve basım uygulandığından dissolüsyon gecikebilir.</td><td class="answer-cell" onclick="this.classList.toggle('revealed')"><span class="blank">. . . . . .</span><span class="answer-text"><div class="tf-answer"><span class="tf-badge true">DOĞRU</span><span>Çift lubrikasyon ve basım uygulanması ilacın dağılmasını ve dissolüsyonunu geciktirebilir.</span></div></span></td></tr><tr><td class="num">9</td><td class="question-cell">Aspirin, yaş granülasyon yönteminin klasik örneğidir.</td><td class="answer-cell" onclick="this.classList.toggle('revealed')"><span class="blank">. . . . . .</span><span class="answer-text"><div class="tf-answer"><span class="tf-badge false">YANLIŞ</span><span>Aspirin kuru granülasyon (slugging) yönteminin klasik örneğidir, yaş granülasyonun değil.</span></div></span></td></tr><tr><td class="num">10</td><td class="question-cell">Slug basımı sırasında toz karışımdaki hava çıkar ve havanın çıkması için süre uzarsa daha iyi slug elde edilir.</td><td class="answer-cell" onclick="this.classList.toggle('revealed')"><span class="blank">. . . . . .</span><span class="answer-text"><div class="tf-answer"><span class="tf-badge true">DOĞRU</span><span>Basım sırasında hava çıkar; süre uzarsa daha yoğun ve kaliteli slug elde edilir.</span></div></span></td></tr><tr><td class="num">11</td><td class="question-cell">Yaş granülasyon, neme hassas maddeler için en uygun yöntemdir.</td><td class="answer-cell" onclick="this.classList.toggle('revealed')"><span class="blank">. . . . . .</span><span class="answer-text"><div class="tf-answer"><span class="tf-badge false">YANLIŞ</span><span>Yaş granülasyon nem kullandığından neme hassas maddeler için uygun değildir; bu durumda kuru granülasyon tercih edilir.</span></div></span></td></tr><tr><td class="num">12</td><td class="question-cell">Yaş granülasyon ile segregasyon olasılığı azalır ve homojen karışımlar hazırlanır.</td><td class="answer-cell" onclick="this.classList.toggle('revealed')"><span class="blank">. . . . . .</span><span class="answer-text"><div class="tf-answer"><span class="tf-badge true">DOĞRU</span><span>Yaş granülasyonla homojen karışımlar hazırlanır ve segregasyon olasılığı azalır.</span></div></span></td></tr><tr><td class="num">13</td><td class="question-cell">Granül boyutunun büyümesinde yalnızca iki mekanizma etkilidir.</td><td class="answer-cell" onclick="this.classList.toggle('revealed')"><span class="blank">. . . . . .</span><span class="answer-text"><div class="tf-answer"><span class="tf-badge false">YANLIŞ</span><span>Granül boyutu büyümesinde 4 mekanizma etkilidir: koalesans, kırılma, aşınma ve tabakalanma.</span></div></span></td></tr><tr><td class="num">14</td><td class="question-cell">Tabakalanma (layering) mekanizması sferonizasyon sisteminde kullanılır.</td><td class="answer-cell" onclick="this.classList.toggle('revealed')"><span class="blank">. . . . . .</span><span class="answer-text"><div class="tf-answer"><span class="tf-badge true">DOĞRU</span><span>Tabakalanma mekanizması sferonizasyon sisteminde kullanılır.</span></div></span></td></tr><tr><td class="num">15</td><td class="question-cell">Shear (planet) granülatörler günümüzde en yaygın kullanılan granülatör tipidir.</td><td class="answer-cell" onclick="this.classList.toggle('revealed')"><span class="blank">. . . . . .</span><span class="answer-text"><div class="tf-answer"><span class="tf-badge false">YANLIŞ</span><span>Shear (planet) granülatörler bugün yerini büyük ölçüde high-speed mixer/granülatörlere bırakmıştır.</span></div></span></td></tr><tr><td class="num">16</td><td class="question-cell">High-speed mixer/granülatörde chopper (kıyıcı bıçak) hem dikey hem yatay hareket eder.</td><td class="answer-cell" onclick="this.classList.toggle('revealed')"><span class="blank">. . . . . .</span><span class="answer-text"><div class="tf-answer"><span class="tf-badge true">DOĞRU</span><span>Chopper hem dikey hem yatay hareket ederek nemli kütleyi keser ve parçalar.</span></div></span></td></tr><tr><td class="num">17</td><td class="question-cell">Akışkan yatak tipi granülatörler diğer tiplere kıyasla en ucuz ekipmanlardır.</td><td class="answer-cell" onclick="this.classList.toggle('revealed')"><span class="blank">. . . . . .</span><span class="answer-text"><div class="tf-answer"><span class="tf-badge false">YANLIŞ</span><span>Akışkan yatak tipi granülatörler diğer tiplere kıyasla pahalıdır.</span></div></span></td></tr><tr><td class="num">18</td><td class="question-cell">Akışkan yatak tipi granülatörlerde sürecin otomasyonu mümkündür.</td><td class="answer-cell" onclick="this.classList.toggle('revealed')"><span class="blank">. . . . . .</span><span class="answer-text"><div class="tf-answer"><span class="tf-badge true">DOĞRU</span><span>Koşullar bir kez sağlandığında proses otomasyonu, optimizasyonu ve validasyonu mümkündür.</span></div></span></td></tr><tr><td class="num">19</td><td class="question-cell">Sprey kurutucularda düzensiz şekilli granüleler oluşur.</td><td class="answer-cell" onclick="this.classList.toggle('revealed')"><span class="blank">. . . . . .</span><span class="answer-text"><div class="tf-answer"><span class="tf-badge false">YANLIŞ</span><span>Sprey kurutucularda küresel şekilli granüleler oluşur, düzensiz değil.</span></div></span></td></tr><tr><td class="num">20</td><td class="question-cell">Sprey kurutma yöntemi, diğer yöntemlerle granüle haline getirilemeyen tozlar için de kullanılabilir.</td><td class="answer-cell" onclick="this.classList.toggle('revealed')"><span class="blank">. . . . . .</span><span class="answer-text"><div class="tf-answer"><span class="tf-badge true">DOĞRU</span><span>Diğer yöntemlerle granüle haline getirilemeyen tozlar için sprey kurutma kullanılabilir.</span></div></span></td></tr></tbody></table></section><section id="bolum-c"><h2 class="section-title">C — Klasik Sorular (10 Soru)</h2><p class="section-desc">Soruya tıklayarak açıklamalı cevabı görebilirsiniz.</p><div class="klasik-card"><div class="klasik-header" onclick="this.parentElement.classList.toggle('revealed')"><span class="klasik-num">1.</span><span class="klasik-q">Tozların tablet haline getirilebilmesi için sahip olması gereken temel özellikleri açıklayınız. Toz akışkanlığı ve sıkıştırılabilirlik neden önemlidir?<span class="klasik-puan">10 puan</span></span><span class="klasik-toggle">▼</span></div><div class="klasik-answer"><div class="klasik-answer-inner">
+        <p>Tozların tablet haline gelebilmesi için üç temel özelliğe sahip olması gerekir:</p>
+        <ol>
+            <li><strong>Toz akışkanlığı:</strong> Malzeme huniden mühreye düzenli olarak akabilmelidir. Bu, benzer ağırlıktaki tabletlerin üretilmesi için şarttır. Akışkanlık yetersiz olursa tabletler arasında ağırlık sapmaları oluşur. Toz akışı mekanik vibratör ve glidant ilavesi ile iyileştirilebilir.</li>
+            <li><strong>Sıkıştırılabilirlik (compressibility):</strong> Basınç uygulandığında stabil ve sağlam bir kompakt (tablet) oluşturabilme özelliğidir. Sıkıştırılabilirliği düşük tozlardan mekanik dayanıklılığı yeterli tabletler elde edilemez.</li>
+            <li><strong>Diğer özellikler:</strong> Kolayca karıştırılabilirlik, homojen renklendirme imkânı, uygun sürtünme ve yapışma özellikleri.</li>
+        </ol>
+    </div></div></div><div class="klasik-card"><div class="klasik-header" onclick="this.parentElement.classList.toggle('revealed')"><span class="klasik-num">2.</span><span class="klasik-q">Tabletlerin hazırlanmasında kullanılan üç temel yöntemi (direk basım, kuru granülasyon, yaş granülasyon) sınıflandırarak her birini kısaca tanımlayınız.<span class="klasik-puan">10 puan</span></span><span class="klasik-toggle">▼</span></div><div class="klasik-answer"><div class="klasik-answer-inner">
+        <h4>Kuru yöntemler</h4>
+        <ul>
+            <li><strong>Direk basım:</strong> Toz karışımı herhangi bir ön işlem görmeden doğrudan basınçla sıkıştırılır. Yalnızca toz karıştırma ve tablet basımı yapılır.</li>
+            <li><strong>Kuru granülasyon (Slugging/Pre-kompresyon):</strong> Kuru toz büyük mührelerde basılarak slug (biriket) oluşturulur, ardından elenerek granüle haline getirilir ve tekrar basılır.</li>
+        </ul>
+        <h4>Yaş yöntemler</h4>
+        <ul>
+            <li><strong>Yaş granülasyon:</strong> Kuru toz karışımına bağlayıcı içeren granülasyon sıvısı eklenerek nemli kütle oluşturulur, granüle haline getirilir, kurutulur ve basılır.</li>
+        </ul>
+    </div></div></div><div class="klasik-card"><div class="klasik-header" onclick="this.parentElement.classList.toggle('revealed')"><span class="klasik-num">3.</span><span class="klasik-q">Direk basım yönteminin avantajlarını ve sorunlarını karşılaştırmalı olarak açıklayınız. Direk basımda kullanılan iki formülasyon yaklaşımını belirtiniz.<span class="klasik-puan">15 puan</span></span><span class="klasik-toggle">▼</span></div><div class="klasik-answer"><div class="klasik-answer-inner">
+        <h4>Avantajları</h4>
+        <ul>
+            <li>En az proses ve ekipman; düşük işgücü maliyeti, az validasyon, düşük güç tüketimi</li>
+            <li>Granülasyon ortadan kalktığından ısı ve nem maruziyeti veya yüksek basınç gerekmez</li>
+            <li>Yaş granülasyondaki değişkenlikler (bağlayıcı sıcaklığı, viskozitesi, hazırlama süresi) elimine edilir</li>
+        </ul>
+        <h4>Sorunları</h4>
+        <ul>
+            <li>İyi akışkanlık için büyük parçacıklar gerekir; büyük parçacıkları homojen karıştırmak güçtür, segregasyon riski yüksektir</li>
+            <li>İlacın basılabilirliği zayıfsa tablet üretimi güçtür</li>
+            <li>Renk vericilerle homojen renkli tablet hazırlamak zordur</li>
+        </ul>
+        <h4>İki formülasyon yaklaşımı</h4>
+        <ol>
+            <li>Nispeten çözünür ilaçlar kaba parçacıklar haline getirilerek basılır (iyi akışkanlık)</li>
+            <li>Düşük dozlu potent ilaçlar (birkaç mg), kaba partiküllü eksipiyanla karıştırılarak basılır</li>
+        </ol>
+    </div></div></div><div class="klasik-card"><div class="klasik-header" onclick="this.parentElement.classList.toggle('revealed')"><span class="klasik-num">4.</span><span class="klasik-q">Kuru granülasyon (slugging) yöntemini detaylı olarak açıklayınız. İşlem basamaklarını sırasıyla yazınız. Bu yöntemin hangi durumlarda tercih edildiğini, avantajlarını ve dezavantajlarını belirtiniz.<span class="klasik-puan">15 puan</span></span><span class="klasik-toggle">▼</span></div><div class="klasik-answer"><div class="klasik-answer-inner">
+        <p><strong>Tanım:</strong> Neme ve ısıya hassas veya doğal kohesif özelliğe sahip maddelerin sıvı kullanılmadan, basınçla sıkıştırılarak granüle haline getirildiği yöntemdir.</p>
+        <h4>İşlem basamakları</h4>
+        <ol>
+            <li><strong>Tartım</strong> — hammaddeler tartılır</li>
+            <li><strong>Karıştırma</strong> — ilaç, seyreltici ve lubrikantın bir kısmı karıştırılır</li>
+            <li><strong>Slugging</strong> — toz karışım büyük mühre-zımbalı makinelerde basılarak slug oluşturulur (25 mm çap, 10–15 mm yükseklik)</li>
+            <li><strong>Kuru eleme</strong> — sluglar uygun mesh genişliğinde eleklerden elenerek granüle haline getirilir</li>
+            <li><strong>Lubrikasyon</strong> — granüleye lubrikant eklenerek karıştırılır</li>
+            <li><strong>Kompresyon</strong> — granüle tablet halinde basılır</li>
+        </ol>
+        <p><strong>Tercih nedenleri:</strong> Formül bileşenleri neme hassas ise, yüksek sıcaklığa dayanamıyorsa veya maddeler doğal kohesif özelliğe sahipse.</p>
+        <p><strong>Avantajları:</strong> Tozu nem ve ısıdan korur; düşük yığın dansiteli tozların yoğunluğunu artırır.</p>
+        <p><strong>Dezavantajları:</strong> Çift lubrikasyon/basım nedeniyle dissolüsyon gecikebilir; yüksek oranda ince ürün (fines) oluşarak verimi düşürebilir; kohesif ilaç/eksipiyan zorunluluğu vardır.</p>
+    </div></div></div><div class="klasik-card"><div class="klasik-header" onclick="this.parentElement.classList.toggle('revealed')"><span class="klasik-num">5.</span><span class="klasik-q">Yaş granülasyon yönteminin tablet üretiminde tercih edilme nedenlerini (avantajlarını) en az 5 madde halinde yazınız.<span class="klasik-puan">10 puan</span></span><span class="klasik-toggle">▼</span></div><div class="klasik-answer"><div class="klasik-answer-inner">
+        <ol>
+            <li>Granüle halinde iyi akıcılık sağlanır; kabul edilebilir ağırlık sapması gösteren tabletler hazırlanabilir</li>
+            <li>Karışımın yoğunluğu artar; gerekli toz hacmi kalıp içine doldurulabilir</li>
+            <li>Homojen karışımlar hazırlanır; segregasyon olasılığı düşüktür</li>
+            <li>İlacın sıkıştırılabilirliği artar</li>
+            <li>İlacın tabletten serbestleşme oranı kontrol edilebilir</li>
+            <li>Tozlanma azalır</li>
+            <li>Tabletin görünümü iyileştirilir</li>
+        </ol>
+    </div></div></div><div class="klasik-card"><div class="klasik-header" onclick="this.parentElement.classList.toggle('revealed')"><span class="klasik-num">6.</span><span class="klasik-q">Granül boyutunun büyümesinde etkili olan 4 mekanizmayı (koalesans, kırılma, aşınma, tabakalanma) tanımlayarak her birini açıklayınız.<span class="klasik-puan">15 puan</span></span><span class="klasik-toggle">▼</span></div><div class="klasik-answer"><div class="klasik-answer-inner">
+        <ol>
+            <li><strong>Koalesans:</strong> İki veya daha fazla granül birbiriyle çarpışarak daha büyük tek bir granül oluşturur. Granüller arası sıvı köprülerin yapıştırıcı etkisiyle gerçekleşir.</li>
+            <li><strong>Kırılma (Breakage):</strong> Mekanik kuvvetler nedeniyle bir granül kırılır; kırılan parçacıklar diğer granüllere yapışarak onların boyutunu büyütür.</li>
+            <li><strong>Aşınma (Abrasion transferi):</strong> Karışma sırasında granül yatağından yıpranan ve aşınan küçük maddeler ayrılır; bu maddeler diğer granüllerin yüzeyine yapışarak boyutlarını artırır.</li>
+            <li><strong>Tabakalanma (Layering):</strong> İkinci bir parti toz karışımı granül yatağına ilave edildiğinde, ince toz parçacıkları mevcut granüllerin yüzeyine yapışarak onları bir tabaka şeklinde kaplar ve boyutu artırır. Bu mekanizma özellikle sferonizasyon sisteminde ve katmanlı granül üretiminde kullanılır.</li>
+        </ol>
+    </div></div></div><div class="klasik-card"><div class="klasik-header" onclick="this.parentElement.classList.toggle('revealed')"><span class="klasik-num">7.</span><span class="klasik-q">High-speed mixer/granülatörlerin yapısını, çalışma prensibini ve proses değişkenlerini detaylı olarak açıklayınız.<span class="klasik-puan">15 puan</span></span><span class="klasik-toggle">▼</span></div><div class="klasik-answer"><div class="klasik-answer-inner">
+        <h4>Yapısı</h4>
+        <ul>
+            <li>Paslanmaz çelikten karıştırma kabı</li>
+            <li>Üç kanatlı (bıçaklı) ana pervane (impeller): Yatay düzlemde döner, ~150–300 rpm</li>
+            <li>Yardımcı kesici/kıyıcı bıçak (chopper): Hem dikey hem yatay hareket eder, ~1500–3000 rpm</li>
+        </ul>
+        <h4>Çalışma prensibi</h4>
+        <ol>
+            <li>Kuru tozlar karıştırma kabına konulur ve dönen pervane ile birkaç dakika karıştırılır</li>
+            <li>Granülasyon sıvısı kapaktaki porttan, pervane çalışırken eklenir</li>
+            <li>Sıvı tozla iyice karışarak nemli kütle oluşturulur</li>
+            <li>Kıyıcı bıçak (chopper) çalışmaya başlayarak nemli kütleyi keser ve parçalar</li>
+            <li>Granüleler üretilince kaptan deşarj olur; tel elekten geçerek büyük granüller küçültülür</li>
+        </ol>
+        <p><strong>Proses değişkenleri:</strong> Pervanenin dönüş hızı, chopper dönüş hızı, likit akış hızı, konulan toz miktarı, likit ilave yöntemi, yaş kütle oluşma süresi.</p>
+        <p><strong>Ürün değişkenleri:</strong> Bağlayıcı sıvı miktarı/özelliği, yüzey gerilimi, viskozite, toz karışımın adhesif özelliği, partikül büyüklüğü/dağılımı, spesifik yüzey alanı, çözünürlük, ıslanma ve paketlenme özelliği.</p>
+    </div></div></div><div class="klasik-card"><div class="klasik-header" onclick="this.parentElement.classList.toggle('revealed')"><span class="klasik-num">8.</span><span class="klasik-q">Akışkan yatak tipi granülatörlerin çalışma prensibini açıklayınız. Avantajlarını ve dezavantajlarını belirtiniz.<span class="klasik-puan">15 puan</span></span><span class="klasik-toggle">▼</span></div><div class="klasik-answer"><div class="klasik-answer-inner">
+        <p><strong>Çalışma prensibi:</strong> Tozlar alttan verilen hava akımı içinde akışkanlaştırılır (havada süspanse hale getirilir). Granülasyon sıvısı bir nozzle'dan toz yatağına püskürtülür. Sıvı parçacıkların yüzeyinde bağlayıcı filmler oluşturarak granülasyonu sağlar. Aynı ekipmanda kurutma da gerçekleştirilir.</p>
+        <h4>Avantajları</h4>
+        <ul>
+            <li>Tüm granülasyon işlemi (karıştırma, granülasyon, kurutma) tek bir ekipmanda yapılır</li>
+            <li>İşçilik maliyetinden tasarruf, transfer kayıplarının azalması, zamandan tasarruf</li>
+            <li>Sürecin otomasyonu mümkündür; koşullar bir kez sağlandığında proses optimize ve valide edilir</li>
+        </ul>
+        <h4>Dezavantajları</h4>
+        <ul>
+            <li>Ekipman diğer granülatör tiplerine kıyasla pahalıdır</li>
+            <li>Proses optimizasyonu için granülasyonu etkileyen parametrelere ilişkin kapsamlı çalışmalar gerekir</li>
+            <li>Bu çalışmalar hem formül geliştirme hem de ölçek büyütme aşamasında devam etmelidir</li>
+        </ul>
+    </div></div></div><div class="klasik-card"><div class="klasik-header" onclick="this.parentElement.classList.toggle('revealed')"><span class="klasik-num">9.</span><span class="klasik-q">Sprey kurutma (spray drying) yöntemini açıklayınız. Bu yöntemin hangi tip maddeler için özellikle uygun olduğunu ve en önemli avantajlarını belirtiniz.<span class="klasik-puan">10 puan</span></span><span class="klasik-toggle">▼</span></div><div class="klasik-answer"><div class="klasik-answer-inner">
+        <p><strong>Yöntem:</strong> Kuru toz yerine çözelti veya süspansiyon formundan kuru, granüler ürün elde edilir. Sıvı, sıcak hava ortamına püskürtülerek anlık buharlaştırma ile kuru parçacıklar elde edilir.</p>
+        <p><strong>Uygun olduğu maddeler:</strong> Isıya hassas maddeler (kurutma süresi çok kısa olduğundan parçalanma minimumdur). Ayrıca diğer yöntemlerle granüle haline getirilemeyen tozlar için uygundur.</p>
+        <h4>En önemli avantajları</h4>
+        <ul>
+            <li>Kurutma süresi çok kısadır</li>
+            <li>Isı ile temas süresi minimumdur → ısıya hassas maddelerin parçalanması çok düşük</li>
+            <li>Kolay akan, küresel granüleler oluşur</li>
+            <li>Bağlayıcının granülelerde iyi dağılımı sağlanır → iyi basılabilirlik</li>
+        </ul>
+    </div></div></div><div class="klasik-card"><div class="klasik-header" onclick="this.parentElement.classList.toggle('revealed')"><span class="klasik-num">10.</span><span class="klasik-q">Direk basım, kuru granülasyon ve yaş granülasyon yöntemlerini; proses sayısı, nem/ısı maruziyeti, maliyet, segregasyon riski ve dissolüsyon açısından karşılaştırınız. Her yönteme bir ilaç/madde örneği veriniz.<span class="klasik-puan">15 puan</span></span><span class="klasik-toggle">▼</span></div><div class="klasik-answer"><div class="klasik-answer-inner">
+        <table>
+            <thead><tr><th>Özellik</th><th>Direk Basım</th><th>Kuru Granülasyon</th><th>Yaş Granülasyon</th></tr></thead>
+            <tbody>
+                <tr><td>Proses sayısı</td><td>En az (2 adım)</td><td>Orta (6 adım)</td><td>En fazla</td></tr>
+                <tr><td>Nem/ısı maruziyeti</td><td>Yok</td><td>Yok</td><td>Var (su/alkol + kurutma)</td></tr>
+                <tr><td>Maliyet</td><td>En düşük</td><td>Orta</td><td>En yüksek</td></tr>
+                <tr><td>Segregasyon riski</td><td>Yüksek</td><td>Düşük</td><td>En düşük</td></tr>
+                <tr><td>Dissolüsyon</td><td>İyi</td><td>Gecikebilir</td><td>Kontrol edilebilir</td></tr>
+                <tr><td>Uygun durumlar</td><td>İyi akışkan/sıkıştırılabilir tozlar</td><td>Neme/ısıya hassas, kohesif maddeler</td><td>Genel üretim, homojenlik önemli</td></tr>
+                <tr><td>Örnek</td><td>KCl tabletleri</td><td>Aspirin</td><td>Genel tablet formülasyonları</td></tr>
+            </tbody>
+        </table>
+        <p>Direk basım en ekonomik; kuru granülasyon nem/ısıdan kaçınılması gereken durumlarda tercih edilir; yaş granülasyon ise segregasyonu minimize edip homojenliği artırır, serbestleşme kontrolü sağlar ancak nem/ısı maruziyeti ve yüksek maliyet dezavantajlarıdır.</p>
+    </div></div></div></section></main>
+<footer>Eczacılık Dersleri — Kaynak: Prof. Dr. Julide Akbuğa &copy; 2026</footer>
+<script>
+function toggleAllAnswers(){
+    const btn=document.getElementById('toggleAll');
+    const all=document.querySelectorAll('.answer-cell, .klasik-card');
+    const allRevealed=[...all].every(c=>c.classList.contains('revealed'));
+    all.forEach(c=>{if(allRevealed)c.classList.remove('revealed');else c.classList.add('revealed')});
+    btn.classList.toggle('active',!allRevealed);
+}
+function hideAllAnswers(){
+    document.querySelectorAll('.answer-cell, .klasik-card').forEach(c=>c.classList.remove('revealed'));
+    document.getElementById('toggleAll').classList.remove('active');
+}
+</script>
+</body>
+</html>
