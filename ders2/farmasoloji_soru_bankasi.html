@@ -1,870 +1,104 @@
 <!DOCTYPE html>
 <html lang="tr">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Farmasötik Teknoloji II – Soru Bankası</title>
-<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-<style>
-  :root {
-    --bg: #0f1117;
-    --surface: #181b24;
-    --surface2: #1e2230;
-    --border: #2a2f3e;
-    --text: #e4e6ed;
-    --text-muted: #8b90a0;
-    --accent: #6c9bff;
-    --accent2: #a78bfa;
-    --green: #34d399;
-    --red: #f87171;
-    --orange: #fbbf24;
-    --fill: #2563eb;
-    --tf: #7c3aed;
-    --classic: #d97706;
-    --radius: 12px;
-  }
-
-  * { margin: 0; padding: 0; box-sizing: border-box; }
-
-  body {
-    font-family: 'Outfit', sans-serif;
-    background: var(--bg);
-    color: var(--text);
-    line-height: 1.65;
-    min-height: 100vh;
-  }
-
-  /* ── TOP BAR ── */
-  .topbar {
-    position: sticky;
-    top: 0;
-    z-index: 100;
-    background: rgba(15,17,23,0.85);
-    backdrop-filter: blur(20px);
-    -webkit-backdrop-filter: blur(20px);
-    border-bottom: 1px solid var(--border);
-    padding: 0;
-  }
-
-  .topbar-inner {
-    max-width: 900px;
-    margin: 0 auto;
-    display: flex;
-    flex-direction: column;
-  }
-
-  .topbar-title {
-    text-align: center;
-    padding: 1rem 1.5rem 0.5rem;
-    font-family: 'DM Serif Display', serif;
-    font-size: 1.15rem;
-    letter-spacing: 0.02em;
-    color: var(--text);
-  }
-
-  .topbar-title span {
-    color: var(--accent);
-  }
-
-  /* ── MODE SWITCHER ── */
-  .mode-switch {
-    display: flex;
-    gap: 4px;
-    padding: 6px;
-    margin: 0 auto 8px;
-    background: var(--surface);
-    border-radius: 10px;
-    width: fit-content;
-  }
-
-  .mode-btn {
-    padding: 8px 24px;
-    border: none;
-    border-radius: 8px;
-    background: transparent;
-    color: var(--text-muted);
-    font-family: 'Outfit', sans-serif;
-    font-size: 0.88rem;
-    font-weight: 500;
-    cursor: pointer;
-    transition: all 0.25s ease;
-    display: flex;
-    align-items: center;
-    gap: 6px;
-  }
-
-  .mode-btn:hover {
-    color: var(--text);
-  }
-
-  .mode-btn.active {
-    background: var(--accent);
-    color: #fff;
-    box-shadow: 0 2px 12px rgba(108,155,255,0.3);
-  }
-
-  /* ── SECTION NAV ── */
-  .section-nav {
-    display: flex;
-    gap: 2px;
-    padding: 0 1.5rem 10px;
-    justify-content: center;
-  }
-
-  .section-btn {
-    padding: 6px 16px;
-    border: 1px solid var(--border);
-    border-radius: 20px;
-    background: transparent;
-    color: var(--text-muted);
-    font-family: 'Outfit', sans-serif;
-    font-size: 0.78rem;
-    font-weight: 500;
-    cursor: pointer;
-    transition: all 0.2s;
-    white-space: nowrap;
-  }
-
-  .section-btn:hover { border-color: var(--accent); color: var(--text); }
-
-  .section-btn.active-fill {
-    background: var(--fill);
-    border-color: var(--fill);
-    color: #fff;
-  }
-  .section-btn.active-tf {
-    background: var(--tf);
-    border-color: var(--tf);
-    color: #fff;
-  }
-  .section-btn.active-classic {
-    background: var(--classic);
-    border-color: var(--classic);
-    color: #fff;
-  }
-
-  /* ── CONTENT ── */
-  .container {
-    max-width: 900px;
-    margin: 0 auto;
-    padding: 1.5rem;
-  }
-
-  .view { display: none; }
-  .view.active { display: block; }
-
-  /* ── SECTION HEADER ── */
-  .sec-header {
-    display: flex;
-    align-items: center;
-    gap: 12px;
-    margin: 2rem 0 1.2rem;
-    padding-bottom: 0.8rem;
-    border-bottom: 1px solid var(--border);
-  }
-
-  .sec-header:first-child { margin-top: 0; }
-
-  .sec-icon {
-    width: 40px;
-    height: 40px;
-    border-radius: 10px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-weight: 700;
-    font-size: 1.1rem;
-    color: #fff;
-    flex-shrink: 0;
-  }
-
-  .sec-icon.fill { background: var(--fill); }
-  .sec-icon.tf { background: var(--tf); }
-  .sec-icon.classic { background: var(--classic); }
-
-  .sec-title {
-    font-family: 'DM Serif Display', serif;
-    font-size: 1.3rem;
-  }
-
-  .sec-subtitle {
-    font-size: 0.82rem;
-    color: var(--text-muted);
-    font-weight: 400;
-  }
-
-  /* ── QUESTION CARD ── */
-  .q-card {
-    background: var(--surface);
-    border: 1px solid var(--border);
-    border-radius: var(--radius);
-    padding: 1.2rem 1.4rem;
-    margin-bottom: 10px;
-    transition: border-color 0.2s;
-    position: relative;
-  }
-
-  .q-card:hover { border-color: #3a4058; }
-
-  .q-num {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    width: 28px;
-    height: 28px;
-    border-radius: 8px;
-    font-size: 0.78rem;
-    font-weight: 700;
-    color: #fff;
-    margin-right: 10px;
-    flex-shrink: 0;
-    vertical-align: middle;
-  }
-
-  .q-num.fill { background: var(--fill); }
-  .q-num.tf { background: var(--tf); }
-  .q-num.classic { background: var(--classic); }
-
-  .q-text {
-    font-size: 0.95rem;
-    display: inline;
-  }
-
-  .blank {
-    display: inline-block;
-    min-width: 120px;
-    border-bottom: 2px dashed var(--accent);
-    margin: 0 4px;
-    padding: 0 6px;
-    color: var(--accent);
-    font-weight: 600;
-  }
-
-  .tf-options {
-    display: flex;
-    gap: 8px;
-    margin-top: 10px;
-  }
-
-  .tf-opt {
-    padding: 5px 18px;
-    border: 1px solid var(--border);
-    border-radius: 8px;
-    font-size: 0.82rem;
-    font-weight: 500;
-    color: var(--text-muted);
-    cursor: default;
-  }
-
-  /* ── ANSWER KEY ── */
-  .ans-card {
-    background: var(--surface);
-    border: 1px solid var(--border);
-    border-radius: var(--radius);
-    padding: 0.9rem 1.2rem;
-    margin-bottom: 6px;
-    display: flex;
-    align-items: flex-start;
-    gap: 10px;
-  }
-
-  .ans-num {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    min-width: 28px;
-    height: 28px;
-    border-radius: 8px;
-    font-size: 0.75rem;
-    font-weight: 700;
-    color: #fff;
-    flex-shrink: 0;
-  }
-
-  .ans-num.fill { background: var(--fill); }
-  .ans-num.tf { background: var(--tf); }
-  .ans-num.classic { background: var(--classic); }
-
-  .ans-text {
-    font-size: 0.9rem;
-    line-height: 1.6;
-  }
-
-  .ans-text strong {
-    color: var(--green);
-    font-weight: 600;
-  }
-
-  .ans-text .tag-d {
-    display: inline-block;
-    background: rgba(248,113,113,0.15);
-    color: var(--red);
-    font-size: 0.75rem;
-    padding: 1px 8px;
-    border-radius: 4px;
-    font-weight: 600;
-    margin-right: 4px;
-  }
-
-  .ans-text .tag-y {
-    display: inline-block;
-    background: rgba(52,211,153,0.15);
-    color: var(--green);
-    font-size: 0.75rem;
-    padding: 1px 8px;
-    border-radius: 4px;
-    font-weight: 600;
-    margin-right: 4px;
-  }
-
-  /* ── STATS BAR ── */
-  .stats {
-    display: flex;
-    gap: 1rem;
-    padding: 1rem 0 0.5rem;
-    flex-wrap: wrap;
-  }
-
-  .stat-chip {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    padding: 8px 16px;
-    background: var(--surface);
-    border: 1px solid var(--border);
-    border-radius: 10px;
-    font-size: 0.82rem;
-  }
-
-  .stat-dot {
-    width: 10px;
-    height: 10px;
-    border-radius: 50%;
-  }
-
-  /* ── PRINT ── */
-  .print-btn {
-    position: fixed;
-    bottom: 1.5rem;
-    right: 1.5rem;
-    width: 48px;
-    height: 48px;
-    border-radius: 50%;
-    border: none;
-    background: var(--accent);
-    color: #fff;
-    font-size: 1.2rem;
-    cursor: pointer;
-    box-shadow: 0 4px 20px rgba(108,155,255,0.4);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    transition: transform 0.2s;
-    z-index: 50;
-  }
-  .print-btn:hover { transform: scale(1.1); }
-
-  /* ── RESPONSIVE ── */
-  @media (max-width: 640px) {
-    .container { padding: 1rem; }
-    .mode-btn { padding: 7px 16px; font-size: 0.82rem; }
-    .section-nav { padding: 0 1rem 8px; gap: 4px; flex-wrap: wrap; }
-    .section-btn { padding: 5px 12px; font-size: 0.72rem; }
-    .q-card { padding: 1rem; }
-    .topbar-title { font-size: 1rem; }
-  }
-
-  @media print {
-    .topbar, .print-btn { display: none !important; }
-    body { background: #fff; color: #111; }
-    .q-card, .ans-card { background: #fff; border: 1px solid #ddd; break-inside: avoid; }
-    .q-num, .ans-num { print-color-adjust: exact; -webkit-print-color-adjust: exact; }
-  }
-</style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Yarı-Katı Dozaj Formları &amp; Supozituvarlar - Sınav Soruları &amp; Cevaplar</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Source+Sans+3:wght@400;500;600&display=swap" rel="stylesheet">
+    <style>
+        *,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+        :root{--bg:#f7f5f0;--card-bg:#fff;--text:#2c2c2c;--text-muted:#6b6b6b;--accent:#1a6b4e;--accent-light:#e8f5ee;--border:#e2ddd5;--answer-bg:#fdf8f0;--answer-border:#e8c87a;--tf-true:#1a6b4e;--tf-false:#b5442d}
+        body{font-family:'Source Sans 3',sans-serif;background:var(--bg);color:var(--text);min-height:100vh;line-height:1.55}
+        .hero{width:100%;padding:3rem 1.5rem 2rem;text-align:center;background:linear-gradient(135deg,#1a6b4e 0%,#0d3d2d 100%);color:#fff;position:relative}
+        .hero::after{content:'';position:absolute;inset:0;background:url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.04'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");pointer-events:none}
+        .back-link{display:inline-flex;align-items:center;gap:.4rem;color:rgba(255,255,255,.75);text-decoration:none;font-size:.9rem;margin-bottom:1rem;transition:color .2s}
+        .back-link:hover{color:#fff}
+        .hero h1{font-family:'Playfair Display',serif;font-size:2rem;font-weight:700}
+        .hero p{font-size:1rem;opacity:.85;margin-top:.4rem}
+        .container{max-width:860px;margin:0 auto;padding:2rem 1.5rem 4rem}
+        .controls{display:flex;gap:.75rem;flex-wrap:wrap;margin-bottom:2rem;position:sticky;top:0;z-index:10;background:var(--bg);padding:1rem 0}
+        .btn{padding:.6rem 1.2rem;border:2px solid var(--accent);border-radius:8px;font-weight:600;font-size:.9rem;cursor:pointer;transition:all .2s;font-family:inherit;background:#fff;color:var(--accent)}
+        .btn:hover{background:var(--accent-light)}
+        .btn.active{background:var(--accent);color:#fff}
+        .btn-answer{border-color:#c8951a;color:#a07415}
+        .btn-answer:hover{background:#fdf3dc}
+        .btn-answer.active{background:#c8951a;color:#fff;border-color:#c8951a}
+        .section-title{font-family:'Playfair Display',serif;font-size:1.3rem;font-weight:700;color:var(--accent);margin:2.5rem 0 1rem;padding-bottom:.5rem;border-bottom:2px solid var(--accent-light)}
+        .section-desc{font-size:.9rem;color:var(--text-muted);margin-bottom:1rem;font-style:italic}
+        .q-table{width:100%;border-collapse:collapse;margin-bottom:1.5rem;background:var(--card-bg);border-radius:10px;overflow:hidden;border:1px solid var(--border)}
+        .q-table thead th{background:var(--accent-light);color:var(--accent);font-weight:600;text-align:left;padding:.75rem 1rem;font-size:.85rem;text-transform:uppercase;letter-spacing:.05em}
+        .q-table tbody td{padding:.7rem 1rem;border-top:1px solid var(--border);font-size:.93rem;vertical-align:top}
+        .q-table tbody tr:hover{background:#fafaf7}
+        .num{color:var(--accent);font-weight:700;width:42px;text-align:center;white-space:nowrap}
+        .question-cell{width:62%}
+        .answer-cell{position:relative;min-height:1.4em;cursor:pointer;width:38%}
+        .blank{color:var(--text-muted);font-style:italic;user-select:none}
+        .answer-text{display:none;color:#5a3e00;background:var(--answer-bg);border-left:3px solid var(--answer-border);padding:.35rem .65rem;border-radius:0 4px 4px 0;line-height:1.5;font-size:.9rem}
+        .revealed .blank{display:none}
+        .revealed .answer-text{display:block}
+        .blank-mark{display:inline-block;min-width:120px;border-bottom:1.5px dashed #b5aa98;padding:0 .3rem;margin:0 .15rem;color:var(--text-muted)}
+        .tf-answer{display:flex;flex-direction:column;gap:.35rem}
+        .tf-badge{display:inline-block;padding:.15rem .55rem;border-radius:4px;font-weight:700;font-size:.85rem;letter-spacing:.03em;align-self:flex-start}
+        .tf-badge.true{background:#dff3e7;color:var(--tf-true)}
+        .tf-badge.false{background:#f9e3dc;color:var(--tf-false)}
+        .klasik-card{background:var(--card-bg);border:1px solid var(--border);border-radius:10px;margin-bottom:1rem;overflow:hidden;transition:box-shadow .2s}
+        .klasik-card:hover{box-shadow:0 2px 8px rgba(0,0,0,.04)}
+        .klasik-header{padding:1rem 1.25rem;cursor:pointer;display:flex;gap:.75rem;align-items:flex-start;user-select:none}
+        .klasik-header:hover{background:#fafaf7}
+        .klasik-num{color:var(--accent);font-weight:700;font-size:1rem;min-width:28px}
+        .klasik-q{flex:1;font-size:.95rem;font-weight:500}
+        .klasik-toggle{color:var(--accent);font-size:.85rem;transition:transform .2s;flex-shrink:0;margin-top:.15rem}
+        .revealed .klasik-toggle{transform:rotate(180deg)}
+        .klasik-answer{display:none;padding:0 1.25rem 1.25rem;border-top:1px solid var(--accent-light);background:var(--answer-bg)}
+        .klasik-answer-inner{padding-top:1rem;color:#3d2f0a;font-size:.92rem;line-height:1.65}
+        .klasik-answer-inner strong{color:#4a3208}
+        .revealed .klasik-answer{display:block}
+        .toc{background:#fff;border:1px solid var(--border);border-radius:10px;padding:1rem 1.25rem;margin-bottom:1.5rem}
+        .toc h3{font-family:'Playfair Display',serif;color:var(--accent);font-size:1rem;margin-bottom:.5rem}
+        .toc ul{list-style:none;display:flex;flex-wrap:wrap;gap:.5rem}
+        .toc a{display:inline-block;padding:.3rem .7rem;background:var(--accent-light);color:var(--accent);text-decoration:none;border-radius:6px;font-size:.85rem;font-weight:500;transition:all .2s}
+        .toc a:hover{background:var(--accent);color:#fff}
+        footer{text-align:center;padding:2rem 1rem;font-size:.82rem;color:var(--text-muted);border-top:1px solid var(--border)}
+        @media(max-width:600px){.hero h1{font-size:1.45rem}.q-table tbody td{padding:.55rem .6rem;font-size:.85rem}.controls{flex-direction:column}.klasik-header{padding:.85rem 1rem}.klasik-q{font-size:.88rem}}
+        @media print{.controls,.toc{display:none}.hero{padding:1.5rem}.answer-text,.klasik-answer{display:block!important;color:#333!important;border:none!important;background:none!important;padding:.3rem 0!important}.blank{display:none!important}.klasik-card{page-break-inside:avoid;border:1px solid #ccc;margin-bottom:.8rem}}
+    </style>
 </head>
 <body>
-
-<!-- ═══ TOP BAR ═══ -->
-<div class="topbar">
-  <div class="topbar-inner">
-    <div class="topbar-title">Farmasötik Teknoloji II — <span>Soru Bankası</span></div>
-    <div class="mode-switch">
-      <button class="mode-btn active" onclick="switchMode('questions')">
-        <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 6h10M3 10h7"/></svg>
-        Sorular
-      </button>
-      <button class="mode-btn" onclick="switchMode('answers')">
-        <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 8l3 3 5-6"/></svg>
-        Cevap Anahtarı
-      </button>
-    </div>
-    <div class="section-nav">
-      <button class="section-btn active-fill" onclick="scrollToSection('fill','questions')">Boşluk Doldurma (40)</button>
-      <button class="section-btn" onclick="scrollToSection('tf','questions')">Doğru / Yanlış (40)</button>
-      <button class="section-btn" onclick="scrollToSection('classic','questions')">Klasik (20)</button>
-    </div>
-  </div>
-</div>
-
-<div class="container">
-
-  <!-- ── STATS ── -->
-  <div class="stats">
-    <div class="stat-chip"><div class="stat-dot" style="background:var(--fill)"></div> 40 Boşluk Doldurma</div>
-    <div class="stat-chip"><div class="stat-dot" style="background:var(--tf)"></div> 40 Doğru / Yanlış</div>
-    <div class="stat-chip"><div class="stat-dot" style="background:var(--classic)"></div> 20 Klasik</div>
-  </div>
-
-  <!-- ═══════════════════════════════════════════ -->
-  <!-- ═══ QUESTIONS VIEW ═══ -->
-  <!-- ═══════════════════════════════════════════ -->
-  <div class="view active" id="view-questions">
-
-    <!-- ── BOŞLUK DOLDURMA ── -->
-    <div class="sec-header" id="sec-fill-q">
-      <div class="sec-icon fill">✎</div>
-      <div>
-        <div class="sec-title">Boşluk Doldurma</div>
-        <div class="sec-subtitle">40 Soru</div>
-      </div>
+<header class="hero">
+    <a href="./" class="back-link">← Ana Sayfa</a>
+    <h1>Yarı-Katı Dozaj Formları &amp; Supozituvarlar</h1>
+    <p>100 soru · 40 Boşluk Doldurma + 40 Doğru/Yanlış + 20 Klasik</p>
+</header>
+<main class="container">
+    <div class="controls">
+        <button class="btn btn-answer" id="toggleAll" onclick="toggleAllAnswers()">Tüm Cevapları Göster</button>
+        <button class="btn" onclick="hideAllAnswers()">Tüm Cevapları Gizle</button>
+        <span style="font-size:.82rem;color:var(--text-muted);align-self:center">veya ilgili satıra/karta tıklayın</span>
     </div>
 
-    <div class="q-card"><span class="q-num fill">1</span><span class="q-text">Linimentler; sıvı veya koyu kıvamlı, haricen ve <span class="blank">&nbsp;</span> cilt üzerine ovularak uygulanan preparatlardır.</span></div>
-
-    <div class="q-card"><span class="q-num fill">2</span><span class="q-text">Emülsiyon tipi linimentlerde emülgatör olarak <span class="blank">&nbsp;</span> kullanılır.</span></div>
-
-    <div class="q-card"><span class="q-num fill">3</span><span class="q-text">Yarı-katı ilaç şekillerinin ciltte kalış sürelerine <span class="blank">&nbsp;</span> adı verilir.</span></div>
-
-    <div class="q-card"><span class="q-num fill">4</span><span class="q-text">Kremler genellikle <span class="blank">&nbsp;</span> (Y/S veya S/Y) tipi emülsiyon şeklindedir.</span></div>
-
-    <div class="q-card"><span class="q-num fill">5</span><span class="q-text">Cold cream hazırlanırken yağlı faz ve sulu faz ayrı ayrı <span class="blank">&nbsp;</span> °C'ye ısıtılarak birleştirilir.</span></div>
-
-    <div class="q-card"><span class="q-num fill">6</span><span class="q-text">Stearat (vanishing) kremlerinde yağlı faz oranı maksimum <span class="blank">&nbsp;</span>'dir.</span></div>
-
-    <div class="q-card"><span class="q-num fill">7</span><span class="q-text">Merhem kelimesinin Fransızca karşılığı <span class="blank">&nbsp;</span>'dir.</span></div>
-
-    <div class="q-card"><span class="q-num fill">8</span><span class="q-text">Etken maddeyi taşıyan ortama <span class="blank">&nbsp;</span> (taşıyıcı) denir.</span></div>
-
-    <div class="q-card"><span class="q-num fill">9</span><span class="q-text">Göz merhemleri <span class="blank">&nbsp;</span> µm'den büyük partikül içermemelidir.</span></div>
-
-    <div class="q-card"><span class="q-num fill">10</span><span class="q-text">Susuz göz merhemleri <span class="blank">&nbsp;</span> °C'de 3 saat etüvde sterilize edilir.</span></div>
-
-    <div class="q-card"><span class="q-num fill">11</span><span class="q-text">Hidrokarbon sıvağları <span class="blank">&nbsp;</span>'i (transepidermal su kaybı) azaltarak derinin hidrasyonunu artırır.</span></div>
-
-    <div class="q-card"><span class="q-num fill">12</span><span class="q-text">Susuz lanolin, koyun <span class="blank">&nbsp;</span> elde edilir ve ağırlığının iki katı kadar su tutabilir.</span></div>
-
-    <div class="q-card"><span class="q-num fill">13</span><span class="q-text">Suda çözünebilen merhem sıvağlarının temel bileşenleri <span class="blank">&nbsp;</span> (polietilen glikol)'lerdir.</span></div>
-
-    <div class="q-card"><span class="q-num fill">14</span><span class="q-text">100 g yağın bağlayabildiği iyot miktarına <span class="blank">&nbsp;</span> denir.</span></div>
-
-    <div class="q-card"><span class="q-num fill">15</span><span class="q-text">Merhemler hazırlandıktan sonra <span class="blank">&nbsp;</span> değirmenden geçirilerek homojenize edilir.</span></div>
-
-    <div class="q-card"><span class="q-num fill">16</span><span class="q-text">Draize dermal iritasyon testinde deney hayvanı olarak <span class="blank">&nbsp;</span> kullanılır.</span></div>
-
-    <div class="q-card"><span class="q-num fill">17</span><span class="q-text">Franz difüzyon hücresinde merhemin uygulandığı bölüme <span class="blank">&nbsp;</span> bölümü denir.</span></div>
-
-    <div class="q-card"><span class="q-num fill">18</span><span class="q-text">USP Apparatus 5 (Paddle over Disk) yönteminde çalışma sıcaklığı <span class="blank">&nbsp;</span> °C'dir.</span></div>
-
-    <div class="q-card"><span class="q-num fill">19</span><span class="q-text">Keratoplastik merhemler derinin <span class="blank">&nbsp;</span> tabakasının kalınlığını artırmak için kullanılır.</span></div>
-
-    <div class="q-card"><span class="q-num fill">20</span><span class="q-text">Salisilik asit <span class="blank">&nbsp;</span> konsantrasyonda keratolitik etki gösterir.</span></div>
-
-    <div class="q-card"><span class="q-num fill">21</span><span class="q-text">Jellerde doğal zamklarla hazırlanan jel türüne <span class="blank">&nbsp;</span> adı verilir.</span></div>
-
-    <div class="q-card"><span class="q-num fill">22</span><span class="q-text">Karbopol, pH <span class="blank">&nbsp;</span> aralığında jelleşir ve bu nedenle nötralizasyon maddesi gerektirir.</span></div>
-
-    <div class="q-card"><span class="q-num fill">23</span><span class="q-text">Patlar (pastalar) yüksek oranda (yaklaşık %<span class="blank">&nbsp;</span>) toz madde içerir.</span></div>
-
-    <div class="q-card"><span class="q-num fill">24</span><span class="q-text">Sabun, yağ asitlerinin <span class="blank">&nbsp;</span> ile verdiği tuzlardır.</span></div>
-
-    <div class="q-card"><span class="q-num fill">25</span><span class="q-text">Yumuşak sabunlar <span class="blank">&nbsp;</span> tuzlarından oluşur; katı sabunlar ise sodyum tuzlarından oluşur.</span></div>
-
-    <div class="q-card"><span class="q-num fill">26</span><span class="q-text">Supozituvarlar vücut sıcaklığında eriyerek veya vücut sıvısında çözünerek etki gösteren <span class="blank">&nbsp;</span> görünümlü yarı-katı ilaçlardır.</span></div>
-
-    <div class="q-card"><span class="q-num fill">27</span><span class="q-text">USP'ye göre yetişkin rektal supozituvarların ağırlığı yaklaşık <span class="blank">&nbsp;</span> g'dır.</span></div>
-
-    <div class="q-card"><span class="q-num fill">28</span><span class="q-text">Rektumdaki sıvı miktarı yaklaşık <span class="blank">&nbsp;</span> mL'dir.</span></div>
-
-    <div class="q-card"><span class="q-num fill">29</span><span class="q-text">Kakao yağının en dayanıklı ve en yüksek erime derecesine sahip polimorf formu <span class="blank">&nbsp;</span>'dır.</span></div>
-
-    <div class="q-card"><span class="q-num fill">30</span><span class="q-text">Kakao yağının β polimorf formunun erime derecesi <span class="blank">&nbsp;</span> °C'dir.</span></div>
-
-    <div class="q-card"><span class="q-num fill">31</span><span class="q-text">Witepsol serisi sıvağlar <span class="blank">&nbsp;</span> (sentetik/doğal) yağlar grubuna aittir.</span></div>
-
-    <div class="q-card"><span class="q-num fill">32</span><span class="q-text">PEG sıvağlarından etken madde salımı, sıvağın erimesine değil <span class="blank">&nbsp;</span> hızına bağlıdır.</span></div>
-
-    <div class="q-card"><span class="q-num fill">33</span><span class="q-text">Jelatin-gliserin sıvağları daha çok <span class="blank">&nbsp;</span> supozituvarlar için tercih edilir.</span></div>
-
-    <div class="q-card"><span class="q-num fill">34</span><span class="q-text">Deplasman faktörü (f), 1 g etken maddenin hacmine eşdeğer hacimdeki yer değiştiren <span class="blank">&nbsp;</span> miktarıdır.</span></div>
-
-    <div class="q-card"><span class="q-num fill">35</span><span class="q-text">Supozituvar sıvağının iyot indisi <span class="blank">&nbsp;</span>'ten az olmalıdır.</span></div>
-
-    <div class="q-card"><span class="q-num fill">36</span><span class="q-text">Supozituvarlarda ağırlık sapması kontrolünde 20 supozituvarın en çok <span class="blank">&nbsp;</span> tanesi ortalamadan %7,5'ten fazla sapabilir.</span></div>
-
-    <div class="q-card"><span class="q-num fill">37</span><span class="q-text">Supozituvarların kırılma ve mekanik dayanıklılık testi <span class="blank">&nbsp;</span> metodu ile yapılır.</span></div>
-
-    <div class="q-card"><span class="q-num fill">38</span><span class="q-text">Hidrofilik merhem formülasyonunda emülgatör olarak <span class="blank">&nbsp;</span> kullanılır.</span></div>
-
-    <div class="q-card"><span class="q-num fill">39</span><span class="q-text">Cold cream formülasyonunda emülgatör, balmumundaki yağ asitleri ile borakstaki <span class="blank">&nbsp;</span>'un reaksiyonuyla oluşur.</span></div>
-
-    <div class="q-card"><span class="q-num fill">40</span><span class="q-text">Supozituvarların erime süresi testi sırasında supozituvar <span class="blank">&nbsp;</span> dakika içinde erimiş olmalıdır.</span></div>
-
-
-    <!-- ── DOĞRU / YANLIŞ ── -->
-    <div class="sec-header" id="sec-tf-q">
-      <div class="sec-icon tf">D/Y</div>
-      <div>
-        <div class="sec-title">Doğru / Yanlış</div>
-        <div class="sec-subtitle">40 Soru</div>
-      </div>
+    <div class="toc">
+        <h3>Bölümler</h3>
+        <ul>
+            <li><a href="#bolum-a">A — Boşluk Doldurma (40)</a></li>
+            <li><a href="#bolum-b">B — Doğru / Yanlış (40)</a></li>
+            <li><a href="#bolum-c">C — Klasik Sorular (20)</a></li>
+        </ul>
     </div>
-
-    <div class="q-card"><span class="q-num tf">1</span><span class="q-text">Linimentler yaralı cilt üzerine ovularak uygulanır.</span><div class="tf-options"><span class="tf-opt">Doğru</span><span class="tf-opt">Yanlış</span></div></div>
-
-    <div class="q-card"><span class="q-num tf">2</span><span class="q-text">Kalamin linimenti süspansiyon tipi bir linimenttir.</span><div class="tf-options"><span class="tf-opt">Doğru</span><span class="tf-opt">Yanlış</span></div></div>
-
-    <div class="q-card"><span class="q-num tf">3</span><span class="q-text">Yarı-katı ilaç şekilleri yalnızca lokal etki sağlar, sistemik etki sağlayamaz.</span><div class="tf-options"><span class="tf-opt">Doğru</span><span class="tf-opt">Yanlış</span></div></div>
-
-    <div class="q-card"><span class="q-num tf">4</span><span class="q-text">Kremler hafif asidik yapıdadır ve cilt pH'sına yakındır.</span><div class="tf-options"><span class="tf-opt">Doğru</span><span class="tf-opt">Yanlış</span></div></div>
-
-    <div class="q-card"><span class="q-num tf">5</span><span class="q-text">Stearat kremleri ciltte yağlı bir his bırakır.</span><div class="tf-options"><span class="tf-opt">Doğru</span><span class="tf-opt">Yanlış</span></div></div>
-
-    <div class="q-card"><span class="q-num tf">6</span><span class="q-text">Merhemler ciltteki gözenekleri tıkarlar.</span><div class="tf-options"><span class="tf-opt">Doğru</span><span class="tf-opt">Yanlış</span></div></div>
-
-    <div class="q-card"><span class="q-num tf">7</span><span class="q-text">Göz merhemleri aseptik koşullarda hazırlanmalıdır.</span><div class="tf-options"><span class="tf-opt">Doğru</span><span class="tf-opt">Yanlış</span></div></div>
-
-    <div class="q-card"><span class="q-num tf">8</span><span class="q-text">Hidrokarbon sıvağları kolaylıkla su tutabilirler.</span><div class="tf-options"><span class="tf-opt">Doğru</span><span class="tf-opt">Yanlış</span></div></div>
-
-    <div class="q-card"><span class="q-num tf">9</span><span class="q-text">Vazelin, lanolin veya setil alkol ilavesiyle su tutma özelliği kazanır.</span><div class="tf-options"><span class="tf-opt">Doğru</span><span class="tf-opt">Yanlış</span></div></div>
-
-    <div class="q-card"><span class="q-num tf">10</span><span class="q-text">Su ile karışabilen sıvağlar deriden ve kıyafetlerden kolayca yıkanabilir.</span><div class="tf-options"><span class="tf-opt">Doğru</span><span class="tf-opt">Yanlış</span></div></div>
-
-    <div class="q-card"><span class="q-num tf">11</span><span class="q-text">PEG bazlı sıvağlar yapılarında yüksek oranda su bulundurur.</span><div class="tf-options"><span class="tf-opt">Doğru</span><span class="tf-opt">Yanlış</span></div></div>
-
-    <div class="q-card"><span class="q-num tf">12</span><span class="q-text">Peroksit sayısı, yağdaki oksidasyonun göstergesidir.</span><div class="tf-options"><span class="tf-opt">Doğru</span><span class="tf-opt">Yanlış</span></div></div>
-
-    <div class="q-card"><span class="q-num tf">13</span><span class="q-text">Eritme yönteminde sulu faz ile yağlı faz farklı sıcaklıklarda birleştirilmelidir.</span><div class="tf-options"><span class="tf-opt">Doğru</span><span class="tf-opt">Yanlış</span></div></div>
-
-    <div class="q-card"><span class="q-num tf">14</span><span class="q-text">E. coli ve Pseudomonas merhemlerde hiç bulunmamalıdır.</span><div class="tf-options"><span class="tf-opt">Doğru</span><span class="tf-opt">Yanlış</span></div></div>
-
-    <div class="q-card"><span class="q-num tf">15</span><span class="q-text">Draize dermal iritasyon testinde sıçan kullanılır.</span><div class="tf-options"><span class="tf-opt">Doğru</span><span class="tf-opt">Yanlış</span></div></div>
-
-    <div class="q-card"><span class="q-num tf">16</span><span class="q-text">Franz difüzyon hücresinde membran olarak kadavra derisi kullanılabilir.</span><div class="tf-options"><span class="tf-opt">Doğru</span><span class="tf-opt">Yanlış</span></div></div>
-
-    <div class="q-card"><span class="q-num tf">17</span><span class="q-text">Keratolitik merhemler derinin koruyucu tabakasını kalınlaştırmak için kullanılır.</span><div class="tf-options"><span class="tf-opt">Doğru</span><span class="tf-opt">Yanlış</span></div></div>
-
-    <div class="q-card"><span class="q-num tf">18</span><span class="q-text">Benzokain bir lokal anestezik maddedir.</span><div class="tf-options"><span class="tf-opt">Doğru</span><span class="tf-opt">Yanlış</span></div></div>
-
-    <div class="q-card"><span class="q-num tf">19</span><span class="q-text">Tek fazlı jel sistemlerine örnek olarak alüminyum hidroksit jeli verilebilir.</span><div class="tf-options"><span class="tf-opt">Doğru</span><span class="tf-opt">Yanlış</span></div></div>
-
-    <div class="q-card"><span class="q-num tf">20</span><span class="q-text">Poloksamerler vücut sıcaklığında jelleşme özelliği gösterir.</span><div class="tf-options"><span class="tf-opt">Doğru</span><span class="tf-opt">Yanlış</span></div></div>
-
-    <div class="q-card"><span class="q-num tf">21</span><span class="q-text">Patlar saçlı deriye rahatlıkla uygulanabilir.</span><div class="tf-options"><span class="tf-opt">Doğru</span><span class="tf-opt">Yanlış</span></div></div>
-
-    <div class="q-card"><span class="q-num tf">22</span><span class="q-text">Losyonlar cilde ovulmaksızın uygulanır.</span><div class="tf-options"><span class="tf-opt">Doğru</span><span class="tf-opt">Yanlış</span></div></div>
-
-    <div class="q-card"><span class="q-num tf">23</span><span class="q-text">Sabunlarda sertlik stearik asitten, yumuşaklık oleik asitten gelir.</span><div class="tf-options"><span class="tf-opt">Doğru</span><span class="tf-opt">Yanlış</span></div></div>
-
-    <div class="q-card"><span class="q-num tf">24</span><span class="q-text">Laurik ve miristik asit tuzları en iyi emülsifiyan ve köpüren sabunlardır.</span><div class="tf-options"><span class="tf-opt">Doğru</span><span class="tf-opt">Yanlış</span></div></div>
-
-    <div class="q-card"><span class="q-num tf">25</span><span class="q-text">Rektal supozituvarların en geniş kullanım alanı gastrit tedavisidir.</span><div class="tf-options"><span class="tf-opt">Doğru</span><span class="tf-opt">Yanlış</span></div></div>
-
-    <div class="q-card"><span class="q-num tf">26</span><span class="q-text">Rektal supozituvarlar karaciğer ilk geçiş etkisinden tamamen kurtulma avantajı sağlar.</span><div class="tf-options"><span class="tf-opt">Doğru</span><span class="tf-opt">Yanlış</span></div></div>
-
-    <div class="q-card"><span class="q-num tf">27</span><span class="q-text">Kakao yağı, vajinal supozituvarlar için uygundur.</span><div class="tf-options"><span class="tf-opt">Doğru</span><span class="tf-opt">Yanlış</span></div></div>
-
-    <div class="q-card"><span class="q-num tf">28</span><span class="q-text">Kakao yağının γ (gamma) formu en az dayanıklı polimorf formudur.</span><div class="tf-options"><span class="tf-opt">Doğru</span><span class="tf-opt">Yanlış</span></div></div>
-
-    <div class="q-card"><span class="q-num tf">29</span><span class="q-text">Witepsol sıvağları %1 monogliserit içerir ve emülgatör özelliği vardır.</span><div class="tf-options"><span class="tf-opt">Doğru</span><span class="tf-opt">Yanlış</span></div></div>
-
-    <div class="q-card"><span class="q-num tf">30</span><span class="q-text">PEG sıvağlarının erime dereceleri genellikle vücut sıcaklığının altındadır.</span><div class="tf-options"><span class="tf-opt">Doğru</span><span class="tf-opt">Yanlış</span></div></div>
-
-    <div class="q-card"><span class="q-num tf">31</span><span class="q-text">Etken madde sıvağda çözünüyorsa deplasman faktörü 1 kabul edilir.</span><div class="tf-options"><span class="tf-opt">Doğru</span><span class="tf-opt">Yanlış</span></div></div>
-
-    <div class="q-card"><span class="q-num tf">32</span><span class="q-text">Supozituvarlarda erime derecesi 37 °C'den fazla olmamalıdır.</span><div class="tf-options"><span class="tf-opt">Doğru</span><span class="tf-opt">Yanlış</span></div></div>
-
-    <div class="q-card"><span class="q-num tf">33</span><span class="q-text">Supozituvar kalıpları döküm öncesi yağlanmamalıdır.</span><div class="tf-options"><span class="tf-opt">Doğru</span><span class="tf-opt">Yanlış</span></div></div>
-
-    <div class="q-card"><span class="q-num tf">34</span><span class="q-text">Kakao yağı 35 °C'nin üzerinde ısıtılırsa 22 °C'de katılaşmaz.</span><div class="tf-options"><span class="tf-opt">Doğru</span><span class="tf-opt">Yanlış</span></div></div>
-
-    <div class="q-card"><span class="q-num tf">35</span><span class="q-text">Vajinal supozituvarlarda PEG sıvağları tahriş nedeniyle az kullanılır.</span><div class="tf-options"><span class="tf-opt">Doğru</span><span class="tf-opt">Yanlış</span></div></div>
-
-    <div class="q-card"><span class="q-num tf">36</span><span class="q-text">Rektum sıvısının tamponlama kapasitesi yüksektir.</span><div class="tf-options"><span class="tf-opt">Doğru</span><span class="tf-opt">Yanlış</span></div></div>
-
-    <div class="q-card"><span class="q-num tf">37</span><span class="q-text">Absorpsiyon sıvağları genellikle S/Y emülsiyonu oluştururlar.</span><div class="tf-options"><span class="tf-opt">Doğru</span><span class="tf-opt">Yanlış</span></div></div>
-
-    <div class="q-card"><span class="q-num tf">38</span><span class="q-text">Kakao yağı içeren supozituvarlar buzlukta saklanabilir.</span><div class="tf-options"><span class="tf-opt">Doğru</span><span class="tf-opt">Yanlış</span></div></div>
-
-    <div class="q-card"><span class="q-num tf">39</span><span class="q-text">Jelatin, hayvan kolajeninden elde edilir; asit hidroliz ile Jelatin A elde edilir.</span><div class="tf-options"><span class="tf-opt">Doğru</span><span class="tf-opt">Yanlış</span></div></div>
-
-    <div class="q-card"><span class="q-num tf">40</span><span class="q-text">Nitrogliserin sistemik etkili merhemlere örnek gösterilebilir.</span><div class="tf-options"><span class="tf-opt">Doğru</span><span class="tf-opt">Yanlış</span></div></div>
-
-
-    <!-- ── KLASİK ── -->
-    <div class="sec-header" id="sec-classic-q">
-      <div class="sec-icon classic">?</div>
-      <div>
-        <div class="sec-title">Klasik Sorular</div>
-        <div class="sec-subtitle">20 Soru</div>
-      </div>
-    </div>
-
-    <div class="q-card"><span class="q-num classic">1</span><span class="q-text">Liniment tiplerini (çözelti, emülsiyon, süspansiyon) birer örnekle açıklayınız.</span></div>
-
-    <div class="q-card"><span class="q-num classic">2</span><span class="q-text">Yarı-katı ilaç şekillerini sayınız ve yarı-katı formların topikal uygulamada sağladığı avantajları belirtiniz.</span></div>
-
-    <div class="q-card"><span class="q-num classic">3</span><span class="q-text">Cold cream formülasyonunun hazırlanışını adım adım açıklayınız. Emülgatör nasıl oluşur?</span></div>
-
-    <div class="q-card"><span class="q-num classic">4</span><span class="q-text">Merhem sıvağlarının (bazlarının) dört ana sınıfını sayarak her birinin özelliklerini karşılaştırınız.</span></div>
-
-    <div class="q-card"><span class="q-num classic">5</span><span class="q-text">İdeal bir merhem sıvağının taşıması gereken özellikleri sıralayınız.</span></div>
-
-    <div class="q-card"><span class="q-num classic">6</span><span class="q-text">Göz merhemlerinin sterilizasyon koşullarını ve özel gereksinimlerini açıklayınız.</span></div>
-
-    <div class="q-card"><span class="q-num classic">7</span><span class="q-text">Sıvağlarda yapılan kontrol parametrelerini (erime derecesi, asitlik derecesi, iyot indisi, sabunlaşma indeksi, peroksit sayısı) açıklayınız.</span></div>
-
-    <div class="q-card"><span class="q-num classic">8</span><span class="q-text">Merhemlerin eritme yöntemiyle hazırlanışını adım adım anlatınız.</span></div>
-
-    <div class="q-card"><span class="q-num classic">9</span><span class="q-text">Merhemlerde etken madde salım testlerinden Franz difüzyon hücresi yöntemini açıklayınız.</span></div>
-
-    <div class="q-card"><span class="q-num classic">10</span><span class="q-text">Merhemlerin farmakolojik sınıflandırmasını yaparak her gruptan birer örnek veriniz.</span></div>
-
-    <div class="q-card"><span class="q-num classic">11</span><span class="q-text">Jel sınıflandırmasını (tek fazlı / iki fazlı) açıklayarak her birine birer örnek veriniz.</span></div>
-
-    <div class="q-card"><span class="q-num classic">12</span><span class="q-text">Jel hazırlamada kullanılan doğal, yarı-sentetik ve sentetik polimerleri sayarak özelliklerini belirtiniz.</span></div>
-
-    <div class="q-card"><span class="q-num classic">13</span><span class="q-text">Pat (pasta) nedir? Kremlerden ve merhemlerden ne gibi farkları vardır? Hazırlanışını açıklayınız.</span></div>
-
-    <div class="q-card"><span class="q-num classic">14</span><span class="q-text">Sabunların hazırlanış yöntemlerini ve yumuşak-katı sabun arasındaki farkları açıklayınız.</span></div>
-
-    <div class="q-card"><span class="q-num classic">15</span><span class="q-text">Rektal supozituvarların avantaj ve dezavantajlarını karşılaştırınız.</span></div>
-
-    <div class="q-card"><span class="q-num classic">16</span><span class="q-text">Kakao yağının polimorf formlarını (α, β, β₁, γ) erime dereceleri ve oluşum koşullarıyla birlikte açıklayınız.</span></div>
-
-    <div class="q-card"><span class="q-num classic">17</span><span class="q-text">Deplasman (yer değiştirme) faktörünü tanımlayarak supozituvar hazırlamadaki önemini ve hesaplama formülünü yazınız.</span></div>
-
-    <div class="q-card"><span class="q-num classic">18</span><span class="q-text">Supozituvarlarda yapılan kontrol parametrelerini (görünüş, ağırlık sapması, erime derecesi, kırılma testi vb.) açıklayınız.</span></div>
-
-    <div class="q-card"><span class="q-num classic">19</span><span class="q-text">Supozituvar sıvağ seçiminde etken maddenin çözünürlüğü (yağda/suda) nasıl bir rol oynar? Örneklerle açıklayınız.</span></div>
-
-    <div class="q-card"><span class="q-num classic">20</span><span class="q-text">Supozituvarlarda çözünme hızı (salım) test yöntemlerinden sepet, palet ve diyaliz yöntemlerini karşılaştırınız.</span></div>
-
-  </div><!-- /view-questions -->
-
-
-  <!-- ═══════════════════════════════════════════ -->
-  <!-- ═══ ANSWERS VIEW ═══ -->
-  <!-- ═══════════════════════════════════════════ -->
-  <div class="view" id="view-answers">
-
-    <!-- ── BOŞLUK DOLDURMA CEVAPLARI ── -->
-    <div class="sec-header" id="sec-fill-a">
-      <div class="sec-icon fill">✎</div>
-      <div>
-        <div class="sec-title">Boşluk Doldurma – Cevaplar</div>
-        <div class="sec-subtitle">40 Soru</div>
-      </div>
-    </div>
-
-    <div class="ans-card"><span class="ans-num fill">1</span><span class="ans-text"><strong>yaralı olmayan</strong></span></div>
-    <div class="ans-card"><span class="ans-num fill">2</span><span class="ans-text"><strong>sabun</strong></span></div>
-    <div class="ans-card"><span class="ans-num fill">3</span><span class="ans-text"><strong>residence time</strong> (kalış süresi)</span></div>
-    <div class="ans-card"><span class="ans-num fill">4</span><span class="ans-text"><strong>Y/S</strong> (su içinde yağ)</span></div>
-    <div class="ans-card"><span class="ans-num fill">5</span><span class="ans-text"><strong>75</strong></span></div>
-    <div class="ans-card"><span class="ans-num fill">6</span><span class="ans-text"><strong>%30</strong></span></div>
-    <div class="ans-card"><span class="ans-num fill">7</span><span class="ans-text"><strong>Pomad</strong></span></div>
-    <div class="ans-card"><span class="ans-num fill">8</span><span class="ans-text"><strong>Sıvağ</strong></span></div>
-    <div class="ans-card"><span class="ans-num fill">9</span><span class="ans-text"><strong>20</strong></span></div>
-    <div class="ans-card"><span class="ans-num fill">10</span><span class="ans-text"><strong>140</strong></span></div>
-    <div class="ans-card"><span class="ans-num fill">11</span><span class="ans-text"><strong>TEWL</strong> (Transepidermal Water Loss)</span></div>
-    <div class="ans-card"><span class="ans-num fill">12</span><span class="ans-text"><strong>yününden</strong></span></div>
-    <div class="ans-card"><span class="ans-num fill">13</span><span class="ans-text"><strong>PEG</strong></span></div>
-    <div class="ans-card"><span class="ans-num fill">14</span><span class="ans-text"><strong>İyot indeksi (İyot indisi)</strong></span></div>
-    <div class="ans-card"><span class="ans-num fill">15</span><span class="ans-text"><strong>Silindirlı</strong></span></div>
-    <div class="ans-card"><span class="ans-num fill">16</span><span class="ans-text"><strong>Tavşan</strong></span></div>
-    <div class="ans-card"><span class="ans-num fill">17</span><span class="ans-text"><strong>Donör</strong></span></div>
-    <div class="ans-card"><span class="ans-num fill">18</span><span class="ans-text"><strong>32 ± 0,5</strong></span></div>
-    <div class="ans-card"><span class="ans-num fill">19</span><span class="ans-text"><strong>koruyucu</strong> (stratum corneum)</span></div>
-    <div class="ans-card"><span class="ans-num fill">20</span><span class="ans-text"><strong>%4-10</strong></span></div>
-    <div class="ans-card"><span class="ans-num fill">21</span><span class="ans-text"><strong>Müsilaj</strong></span></div>
-    <div class="ans-card"><span class="ans-num fill">22</span><span class="ans-text"><strong>5-10</strong></span></div>
-    <div class="ans-card"><span class="ans-num fill">23</span><span class="ans-text"><strong>50-70</strong></span></div>
-    <div class="ans-card"><span class="ans-num fill">24</span><span class="ans-text"><strong>alkaliler (veya amin grubu maddeler)</strong></span></div>
-    <div class="ans-card"><span class="ans-num fill">25</span><span class="ans-text"><strong>Potasyum</strong></span></div>
-    <div class="ans-card"><span class="ans-num fill">26</span><span class="ans-text"><strong>Katı</strong></span></div>
-    <div class="ans-card"><span class="ans-num fill">27</span><span class="ans-text"><strong>2</strong></span></div>
-    <div class="ans-card"><span class="ans-num fill">28</span><span class="ans-text"><strong>1-3</strong></span></div>
-    <div class="ans-card"><span class="ans-num fill">29</span><span class="ans-text"><strong>β (beta)</strong></span></div>
-    <div class="ans-card"><span class="ans-num fill">30</span><span class="ans-text"><strong>34,5</strong></span></div>
-    <div class="ans-card"><span class="ans-num fill">31</span><span class="ans-text"><strong>Sentetik / yarı-sentetik</strong></span></div>
-    <div class="ans-card"><span class="ans-num fill">32</span><span class="ans-text"><strong>çözünme</strong></span></div>
-    <div class="ans-card"><span class="ans-num fill">33</span><span class="ans-text"><strong>Vajinal</strong></span></div>
-    <div class="ans-card"><span class="ans-num fill">34</span><span class="ans-text"><strong>sıvağ</strong> (g cinsinden)</span></div>
-    <div class="ans-card"><span class="ans-num fill">35</span><span class="ans-text"><strong>3</strong></span></div>
-    <div class="ans-card"><span class="ans-num fill">36</span><span class="ans-text"><strong>2</strong></span></div>
-    <div class="ans-card"><span class="ans-num fill">37</span><span class="ans-text"><strong>Erweka</strong></span></div>
-    <div class="ans-card"><span class="ans-num fill">38</span><span class="ans-text"><strong>Sodyum lauril sülfat (SLS)</strong></span></div>
-    <div class="ans-card"><span class="ans-num fill">39</span><span class="ans-text"><strong>sodyum</strong></span></div>
-    <div class="ans-card"><span class="ans-num fill">40</span><span class="ans-text"><strong>30</strong> (yarım saat)</span></div>
-
-
-    <!-- ── DOĞRU / YANLIŞ CEVAPLARI ── -->
-    <div class="sec-header" id="sec-tf-a">
-      <div class="sec-icon tf">D/Y</div>
-      <div>
-        <div class="sec-title">Doğru / Yanlış – Cevaplar</div>
-        <div class="sec-subtitle">40 Soru</div>
-      </div>
-    </div>
-
-    <div class="ans-card"><span class="ans-num tf">1</span><span class="ans-text"><span class="tag-d">YANLIŞ</span> Linimentler yaralı olmayan cilt üzerine ovularak uygulanır.</span></div>
-    <div class="ans-card"><span class="ans-num tf">2</span><span class="ans-text"><span class="tag-y">DOĞRU</span> Kalamin linimenti süspansiyon tipi linimentlere örnektir.</span></div>
-    <div class="ans-card"><span class="ans-num tf">3</span><span class="ans-text"><span class="tag-d">YANLIŞ</span> Hem lokal hem de sistemik etki sağlanabilir.</span></div>
-    <div class="ans-card"><span class="ans-num tf">4</span><span class="ans-text"><span class="tag-y">DOĞRU</span> Kremler hafif asidik yapıdadır.</span></div>
-    <div class="ans-card"><span class="ans-num tf">5</span><span class="ans-text"><span class="tag-d">YANLIŞ</span> Stearat (vanishing) kremleri ciltte yağlı his bırakmaz.</span></div>
-    <div class="ans-card"><span class="ans-num tf">6</span><span class="ans-text"><span class="tag-d">YANLIŞ</span> Merhemler gözenekleri tıkamazlar.</span></div>
-    <div class="ans-card"><span class="ans-num tf">7</span><span class="ans-text"><span class="tag-y">DOĞRU</span> Oftalmik preparatlar steril ve aseptik koşullarda hazırlanmalıdır.</span></div>
-    <div class="ans-card"><span class="ans-num tf">8</span><span class="ans-text"><span class="tag-d">YANLIŞ</span> Hidrokarbon sıvağları su içermezler ve kolaylıkla su tutamazlar.</span></div>
-    <div class="ans-card"><span class="ans-num tf">9</span><span class="ans-text"><span class="tag-y">DOĞRU</span> Vazelin, lanolin veya setil alkol ilavesiyle su tutma özelliği kazanır.</span></div>
-    <div class="ans-card"><span class="ans-num tf">10</span><span class="ans-text"><span class="tag-y">DOĞRU</span> Y/S tipi emülsiyon olduklarından kolayca yıkanabilirler.</span></div>
-    <div class="ans-card"><span class="ans-num tf">11</span><span class="ans-text"><span class="tag-d">YANLIŞ</span> PEG bazlı sıvağlar yağsızdır ve yapılarında su bulundurmazlar.</span></div>
-    <div class="ans-card"><span class="ans-num tf">12</span><span class="ans-text"><span class="tag-y">DOĞRU</span> Peroksit sayısı yağlardaki oksidasyonun ölçüsüdür.</span></div>
-    <div class="ans-card"><span class="ans-num tf">13</span><span class="ans-text"><span class="tag-d">YANLIŞ</span> Her iki faz aynı sıcaklıkta iken birleştirilmelidir.</span></div>
-    <div class="ans-card"><span class="ans-num tf">14</span><span class="ans-text"><span class="tag-y">DOĞRU</span> E. coli, Pseudomonas ve Candida merhemlerde hiç bulunmamalıdır.</span></div>
-    <div class="ans-card"><span class="ans-num tf">15</span><span class="ans-text"><span class="tag-d">YANLIŞ</span> Draize testinde tavşan kullanılır, sıçan değil.</span></div>
-    <div class="ans-card"><span class="ans-num tf">16</span><span class="ans-text"><span class="tag-y">DOĞRU</span> Franz hücresinde kadavra derisi veya ameliyat sonrası insan derisi membran olarak kullanılabilir.</span></div>
-    <div class="ans-card"><span class="ans-num tf">17</span><span class="ans-text"><span class="tag-d">YANLIŞ</span> Keratolitik merhemler boynuzsu tabakayı yumuşatır veya yok eder; keratoplastik merhemler kalınlaştırır.</span></div>
-    <div class="ans-card"><span class="ans-num tf">18</span><span class="ans-text"><span class="tag-y">DOĞRU</span> Benzokain %1-20 konsantrasyonda kullanılan bir lokal anesteziktir.</span></div>
-    <div class="ans-card"><span class="ans-num tf">19</span><span class="ans-text"><span class="tag-d">YANLIŞ</span> Alüminyum hidroksit jeli iki fazlı jel sistemlerine örnektir.</span></div>
-    <div class="ans-card"><span class="ans-num tf">20</span><span class="ans-text"><span class="tag-y">DOĞRU</span> Poloksamerler vücut sıcaklığında jelleşen termal olarak hassas polimerlerdir.</span></div>
-    <div class="ans-card"><span class="ans-num tf">21</span><span class="ans-text"><span class="tag-d">YANLIŞ</span> Patlar saçlı deriye asla uygulanmazlar.</span></div>
-    <div class="ans-card"><span class="ans-num tf">22</span><span class="ans-text"><span class="tag-y">DOĞRU</span> Losyonlar cilde ovulmaksızın tatbik edilen akışkan preparatlardır.</span></div>
-    <div class="ans-card"><span class="ans-num tf">23</span><span class="ans-text"><span class="tag-y">DOĞRU</span> Stearik asit sertlik, oleik asit yumuşaklık sağlar.</span></div>
-    <div class="ans-card"><span class="ans-num tf">24</span><span class="ans-text"><span class="tag-y">DOĞRU</span> Ancak tahriş edici etkileri fazla olduğundan konsantrasyonları %20-25 ile sınırlıdır.</span></div>
-    <div class="ans-card"><span class="ans-num tf">25</span><span class="ans-text"><span class="tag-d">YANLIŞ</span> En geniş kullanım alanı hemoroit tedavisidir.</span></div>
-    <div class="ans-card"><span class="ans-num tf">26</span><span class="ans-text"><span class="tag-d">YANLIŞ</span> Tamamen değil kısmen kurtulur; üst rektal ven karaciğere uğrar.</span></div>
-    <div class="ans-card"><span class="ans-num tf">27</span><span class="ans-text"><span class="tag-d">YANLIŞ</span> Kakao yağı vajinada mukoz salgılarla karışmadığından vajinal supozituvarlar için uygun değildir.</span></div>
-    <div class="ans-card"><span class="ans-num tf">28</span><span class="ans-text"><span class="tag-y">DOĞRU</span> γ formu 18,5 °C erime derecesine sahip en az dayanıklı formdur.</span></div>
-    <div class="ans-card"><span class="ans-num tf">29</span><span class="ans-text"><span class="tag-y">DOĞRU</span> Witepsol %1 monogliserit içerir ve emülgatör özelliğine sahiptir.</span></div>
-    <div class="ans-card"><span class="ans-num tf">30</span><span class="ans-text"><span class="tag-d">YANLIŞ</span> PEG sıvağlarının erime dereceleri genellikle vücut sıcaklığının üzerindedir.</span></div>
-    <div class="ans-card"><span class="ans-num tf">31</span><span class="ans-text"><span class="tag-y">DOĞRU</span> Etken madde çözünüyorsa veya sıvı ise f = 1 kabul edilir.</span></div>
-    <div class="ans-card"><span class="ans-num tf">32</span><span class="ans-text"><span class="tag-y">DOĞRU</span> Erime derecesi 37 °C'den fazla olmamalıdır.</span></div>
-    <div class="ans-card"><span class="ans-num tf">33</span><span class="ans-text"><span class="tag-d">YANLIŞ</span> Kalıplar döküm öncesi sıvı parafin, gliserin veya badem yağı ile yağlanır.</span></div>
-    <div class="ans-card"><span class="ans-num tf">34</span><span class="ans-text"><span class="tag-y">DOĞRU</span> 35 °C üstünde ısıtılırsa β formu metastabil formlara dönüşür ve 22 °C'de katılaşmaz.</span></div>
-    <div class="ans-card"><span class="ans-num tf">35</span><span class="ans-text"><span class="tag-y">DOĞRU</span> PEG sıvağları vajinal mukozayı tahriş edebilir, bu nedenle az kullanılır.</span></div>
-    <div class="ans-card"><span class="ans-num tf">36</span><span class="ans-text"><span class="tag-d">YANLIŞ</span> Rektum sıvısının tamponlama kapasitesi yoktur.</span></div>
-    <div class="ans-card"><span class="ans-num tf">37</span><span class="ans-text"><span class="tag-y">DOĞRU</span> Absorpsiyon sıvağları genellikle S/Y emülsiyonu oluştururlar.</span></div>
-    <div class="ans-card"><span class="ans-num tf">38</span><span class="ans-text"><span class="tag-d">YANLIŞ</span> Kakao yağı içeren supozituvarlar kesinlikle buzlukta saklanmamalıdır.</span></div>
-    <div class="ans-card"><span class="ans-num tf">39</span><span class="ans-text"><span class="tag-y">DOĞRU</span> Asit hidroliz → Jelatin A, Alkali hidroliz → Jelatin B.</span></div>
-    <div class="ans-card"><span class="ans-num tf">40</span><span class="ans-text"><span class="tag-y">DOĞRU</span> Nitrogliserin deriye uygulandığında kana geçerek sistemik etki gösterir.</span></div>
-
-
-    <!-- ── KLASİK CEVAPLAR ── -->
-    <div class="sec-header" id="sec-classic-a">
-      <div class="sec-icon classic">?</div>
-      <div>
-        <div class="sec-title">Klasik Sorular – Cevaplar</div>
-        <div class="sec-subtitle">20 Soru</div>
-      </div>
-    </div>
-
-    <div class="ans-card"><span class="ans-num classic">1</span><span class="ans-text"><strong>Çözelti tipi:</strong> Alkol veya yağ çözücülü (kafur linimenti, metil salisilat linimenti). <strong>Emülsiyon tipi:</strong> Sabun emülgatörlü; amonyak/kireç suyu + yağ → sabun oluşumu (kafurlu amonyak linimenti). <strong>Süspansiyon tipi:</strong> Toz partiküller sıvıda dağılmış (kalamin linimenti).</span></div>
-
-    <div class="ans-card"><span class="ans-num classic">2</span><span class="ans-text">Yarı-katı ilaç şekilleri: merhem, krem, jel, pat ve supozituvar. Avantajları: ciltte uzun kalış süresi (residence time), hem lokal hem sistemik etki imkânı, homojen görünüm, kolay uygulama, transdermal ilaç taşıyabilme ve yumuşatıcı/koruyucu etki sağlama.</span></div>
-
-    <div class="ans-card"><span class="ans-num classic">3</span><span class="ans-text">Yağlı faz (setilesterler, sıvı parafin, beyaz balmumu) su banyosunda 75 °C'ye getirilir. Sulu faz (su + boraks) ayrı erlende 75 °C'ye ısıtılır. Sulu faz, yağlı faza yavaş ve sürekli karıştırılarak eklenir. 40 °C'de esans ilave edilir. Emülgatör, borakstaki sodyum ile balmumundaki yağ asitlerinin reaksiyonuyla oluşan sodyum tuzu (in-situ sabun) tarafından sağlanır.</span></div>
-
-    <div class="ans-card"><span class="ans-num classic">4</span><span class="ans-text"><strong>1) Hidrokarbon sıvağları:</strong> Yağlı bazlar, su içermez, ciltten uzaklaştırması zor (vazelin). <strong>2) Absorpsiyon sıvağları:</strong> Su tutabilen bazlar, S/Y emülsiyonu, emolyan etkili (lanolin). <strong>3) Su ile karışabilen sıvağlar:</strong> Y/S emülsiyonu, kolay yıkanabilir, en çok kullanılan grup (hidrofilik merhem). <strong>4) Suda çözünebilen sıvağlar:</strong> PEG bazlı, yağsız, örtücü etkisi az.</span></div>
-
-    <div class="ans-card"><span class="ans-num classic">5</span><span class="ans-text">İrritasyon yapmamalı, deriden su çekmemeli, fazla yağlı olmamalı, etken madde ile geçimli olmalı, stabil olmalı, su ile kolay uzaklaştırılabilmeli, su ve diğer sıvıları tutabilmeli, ilaçları etkin şekilde salabilmeli.</span></div>
-
-    <div class="ans-card"><span class="ans-num classic">6</span><span class="ans-text">Göz merhemleri steril ve aseptik koşullarda hazırlanmalıdır. 20 µm'den büyük partikül içermemeli, gözyaşı ile karışabilmeli, viskozite uygun olmalıdır. Sıvağ sterilizasyonu 130 °C'de, kap sterilizasyonu etilen oksit ile yapılır. Susuz göz merhemleri 140 °C'de 3 saat, emülsiyon tipi olanlar 100 °C'de 30 dk otoklavda sterilize edilir. Metal parçacık kontrolü de yapılmalıdır.</span></div>
-
-    <div class="ans-card"><span class="ans-num classic">7</span><span class="ans-text"><strong>Erime derecesi:</strong> Sıvağın erime aralığı ölçülür. <strong>Su miktarı:</strong> 20 °C'de tuttuğu su tartılır. <strong>Asitlik derecesi:</strong> 100 g yağın serbest asitlerini nötralize eden 1 N KOH'un mL miktarı. <strong>İyot indisi:</strong> 100 g yağın bağladığı iyot miktarı. <strong>Sabunlaşma indeksi:</strong> 1 g yağı sabunlaştırmak için gereken KOH (mg). <strong>Peroksit sayısı:</strong> 1 g yağın K-iyodürden açığa çıkardığı iyot için harcanan Na-tiyosülfat (mL).</span></div>
-
-    <div class="ans-card"><span class="ans-num classic">8</span><span class="ans-text">1) Yağlı ve sulu maddeler ayrı kaplarda ısıtılarak eritilir. 2) Her iki faz ayrı ayrı homojen hale getirilir. 3) İç faz, dış faza aynı sıcaklıkta iken (genelde sulu faz → yağlı faz üzerine) karıştırılarak ilave edilir. 4) Soğuyana kadar karıştırmaya devam edilir. 5) Emülgatör in-situ oluşuyorsa yeterli karıştırma sağlanmalıdır.</span></div>
-
-    <div class="ans-card"><span class="ans-num classic">9</span><span class="ans-text">Franz difüzyon hücresi, donör ve reseptör bölümlerinden oluşur. Donör bölümüne merhem uygulanır. Arada membran (selüloz, silikon, yapay veya kadavra derisi) bulunur. Reseptör bölümünden zamana bağlı örnekler alınarak etken maddenin geçiş miktarı ölçülür. Zarlı veya zarsız çalışılabilir. En sık 6 hücreli Franz tipi difüzyon hücreleri kullanılır.</span></div>
-
-    <div class="ans-card"><span class="ans-num classic">10</span><span class="ans-text"><strong>1) Antiseptik:</strong> Antibiyotik/antifungal içeren. <strong>2) Antipirüritik:</strong> Kaşıntı giderici (mentol, fenol, kafur). <strong>3) Keratoplastik:</strong> Koruyucu tabakayı kalınlaştırıcı (ihtiyol %10, salisilik asit %1-2). <strong>4) Keratolitik:</strong> Boynuzsu tabakayı yumuşatıcı (salisilik asit %4-10). <strong>5) Lokal analjezik:</strong> Antiromatizmal etkili. <strong>6) Lokal anestezik:</strong> Benzokain, lidokain. <strong>7) Yumuşatıcı/nemlendirici:</strong> Vazelin, lanolin. <strong>8) Koruyucu:</strong> Güneş kremleri, çinko oksit. <strong>9) Sistemik etkili:</strong> Nitrogliserin, kortizon.</span></div>
-
-    <div class="ans-card"><span class="ans-num classic">11</span><span class="ans-text"><strong>Tek fazlı:</strong> Sıvı fazda tamamen çözünmüş organik moleküllerle hazırlanır. Hidrojel (su ile; HMC+su), organojel (alkol/mineral yağ ile; Plastibase), in situ jel (poloksamerler, Carbopol). <strong>İki fazlı:</strong> İnorganik küçük moleküllerin sıvıda dayanıksız ağ yapısı oluşturduğu sistem (alüminyum hidroksit jeli). Partikül büyükse magma (bentonit magma) olarak adlandırılır, tiksotropi gösterir.</span></div>
-
-    <div class="ans-card"><span class="ans-num classic">12</span><span class="ans-text"><strong>Doğal:</strong> Jelatin, aljinatlar, agar (%0,1'de jel), kitosan (%1-2), glisirizin (%2-3), pektin, arap zamkı, ksantan zamkı. <strong>Yarı-sentetik:</strong> Selüloz türevleri (CMC, HPMC, MC). <strong>Sentetik:</strong> Poloksamerler (vücut sıcaklığında jelleşir, %15-25), Karbopol (pH 5-10'da jelleşir, TEA ile nötralize edilir), PVA (%10-15), poliakrilamitler (%4-10). <strong>İnorganik:</strong> Bentonit, Veegum, mikrokristal selüloz/silika.</span></div>
-
-    <div class="ans-card"><span class="ans-num classic">13</span><span class="ans-text">Patlar %50-70 oranında toz madde içeren yarı-katı preparatlardır. Kremlerden daha sert, merhemlerden daha absorplayıcıdırlar. Kurutucu özellikleri vardır, saçlı deriye uygulanmaz, deriye nüfuz etmezler. Hazırlanışı: Katı maddeler toz edilir → yağlı sıvağ ile homojen karışım yapılır veya suda şişen jellerle karıştırılır. Nişasta kullanılacaksa önce soğuk su ile karıştırılır.</span></div>
-
-    <div class="ans-card"><span class="ans-num classic">14</span><span class="ans-text"><strong>Yöntemler:</strong> 1) Yağdan hareketle: Yağlar + alkali → sabunlaşma. 2) Yağ asidinden hareketle: Yağ asidi + soda. 3) Sülfürik asit ile: Sülfat/sülfonat tipi sabunlar. <strong>Yumuşak sabunlar:</strong> Potasyum tuzları, yüksek potasyum oleat, köpürme zayıf ama emülgatör özelliği yüksek. <strong>Katı sabunlar:</strong> Sodyum tuzları, yüksek sodyum stearat, iyi köpürür ama emülsifiyan özelliği zayıf.</span></div>
-
-    <div class="ans-card"><span class="ans-num classic">15</span><span class="ans-text"><strong>Avantajlar:</strong> Karaciğer ilk geçiş etkisinden kısmen kurtulma, GİS'te bozulan/tahriş eden ilaçlar için uygun, hızlı etki, oral yol kullanılamadığında alternatif, bebek-yaşlı-bilinçsiz hastalar için kolay, düşük dozla sistemik etki, biyoyararlanım artışı. <strong>Dezavantajlar:</strong> Hasta uyuncu düşük, mukozal iritasyon, pahalı üretim, özel saklama koşulları gerekliliği.</span></div>
-
-    <div class="ans-card"><span class="ans-num classic">16</span><span class="ans-text"><strong>α (23 °C):</strong> Metastabil, 35 °C üstünde eritilmiş kakao yağının çabuk soğutulmasıyla oluşur. <strong>β (34,5 °C):</strong> En dayanıklı, en yüksek erime dereceli form; 35 °C'de eritilip yavaş soğutularak elde edilir. <strong>β₁ (28 °C):</strong> Oda sıcaklığında dayanıklı; 20 °C'de 1 saat bırakılması ile oluşur. <strong>γ (18,5 °C):</strong> En az dayanıklı form; eritilmiş kakao yağının çok çabuk soğutulmasıyla oluşur.</span></div>
-
-    <div class="ans-card"><span class="ans-num classic">17</span><span class="ans-text">Deplasman faktörü (f): 1 g etken maddenin hacmine eşdeğer hacimdeki yer değiştiren sıvağ miktarı (g). f = sıvağın yoğunluğu / etken maddenin yoğunluğu. Formül: M = F − {(f₁·S₁) + (f₂·S₂) + … + (fₙ·Sₙ)} (M: gerekli sıvağ, F: boş kalıp ağırlığı, S: etken madde miktarı). Önemi: Doğru miktarda sıvağ hesaplanarak supozituvarın istenilen ağırlık ve şekilde üretilmesini sağlar.</span></div>
-
-    <div class="ans-card"><span class="ans-num classic">18</span><span class="ans-text"><strong>Görünüş:</strong> İç-dış yüzey düzgünlüğü, çatlak/çukur kontrolü. <strong>Ağırlık sapması:</strong> 20 adet ölçülür; 18'i ≤%5, en çok 2'si ≤%7,5 sapma. <strong>Erime derecesi:</strong> ≤37 °C. <strong>Erime süresi:</strong> 37 °C su banyosunda ≤30 dk. <strong>Kırılma/mekanik dayanıklılık:</strong> Erweka metodu, ideal ≥1,8-2 kg. <strong>Ayrıca:</strong> pH, etken madde miktarı (UV, HPLC), salım özellikleri, stabilite testleri.</span></div>
-
-    <div class="ans-card"><span class="ans-num classic">19</span><span class="ans-text">Yağda düşük – suda yüksek çözünürlük → <strong>yağlı sıvağ</strong> tercih edilir (sıvağda çözünmez, kolay salınır). Yağda yüksek – suda düşük çözünürlük → <strong>hidrofilik sıvağ</strong> tercih edilir (sıvağda tutulmaz, kolay salınır). Her iki çözünürlüğü düşük olan etken maddeler için sıvağ seçimi belirsizdir; ek deneyler gerektirir.</span></div>
-
-    <div class="ans-card"><span class="ans-num classic">20</span><span class="ans-text"><strong>Sepet yöntemi (USP I):</strong> Tel ağlı sepetlerde supozituvar sabit pozisyonda tutulur; yağlı sıvağlarla tıkanma sorunu olabilir, Palmier tasarımı ile çözülür. <strong>Palet yöntemi (USP II):</strong> Supozituvar dibe çelik spirallerle sabitlenir; dönme hızı artışı salımı hızlandırabilir. <strong>Diyaliz yöntemi:</strong> Supozituvar diyaliz torbasında erir ve ince film halinde yayılır; in vivo durumu en iyi taklit eden yöntem olarak kabul edilir.</span></div>
-
-  </div><!-- /view-answers -->
-
-</div><!-- /container -->
-
-<button class="print-btn" onclick="window.print()" title="Yazdır">🖨</button>
-
+<section id="bolum-a"><h2 class="section-title">A — Boşluk Doldurma (40 Soru)</h2><p class="section-desc">Aşağıdaki cümlelerdeki boşlukları uygun kavramlarla doldurunuz.</p><table class="q-table"><thead><tr><th>#</th><th>Soru</th><th>Cevap</th></tr></thead><tbody><tr><td class="num">1</td><td class="question-cell">Linimentler; sıvı veya koyu kıvamlı, haricen ve <span class="blank-mark">_______</span> cilt üzerine ovularak uygulanan preparatlardır.</td><td class="answer-cell" onclick="this.classList.toggle('revealed')"><span class="blank">. . . . . .</span><span class="answer-text"><strong>yaralı olmayan</strong></span></td></tr><tr><td class="num">2</td><td class="question-cell">Emülsiyon tipi linimentlerde emülgatör olarak <span class="blank-mark">_______</span> kullanılır.</td><td class="answer-cell" onclick="this.classList.toggle('revealed')"><span class="blank">. . . . . .</span><span class="answer-text"><strong>sabun</strong></span></td></tr><tr><td class="num">3</td><td class="question-cell">Yarı-katı ilaç şekillerinin ciltte kalış sürelerine <span class="blank-mark">_______</span> adı verilir.</td><td class="answer-cell" onclick="this.classList.toggle('revealed')"><span class="blank">. . . . . .</span><span class="answer-text"><strong>residence time (kalış süresi)</strong></span></td></tr><tr><td class="num">4</td><td class="question-cell">Kremler genellikle <span class="blank-mark">_______</span> (Y/S veya S/Y) tipi emülsiyon şeklindedir.</td><td class="answer-cell" onclick="this.classList.toggle('revealed')"><span class="blank">. . . . . .</span><span class="answer-text"><strong>Y/S (su içinde yağ)</strong></span></td></tr><tr><td class="num">5</td><td class="question-cell">Cold cream hazırlanırken yağlı faz ve sulu faz ayrı ayrı <span class="blank-mark">_______</span> °C'ye ısıtılarak birleştirilir.</td><td class="answer-cell" onclick="this.classList.toggle('revealed')"><span class="blank">. . . . . .</span><span class="answer-text"><strong>75</strong></span></td></tr><tr><td class="num">6</td><td class="question-cell">Stearat (vanishing) kremlerinde yağlı faz oranı maksimum <span class="blank-mark">_______</span>'dir.</td><td class="answer-cell" onclick="this.classList.toggle('revealed')"><span class="blank">. . . . . .</span><span class="answer-text"><strong>%30</strong></span></td></tr><tr><td class="num">7</td><td class="question-cell">Merhem kelimesinin Fransızca karşılığı <span class="blank-mark">_______</span>'dir.</td><td class="answer-cell" onclick="this.classList.toggle('revealed')"><span class="blank">. . . . . .</span><span class="answer-text"><strong>Pomad</strong></span></td></tr><tr><td class="num">8</td><td class="question-cell">Etken maddeyi taşıyan ortama <span class="blank-mark">_______</span> (taşıyıcı) denir.</td><td class="answer-cell" onclick="this.classList.toggle('revealed')"><span class="blank">. . . . . .</span><span class="answer-text"><strong>Sıvağ</strong></span></td></tr><tr><td class="num">9</td><td class="question-cell">Göz merhemleri <span class="blank-mark">_______</span> µm'den büyük partikül içermemelidir.</td><td class="answer-cell" onclick="this.classList.toggle('revealed')"><span class="blank">. . . . . .</span><span class="answer-text"><strong>20</strong></span></td></tr><tr><td class="num">10</td><td class="question-cell">Susuz göz merhemleri <span class="blank-mark">_______</span> °C'de 3 saat etüvde sterilize edilir.</td><td class="answer-cell" onclick="this.classList.toggle('revealed')"><span class="blank">. . . . . .</span><span class="answer-text"><strong>140</strong></span></td></tr><tr><td class="num">11</td><td class="question-cell">Hidrokarbon sıvağları <span class="blank-mark">_______</span>'i (transepidermal su kaybı) azaltarak derinin hidrasyonunu artırır.</td><td class="answer-cell" onclick="this.classList.toggle('revealed')"><span class="blank">. . . . . .</span><span class="answer-text"><strong>TEWL (Transepidermal Water Loss)</strong></span></td></tr><tr><td class="num">12</td><td class="question-cell">Susuz lanolin, koyun <span class="blank-mark">_______</span> elde edilir ve ağırlığının iki katı kadar su tutabilir.</td><td class="answer-cell" onclick="this.classList.toggle('revealed')"><span class="blank">. . . . . .</span><span class="answer-text"><strong>yününden</strong></span></td></tr><tr><td class="num">13</td><td class="question-cell">Suda çözünebilen merhem sıvağlarının temel bileşenleri <span class="blank-mark">_______</span> (polietilen glikol)'lerdir.</td><td class="answer-cell" onclick="this.classList.toggle('revealed')"><span class="blank">. . . . . .</span><span class="answer-text"><strong>PEG</strong></span></td></tr><tr><td class="num">14</td><td class="question-cell">100 g yağın bağlayabildiği iyot miktarına <span class="blank-mark">_______</span> denir.</td><td class="answer-cell" onclick="this.classList.toggle('revealed')"><span class="blank">. . . . . .</span><span class="answer-text"><strong>İyot indeksi (İyot indisi)</strong></span></td></tr><tr><td class="num">15</td><td class="question-cell">Merhemler hazırlandıktan sonra <span class="blank-mark">_______</span> değirmenden geçirilerek homojenize edilir.</td><td class="answer-cell" onclick="this.classList.toggle('revealed')"><span class="blank">. . . . . .</span><span class="answer-text"><strong>Silindirlı</strong></span></td></tr><tr><td class="num">16</td><td class="question-cell">Draize dermal iritasyon testinde deney hayvanı olarak <span class="blank-mark">_______</span> kullanılır.</td><td class="answer-cell" onclick="this.classList.toggle('revealed')"><span class="blank">. . . . . .</span><span class="answer-text"><strong>Tavşan</strong></span></td></tr><tr><td class="num">17</td><td class="question-cell">Franz difüzyon hücresinde merhemin uygulandığı bölüme <span class="blank-mark">_______</span> bölümü denir.</td><td class="answer-cell" onclick="this.classList.toggle('revealed')"><span class="blank">. . . . . .</span><span class="answer-text"><strong>Donör</strong></span></td></tr><tr><td class="num">18</td><td class="question-cell">USP Apparatus 5 (Paddle over Disk) yönteminde çalışma sıcaklığı <span class="blank-mark">_______</span> °C'dir.</td><td class="answer-cell" onclick="this.classList.toggle('revealed')"><span class="blank">. . . . . .</span><span class="answer-text"><strong>32 ± 0,5</strong></span></td></tr><tr><td class="num">19</td><td class="question-cell">Keratoplastik merhemler derinin <span class="blank-mark">_______</span> tabakasının kalınlığını artırmak için kullanılır.</td><td class="answer-cell" onclick="this.classList.toggle('revealed')"><span class="blank">. . . . . .</span><span class="answer-text"><strong>koruyucu (stratum corneum)</strong></span></td></tr><tr><td class="num">20</td><td class="question-cell">Salisilik asit <span class="blank-mark">_______</span> konsantrasyonda keratolitik etki gösterir.</td><td class="answer-cell" onclick="this.classList.toggle('revealed')"><span class="blank">. . . . . .</span><span class="answer-text"><strong>%4-10</strong></span></td></tr><tr><td class="num">21</td><td class="question-cell">Jellerde doğal zamklarla hazırlanan jel türüne <span class="blank-mark">_______</span> adı verilir.</td><td class="answer-cell" onclick="this.classList.toggle('revealed')"><span class="blank">. . . . . .</span><span class="answer-text"><strong>Müsilaj</strong></span></td></tr><tr><td class="num">22</td><td class="question-cell">Karbopol, pH <span class="blank-mark">_______</span> aralığında jelleşir ve bu nedenle nötralizasyon maddesi gerektirir.</td><td class="answer-cell" onclick="this.classList.toggle('revealed')"><span class="blank">. . . . . .</span><span class="answer-text"><strong>5-10</strong></span></td></tr><tr><td class="num">23</td><td class="question-cell">Patlar (pastalar) yüksek oranda (yaklaşık %<span class="blank-mark">_______</span>) toz madde içerir.</td><td class="answer-cell" onclick="this.classList.toggle('revealed')"><span class="blank">. . . . . .</span><span class="answer-text"><strong>50-70</strong></span></td></tr><tr><td class="num">24</td><td class="question-cell">Sabun, yağ asitlerinin <span class="blank-mark">_______</span> ile verdiği tuzlardır.</td><td class="answer-cell" onclick="this.classList.toggle('revealed')"><span class="blank">. . . . . .</span><span class="answer-text"><strong>alkaliler (veya amin grubu maddeler)</strong></span></td></tr><tr><td class="num">25</td><td class="question-cell">Yumuşak sabunlar <span class="blank-mark">_______</span> tuzlarından oluşur; katı sabunlar ise sodyum tuzlarından oluşur.</td><td class="answer-cell" onclick="this.classList.toggle('revealed')"><span class="blank">. . . . . .</span><span class="answer-text"><strong>Potasyum</strong></span></td></tr><tr><td class="num">26</td><td class="question-cell">Supozituvarlar vücut sıcaklığında eriyerek veya vücut sıvısında çözünerek etki gösteren <span class="blank-mark">_______</span> görünümlü yarı-katı ilaçlardır.</td><td class="answer-cell" onclick="this.classList.toggle('revealed')"><span class="blank">. . . . . .</span><span class="answer-text"><strong>Katı</strong></span></td></tr><tr><td class="num">27</td><td class="question-cell">USP'ye göre yetişkin rektal supozituvarların ağırlığı yaklaşık <span class="blank-mark">_______</span> g'dır.</td><td class="answer-cell" onclick="this.classList.toggle('revealed')"><span class="blank">. . . . . .</span><span class="answer-text"><strong>2</strong></span></td></tr><tr><td class="num">28</td><td class="question-cell">Rektumdaki sıvı miktarı yaklaşık <span class="blank-mark">_______</span> mL'dir.</td><td class="answer-cell" onclick="this.classList.toggle('revealed')"><span class="blank">. . . . . .</span><span class="answer-text"><strong>1-3</strong></span></td></tr><tr><td class="num">29</td><td class="question-cell">Kakao yağının en dayanıklı ve en yüksek erime derecesine sahip polimorf formu <span class="blank-mark">_______</span>'dır.</td><td class="answer-cell" onclick="this.classList.toggle('revealed')"><span class="blank">. . . . . .</span><span class="answer-text"><strong>β (beta)</strong></span></td></tr><tr><td class="num">30</td><td class="question-cell">Kakao yağının β polimorf formunun erime derecesi <span class="blank-mark">_______</span> °C'dir.</td><td class="answer-cell" onclick="this.classList.toggle('revealed')"><span class="blank">. . . . . .</span><span class="answer-text"><strong>34,5</strong></span></td></tr><tr><td class="num">31</td><td class="question-cell">Witepsol serisi sıvağlar <span class="blank-mark">_______</span> (sentetik/doğal) yağlar grubuna aittir.</td><td class="answer-cell" onclick="this.classList.toggle('revealed')"><span class="blank">. . . . . .</span><span class="answer-text"><strong>Sentetik / yarı-sentetik</strong></span></td></tr><tr><td class="num">32</td><td class="question-cell">PEG sıvağlarından etken madde salımı, sıvağın erimesine değil <span class="blank-mark">_______</span> hızına bağlıdır.</td><td class="answer-cell" onclick="this.classList.toggle('revealed')"><span class="blank">. . . . . .</span><span class="answer-text"><strong>çözünme</strong></span></td></tr><tr><td class="num">33</td><td class="question-cell">Jelatin-gliserin sıvağları daha çok <span class="blank-mark">_______</span> supozituvarlar için tercih edilir.</td><td class="answer-cell" onclick="this.classList.toggle('revealed')"><span class="blank">. . . . . .</span><span class="answer-text"><strong>Vajinal</strong></span></td></tr><tr><td class="num">34</td><td class="question-cell">Deplasman faktörü (f), 1 g etken maddenin hacmine eşdeğer hacimdeki yer değiştiren <span class="blank-mark">_______</span> miktarıdır.</td><td class="answer-cell" onclick="this.classList.toggle('revealed')"><span class="blank">. . . . . .</span><span class="answer-text"><strong>sıvağ (g cinsinden)</strong></span></td></tr><tr><td class="num">35</td><td class="question-cell">Supozituvar sıvağının iyot indisi <span class="blank-mark">_______</span>'ten az olmalıdır.</td><td class="answer-cell" onclick="this.classList.toggle('revealed')"><span class="blank">. . . . . .</span><span class="answer-text"><strong>3</strong></span></td></tr><tr><td class="num">36</td><td class="question-cell">Supozituvarlarda ağırlık sapması kontrolünde 20 supozituvarın en çok <span class="blank-mark">_______</span> tanesi ortalamadan %7,5'ten fazla sapabilir.</td><td class="answer-cell" onclick="this.classList.toggle('revealed')"><span class="blank">. . . . . .</span><span class="answer-text"><strong>2</strong></span></td></tr><tr><td class="num">37</td><td class="question-cell">Supozituvarların kırılma ve mekanik dayanıklılık testi <span class="blank-mark">_______</span> metodu ile yapılır.</td><td class="answer-cell" onclick="this.classList.toggle('revealed')"><span class="blank">. . . . . .</span><span class="answer-text"><strong>Erweka</strong></span></td></tr><tr><td class="num">38</td><td class="question-cell">Hidrofilik merhem formülasyonunda emülgatör olarak <span class="blank-mark">_______</span> kullanılır.</td><td class="answer-cell" onclick="this.classList.toggle('revealed')"><span class="blank">. . . . . .</span><span class="answer-text"><strong>Sodyum lauril sülfat (SLS)</strong></span></td></tr><tr><td class="num">39</td><td class="question-cell">Cold cream formülasyonunda emülgatör, balmumundaki yağ asitleri ile borakstaki <span class="blank-mark">_______</span>'un reaksiyonuyla oluşur.</td><td class="answer-cell" onclick="this.classList.toggle('revealed')"><span class="blank">. . . . . .</span><span class="answer-text"><strong>sodyum</strong></span></td></tr><tr><td class="num">40</td><td class="question-cell">Supozituvarların erime süresi testi sırasında supozituvar <span class="blank-mark">_______</span> dakika içinde erimiş olmalıdır.</td><td class="answer-cell" onclick="this.classList.toggle('revealed')"><span class="blank">. . . . . .</span><span class="answer-text"><strong>30 (yarım saat)</strong></span></td></tr></tbody></table></section><section id="bolum-b"><h2 class="section-title">B — Doğru / Yanlış (40 Soru)</h2><p class="section-desc">Aşağıdaki ifadelerin doğru (D) veya yanlış (Y) olduğunu belirtiniz.</p><table class="q-table"><thead><tr><th>#</th><th>İfade</th><th>Cevap</th></tr></thead><tbody><tr><td class="num">1</td><td class="question-cell">Linimentler yaralı cilt üzerine ovularak uygulanır.</td><td class="answer-cell" onclick="this.classList.toggle('revealed')"><span class="blank">. . . . . .</span><span class="answer-text"><div class="tf-answer"><span class="tf-badge false">YANLIŞ</span><span>Linimentler yaralı olmayan cilt üzerine ovularak uygulanır.</span></div></span></td></tr><tr><td class="num">2</td><td class="question-cell">Kalamin linimenti süspansiyon tipi bir linimenttir.</td><td class="answer-cell" onclick="this.classList.toggle('revealed')"><span class="blank">. . . . . .</span><span class="answer-text"><div class="tf-answer"><span class="tf-badge true">DOĞRU</span><span>Kalamin linimenti süspansiyon tipi linimentlere örnektir.</span></div></span></td></tr><tr><td class="num">3</td><td class="question-cell">Yarı-katı ilaç şekilleri yalnızca lokal etki sağlar, sistemik etki sağlayamaz.</td><td class="answer-cell" onclick="this.classList.toggle('revealed')"><span class="blank">. . . . . .</span><span class="answer-text"><div class="tf-answer"><span class="tf-badge false">YANLIŞ</span><span>Hem lokal hem de sistemik etki sağlanabilir.</span></div></span></td></tr><tr><td class="num">4</td><td class="question-cell">Kremler hafif asidik yapıdadır ve cilt pH'sına yakındır.</td><td class="answer-cell" onclick="this.classList.toggle('revealed')"><span class="blank">. . . . . .</span><span class="answer-text"><div class="tf-answer"><span class="tf-badge true">DOĞRU</span><span>Kremler hafif asidik yapıdadır.</span></div></span></td></tr><tr><td class="num">5</td><td class="question-cell">Stearat kremleri ciltte yağlı bir his bırakır.</td><td class="answer-cell" onclick="this.classList.toggle('revealed')"><span class="blank">. . . . . .</span><span class="answer-text"><div class="tf-answer"><span class="tf-badge false">YANLIŞ</span><span>Stearat (vanishing) kremleri ciltte yağlı his bırakmaz.</span></div></span></td></tr><tr><td class="num">6</td><td class="question-cell">Merhemler ciltteki gözenekleri tıkarlar.</td><td class="answer-cell" onclick="this.classList.toggle('revealed')"><span class="blank">. . . . . .</span><span class="answer-text"><div class="tf-answer"><span class="tf-badge false">YANLIŞ</span><span>Merhemler gözenekleri tıkamazlar.</span></div></span></td></tr><tr><td class="num">7</td><td class="question-cell">Göz merhemleri aseptik koşullarda hazırlanmalıdır.</td><td class="answer-cell" onclick="this.classList.toggle('revealed')"><span class="blank">. . . . . .</span><span class="answer-text"><div class="tf-answer"><span class="tf-badge true">DOĞRU</span><span>Oftalmik preparatlar steril ve aseptik koşullarda hazırlanmalıdır.</span></div></span></td></tr><tr><td class="num">8</td><td class="question-cell">Hidrokarbon sıvağları kolaylıkla su tutabilirler.</td><td class="answer-cell" onclick="this.classList.toggle('revealed')"><span class="blank">. . . . . .</span><span class="answer-text"><div class="tf-answer"><span class="tf-badge false">YANLIŞ</span><span>Hidrokarbon sıvağları su içermezler ve kolaylıkla su tutamazlar.</span></div></span></td></tr><tr><td class="num">9</td><td class="question-cell">Vazelin, lanolin veya setil alkol ilavesiyle su tutma özelliği kazanır.</td><td class="answer-cell" onclick="this.classList.toggle('revealed')"><span class="blank">. . . . . .</span><span class="answer-text"><div class="tf-answer"><span class="tf-badge true">DOĞRU</span><span>Vazelin, lanolin veya setil alkol ilavesiyle su tutma özelliği kazanır.</span></div></span></td></tr><tr><td class="num">10</td><td class="question-cell">Su ile karışabilen sıvağlar deriden ve kıyafetlerden kolayca yıkanabilir.</td><td class="answer-cell" onclick="this.classList.toggle('revealed')"><span class="blank">. . . . . .</span><span class="answer-text"><div class="tf-answer"><span class="tf-badge true">DOĞRU</span><span>Y/S tipi emülsiyon olduklarından kolayca yıkanabilirler.</span></div></span></td></tr><tr><td class="num">11</td><td class="question-cell">PEG bazlı sıvağlar yapılarında yüksek oranda su bulundurur.</td><td class="answer-cell" onclick="this.classList.toggle('revealed')"><span class="blank">. . . . . .</span><span class="answer-text"><div class="tf-answer"><span class="tf-badge false">YANLIŞ</span><span>PEG bazlı sıvağlar yağsızdır ve yapılarında su bulundurmazlar.</span></div></span></td></tr><tr><td class="num">12</td><td class="question-cell">Peroksit sayısı, yağdaki oksidasyonun göstergesidir.</td><td class="answer-cell" onclick="this.classList.toggle('revealed')"><span class="blank">. . . . . .</span><span class="answer-text"><div class="tf-answer"><span class="tf-badge true">DOĞRU</span><span>Peroksit sayısı yağlardaki oksidasyonun ölçüsüdür.</span></div></span></td></tr><tr><td class="num">13</td><td class="question-cell">Eritme yönteminde sulu faz ile yağlı faz farklı sıcaklıklarda birleştirilmelidir.</td><td class="answer-cell" onclick="this.classList.toggle('revealed')"><span class="blank">. . . . . .</span><span class="answer-text"><div class="tf-answer"><span class="tf-badge false">YANLIŞ</span><span>Her iki faz aynı sıcaklıkta iken birleştirilmelidir.</span></div></span></td></tr><tr><td class="num">14</td><td class="question-cell">E. coli ve Pseudomonas merhemlerde hiç bulunmamalıdır.</td><td class="answer-cell" onclick="this.classList.toggle('revealed')"><span class="blank">. . . . . .</span><span class="answer-text"><div class="tf-answer"><span class="tf-badge true">DOĞRU</span><span>E. coli, Pseudomonas ve Candida merhemlerde hiç bulunmamalıdır.</span></div></span></td></tr><tr><td class="num">15</td><td class="question-cell">Draize dermal iritasyon testinde sıçan kullanılır.</td><td class="answer-cell" onclick="this.classList.toggle('revealed')"><span class="blank">. . . . . .</span><span class="answer-text"><div class="tf-answer"><span class="tf-badge false">YANLIŞ</span><span>Draize testinde tavşan kullanılır, sıçan değil.</span></div></span></td></tr><tr><td class="num">16</td><td class="question-cell">Franz difüzyon hücresinde membran olarak kadavra derisi kullanılabilir.</td><td class="answer-cell" onclick="this.classList.toggle('revealed')"><span class="blank">. . . . . .</span><span class="answer-text"><div class="tf-answer"><span class="tf-badge true">DOĞRU</span><span>Franz hücresinde kadavra derisi veya ameliyat sonrası insan derisi membran olarak kullanılabilir.</span></div></span></td></tr><tr><td class="num">17</td><td class="question-cell">Keratolitik merhemler derinin koruyucu tabakasını kalınlaştırmak için kullanılır.</td><td class="answer-cell" onclick="this.classList.toggle('revealed')"><span class="blank">. . . . . .</span><span class="answer-text"><div class="tf-answer"><span class="tf-badge false">YANLIŞ</span><span>Keratolitik merhemler boynuzsu tabakayı yumuşatır veya yok eder; keratoplastik merhemler kalınlaştırır.</span></div></span></td></tr><tr><td class="num">18</td><td class="question-cell">Benzokain bir lokal anestezik maddedir.</td><td class="answer-cell" onclick="this.classList.toggle('revealed')"><span class="blank">. . . . . .</span><span class="answer-text"><div class="tf-answer"><span class="tf-badge true">DOĞRU</span><span>Benzokain %1-20 konsantrasyonda kullanılan bir lokal anesteziktir.</span></div></span></td></tr><tr><td class="num">19</td><td class="question-cell">Tek fazlı jel sistemlerine örnek olarak alüminyum hidroksit jeli verilebilir.</td><td class="answer-cell" onclick="this.classList.toggle('revealed')"><span class="blank">. . . . . .</span><span class="answer-text"><div class="tf-answer"><span class="tf-badge false">YANLIŞ</span><span>Alüminyum hidroksit jeli iki fazlı jel sistemlerine örnektir.</span></div></span></td></tr><tr><td class="num">20</td><td class="question-cell">Poloksamerler vücut sıcaklığında jelleşme özelliği gösterir.</td><td class="answer-cell" onclick="this.classList.toggle('revealed')"><span class="blank">. . . . . .</span><span class="answer-text"><div class="tf-answer"><span class="tf-badge true">DOĞRU</span><span>Poloksamerler vücut sıcaklığında jelleşen termal olarak hassas polimerlerdir.</span></div></span></td></tr><tr><td class="num">21</td><td class="question-cell">Patlar saçlı deriye rahatlıkla uygulanabilir.</td><td class="answer-cell" onclick="this.classList.toggle('revealed')"><span class="blank">. . . . . .</span><span class="answer-text"><div class="tf-answer"><span class="tf-badge false">YANLIŞ</span><span>Patlar saçlı deriye asla uygulanmazlar.</span></div></span></td></tr><tr><td class="num">22</td><td class="question-cell">Losyonlar cilde ovulmaksızın uygulanır.</td><td class="answer-cell" onclick="this.classList.toggle('revealed')"><span class="blank">. . . . . .</span><span class="answer-text"><div class="tf-answer"><span class="tf-badge true">DOĞRU</span><span>Losyonlar cilde ovulmaksızın tatbik edilen akışkan preparatlardır.</span></div></span></td></tr><tr><td class="num">23</td><td class="question-cell">Sabunlarda sertlik stearik asitten, yumuşaklık oleik asitten gelir.</td><td class="answer-cell" onclick="this.classList.toggle('revealed')"><span class="blank">. . . . . .</span><span class="answer-text"><div class="tf-answer"><span class="tf-badge true">DOĞRU</span><span>Stearik asit sertlik, oleik asit yumuşaklık sağlar.</span></div></span></td></tr><tr><td class="num">24</td><td class="question-cell">Laurik ve miristik asit tuzları en iyi emülsifiyan ve köpüren sabunlardır.</td><td class="answer-cell" onclick="this.classList.toggle('revealed')"><span class="blank">. . . . . .</span><span class="answer-text"><div class="tf-answer"><span class="tf-badge true">DOĞRU</span><span>Ancak tahriş edici etkileri fazla olduğundan konsantrasyonları %20-25 ile sınırlıdır.</span></div></span></td></tr><tr><td class="num">25</td><td class="question-cell">Rektal supozituvarların en geniş kullanım alanı gastrit tedavisidir.</td><td class="answer-cell" onclick="this.classList.toggle('revealed')"><span class="blank">. . . . . .</span><span class="answer-text"><div class="tf-answer"><span class="tf-badge false">YANLIŞ</span><span>En geniş kullanım alanı hemoroit tedavisidir.</span></div></span></td></tr><tr><td class="num">26</td><td class="question-cell">Rektal supozituvarlar karaciğer ilk geçiş etkisinden tamamen kurtulma avantajı sağlar.</td><td class="answer-cell" onclick="this.classList.toggle('revealed')"><span class="blank">. . . . . .</span><span class="answer-text"><div class="tf-answer"><span class="tf-badge false">YANLIŞ</span><span>Tamamen değil kısmen kurtulur; üst rektal ven karaciğere uğrar.</span></div></span></td></tr><tr><td class="num">27</td><td class="question-cell">Kakao yağı, vajinal supozituvarlar için uygundur.</td><td class="answer-cell" onclick="this.classList.toggle('revealed')"><span class="blank">. . . . . .</span><span class="answer-text"><div class="tf-answer"><span class="tf-badge false">YANLIŞ</span><span>Kakao yağı vajinada mukoz salgılarla karışmadığından vajinal supozituvarlar için uygun değildir.</span></div></span></td></tr><tr><td class="num">28</td><td class="question-cell">Kakao yağının γ (gamma) formu en az dayanıklı polimorf formudur.</td><td class="answer-cell" onclick="this.classList.toggle('revealed')"><span class="blank">. . . . . .</span><span class="answer-text"><div class="tf-answer"><span class="tf-badge true">DOĞRU</span><span>γ formu 18,5 °C erime derecesine sahip en az dayanıklı formdur.</span></div></span></td></tr><tr><td class="num">29</td><td class="question-cell">Witepsol sıvağları %1 monogliserit içerir ve emülgatör özelliği vardır.</td><td class="answer-cell" onclick="this.classList.toggle('revealed')"><span class="blank">. . . . . .</span><span class="answer-text"><div class="tf-answer"><span class="tf-badge true">DOĞRU</span><span>Witepsol %1 monogliserit içerir ve emülgatör özelliğine sahiptir.</span></div></span></td></tr><tr><td class="num">30</td><td class="question-cell">PEG sıvağlarının erime dereceleri genellikle vücut sıcaklığının altındadır.</td><td class="answer-cell" onclick="this.classList.toggle('revealed')"><span class="blank">. . . . . .</span><span class="answer-text"><div class="tf-answer"><span class="tf-badge false">YANLIŞ</span><span>PEG sıvağlarının erime dereceleri genellikle vücut sıcaklığının üzerindedir.</span></div></span></td></tr><tr><td class="num">31</td><td class="question-cell">Etken madde sıvağda çözünüyorsa deplasman faktörü 1 kabul edilir.</td><td class="answer-cell" onclick="this.classList.toggle('revealed')"><span class="blank">. . . . . .</span><span class="answer-text"><div class="tf-answer"><span class="tf-badge true">DOĞRU</span><span>Etken madde çözünüyorsa veya sıvı ise f = 1 kabul edilir.</span></div></span></td></tr><tr><td class="num">32</td><td class="question-cell">Supozituvarlarda erime derecesi 37 °C'den fazla olmamalıdır.</td><td class="answer-cell" onclick="this.classList.toggle('revealed')"><span class="blank">. . . . . .</span><span class="answer-text"><div class="tf-answer"><span class="tf-badge true">DOĞRU</span><span>Erime derecesi 37 °C'den fazla olmamalıdır.</span></div></span></td></tr><tr><td class="num">33</td><td class="question-cell">Supozituvar kalıpları döküm öncesi yağlanmamalıdır.</td><td class="answer-cell" onclick="this.classList.toggle('revealed')"><span class="blank">. . . . . .</span><span class="answer-text"><div class="tf-answer"><span class="tf-badge false">YANLIŞ</span><span>Kalıplar döküm öncesi sıvı parafin, gliserin veya badem yağı ile yağlanır.</span></div></span></td></tr><tr><td class="num">34</td><td class="question-cell">Kakao yağı 35 °C'nin üzerinde ısıtılırsa 22 °C'de katılaşmaz.</td><td class="answer-cell" onclick="this.classList.toggle('revealed')"><span class="blank">. . . . . .</span><span class="answer-text"><div class="tf-answer"><span class="tf-badge true">DOĞRU</span><span>35 °C üstünde ısıtılırsa β formu metastabil formlara dönüşür ve 22 °C'de katılaşmaz.</span></div></span></td></tr><tr><td class="num">35</td><td class="question-cell">Vajinal supozituvarlarda PEG sıvağları tahriş nedeniyle az kullanılır.</td><td class="answer-cell" onclick="this.classList.toggle('revealed')"><span class="blank">. . . . . .</span><span class="answer-text"><div class="tf-answer"><span class="tf-badge true">DOĞRU</span><span>PEG sıvağları vajinal mukozayı tahriş edebilir, bu nedenle az kullanılır.</span></div></span></td></tr><tr><td class="num">36</td><td class="question-cell">Rektum sıvısının tamponlama kapasitesi yüksektir.</td><td class="answer-cell" onclick="this.classList.toggle('revealed')"><span class="blank">. . . . . .</span><span class="answer-text"><div class="tf-answer"><span class="tf-badge false">YANLIŞ</span><span>Rektum sıvısının tamponlama kapasitesi yoktur.</span></div></span></td></tr><tr><td class="num">37</td><td class="question-cell">Absorpsiyon sıvağları genellikle S/Y emülsiyonu oluştururlar.</td><td class="answer-cell" onclick="this.classList.toggle('revealed')"><span class="blank">. . . . . .</span><span class="answer-text"><div class="tf-answer"><span class="tf-badge true">DOĞRU</span><span>Absorpsiyon sıvağları genellikle S/Y emülsiyonu oluştururlar.</span></div></span></td></tr><tr><td class="num">38</td><td class="question-cell">Kakao yağı içeren supozituvarlar buzlukta saklanabilir.</td><td class="answer-cell" onclick="this.classList.toggle('revealed')"><span class="blank">. . . . . .</span><span class="answer-text"><div class="tf-answer"><span class="tf-badge false">YANLIŞ</span><span>Kakao yağı içeren supozituvarlar kesinlikle buzlukta saklanmamalıdır.</span></div></span></td></tr><tr><td class="num">39</td><td class="question-cell">Jelatin, hayvan kolajeninden elde edilir; asit hidroliz ile Jelatin A elde edilir.</td><td class="answer-cell" onclick="this.classList.toggle('revealed')"><span class="blank">. . . . . .</span><span class="answer-text"><div class="tf-answer"><span class="tf-badge true">DOĞRU</span><span>Asit hidroliz → Jelatin A, Alkali hidroliz → Jelatin B.</span></div></span></td></tr><tr><td class="num">40</td><td class="question-cell">Nitrogliserin sistemik etkili merhemlere örnek gösterilebilir.</td><td class="answer-cell" onclick="this.classList.toggle('revealed')"><span class="blank">. . . . . .</span><span class="answer-text"><div class="tf-answer"><span class="tf-badge true">DOĞRU</span><span>Nitrogliserin deriye uygulandığında kana geçerek sistemik etki gösterir.</span></div></span></td></tr></tbody></table></section><section id="bolum-c"><h2 class="section-title">C — Klasik Sorular (20 Soru)</h2><p class="section-desc">Soruya tıklayarak açıklamalı cevabı görebilirsiniz.</p><div class="klasik-card"><div class="klasik-header" onclick="this.parentElement.classList.toggle('revealed')"><span class="klasik-num">1.</span><span class="klasik-q">Liniment tiplerini (çözelti, emülsiyon, süspansiyon) birer örnekle açıklayınız.</span><span class="klasik-toggle">▼</span></div><div class="klasik-answer"><div class="klasik-answer-inner"><p><strong>Çözelti tipi:</strong> Alkol veya yağ çözücülü (kafur linimenti, metil salisilat linimenti). <strong>Emülsiyon tipi:</strong> Sabun emülgatörlü; amonyak/kireç suyu + yağ → sabun oluşumu (kafurlu amonyak linimenti). <strong>Süspansiyon tipi:</strong> Toz partiküller sıvıda dağılmış (kalamin linimenti).</p></div></div></div><div class="klasik-card"><div class="klasik-header" onclick="this.parentElement.classList.toggle('revealed')"><span class="klasik-num">2.</span><span class="klasik-q">Yarı-katı ilaç şekillerini sayınız ve yarı-katı formların topikal uygulamada sağladığı avantajları belirtiniz.</span><span class="klasik-toggle">▼</span></div><div class="klasik-answer"><div class="klasik-answer-inner"><p>Yarı-katı ilaç şekilleri: merhem, krem, jel, pat ve supozituvar. <strong>Avantajları:</strong> ciltte uzun kalış süresi (residence time), hem lokal hem sistemik etki imkânı, homojen görünüm, kolay uygulama, transdermal ilaç taşıyabilme ve yumuşatıcı/koruyucu etki sağlama.</p></div></div></div><div class="klasik-card"><div class="klasik-header" onclick="this.parentElement.classList.toggle('revealed')"><span class="klasik-num">3.</span><span class="klasik-q">Cold cream formülasyonunun hazırlanışını adım adım açıklayınız. Emülgatör nasıl oluşur?</span><span class="klasik-toggle">▼</span></div><div class="klasik-answer"><div class="klasik-answer-inner"><p>Yağlı faz (setilesterler, sıvı parafin, beyaz balmumu) su banyosunda 75 °C'ye getirilir. Sulu faz (su + boraks) ayrı erlende 75 °C'ye ısıtılır. Sulu faz, yağlı faza yavaş ve sürekli karıştırılarak eklenir. 40 °C'de esans ilave edilir. <strong>Emülgatör</strong>, borakstaki sodyum ile balmumundaki yağ asitlerinin reaksiyonuyla oluşan sodyum tuzu (in-situ sabun) tarafından sağlanır.</p></div></div></div><div class="klasik-card"><div class="klasik-header" onclick="this.parentElement.classList.toggle('revealed')"><span class="klasik-num">4.</span><span class="klasik-q">Merhem sıvağlarının (bazlarının) dört ana sınıfını sayarak her birinin özelliklerini karşılaştırınız.</span><span class="klasik-toggle">▼</span></div><div class="klasik-answer"><div class="klasik-answer-inner"><p><strong>1) Hidrokarbon sıvağları:</strong> Yağlı bazlar, su içermez, ciltten uzaklaştırması zor (vazelin). <strong>2) Absorpsiyon sıvağları:</strong> Su tutabilen bazlar, S/Y emülsiyonu, emolyan etkili (lanolin). <strong>3) Su ile karışabilen sıvağlar:</strong> Y/S emülsiyonu, kolay yıkanabilir, en çok kullanılan grup (hidrofilik merhem). <strong>4) Suda çözünebilen sıvağlar:</strong> PEG bazlı, yağsız, örtücü etkisi az.</p></div></div></div><div class="klasik-card"><div class="klasik-header" onclick="this.parentElement.classList.toggle('revealed')"><span class="klasik-num">5.</span><span class="klasik-q">İdeal bir merhem sıvağının taşıması gereken özellikleri sıralayınız.</span><span class="klasik-toggle">▼</span></div><div class="klasik-answer"><div class="klasik-answer-inner"><p>İrritasyon yapmamalı, deriden su çekmemeli, fazla yağlı olmamalı, etken madde ile geçimli olmalı, stabil olmalı, su ile kolay uzaklaştırılabilmeli, su ve diğer sıvıları tutabilmeli, ilaçları etkin şekilde salabilmeli.</p></div></div></div><div class="klasik-card"><div class="klasik-header" onclick="this.parentElement.classList.toggle('revealed')"><span class="klasik-num">6.</span><span class="klasik-q">Göz merhemlerinin sterilizasyon koşullarını ve özel gereksinimlerini açıklayınız.</span><span class="klasik-toggle">▼</span></div><div class="klasik-answer"><div class="klasik-answer-inner"><p>Göz merhemleri steril ve aseptik koşullarda hazırlanmalıdır. 20 µm'den büyük partikül içermemeli, gözyaşı ile karışabilmeli, viskozite uygun olmalıdır. Sıvağ sterilizasyonu 130 °C'de, kap sterilizasyonu etilen oksit ile yapılır. Susuz göz merhemleri 140 °C'de 3 saat, emülsiyon tipi olanlar 100 °C'de 30 dk otoklavda sterilize edilir. Metal parçacık kontrolü de yapılmalıdır.</p></div></div></div><div class="klasik-card"><div class="klasik-header" onclick="this.parentElement.classList.toggle('revealed')"><span class="klasik-num">7.</span><span class="klasik-q">Sıvağlarda yapılan kontrol parametrelerini (erime derecesi, asitlik derecesi, iyot indisi, sabunlaşma indeksi, peroksit sayısı) açıklayınız.</span><span class="klasik-toggle">▼</span></div><div class="klasik-answer"><div class="klasik-answer-inner"><p><strong>Erime derecesi:</strong> Sıvağın erime aralığı ölçülür. <strong>Su miktarı:</strong> 20 °C'de tuttuğu su tartılır. <strong>Asitlik derecesi:</strong> 100 g yağın serbest asitlerini nötralize eden 1 N KOH'un mL miktarı. <strong>İyot indisi:</strong> 100 g yağın bağladığı iyot miktarı. <strong>Sabunlaşma indeksi:</strong> 1 g yağı sabunlaştırmak için gereken KOH (mg). <strong>Peroksit sayısı:</strong> 1 g yağın K-iyodürden açığa çıkardığı iyot için harcanan Na-tiyosülfat (mL).</p></div></div></div><div class="klasik-card"><div class="klasik-header" onclick="this.parentElement.classList.toggle('revealed')"><span class="klasik-num">8.</span><span class="klasik-q">Merhemlerin eritme yöntemiyle hazırlanışını adım adım anlatınız.</span><span class="klasik-toggle">▼</span></div><div class="klasik-answer"><div class="klasik-answer-inner"><p>1) Yağlı ve sulu maddeler ayrı kaplarda ısıtılarak eritilir. 2) Her iki faz ayrı ayrı homojen hale getirilir. 3) İç faz, dış faza aynı sıcaklıkta iken (genelde sulu faz → yağlı faz üzerine) karıştırılarak ilave edilir. 4) Soğuyana kadar karıştırmaya devam edilir. 5) Emülgatör in-situ oluşuyorsa yeterli karıştırma sağlanmalıdır.</p></div></div></div><div class="klasik-card"><div class="klasik-header" onclick="this.parentElement.classList.toggle('revealed')"><span class="klasik-num">9.</span><span class="klasik-q">Merhemlerde etken madde salım testlerinden Franz difüzyon hücresi yöntemini açıklayınız.</span><span class="klasik-toggle">▼</span></div><div class="klasik-answer"><div class="klasik-answer-inner"><p>Franz difüzyon hücresi, donör ve reseptör bölümlerinden oluşur. Donör bölümüne merhem uygulanır. Arada membran (selüloz, silikon, yapay veya kadavra derisi) bulunur. Reseptör bölümünden zamana bağlı örnekler alınarak etken maddenin geçiş miktarı ölçülür. Zarlı veya zarsız çalışılabilir. En sık 6 hücreli Franz tipi difüzyon hücreleri kullanılır.</p></div></div></div><div class="klasik-card"><div class="klasik-header" onclick="this.parentElement.classList.toggle('revealed')"><span class="klasik-num">10.</span><span class="klasik-q">Merhemlerin farmakolojik sınıflandırmasını yaparak her gruptan birer örnek veriniz.</span><span class="klasik-toggle">▼</span></div><div class="klasik-answer"><div class="klasik-answer-inner"><p><strong>1) Antiseptik:</strong> Antibiyotik/antifungal içeren. <strong>2) Antipirüritik:</strong> Kaşıntı giderici (mentol, fenol, kafur). <strong>3) Keratoplastik:</strong> Koruyucu tabakayı kalınlaştırıcı (ihtiyol %10, salisilik asit %1-2). <strong>4) Keratolitik:</strong> Boynuzsu tabakayı yumuşatıcı (salisilik asit %4-10). <strong>5) Lokal analjezik:</strong> Antiromatizmal etkili. <strong>6) Lokal anestezik:</strong> Benzokain, lidokain. <strong>7) Yumuşatıcı/nemlendirici:</strong> Vazelin, lanolin. <strong>8) Koruyucu:</strong> Güneş kremleri, çinko oksit. <strong>9) Sistemik etkili:</strong> Nitrogliserin, kortizon.</p></div></div></div><div class="klasik-card"><div class="klasik-header" onclick="this.parentElement.classList.toggle('revealed')"><span class="klasik-num">11.</span><span class="klasik-q">Jel sınıflandırmasını (tek fazlı / iki fazlı) açıklayarak her birine birer örnek veriniz.</span><span class="klasik-toggle">▼</span></div><div class="klasik-answer"><div class="klasik-answer-inner"><p><strong>Tek fazlı:</strong> Sıvı fazda tamamen çözünmüş organik moleküllerle hazırlanır. Hidrojel (su ile; HMC+su), organojel (alkol/mineral yağ ile; Plastibase), in situ jel (poloksamerler, Carbopol). <strong>İki fazlı:</strong> İnorganik küçük moleküllerin sıvıda dayanıksız ağ yapısı oluşturduğu sistem (alüminyum hidroksit jeli). Partikül büyükse magma (bentonit magma) olarak adlandırılır, tiksotropi gösterir.</p></div></div></div><div class="klasik-card"><div class="klasik-header" onclick="this.parentElement.classList.toggle('revealed')"><span class="klasik-num">12.</span><span class="klasik-q">Jel hazırlamada kullanılan doğal, yarı-sentetik ve sentetik polimerleri sayarak özelliklerini belirtiniz.</span><span class="klasik-toggle">▼</span></div><div class="klasik-answer"><div class="klasik-answer-inner"><p><strong>Doğal:</strong> Jelatin, aljinatlar, agar (%0,1'de jel), kitosan (%1-2), glisirizin (%2-3), pektin, arap zamkı, ksantan zamkı. <strong>Yarı-sentetik:</strong> Selüloz türevleri (CMC, HPMC, MC). <strong>Sentetik:</strong> Poloksamerler (vücut sıcaklığında jelleşir, %15-25), Karbopol (pH 5-10'da jelleşir, TEA ile nötralize edilir), PVA (%10-15), poliakrilamitler (%4-10). <strong>İnorganik:</strong> Bentonit, Veegum, mikrokristal selüloz/silika.</p></div></div></div><div class="klasik-card"><div class="klasik-header" onclick="this.parentElement.classList.toggle('revealed')"><span class="klasik-num">13.</span><span class="klasik-q">Pat (pasta) nedir? Kremlerden ve merhemlerden ne gibi farkları vardır? Hazırlanışını açıklayınız.</span><span class="klasik-toggle">▼</span></div><div class="klasik-answer"><div class="klasik-answer-inner"><p>Patlar %50-70 oranında toz madde içeren yarı-katı preparatlardır. Kremlerden daha sert, merhemlerden daha absorplayıcıdırlar. Kurutucu özellikleri vardır, saçlı deriye uygulanmaz, deriye nüfuz etmezler. <strong>Hazırlanışı:</strong> Katı maddeler toz edilir → yağlı sıvağ ile homojen karışım yapılır veya suda şişen jellerle karıştırılır. Nişasta kullanılacaksa önce soğuk su ile karıştırılır.</p></div></div></div><div class="klasik-card"><div class="klasik-header" onclick="this.parentElement.classList.toggle('revealed')"><span class="klasik-num">14.</span><span class="klasik-q">Sabunların hazırlanış yöntemlerini ve yumuşak-katı sabun arasındaki farkları açıklayınız.</span><span class="klasik-toggle">▼</span></div><div class="klasik-answer"><div class="klasik-answer-inner"><p><strong>Yöntemler:</strong> 1) Yağdan hareketle: Yağlar + alkali → sabunlaşma. 2) Yağ asidinden hareketle: Yağ asidi + soda. 3) Sülfürik asit ile: Sülfat/sülfonat tipi sabunlar. <strong>Yumuşak sabunlar:</strong> Potasyum tuzları, yüksek potasyum oleat, köpürme zayıf ama emülgatör özelliği yüksek. <strong>Katı sabunlar:</strong> Sodyum tuzları, yüksek sodyum stearat, iyi köpürür ama emülsifiyan özelliği zayıf.</p></div></div></div><div class="klasik-card"><div class="klasik-header" onclick="this.parentElement.classList.toggle('revealed')"><span class="klasik-num">15.</span><span class="klasik-q">Rektal supozituvarların avantaj ve dezavantajlarını karşılaştırınız.</span><span class="klasik-toggle">▼</span></div><div class="klasik-answer"><div class="klasik-answer-inner"><p><strong>Avantajlar:</strong> Karaciğer ilk geçiş etkisinden kısmen kurtulma, GİS'te bozulan/tahriş eden ilaçlar için uygun, hızlı etki, oral yol kullanılamadığında alternatif, bebek-yaşlı-bilinçsiz hastalar için kolay, düşük dozla sistemik etki, biyoyararlanım artışı. <strong>Dezavantajlar:</strong> Hasta uyuncu düşük, mukozal iritasyon, pahalı üretim, özel saklama koşulları gerekliliği.</p></div></div></div><div class="klasik-card"><div class="klasik-header" onclick="this.parentElement.classList.toggle('revealed')"><span class="klasik-num">16.</span><span class="klasik-q">Kakao yağının polimorf formlarını (α, β, β₁, γ) erime dereceleri ve oluşum koşullarıyla birlikte açıklayınız.</span><span class="klasik-toggle">▼</span></div><div class="klasik-answer"><div class="klasik-answer-inner"><p><strong>α (23 °C):</strong> Metastabil, 35 °C üstünde eritilmiş kakao yağının çabuk soğutulmasıyla oluşur. <strong>β (34,5 °C):</strong> En dayanıklı, en yüksek erime dereceli form; 35 °C'de eritilip yavaş soğutularak elde edilir. <strong>β₁ (28 °C):</strong> Oda sıcaklığında dayanıklı; 20 °C'de 1 saat bırakılması ile oluşur. <strong>γ (18,5 °C):</strong> En az dayanıklı form; eritilmiş kakao yağının çok çabuk soğutulmasıyla oluşur.</p></div></div></div><div class="klasik-card"><div class="klasik-header" onclick="this.parentElement.classList.toggle('revealed')"><span class="klasik-num">17.</span><span class="klasik-q">Deplasman (yer değiştirme) faktörünü tanımlayarak supozituvar hazırlamadaki önemini ve hesaplama formülünü yazınız.</span><span class="klasik-toggle">▼</span></div><div class="klasik-answer"><div class="klasik-answer-inner"><p>Deplasman faktörü (f): 1 g etken maddenin hacmine eşdeğer hacimdeki yer değiştiren sıvağ miktarı (g). f = sıvağın yoğunluğu / etken maddenin yoğunluğu. <strong>Formül:</strong> M = F − {(f₁·S₁) + (f₂·S₂) + … + (fₙ·Sₙ)} (M: gerekli sıvağ, F: boş kalıp ağırlığı, S: etken madde miktarı). <strong>Önemi:</strong> Doğru miktarda sıvağ hesaplanarak supozituvarın istenilen ağırlık ve şekilde üretilmesini sağlar.</p></div></div></div><div class="klasik-card"><div class="klasik-header" onclick="this.parentElement.classList.toggle('revealed')"><span class="klasik-num">18.</span><span class="klasik-q">Supozituvarlarda yapılan kontrol parametrelerini (görünüş, ağırlık sapması, erime derecesi, kırılma testi vb.) açıklayınız.</span><span class="klasik-toggle">▼</span></div><div class="klasik-answer"><div class="klasik-answer-inner"><p><strong>Görünüş:</strong> İç-dış yüzey düzgünlüğü, çatlak/çukur kontrolü. <strong>Ağırlık sapması:</strong> 20 adet ölçülür; 18'i ≤%5, en çok 2'si ≤%7,5 sapma. <strong>Erime derecesi:</strong> ≤37 °C. <strong>Erime süresi:</strong> 37 °C su banyosunda ≤30 dk. <strong>Kırılma/mekanik dayanıklılık:</strong> Erweka metodu, ideal ≥1,8-2 kg. <strong>Ayrıca:</strong> pH, etken madde miktarı (UV, HPLC), salım özellikleri, stabilite testleri.</p></div></div></div><div class="klasik-card"><div class="klasik-header" onclick="this.parentElement.classList.toggle('revealed')"><span class="klasik-num">19.</span><span class="klasik-q">Supozituvar sıvağ seçiminde etken maddenin çözünürlüğü (yağda/suda) nasıl bir rol oynar? Örneklerle açıklayınız.</span><span class="klasik-toggle">▼</span></div><div class="klasik-answer"><div class="klasik-answer-inner"><p>Yağda düşük – suda yüksek çözünürlük → <strong>yağlı sıvağ</strong> tercih edilir (sıvağda çözünmez, kolay salınır). Yağda yüksek – suda düşük çözünürlük → <strong>hidrofilik sıvağ</strong> tercih edilir (sıvağda tutulmaz, kolay salınır). Her iki çözünürlüğü düşük olan etken maddeler için sıvağ seçimi belirsizdir; ek deneyler gerektirir.</p></div></div></div><div class="klasik-card"><div class="klasik-header" onclick="this.parentElement.classList.toggle('revealed')"><span class="klasik-num">20.</span><span class="klasik-q">Supozituvarlarda çözünme hızı (salım) test yöntemlerinden sepet, palet ve diyaliz yöntemlerini karşılaştırınız.</span><span class="klasik-toggle">▼</span></div><div class="klasik-answer"><div class="klasik-answer-inner"><p><strong>Sepet yöntemi (USP I):</strong> Tel ağlı sepetlerde supozituvar sabit pozisyonda tutulur; yağlı sıvağlarla tıkanma sorunu olabilir, Palmier tasarımı ile çözülür. <strong>Palet yöntemi (USP II):</strong> Supozituvar dibe çelik spirallerle sabitlenir; dönme hızı artışı salımı hızlandırabilir. <strong>Diyaliz yöntemi:</strong> Supozituvar diyaliz torbasında erir ve ince film halinde yayılır; in vivo durumu en iyi taklit eden yöntem olarak kabul edilir.</p></div></div></div></section></main>
+<footer>Eczacılık Dersleri &copy; 2026</footer>
 <script>
-  function switchMode(mode) {
-    document.querySelectorAll('.mode-btn').forEach(b => b.classList.remove('active'));
-    document.querySelectorAll('.view').forEach(v => v.classList.remove('active'));
-
-    if (mode === 'questions') {
-      document.querySelectorAll('.mode-btn')[0].classList.add('active');
-      document.getElementById('view-questions').classList.add('active');
-    } else {
-      document.querySelectorAll('.mode-btn')[1].classList.add('active');
-      document.getElementById('view-answers').classList.add('active');
-    }
-
-    updateSectionNav(mode);
-    window.scrollTo({ top: 0, behavior: 'smooth' });
-  }
-
-  function updateSectionNav(mode) {
-    const btns = document.querySelectorAll('.section-btn');
-    btns.forEach(b => {
-      b.className = 'section-btn';
-      b.onclick = null;
-    });
-
-    const suffix = mode === 'answers' ? 'a' : 'q';
-    btns[0].classList.add('active-fill');
-    btns[0].onclick = () => scrollToSection('fill', mode);
-    btns[1].onclick = () => scrollToSection('tf', mode);
-    btns[2].onclick = () => scrollToSection('classic', mode);
-  }
-
-  function scrollToSection(sec, mode) {
-    const suffix = (mode === 'answers') ? 'a' : 'q';
-    const el = document.getElementById('sec-' + sec + '-' + suffix);
-
-    document.querySelectorAll('.section-btn').forEach(b => b.className = 'section-btn');
-    const map = { fill: 0, tf: 1, classic: 2 };
-    const cls = { fill: 'active-fill', tf: 'active-tf', classic: 'active-classic' };
-    document.querySelectorAll('.section-btn')[map[sec]].classList.add(cls[sec]);
-
-    if (el) {
-      const topbar = document.querySelector('.topbar');
-      const offset = topbar ? topbar.offsetHeight + 12 : 80;
-      const y = el.getBoundingClientRect().top + window.pageYOffset - offset;
-      window.scrollTo({ top: y, behavior: 'smooth' });
-    }
-  }
-
-  // Init
-  updateSectionNav('questions');
+function toggleAllAnswers(){
+    const btn=document.getElementById('toggleAll');
+    const all=document.querySelectorAll('.answer-cell, .klasik-card');
+    const allRevealed=[...all].every(c=>c.classList.contains('revealed'));
+    all.forEach(c=>{if(allRevealed)c.classList.remove('revealed');else c.classList.add('revealed')});
+    btn.classList.toggle('active',!allRevealed);
+}
+function hideAllAnswers(){
+    document.querySelectorAll('.answer-cell, .klasik-card').forEach(c=>c.classList.remove('revealed'));
+    document.getElementById('toggleAll').classList.remove('active');
+}
 </script>
-
 </body>
 </html>
