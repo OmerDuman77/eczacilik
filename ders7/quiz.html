@@ -1,0 +1,346 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Metabolizma & Lipid Bozuklukları — Soru Bankası</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,600;9..144,900&family=Spline+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#0e1116;
+    --panel:#161b22;
+    --panel-2:#1c232d;
+    --ink:#e8edf2;
+    --muted:#94a3b3;
+    --line:#28313d;
+    --accent:#5eb3a1;
+    --accent-2:#c9a24b;
+    --correct:#1f7a4d;
+    --correct-bg:rgba(46,170,110,.16);
+    --correct-line:#34c47e;
+    --wrong:#9b2c2c;
+    --wrong-bg:rgba(214,69,69,.16);
+    --wrong-line:#e25555;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{scroll-behavior:smooth}
+  body{
+    background:
+      radial-gradient(1200px 600px at 80% -10%, rgba(94,179,161,.10), transparent 60%),
+      radial-gradient(900px 500px at -10% 30%, rgba(201,162,75,.08), transparent 55%),
+      var(--bg);
+    color:var(--ink);
+    font-family:'Spline Sans',system-ui,sans-serif;
+    line-height:1.55;
+    -webkit-font-smoothing:antialiased;
+  }
+  .wrap{max-width:880px;margin:0 auto;padding:56px 22px 120px}
+
+  header.hero{margin-bottom:46px}
+  .kicker{
+    font-size:.72rem;letter-spacing:.32em;text-transform:uppercase;
+    color:var(--accent);font-weight:600;margin-bottom:14px;
+  }
+  h1.title{
+    font-family:'Fraunces',serif;font-weight:900;
+    font-size:clamp(2.1rem,5.2vw,3.4rem);line-height:1.02;
+    letter-spacing:-.01em;margin-bottom:18px;
+  }
+  h1.title em{font-style:italic;color:var(--accent-2)}
+  .lede{color:var(--muted);max-width:60ch;font-size:1.02rem}
+
+  .scoreboard{
+    display:flex;flex-wrap:wrap;gap:14px;margin-top:30px;
+  }
+  .score-card{
+    flex:1 1 180px;background:var(--panel);border:1px solid var(--line);
+    border-radius:14px;padding:16px 18px;
+  }
+  .score-card .lbl{font-size:.74rem;letter-spacing:.12em;text-transform:uppercase;color:var(--muted)}
+  .score-card .val{font-family:'Fraunces',serif;font-weight:600;font-size:1.6rem;margin-top:4px}
+  .score-card .val span{color:var(--muted);font-size:1rem;font-weight:400}
+
+  section.topic{margin-top:64px}
+  .topic-head{
+    position:sticky;top:0;z-index:5;
+    background:linear-gradient(180deg, var(--bg) 70%, rgba(14,17,22,0));
+    padding:18px 0 16px;margin-bottom:8px;
+  }
+  .topic-num{
+    font-family:'Fraunces',serif;font-style:italic;color:var(--accent-2);
+    font-size:1rem;display:block;margin-bottom:2px;
+  }
+  .topic-head h2{
+    font-family:'Fraunces',serif;font-weight:600;
+    font-size:clamp(1.5rem,3.6vw,2.1rem);letter-spacing:-.01em;
+    display:flex;align-items:baseline;gap:12px;flex-wrap:wrap;
+  }
+  .topic-head .meta{font-family:'Spline Sans';font-size:.8rem;color:var(--muted);font-weight:500}
+  .rule{height:2px;background:linear-gradient(90deg,var(--accent),transparent);border-radius:2px;margin-top:4px}
+
+  .q{
+    background:var(--panel);border:1px solid var(--line);
+    border-radius:16px;padding:22px 22px 18px;margin-top:18px;
+    transition:border-color .25s;
+  }
+  .q.answered{border-color:var(--panel-2)}
+  .q-top{display:flex;gap:12px;align-items:flex-start;margin-bottom:16px}
+  .q-no{
+    flex:none;width:30px;height:30px;border-radius:8px;
+    background:var(--panel-2);color:var(--accent);
+    font-weight:700;font-size:.82rem;
+    display:grid;place-items:center;font-family:'Fraunces',serif;
+  }
+  .q-text{font-size:1.04rem;font-weight:500;padding-top:3px}
+
+  .opts{display:flex;flex-direction:column;gap:9px}
+  .opt{
+    text-align:left;width:100%;cursor:pointer;
+    background:var(--panel-2);border:1px solid var(--line);
+    color:var(--ink);border-radius:11px;padding:12px 14px;
+    font-family:inherit;font-size:.96rem;line-height:1.4;
+    display:flex;gap:12px;align-items:flex-start;
+    transition:background .18s,border-color .18s,transform .06s;
+  }
+  .opt:hover:not(:disabled){background:#212a35;border-color:#3a4655}
+  .opt:active:not(:disabled){transform:scale(.995)}
+  .opt:disabled{cursor:default}
+  .opt .mark{
+    flex:none;width:22px;height:22px;border-radius:50%;
+    border:1.5px solid var(--muted);color:var(--muted);
+    font-size:.74rem;font-weight:700;display:grid;place-items:center;
+    margin-top:1px;font-family:'Fraunces',serif;transition:.2s;
+  }
+  .opt.correct{background:var(--correct-bg);border-color:var(--correct-line);color:#d6ffe9}
+  .opt.correct .mark{border-color:var(--correct-line);background:var(--correct-line);color:#06231a}
+  .opt.wrong{background:var(--wrong-bg);border-color:var(--wrong-line);color:#ffe0e0}
+  .opt.wrong .mark{border-color:var(--wrong-line);background:var(--wrong-line);color:#2a0a0a}
+  .opt.correct .mark::after{content:"✓"}
+  .opt.wrong .mark::after{content:"✕"}
+  .opt.correct .mark, .opt.wrong .mark{font-size:.8rem}
+  .opt.correct .mark span, .opt.wrong .mark span{display:none}
+
+  .feedback{
+    margin-top:12px;font-size:.86rem;color:var(--muted);
+    padding-left:2px;display:none;
+  }
+  .feedback.show{display:block}
+  .feedback b{color:var(--accent)}
+
+  footer{margin-top:80px;text-align:center;color:var(--muted);font-size:.82rem}
+  .reset{
+    margin-top:18px;background:transparent;border:1px solid var(--line);
+    color:var(--muted);padding:10px 18px;border-radius:10px;
+    font-family:inherit;cursor:pointer;font-size:.85rem;transition:.2s;
+  }
+  .reset:hover{border-color:var(--accent);color:var(--accent)}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header class="hero">
+    <div class="kicker">Doç. Dr. Ozan Emre Eyupoğlu · Ders Notları</div>
+    <h1 class="title">Metabolizma &amp; Lipid<br>Bozuklukları <em>Soru Bankası</em></h1>
+    <p class="lede">Üç konu başlığı altında toplam <b style="color:var(--ink)">90 çoktan seçmeli soru</b>. Bir şıkka tıklayın: doğruysa yeşil, yanlışsa kırmızı yanar ve doğru cevap yeşille işaretlenir. Cevap anahtarı yoktur — geri bildirim anında ekrandadır.</p>
+
+    <div class="scoreboard">
+      <div class="score-card"><div class="lbl">Yanıtlanan</div><div class="val"><span id="s-ans">0</span><span> / 90</span></div></div>
+      <div class="score-card"><div class="lbl">Doğru</div><div class="val" id="s-correct" style="color:var(--correct-line)">0</div></div>
+      <div class="score-card"><div class="lbl">Başarı</div><div class="val" id="s-pct">—</div></div>
+    </div>
+  </header>
+
+  <div id="quiz"></div>
+
+  <footer>
+    <div>Soru bankası eğitim amaçlıdır. Klinik karar için güncel kılavuzlara başvurulmalıdır.</div>
+    <button class="reset" onclick="location.reload()">↺ Sınavı Sıfırla</button>
+  </footer>
+</div>
+
+<script>
+const DATA = [
+  {
+    title:"Aminoasit Metabolizması Bozuklukları",
+    meta:"30 soru",
+    questions:[
+      {q:"Aminoasit metabolizması bozuklukları çoğunlukla hangi kalıtım paternini gösterir?",o:["Otozomal dominant","Otozomal resesif","X'e bağlı dominant","Mitokondriyal","Multifaktöriyel"],a:1},
+      {q:"Fenilketonüride (PKU) eksik olan enzim hangisidir?",o:["Tirozinaz","Fenilalanin hidroksilaz","Homogentisik asit oksidaz","Sistatyonin β-sentaz","Glukoz-6-fosfataz"],a:1},
+      {q:"PKU'da hangi metabolik dönüşüm bozulur?",o:["Tirozin → melanin","Fenilalanin → tirozin","Metiyonin → sistein","Lösin → keto asit","Triptofan → serotonin"],a:1},
+      {q:"PKU'lu hastalarda tipik olarak görülen idrar bulgusu nedir?",o:["Akçaağaç şurubu kokusu","Küf/kötü kokulu idrar","Kola rengi idrar","Tatlı meyve kokusu","Renksiz seyreltik idrar"],a:1},
+      {q:"PKU'lu çocuklarda açık ten, saç ve göz renginin nedeni nedir?",o:["Demir eksikliği","Melanin sentezi için tirozin azlığı","Aşırı bilirubin birikimi","B12 eksikliği","Çinko fazlalığı"],a:1},
+      {q:"PKU tedavisinin temelini hangisi oluşturur?",o:["Yüksek proteinli diyet","Düşük fenilalaninli diyet + tirozin takviyesi","Sadece B6 vitamini","Amonyak bağlayıcı ilaçlar","Nitisinon"],a:1},
+      {q:"Akçaağaç Şurubu İdrar Hastalığı'nda (MSUD) metabolizması bozulan aminoasitler hangileridir?",o:["Fenilalanin, tirozin, triptofan","Lösin, izolösin, valin","Metiyonin, sistein, homosistein","Glisin, serin, alanin","Lizin, arginin, histidin"],a:1},
+      {q:"MSUD'da eksik olan enzim hangisidir?",o:["Fenilalanin hidroksilaz","Dallı zincirli α-ketoasit dehidrogenaz","Sistatyonin β-sentaz","Ornitin transkarbamilaz","Fumarilasetoasetat hidrolaz"],a:1},
+      {q:"MSUD'da idrarda hissedilen karakteristik koku nedir?",o:["Küf kokusu","Akçaağaç şurubu (tatlı) kokusu","Amonyak kokusu","Aseton kokusu","Balık kokusu"],a:1},
+      {q:"Aşağıdakilerden hangisi MSUD'lu yenidoğanda beklenen bir bulgu DEĞİLDİR?",o:["Kusma","Letarji","İdrarda tatlı koku","Açık ten rengi","Metabolik ensefalopati"],a:3},
+      {q:"Homosistinüride eksik olan enzim hangisidir?",o:["Sistatyonin β-sentaz","Fenilalanin hidroksilaz","Tirozinaz","Glukoz-6-fosfataz","Dallı zincirli ketoasit dehidrogenaz"],a:0},
+      {q:"Homosistinüride hangi metabolit birikir?",o:["Fenilalanin","Homosistein","Lösin","Amonyak","Tirozin"],a:1},
+      {q:"Aşağıdakilerden hangisi homosistinürinin klinik bulgularından biri DEĞİLDİR?",o:["Marfanoid görünüm","Tromboemboli riski","Mental retardasyon","Hiperamonyemik koma","Lens dislokasyonu eğilimi"],a:3},
+      {q:"Homosistinüri tedavisinde kullanılan vitamin hangisidir?",o:["B12","B6 (piridoksin)","C vitamini","D vitamini","Folik asit tek başına"],a:1},
+      {q:"Homosistinüri diyet tedavisinde hangi aminoasit kısıtlanır?",o:["Lösin","Metiyonin","Fenilalanin","Valin","Arginin"],a:1},
+      {q:"Üre döngüsü bozukluklarında biriken ve esas toksisiteden sorumlu olan madde nedir?",o:["Laktik asit","Amonyak","Keton cisimleri","Bilirubin","Ürik asit"],a:1},
+      {q:"Üre döngüsü bozukluğunda görülen tablo aşağıdakilerden hangisidir?",o:["Hipoglisemi","Hiperamonyemi","Hiperkalemi","Hiperkalsemi","Hipernatremi"],a:1},
+      {q:"Üre döngüsü bozukluklarının tedavisinde hangisi yer alır?",o:["Yüksek proteinli diyet","Protein kısıtlaması + amonyak bağlayıcı ilaçlar","Sadece tirozin takviyesi","Nitisinon","B6 vitamini"],a:1},
+      {q:"Aşağıdaki bozukluklardan hangisi aromatik aminoasit bozuklukları grubundadır?",o:["MSUD","Fenilketonüri","Homosistinüri","Hiperamonyemi","Hartnup hastalığı"],a:1},
+      {q:"MSUD hangi sınıfa dahildir?",o:["Aromatik aminoasit bozukluğu","Dallı zincirli aminoasit bozukluğu","Kükürtlü aminoasit bozukluğu","Üre döngüsü bozukluğu","Taşıma bozukluğu"],a:1},
+      {q:"Homosistinüri hangi grupta yer alır?",o:["Aromatik aminoasit bozukluğu","Kükürtlü aminoasit bozukluğu","Dallı zincirli aminoasit bozukluğu","Üre döngüsü bozukluğu","Enerji metabolizması bozukluğu"],a:1},
+      {q:"Tirozinemi Tip I'de bozulan basamak aşağıdakilerden hangisidir?",o:["Fenilalanin hidroksilasyonu","Fumarilasetoasetatın yıkımı","Metiyonin metabolizması","Üre sentezi","Lösin transaminasyonu"],a:1},
+      {q:"Tirozinemi tedavisinde kullanılan ilaç hangisidir?",o:["Nitisinon","Statin","Fibrat","Penisilamin","Allopürinol"],a:0},
+      {q:"Tirozinemide en sık etkilenen organlar hangileridir?",o:["Kalp ve akciğer","Karaciğer ve böbrek","Dalak ve pankreas","Beyin ve omurilik","Cilt ve eklemler"],a:1},
+      {q:"Hartnup hastalığında temel sorun nedir?",o:["Fenilalanin yıkımının bozulması","Triptofan taşınmasının bozulması","Amonyağın detoksifiye edilememesi","Lösin metabolizmasının bozulması","Homosistein birikimi"],a:1},
+      {q:"Hartnup hastalığında görülen klinik tablo aşağıdakilerden hangisine benzer?",o:["Marfan sendromu","Pellagra","Kwashiorkor","Skorbüt","Rikets"],a:1},
+      {q:"Hartnup hastalığında önerilen yaklaşım hangisidir?",o:["Protein kısıtlaması","Protein açısından zengin diyet","Tam açlık","Yüksek doz demir","Sadece sıvı kısıtlaması"],a:1},
+      {q:"Aşağıdakilerden hangisi aminoasit metabolizması bozukluklarının tanısında kullanılan yöntemlerden biri DEĞİLDİR?",o:["Yenidoğan tarama testleri","Kan aminoasit analizi","İdrar organik asit analizi","Genetik testler","Endoskopik biyopsi"],a:4},
+      {q:"Enzim eksikliğine bağlı biriken aminoasit türevlerinin tipik etkisi nedir?",o:["Kemik mineralizasyonunu artırır","Nörotoksik ve asidoz yapıcıdır","Kan basıncını düşürür","Bağışıklığı güçlendirir","İnsülin salınımını artırır"],a:1},
+      {q:"Aminoasit metabolizması bozukluklarında erken tanının en önemli amacı nedir?",o:["İlaç maliyetini düşürmek","Kalıcı nörolojik hasarı önlemek","Hastaneye yatışı zorunlu kılmak","Diyeti tamamen kaldırmak","Genetik testi gereksiz kılmak"],a:1}
+    ]
+  },
+  {
+    title:"Hiperlipidemiler ve Klinik Yorumu",
+    meta:"30 soru",
+    questions:[
+      {q:"Dislipidemi terimi neyi ifade eder?",o:["Sadece kolesterol yüksekliği","Lipidlerin nicel veya nitel bozukluğu","Sadece trigliserid düşüklüğü","Yalnızca HDL artışı","Protein metabolizması bozukluğu"],a:1},
+      {q:"Hiperlipidemi, dislipidemi ile nasıl ilişkilidir?",o:["Tamamen ayrı bir durumdur","Dislipideminin bir alt grubudur","Dislipideminin tersidir","Sadece çocuklarda görülür","Lipid eksikliğini ifade eder"],a:1},
+      {q:"Hiperlipidemi, hangi hastalık grubu için en önemli modifiye edilebilir risk faktörlerinden biridir?",o:["Solunum hastalıkları","Kardiyovasküler hastalıklar","Böbrek taşı","Romatizmal hastalıklar","Tiroid kanseri"],a:1},
+      {q:"Aşağıdakilerden hangisi lipidlerin fizyolojik rollerinden biri DEĞİLDİR?",o:["Hücre membran bütünlüğü","Steroid hormon ve D vitamini sentezi","Enerji depolanması","Oksijen taşınması","Hücre içi sinyal iletimi"],a:3},
+      {q:"Diyetsel trigliseridlerin taşınmasından sorumlu lipoprotein hangisidir?",o:["LDL","Şilomikron","HDL","IDL","Lp(a)"],a:1},
+      {q:"Endojen trigliseridleri taşıyan lipoprotein hangisidir?",o:["Şilomikron","VLDL","HDL","LDL","Albümin"],a:1},
+      {q:"Kolesterolün dokulara taşınmasını sağlayan ve aterojenik kabul edilen lipoprotein hangisidir?",o:["HDL","LDL","Şilomikron","VLDL","IDL"],a:1},
+      {q:"\"Ters kolesterol taşınması\" ile koruyucu rol üstlenen lipoprotein hangisidir?",o:["LDL","HDL","VLDL","Şilomikron","IDL"],a:1},
+      {q:"IDL hangi lipoproteinin kalıntısı (remnant) olarak tanımlanır?",o:["LDL","VLDL","HDL","Şilomikron","Lp(a)"],a:1},
+      {q:"Familial hiperkolesterolemi hangi etiyolojik gruba girer?",o:["Sekonder","Primer (genetik)","Edinsel","İlaca bağlı","Beslenmeye bağlı geçici"],a:1},
+      {q:"Aşağıdakilerden hangisi sekonder hiperlipidemi nedenlerinden biri DEĞİLDİR?",o:["Diyabetes mellitus","Hipotiroidi","Nefrotik sendrom","Familial kombine hiperlipidemi","Obezite"],a:3},
+      {q:"Aşağıdaki ilaç gruplarından hangisi sekonder hiperlipidemiye yol açabilir?",o:["Statinler","Kortikosteroidler, tiazidler, beta blokerler","Fibratlar","Ezetimib","PCSK9 inhibitörleri"],a:1},
+      {q:"Fredrickson (WHO) sınıflamasında Tip I'de artan lipoprotein ve tipik klinik hangisidir?",o:["LDL — erken ateroskleroz","Şilomikron — akut pankreatit","VLDL — TG yüksekliği","IDL — ksantomlar","HDL — koruyuculuk"],a:1},
+      {q:"Fredrickson sınıflamasında Tip IIa'da artan lipoprotein hangisidir?",o:["VLDL","LDL","Şilomikron","IDL","HDL"],a:1},
+      {q:"Fredrickson sınıflamasında IDL artışı ve ksantomlar ile karakterize tip hangisidir?",o:["Tip I","Tip III","Tip IIb","Tip IV","Tip V"],a:1},
+      {q:"Fredrickson Tip IV'te öne çıkan laboratuvar bulgusu nedir?",o:["İzole LDL yüksekliği","Trigliserid (VLDL) yüksekliği","HDL yüksekliği","Şilomikron yüksekliği tek başına","Düşük total kolesterol"],a:1},
+      {q:"Aterosklerozun patofizyolojisinde ilk basamaklardan biri olarak kabul edilen olay nedir?",o:["LDL oksidasyonu","Trombosit eksikliği","HDL artışı","Hemoliz","Hiperamonyemi"],a:0},
+      {q:"Aterosklerotik plak gelişiminde lipid yüklü hücreler hangi isimle anılır?",o:["Plazma hücreleri","Köpük hücreleri","Mast hücreleri","Dev hücreler","Kupffer hücreleri"],a:1},
+      {q:"Hiperlipidemili hastaların klinik durumu için en doğru ifade hangisidir?",o:["Tüm hastalar semptomatiktir","Çoğu hasta asemptomatiktir","Daima göğüs ağrısı vardır","Mutlaka pankreatit gelişir","Her zaman ksantom görülür"],a:1},
+      {q:"Aşağıdakilerden hangisi hiperlipideminin fizik muayene bulgularından biri DEĞİLDİR?",o:["Ksantom","Ksantelazma","Arcus cornealis","Splenomegali","Eruptif ksantom"],a:3},
+      {q:"Akut pankreatit riski özellikle trigliserid hangi düzeyin üzerine çıktığında belirginleşir?",o:["> 150 mg/dL","> 1000 mg/dL","> 200 mg/dL","> 40 mg/dL","> 500 mg/dL'nin altında"],a:1},
+      {q:"LDL-kolesterol artışı ile kardiyovasküler olay riski arasındaki ilişki nasıldır?",o:["Ters orantılı","Doğrusal (lineer) ilişki","İlişki yoktur","Sadece kadınlarda görülür","Yalnızca yaşlılarda"],a:1},
+      {q:"Aşağıdakilerden hangisi yüksek riskli hastalarda bakılması önerilen lipid parametresidir?",o:["Lp(a)","Serum demiri","CRP tek başına","Tiroid antikorları","Vitamin D"],a:0},
+      {q:"Hiperlipidemide klinik yorumun temel ilkesi nedir?",o:["Yalnızca LDL düzeyine bakılır","Toplam kardiyovasküler risk değerlendirilir","Sadece trigliserid esas alınır","Yaş dikkate alınmaz","HDL göz ardı edilir"],a:1},
+      {q:"Toplam kardiyovasküler risk değerlendirmesinde aşağıdakilerden hangisi birlikte ele alınmaz?",o:["Yaş ve cinsiyet","Sigara kullanımı","Hipertansiyon ve DM","Boy uzunluğu tek başına","Lipid düzeyleri"],a:3},
+      {q:"Hiperlipidemi tedavisinde yaşam tarzı değişikliği kapsamında hangisi yer almaz?",o:["Doymuş yağ azaltma, lif artırma","Kilo kontrolü","Fiziksel aktivite","Alkol ve sigara kısıtlaması","Su alımının tamamen kesilmesi"],a:4},
+      {q:"Aşağıdakilerden hangisi hiperlipidemide kullanılan farmakolojik tedavi seçeneklerinden biri DEĞİLDİR?",o:["Statinler","Ezetimib","PCSK9 inhibitörleri","Fibratlar","Nitisinon"],a:4},
+      {q:"Eczacılık perspektifinden statin tedavisinde özellikle takip edilmesi gereken yan etki nedir?",o:["Miyopati","Saç dökülmesi","İşitme kaybı","Hipoglisemi","Diş çürüğü"],a:0},
+      {q:"45 yaşında, LDL 210 mg/dL, Aşil tendonunda kalınlaşma, bilateral arcus cornealis ve babasında erken MI öyküsü olan hastada en olası ön tanı nedir?",o:["Sekonder hipertrigliseridemi","Familial hiperkolesterolemi","Hipotiroidi","Nefrotik sendrom","Tip I hiperlipoproteinemi"],a:1},
+      {q:"Açlık TG 1200 mg/dL, eruptif ksantomlar, kötü kontrollü tip 2 diyabet ve alkol öyküsü olan hastada öncelikli tedavi hedefi nedir?",o:["LDL'yi yavaşça düşürmek","Trigliseridi hızla düşürmek (fibrat, glisemik kontrol, alkol kısıtlaması)","HDL'yi düşürmek","Sadece statin başlamak","Protein kısıtlaması"],a:1}
+    ]
+  },
+  {
+    title:"Doğuştan Metabolizma Kusurları",
+    meta:"30 soru",
+    questions:[
+      {q:"Doğuştan metabolizma kusurları temelde nedir?",o:["Edinsel enfeksiyöz hastalıklar","Genetik geçişli metabolik yolak bozuklukları","Otoimmün hastalıklar","Beslenme yetersizliği hastalıkları","Travmatik organ hasarı"],a:1},
+      {q:"Doğuştan metabolizma kusurları en sık hangi kalıtım paternini gösterir?",o:["Otozomal dominant","Otozomal resesif","X'e bağlı dominant","Mitokondriyal","Sporadik"],a:1},
+      {q:"Doğuştan metabolizma kusurlarını ilk kez 1908'de tanımlayan bilim insanı kimdir?",o:["Gregor Mendel","Archibald Garrod","Linus Pauling","Frederick Sanger","Hans Krebs"],a:1},
+      {q:"Patogenezde enzim eksikliğinin doğrudan sonucu nedir?",o:["Substrat birikimi","Enzim fazlalığı","Gen fazlalığı","Hücre çoğalması","İmmün baskılanma"],a:0},
+      {q:"Aşağıdakilerden hangisi doğuştan metabolizma kusurlarının olası sonuçlarından biri DEĞİLDİR?",o:["Metabolik asidoz","Hipoglisemi","Hiperamonyemi","Hipertiroidi","Organ hasarı"],a:3},
+      {q:"\"Küçük molekül hastalıkları\" grubuna aşağıdakilerden hangisi girer?",o:["Lizozomal depo hastalıkları","Aminoasit bozuklukları","Peroksizomal hastalıklar","Mitokondriyal hastalıklar","Glikojen depo hastalıkları"],a:1},
+      {q:"Aşağıdakilerden hangisi küçük molekül hastalıklarına örnek olarak verilmiştir?",o:["Gaucher hastalığı","Fenilketonüri","Tay-Sachs hastalığı","Zellweger sendromu","Glikojen depo hastalığı"],a:1},
+      {q:"Enerji metabolizması bozuklukları grubuna aşağıdakilerden hangisi girer?",o:["Organik asidemi","Yağ asidi oksidasyon bozuklukları","Homosistinüri","Üre siklusu bozuklukları","Fenilketonüri"],a:1},
+      {q:"Glikojen depo hastalıkları hangi grupta sınıflandırılır?",o:["Küçük molekül hastalıkları","Enerji metabolizması bozuklukları","Kompleks molekül hastalıkları","Lizozomal depo hastalıkları","Peroksizomal hastalıklar"],a:1},
+      {q:"Kompleks molekül hastalıkları grubuna aşağıdakilerden hangisi girer?",o:["Aminoasit bozuklukları","Lizozomal ve peroksizomal hastalıklar","Üre siklusu bozuklukları","Organik asidemiler","Glukoneogenez kusurları"],a:1},
+      {q:"Gaucher hastalığı hangi hastalık grubunda yer alır?",o:["Aminoasit bozukluğu","Lizozomal depo hastalığı","Üre siklusu bozukluğu","Yağ asidi oksidasyon bozukluğu","Glukoneogenez kusuru"],a:1},
+      {q:"Zellweger sendromu hangi organel ile ilişkili hastalık grubundadır?",o:["Mitokondri","Peroksizom","Ribozom","Golgi aygıtı","Çekirdek"],a:1},
+      {q:"Tay-Sachs hastalığı aşağıdaki gruplardan hangisine örnektir?",o:["Lizozomal depo hastalığı","Üre siklusu bozukluğu","Aromatik aminoasit bozukluğu","Glikojen depo hastalığı","Yağ asidi oksidasyon bozukluğu"],a:0},
+      {q:"Aşağıdakilerden hangisi doğuştan metabolizma kusurlarında yenidoğan dönemi bulgularından biri DEĞİLDİR?",o:["Beslenme reddi","Kusma","Letarji","Hepatomegali","Solunum sıkıntısı"],a:3},
+      {q:"Aşağıdakilerden hangisi ileri dönem klinik bulgularından biridir?",o:["Beslenme reddi","Mental retardasyon","Akut solunum sıkıntısı","Yenidoğan kusması","İlk gün letarjisi"],a:1},
+      {q:"Tanıda kan gazında beklenen tipik bulgu nedir?",o:["Metabolik alkaloz","Metabolik asidoz","Respiratuar alkaloz","Normal pH","Hiperoksemi"],a:1},
+      {q:"Yenidoğan taramasında genişletilmiş tarama için kullanılan başlıca yöntem hangisidir?",o:["Tandem MS","Manyetik rezonans","Ultrason","Elektrokardiyografi","Kemik dansitometresi"],a:0},
+      {q:"İdrarda organik asit analizi hangi yöntemle yapılır?",o:["GC-MS","PCR","ELISA","Western blot","Akım sitometri"],a:0},
+      {q:"Aşağıdakilerden hangisi doğuştan metabolizma kusurlarının tanısında kullanılan özel testlerden biri DEĞİLDİR?",o:["Aminoasit analizi","Organik asit analizi","Enzim aktivite testleri","Genetik analiz","Akciğer spirometrisi"],a:4},
+      {q:"Türkiye'de yenidoğan tarama programında taranan hastalıklardan biri hangisidir?",o:["Gaucher hastalığı","Fenilketonüri","Tay-Sachs hastalığı","Zellweger sendromu","Mitokondriyal miyopati"],a:1},
+      {q:"Aşağıdakilerden hangisi Türkiye'de taranan başlıca hastalıklardan biridir?",o:["Biyotinidaz eksikliği","Homosistinüri","Tip I tirozinemi","Hartnup hastalığı","Glikojen depo hastalığı"],a:0},
+      {q:"Konjenital hipotiroidi yenidoğan taraması açısından ne anlam taşır?",o:["Taranmaz","Türkiye'de taranan başlıca hastalıklardan biridir","Sadece erişkinlerde aranır","Genetik test gerektirmez","Sadece idrarla tanı konur"],a:1},
+      {q:"Diyet tedavisinin temel mantığı nedir?",o:["Tüm besinlerin artırılması","Problemli (toksik) metabolitin kısıtlanması","Sadece sıvı verilmesi","Protein alımının maksimuma çıkarılması","Karbonhidratın tamamen kesilmesi"],a:1},
+      {q:"Farmakolojik tedavide kullanılan vitamin/kofaktör desteklerine örnek hangisidir?",o:["A, E, K","B6, B12, biotin","C ve D","Sadece folik asit","Niasin tek başına"],a:1},
+      {q:"Enzim replasman tedavisi özellikle hangi hastalık grubunda öne çıkar?",o:["Aminoasit bozuklukları","Lizozomal depo hastalıkları","Üre siklusu bozuklukları","Glukoneogenez kusurları","Organik asidemiler"],a:1},
+      {q:"Gen tedavisi doğuştan metabolizma kusurlarında günümüzde hangi aşamadadır?",o:["Rutin standart tedavi","Araştırma aşamasında / sınırlı uygulamalar","Tamamen terk edilmiş","Sadece erişkinlerde onaylı","Tek tedavi seçeneği"],a:1},
+      {q:"Aşağıdakilerden hangisi eczacının rollerinden biri DEĞİLDİR?",o:["Medikal mama ve ilaç danışmanlığı","Tedaviye uyumun izlenmesi","Cerrahi operasyon yapmak","Yan etki ve ilaç etkileşim takibi","Hasta ve aile eğitimi"],a:2},
+      {q:"Aşağıdakilerden hangisi alandaki güncel gelişmelerden biri olarak belirtilmiştir?",o:["Genişletilmiş yenidoğan taramaları","Rutin kan nakli","Geleneksel açlık tedavisi","Antibiyotik profilaksisi","Fototerapi"],a:0},
+      {q:"Hücresel düzeyde enzim eksikliğinin sonuçlarından biri olarak hangisi sayılabilir?",o:["Hücresel enerji metabolizmasının bozulması","Membran geçirgenliğinin artması yararlıdır","Mitokondri sayısının artması","DNA onarımının hızlanması","Protein sentezinin durması yararlıdır"],a:0},
+      {q:"Doğuştan metabolizma kusurlarında erken tanı konulmazsa beklenen sonuç nedir?",o:["Spontan iyileşme","Ağır morbidite ve mortalite","Hastalığın ortadan kalkması","Yalnızca kozmetik sorunlar","Geçici hafif belirtiler"],a:1}
+    ]
+  }
+];
+
+let answered = 0, correct = 0;
+const quiz = document.getElementById('quiz');
+let globalNo = 0;
+
+DATA.forEach((topic, ti)=>{
+  const sec = document.createElement('section');
+  sec.className = 'topic';
+  sec.innerHTML = `
+    <div class="topic-head">
+      <span class="topic-num">Bölüm ${String.fromCharCode(65+ti)}</span>
+      <h2>${topic.title} <span class="meta">· ${topic.meta}</span></h2>
+      <div class="rule"></div>
+    </div>`;
+  topic.questions.forEach((item, qi)=>{
+    globalNo++;
+    const card = document.createElement('div');
+    card.className = 'q';
+    const opts = item.o.map((txt,oi)=>{
+      const letter = String.fromCharCode(65+oi);
+      return `<button class="opt" data-correct="${oi===item.a}">
+                <span class="mark"><span>${letter}</span></span>
+                <span>${txt}</span>
+              </button>`;
+    }).join('');
+    card.innerHTML = `
+      <div class="q-top">
+        <div class="q-no">${globalNo}</div>
+        <div class="q-text">${item.q}</div>
+      </div>
+      <div class="opts">${opts}</div>
+      <div class="feedback"></div>`;
+    sec.appendChild(card);
+  });
+  quiz.appendChild(sec);
+});
+
+quiz.addEventListener('click', e=>{
+  const btn = e.target.closest('.opt');
+  if(!btn) return;
+  const card = btn.closest('.q');
+  if(card.classList.contains('answered')) return;
+
+  card.classList.add('answered');
+  const opts = card.querySelectorAll('.opt');
+  const isRight = btn.dataset.correct === 'true';
+
+  opts.forEach(o=>{
+    o.disabled = true;
+    if(o.dataset.correct === 'true') o.classList.add('correct');
+  });
+  if(!isRight) btn.classList.add('wrong');
+
+  const fb = card.querySelector('.feedback');
+  fb.classList.add('show');
+  fb.innerHTML = isRight
+    ? '<b>Doğru.</b> İşaretlediğiniz şık doğru cevaptır.'
+    : '<b>Yanlış.</b> Doğru cevap yeşille gösterilmektedir.';
+
+  answered++;
+  if(isRight) correct++;
+  updateScore();
+});
+
+function updateScore(){
+  document.getElementById('s-ans').textContent = answered;
+  document.getElementById('s-correct').textContent = correct;
+  document.getElementById('s-pct').textContent =
+    answered ? Math.round(correct/answered*100) + '%' : '—';
+}
+</script>
+</body>
+</html>

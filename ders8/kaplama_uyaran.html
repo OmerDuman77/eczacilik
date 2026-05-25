@@ -1,0 +1,553 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Tablet Kaplama & Uyaranlara Cevap Veren DDS — Çalışma Sayfası</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Spectral:ital,wght@0,400;0,600;0,800;1,500&family=Inter+Tight:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#0b1413;--panel:#11201e;--panel-2:#172a27;--ink:#e7f0ee;--muted:#8fa6a2;--line:#23423d;
+    --accent:#2bb6a3;--accent-2:#e0a458;
+    --correct-bg:rgba(43,182,131,.16);--correct-line:#37c98a;
+    --wrong-bg:rgba(214,69,69,.16);--wrong-line:#e25555;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{scroll-behavior:smooth}
+  body{background:radial-gradient(1100px 560px at 84% -10%, rgba(43,182,163,.10), transparent 60%),radial-gradient(900px 520px at -10% 22%, rgba(224,164,88,.07), transparent 55%),var(--bg);color:var(--ink);font-family:'Inter Tight',system-ui,sans-serif;line-height:1.6;-webkit-font-smoothing:antialiased}
+  .wrap{max-width:900px;margin:0 auto;padding:40px 22px 120px}
+  .kicker{font-size:.72rem;letter-spacing:.3em;text-transform:uppercase;color:var(--accent);font-weight:600;margin-bottom:12px}
+  h1.title{font-family:'Spectral',serif;font-weight:800;font-size:clamp(1.7rem,4.2vw,2.7rem);line-height:1.06;letter-spacing:-.01em;margin-bottom:8px}
+  h1.title em{font-style:italic;color:var(--accent-2)}
+  .sub{color:var(--muted);font-size:.96rem;margin-bottom:22px}
+
+  /* TOP TOPIC NAV */
+  .topnav{position:sticky;top:0;z-index:30;display:flex;gap:10px;padding:14px 0 12px;background:linear-gradient(180deg,var(--bg) 80%,rgba(11,20,19,0));flex-wrap:wrap}
+  .topbtn{flex:1 1 220px;cursor:pointer;border:1px solid var(--line);background:var(--panel-2);color:var(--muted);border-radius:14px;padding:14px 16px;font-family:'Spectral',serif;font-size:1.05rem;font-weight:600;transition:.2s;text-align:center}
+  .topbtn:hover{border-color:#345f57;color:var(--ink)}
+  .topbtn.active{background:var(--accent-2);border-color:var(--accent-2);color:#2a1a05}
+
+  /* SUB TABS */
+  .tabs{position:sticky;top:62px;z-index:20;display:flex;flex-wrap:wrap;gap:8px;padding:10px 0 12px;background:linear-gradient(180deg,var(--bg) 78%,rgba(11,20,19,0));margin-bottom:6px}
+  .tab{flex:1 1 130px;min-width:120px;cursor:pointer;border:1px solid var(--line);background:var(--panel);color:var(--muted);border-radius:11px;padding:10px 12px;font-family:inherit;font-size:.86rem;font-weight:600;transition:.2s;text-align:center;line-height:1.2}
+  .tab small{display:block;font-weight:400;font-size:.72rem;opacity:.7;margin-top:2px}
+  .tab:hover{border-color:#345f57;color:var(--ink)}
+  .tab.active{background:var(--accent);border-color:var(--accent);color:#04201c}
+
+  .topic-wrap{display:none}
+  .topic-wrap.active{display:block}
+  .panel{display:none;animation:fade .35s ease}
+  .panel.active{display:block}
+  @keyframes fade{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
+
+  /* SUMMARY */
+  .summary h2{font-family:'Spectral',serif;font-weight:600;font-size:1.45rem;margin:32px 0 6px;color:var(--ink)}
+  .summary h2:first-child{margin-top:6px}
+  .summary h2 .n{color:var(--accent);font-style:italic;margin-right:8px}
+  .summary h3{font-size:1.04rem;font-weight:600;color:var(--accent-2);margin:18px 0 4px}
+  .summary p{margin:10px 0;color:#d5e2df}
+  .summary ul{margin:8px 0 8px 4px;padding-left:20px;color:#d5e2df}
+  .summary li{margin:5px 0}
+  .summary b{color:var(--ink)}
+  .summary .lead{font-size:1.04rem;border-left:3px solid var(--accent);padding-left:16px;color:#cfe0dc}
+  .summary hr{border:none;border-top:1px solid var(--line);margin:28px 0}
+
+  .intro-note{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:14px 16px;color:var(--muted);font-size:.9rem;margin-bottom:16px}
+  .intro-note b{color:var(--accent)}
+
+  /* FILL (test) */
+  .q{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:18px 18px 14px;margin-top:14px}
+  .q-top{display:flex;gap:11px;align-items:flex-start;margin-bottom:13px}
+  .q-no{flex:none;width:28px;height:28px;border-radius:8px;background:var(--panel-2);color:var(--accent);font-weight:700;font-size:.8rem;display:grid;place-items:center;font-family:'Spectral',serif}
+  .q-text{font-size:1rem;font-weight:500;padding-top:2px}
+  .q-text .blank{color:var(--accent-2);font-weight:700;letter-spacing:1px}
+  .opts{display:flex;flex-direction:column;gap:8px}
+  .opt{text-align:left;width:100%;cursor:pointer;background:var(--panel-2);border:1px solid var(--line);color:var(--ink);border-radius:10px;padding:11px 13px;font-family:inherit;font-size:.94rem;display:flex;gap:11px;align-items:flex-start;transition:.16s}
+  .opt:hover:not(:disabled){background:#1d322e;border-color:#39625a}
+  .opt:disabled{cursor:default}
+  .opt .mark{flex:none;width:21px;height:21px;border-radius:50%;border:1.5px solid var(--muted);color:var(--muted);font-size:.72rem;font-weight:700;display:grid;place-items:center;margin-top:1px;font-family:'Spectral',serif}
+  .opt.correct{background:var(--correct-bg);border-color:var(--correct-line);color:#d6ffe9}
+  .opt.correct .mark{border-color:var(--correct-line);background:var(--correct-line);color:#06231a}
+  .opt.correct .mark::after{content:"✓"}
+  .opt.wrong{background:var(--wrong-bg);border-color:var(--wrong-line);color:#ffe0e0}
+  .opt.wrong .mark{border-color:var(--wrong-line);background:var(--wrong-line);color:#2a0a0a}
+  .opt.wrong .mark::after{content:"✕"}
+  .opt.correct .mark span,.opt.wrong .mark span{display:none}
+  .scorebar{display:flex;gap:12px;flex-wrap:wrap;margin-bottom:8px}
+  .sc{flex:1 1 130px;background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:12px 14px}
+  .sc .l{font-size:.7rem;letter-spacing:.1em;text-transform:uppercase;color:var(--muted)}
+  .sc .v{font-family:'Spectral',serif;font-size:1.35rem;font-weight:600;margin-top:2px}
+
+  /* REVEAL */
+  .reveal{background:var(--panel);border:1px solid var(--line);border-radius:14px;margin-top:12px;overflow:hidden;transition:border-color .2s}
+  .reveal:hover{border-color:#345f57}
+  .reveal-head{display:flex;gap:12px;align-items:center;padding:14px 16px;cursor:pointer}
+  .reveal-no{flex:none;width:28px;height:28px;border-radius:8px;background:var(--panel-2);color:var(--accent);font-weight:700;font-size:.8rem;display:grid;place-items:center;font-family:'Spectral',serif}
+  .reveal-term{flex:1;font-weight:600;font-size:1rem}
+  .dots{flex:none;font-family:'Spectral',serif;font-weight:800;color:var(--accent-2);font-size:1.4rem;letter-spacing:2px;line-height:1;transition:.25s;padding:0 4px}
+  .reveal.open .dots{color:var(--accent);transform:rotate(90deg)}
+  .reveal-body{max-height:0;opacity:0;padding:0 16px;transition:max-height .3s ease,opacity .25s ease,padding .3s ease;color:#d5e2df;font-size:.95rem;border-top:1px solid transparent}
+  .reveal.open .reveal-body{max-height:800px;opacity:1;padding:13px 16px 16px;border-top:1px solid var(--line)}
+  .reveal-body b{color:var(--accent-2)}
+
+  footer{margin-top:60px;text-align:center;color:var(--muted);font-size:.82rem}
+  .tools{display:flex;gap:10px;justify-content:center;flex-wrap:wrap;margin-top:14px}
+  .toolbtn{background:transparent;border:1px solid var(--line);color:var(--muted);padding:9px 16px;border-radius:10px;font-family:inherit;cursor:pointer;font-size:.84rem;transition:.2s}
+  .toolbtn:hover{border-color:var(--accent);color:var(--accent)}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="kicker">Prof. Dr. Jülide Akbuğa · Ders Notları</div>
+  <h1 class="title">Tablet Kaplama &amp; <em>Uyaranlara Cevap Veren DDS</em></h1>
+  <div class="sub">İki ayrı konu, tek sayfada. Önce üstten konuyu seçin; her konunun altında detaylı özet, boşluk doldurma (test), terim–anlam ve klasik soru bölümleri vardır.</div>
+
+  <nav class="topnav">
+    <button class="topbtn active" data-topic="tk">① Tablet Kaplama</button>
+    <button class="topbtn" data-topic="uc">② Uyaranlara Cevap Veren DDS</button>
+  </nav>
+
+  <!-- ===================================================== TABLET KAPLAMA ===================================================== -->
+  <div class="topic-wrap active" id="tk">
+    <nav class="tabs" data-scope="tk">
+      <button class="tab active" data-sub="tk-ozet">Detaylı Özet</button>
+      <button class="tab" data-sub="tk-bosluk">Boşluk<small>30 · yeşil/kırmızı</small></button>
+      <button class="tab" data-sub="tk-terim">Terim–Anlam<small>40 · tıkla, aç</small></button>
+      <button class="tab" data-sub="tk-klasik">Klasik<small>15 · tıkla, aç</small></button>
+    </nav>
+
+    <section class="panel summary active" id="tk-ozet">
+      <p class="lead">Kaplama, özel yarar sağlamak amacıyla granül veya tablet yüzeylerinin ince bir <b>polimer film tabakası</b> ile kaplanması işlemidir. Tabletler, kapsüller ve ilaç kristalleri dahil çok çeşitli oral katı dozaj şekillerine uygulanabilir; amaç, kaplanmamış formların özelliklerini düzeltmek ve yararlarını artırmaktır.</p>
+
+      <h2><span class="n">1.</span>Oral Katı Formlar Niçin Kaplanır?</h2>
+      <p>Kaplanma nedenleri çok çeşitlidir; en yaygınları:</p>
+      <ul>
+        <li><b>1 –</b> İlacı çevrenin etkilerinden koruma, <b>stabilitenin</b> sağlanması/korunması,</li>
+        <li><b>2 –</b> Hoş olmayan <b>tat ve kokuyu maskeleme</b>,</li>
+        <li><b>3 –</b> Ürün <b>teşhisini</b> (tanınmasını) kolaylaştırma,</li>
+        <li><b>4 –</b> Ürün <b>görünümünü</b> iyileştirme,</li>
+        <li><b>5 –</b> Uyumsuz (geçimsiz) maddeler arasında <b>etkileşim riskini azaltma</b>,</li>
+        <li><b>6 –</b> İlacın <b>serbestleşmesini kontrol etme</b>,</li>
+        <li><b>7 –</b> Enterik kaplıdaki gibi <b>ilaç salımını değiştirme</b> ve sürekli etki sağlama.</li>
+      </ul>
+      <h3>Dezavantajları</h3>
+      <ul>
+        <li>Formülasyon <b>maliyetini</b> artırır,</li>
+        <li>İlacın <b>farmakodinamik</b> özelliklerini etkileyebilir,</li>
+        <li>Beneklenme, kapaklanma, çatlama, köprüleme gibi <b>film kusurlarına</b> yol açabilir,</li>
+        <li>İşlem <b>karmaşıktır</b>.</li>
+      </ul>
+
+      <h2><span class="n">2.</span>Dikkate Alınacak Noktalar ve Tablet Özellikleri</h2>
+      <p>Kaplamada üç ana grup ele alınır: <b>(a) tablet özellikleri</b> (şekil, tolerans, yüzey alanı), <b>(b) kaplama işlemi</b> (ekipman, parametreler, tesis/yan donanım, otomasyon) ve <b>(c) kaplama çözeltisi bileşimi</b> (polimer, renklendirici, plastifiyan, çözücü). Kaplanacak tablet <b>küresel şekilli, homojen yüzeyli</b> ve uygun fiziksel özellikte olmalı; kaplama sırasındaki yıpranmayı tolere edecek kadar <b>aşınmaya dayanıklı</b> olmalıdır. Isı varlığında yüzeyi kırılgan/yumuşak olan, kaplama çözeltisinden etkilenen veya erken aşamada yüzeyinde pürüz oluşan tabletler film kaplama için kabul edilemez.</p>
+
+      <h2><span class="n">3.</span>Film Kaplama Prosesi ve Çözeltinin Uygulanması</h2>
+      <p>Film kaplama prosesi şu aşamaları içerir: <b>ıslanma/adhesif özellik kazandırma → birikme ve kısmi kuruma → yayılma (yüzeyi kaplama) → koalesans ve kohezyon</b>. Kaplama çözeltisi, sıcak hava ile ısıtılmış ve hareket halindeki tabletlerin üzerine <b>püskürtülür</b> (hareketli tabletlere dikey uygulanır); bu sırada çözücü uçar ve her bir çekirdeğin etrafında ince bir kaplama oluşur.</p>
+
+      <h2><span class="n">4.</span>Kaplama İşleminin Tipleri</h2>
+      <p>İlaç endüstrisi başlıca üç tip kaplama kullanır: <b>film kaplama, şeker kaplama ve enterik kaplama</b>; ayrıca ilaç salımını modifiye etmek için kaplama ve <b>basınçla (kompresyonla) kaplama</b> da uygulanır.</p>
+
+      <h2><span class="n">5.</span>Film Kaplama</h2>
+      <p>En popüler tekniktir ve yeni kaplı ürünlerin büyük kısmı piyasaya film kaplı olarak sunulur. Tablet, kapsül veya çok partiküllü bir çekirdek yüzeyine kaplama çözeltisi püskürtülerek <b>ince bir polimer film tabakası</b> oluşturulur. Film kaplama, elde edilen <b>ilaç salım özelliğine</b> göre iki gruba ayrılır:</p>
+      <ul>
+        <li><b>Hemen-salan film kaplama</b>: Genellikle <b>suda çözünür</b>. Gastro-dirençli (mide-dirençli) kaplamalar ise suda yalnızca <b>pH 5–6'nın üzerinde</b> çözünür; ilacı mide ortamından korumak (asitte dayanıksız ilaçlar) veya midede serbestleşmesini önlemek (midede irritan ilaçlar) için kullanılır. Son yıllarda kolona ilaç taşıyıcı sistemlerin bir parçası olarak da kullanılmaktadır.</li>
+        <li><b>Uzatılmış (modifiye)-salan film kaplama</b>: Suda <b>çözünmez</b>; ilacın belirli şekilde (tipik olarak <b>6–12 saat</b>) salınmasını sağlar ve günlük doz sayısını azaltır; salım profilini değiştirerek tedavi yararını ve etkinliği artırır.</li>
+      </ul>
+      <p>Film kaplama, polimer bazlı bir <b>çözelti veya süspansiyonun</b> (polimer + pigment + plastifiyan + diğer yardımcılar) dönen/akışkanlaştırılmış tablet kütlesine püskürtülmesiyle yapılır; kurutma koşulları çözücüyü uzaklaştırarak her çekirdeğin etrafında ince kaplama oluşturmalıdır.</p>
+
+      <h2><span class="n">6.</span>Film-Kaplama Formülasyonu ve Polimerler</h2>
+      <p>Tipik bileşenler: <b>polimer, plastifiyan, renk verici madde ve solvan/vehikül</b>. Tüm maddeler ilgili mevzuata ve farmakope gereksinimlerine uymalıdır.</p>
+      <h3>Hemen-salan film kaplama polimerleri</h3>
+      <ul>
+        <li><b>Selüloz türevleri</b>: En çok kullanılanlar selüloz eterleridir; <b>HPMC</b> en yaygındır (suda çözünür, iyi mekanik özellikli film, kolay işlem). Benzer özellikte MC ve hidroksipropil selüloz da kullanılır.</li>
+        <li><b>Vinil türevleri</b>: <b>PVP</b> en çok kullanılan vinil polimeridir ancak <b>yapışkanlığı</b> kullanımını sınırlar; daha iyi film için vinilpirolidon–vinil asetat <b>kopolimeri</b> tercih edilir. <b>PVA</b> (polivinil asetatın kısmi hidrolizi) yüksek adhezyonlu, iyi mekanik özellikli film verir ve gaz geçişine karşı iyi bariyer oluşturur. Son yıllarda vinil alkol–etilen glikol kopolimerleri (PVA'dan daha az yapışkan, yüksek esneklik) çok kullanılır.</li>
+        <li><b>Aminoalkil metakrilat kopolimerleri</b>: Düşük pH'da çözündükleri için <b>tat maskelemede</b> etkilidir; organik çözücülerde de çözünür, sulu dispersiyon halinde hazırlanabilir.</li>
+      </ul>
+      <h3>İlaç salımı modifiye olmuş kaplama polimerleri</h3>
+      <ul>
+        <li><b>Selüloz türevleri</b>: Sübstitüsyon derecesi yükseldikçe polimer suda çözünmez hale gelir; örnek <b>EC (etil selüloz)</b>, ayrıca selüloz esterleri (<b>selüloz asetat</b>).</li>
+        <li><b>Metilmetakrilat kopolimerleri</b>: Suda çözünmez ama farklı geçirgenlikte tipler hazırlanabilir; modifiye-salan sistemlerde kullanılır. <b>Metakrilik asit kopolimerleri</b> mide-dirençli kaplamada kullanılır — düşük pH'da çözünmez, pH yükseldikçe çözünür; sulu polimer dispersiyonu halinde uygulanır. Poli(met)akrilatların ticari adı <b>EUDRAGIT</b>'tir.</li>
+        <li><b>Fitalat-ester polimerleri</b>: Metakrilik asit polimerlerine benzer; geciktirilmiş-salım için uygundur. Örnekler: <b>HPMCP</b> (hidroksipropilmetil selüloz fitalat), <b>CAP</b> (selüloz asetat fitalat), <b>PVAP</b> (polivinil asetat fitalat). Organik çözücü veya sulu dispersiyon halinde uygulanır.</li>
+      </ul>
+      <h3>Boya maddeleri ve çözücüler</h3>
+      <p>Çözünmeyen film kaplamalarda <b>pigmentler</b> tercih edilir; ışığa daha dayanıklıdır, opak görünüm ve yüksek kaplayıcılık sağlar, geçirgenlik optimize edilebilir. Renk maddesi örnekleri: <b>demir oksit pigmentleri, titanyum dioksit, alüminyum lakları</b> (suda çözünen boyanın bağlanmış şekli). Organik çözücü (örn. <b>aseton</b>) kullanımının çevre, güvenlik (yanıcılık/toksisite), ekonomi ve atık açısından birçok dezavantajı vardır; bu nedenle modern film kaplamada <b>sulu polimer dispersiyonları</b> (polimerin sulu süspansiyonu) tercih edilir.</p>
+
+      <h2><span class="n">7.</span>Film-Kaplama Hataları ve Proses/Ekipman</h2>
+      <p>Film kaplama mükemmel bir işlem değildir; kusurlar genellikle çekirdek/kaplama formülasyonundan veya işlemin uygun tasarlanmamasından kaynaklanır. İkiye ayrılır: <b>görsel kusurlar</b> ve <b>fonksiyonel kusurlar</b> (örn. ilaç salımını etkileyenler; çoğunlukla modifiye-salım ürünleriyle ilgili). Görsel kusurlar; <b>proses sorunları</b> (kurutmada püskürtme hızı ile çözücü buharlaşma oranı arasındaki dengesizlik) ve <b>formülasyon sorunları</b> (çekirdek veya kaplama) olarak sınıflanır. Tablet film kaplamanın büyük kısmı kaplama çözeltisi/süspansiyonunun yüzeye <b>püskürtülmesiyle</b> yapılır; modern <b>kazanda kaplama</b> ekipmanları yan havalandırma kanallıdır (Accela Cota, Premier Coater, Hi-Coater, Driacoater). <b>Akışkanlaştırıcı-yatak</b> ekipmanları da kullanılır (GEA, Glatt, Vector-Freund). Proses gereksinimleri: sprey sıvısını yeterince atomize etme, tablet yatağının iyi karıştırılması, çözücüyü buharlaştıracak yeterli kurutma havası (özellikle sulu uygulamalarda) ve iyi egzoz tesisleri.</p>
+
+      <h2><span class="n">8.</span>Şeker Kaplama</h2>
+      <p>Farmasötik kaplamanın geleneksel yöntemidir (19. yüzyıl sonundan beri); çekirdek tablete <b>sakaroz bazlı</b> formülasyonların art arda uygulanmasıyla kalın bir şeker tabakası oluşturulur. Şeker kaplı tabletler genellikle <b>hemen-salım</b> özelliği taşır; ancak yapışma kademesinde suda kısmen/tamamen çözünmeyen özel polimerler kullanılarak <b>gecikmiş (mide-dirençli) veya genişletilmiş salım</b> kazandırılabilir. Şeker kaplı tabletler düzgün, yuvarlak konturlu, parlak yüzeyli olmalıdır.</p>
+      <h3>Şeker kaplama kademeleri (sırasıyla)</h3>
+      <ul>
+        <li><b>1 – Koruyucu kaplama (sealing)</b>: Şeker kaplamalar sulu olduğundan, su çekirdekle temas edip stabiliteyi bozabilir veya erken dağılmaya yol açabilir; bunu önlemek için çekirdek su geçirmez/sızdırmaz tabakayla kaplanır. Geleneksel olarak <b>şellak</b>, günümüzde <b>selüloz asetat fitalat veya polivinil asetat fitalat</b> tercih edilir.</li>
+        <li><b>2 – Alt kaplama (subcoating)</b>: Tablet kenarlarını yuvarlamak için yüksek oranda (ağırlığın ~%50–100'ü) uygulanır; sukroz çözeltisine hacim verici olarak <b>kalsiyum karbonat</b>, yapışmayı önlemek için <b>talk</b> (antiaderent) ve kırılganlığı azaltmak için <b>arap zamkı</b> gibi polisakkarit zamkları eklenir.</li>
+        <li><b>3 – Düzeltici (pürüzsüzleştirici) tabaka</b>: Renk vericinin kolay uygulanması için pürüzsüz yüzey gerekir; şeker çözeltisine kalsiyum karbonat/talk eklenir ve genellikle <b>titanyum dioksit</b> ile istenen beyazlığa ayarlanır.</li>
+        <li><b>4 – Renklendirme tabakası</b>: Neredeyse tüm şeker kaplı tabletler renklidir; renk maddesi içeren sakaroz şurubu kullanılır. İki tip renk maddesi: <b>suda çözünen boyalar</b> ve <b>suda çözünmeyen pigmentler</b>.</li>
+        <li><b>5 – Parlatma (polishing)</b>: Toz edilmiş <b>mumların</b> (karnauba mumu, balmumu) veya bunların ılık organik çözeltilerinin uygulanmasıyla cila verilir.</li>
+        <li><b>6 – Baskı (printing)</b>: Logo, ürün adı, doz/kod basılır; ink-jet veya tampon baskı işlemleri kullanılır.</li>
+      </ul>
+      <p>Şeker kaplama teknik/pratik olarak zordur ve beceri ister. Yaygın kusurlar: kaba/çukurlu görünüm, pürüzsüz fakat donuk tabletler, kırık parçalar, renk homojensizliği, yetersiz kurutmaya bağlı bölünme.</p>
+
+      <h2><span class="n">9.</span>Basınçla (Kompresyonla) Kaplama</h2>
+      <p>Film ve şeker kaplamadan farklıdır: önceden hazırlanmış çekirdek tabletin etrafında, özel tasarlı granülün tablet makinesinde <b>sıkıştırılarak basılması</b>dır; esasen <b>kuru</b> bir prosestir. Çekirdek tablet hazırlanıp daha geniş mührelı makineye taşınır; kısmen kaplama tozuyla dolu mührenin merkezine düşürülür, üstü tozla doldurulup ikinci kez basılır. <b>Geçimsiz (uyumsuz) maddeleri ayırmak</b> için de kullanılır (biri çekirdekte, diğeri kaplamada); arada stabiliteyi sağlayan bir <b>ara tabaka (inert plasebo)</b> bulunur. Mekanik olarak karmaşıktır; büyük/düzensiz granüller çekirdeğin eğri kalmasına ve hatalı kaplamaya neden olur. Hem <b>hemen-salan</b> hem <b>modifiye-salan</b> formlarda kullanılır.</p>
+
+      <h2><span class="n">10.</span>Kaplı Multipartiküller (Pellet / Boncuk) ve Pelletizasyon</h2>
+      <p>Kaplı multipartiküller, <b>pellet/boncuk (bead)</b> olarak da adlandırılan, geniş bir aralıkta modifiye/gecikmiş (gastro-dirençli) salan dozaj formlarıdır. Geleneksel parçalanmayan tabletlere göre avantajları: <b>daha hızlı/öngörülebilir gastrik boşalma</b>, performansın beslenme durumuna daha az bağlı olması, GİS'te yüksek dağılım, <b>az lokal tahriş</b>, daha yüksek hasta uyumu/stabilite, <b>homojen ilaç salımı</b> ve artırılmış biyoyararlanım. Sorunları: <b>düşük ilaç yükleme</b>, yardımcı maddeye yüksek ihtiyaç, çok adımlı formülasyon ve çok sayıda proses değişkeni, üretim tekrarlanabilirliği, <b>yüksek maliyet</b>, ileri teknoloji ve eğitimli personel ihtiyacı.</p>
+      <h3>Pelletizasyon teknikleri</h3>
+      <ul>
+        <li><b>Ekstrüzyon-sferonizasyon</b>: Islak kütle ekstrüzyonu sonrası sferonizasyonla tek tip boyutlu küresel partiküller (sferoid/pellet/boncuk) üretir; pratikte <b>0,4–3,0 mm</b> boyutta. Yüksek sistemik toksisiteli potent ilaçlar için umut vericidir.</li>
+        <li><b>Tabakalama tekniği</b>: Çözelti/süspansiyon veya kuru tozun, çekirdek (kristal, granül veya inert tohum) üzerine ardışık biriktirilmesi.</li>
+        <li><b>Kriyopelletizasyon</b>: Sıvı formülasyon damlacıklarının <b>sıvı azot</b> ile katı küresel peletlere dönüştürülmesi.</li>
+        <li><b>Sıcak eriyik ekstrüzyonu (hot melt extrusion)</b> ve <b>dondurarak pelletleme (freeze pelletization)</b>: Erimiş taşıyıcı damlacıklarının karışmayan soğuk sıvı kolonunda katılaştığı, kurutma gerektirmeyen teknik.</li>
+      </ul>
+    </section>
+
+    <section class="panel" id="tk-bosluk">
+      <div class="scorebar">
+        <div class="sc"><div class="l">Yanıtlanan</div><div class="v"><span id="tk-ans">0</span> / 30</div></div>
+        <div class="sc"><div class="l">Doğru</div><div class="v" id="tk-correct" style="color:var(--correct-line)">0</div></div>
+        <div class="sc"><div class="l">Başarı</div><div class="v" id="tk-pct">—</div></div>
+      </div>
+      <div class="intro-note">Boşluğu tamamlayan şıkka tıklayın: doğruysa <b>yeşil</b>, yanlışsa <b>kırmızı</b> yanar, doğru cevap yeşille işaretlenir.</div>
+      <div id="tk-fill"></div>
+    </section>
+
+    <section class="panel" id="tk-terim">
+      <div class="intro-note">Terime tıklayın; <b>···</b> ile anlamı açılır.</div>
+      <div id="tk-terms"></div>
+    </section>
+
+    <section class="panel" id="tk-klasik">
+      <div class="intro-note">Soruyu düşünün, ardından <b>···</b> ile model cevabı açın.</div>
+      <div id="tk-classic"></div>
+    </section>
+  </div>
+
+  <!-- ===================================================== UYARANLARA CEVAP DDS ===================================================== -->
+  <div class="topic-wrap" id="uc">
+    <nav class="tabs" data-scope="uc">
+      <button class="tab active" data-sub="uc-ozet">Detaylı Özet</button>
+      <button class="tab" data-sub="uc-bosluk">Boşluk<small>20 · yeşil/kırmızı</small></button>
+      <button class="tab" data-sub="uc-terim">Terim–Anlam<small>30 · tıkla, aç</small></button>
+      <button class="tab" data-sub="uc-klasik">Klasik<small>10 · tıkla, aç</small></button>
+    </nav>
+
+    <section class="panel summary active" id="uc-ozet">
+      <p class="lead">Uyaranlara cevap veren (stimuli-responsive / "akıllı") ilaç taşıyıcı sistemler, çeşitli <b>uyaranların (stimülanların)</b> taşıyıcının davranışını ve ilaç serbestleşmesini kontrol ettiği sistemlerdir. Amaç, ilacı doğru yerde ve doğru zamanda (zamansal ve mekansal kontrolle) salarak etkinliği artırmak ve hedef dışı etkileri en aza indirmektir.</p>
+
+      <h2><span class="n">1.</span>Temel Kavram ve Uyaran Tipleri</h2>
+      <p>Sistemler iki tip uyarana yanıt verecek şekilde tasarlanır:</p>
+      <ul>
+        <li><b>İçsel (endojen) uyaranlar</b>: Patolojik bölgenin kendi özellikleri — lokal <b>pH</b> veya <b>sıcaklık</b> değişiklikleri, <b>redoks</b> durumu, belirli proteinlerin (enzimlerin) <b>aşırı ekspresyonu</b> ve <b>hipoksi</b>. Patolojik alanlar (tümörler, enfarktlar, aterosklerotik lezyonlar, enfeksiyon bölgeleri, transplant reddi alanları) bu içsel özellikleriyle normal dokulardan ayrılır.</li>
+        <li><b>Dışsal (eksojen / fiziksel) uyaranlar</b>: Vücut dışından uygulanan <b>ultrason, sıcaklık (ısı), manyetik alan ve ışık</b>.</li>
+      </ul>
+
+      <h2><span class="n">2.</span>Neden Nanotaşıyıcılar?</h2>
+      <p>İlaç yüklü nanopartiküler taşıyıcılar; düşük stabilite, hızlı inaktivasyon/bozunma, spesifik olmayan toksisite, zayıf çözünürlük, elverişsiz farmakokinetik ve zayıf biyodağılım gibi sınırlamaların çoğunu aşabilir. Hem hidrofilik hem hidrofobik ilaçları taşıyabilir, in vivo <b>stabiliteyi ve yarı ömrü</b> artırabilir, kontrollü salım sağlayabilir ve farmakokinetiği özel olarak tasarlanabilir biçimde değiştirebilir. Böylece istenmeyen yan etkiler azaltılır ve ilaç ilgili patolojik organ/dokulara, hatta tek tek hücrelere ve hücre içi organellere hedeflenebilir.</p>
+
+      <h2><span class="n">3.</span>Partiküler Sistem Tasarımında Önemli Faktörler</h2>
+      <ul>
+        <li>Dolaşımda <b>uzun süre</b> kalmalı ve ikincil etkiler azalmalı,</li>
+        <li>İlgili organda <b>birikme</b> ve <b>kontrollü degradasyon</b> sağlanmalı,</li>
+        <li>Partiküllerin fiziksel/kimyasal özellikleri ve <b>yüzey kimyası</b> (protein adsorpsiyonu, fagositoz) önemli,</li>
+        <li><b>Boyut</b> biyodağılımda kritiktir (yaklaşık 10 nm – 15 µm küresel partiküller),</li>
+        <li><b>Matriks</b> (polimer vb.) ilaç salımını kontrol eder.</li>
+      </ul>
+
+      <hr>
+      <h2><span class="n">4.</span>İÇSEL UYARANLAR</h2>
+
+      <h3>pH duyarlı DDS</h3>
+      <p><b>Düşük pH</b>, tümörlerin ve iltihaplı/hipoksik alanların iyi bilinen özelliğidir. Tümör hücreleri aerobik koşullarda bile glikozu <b>laktik aside</b> (pK 3.7) dönüştürür; ayrıca yüksek CO₂, yetersiz perfüzyon ve kontrolsüz büyüme de düşük pH'a katkıda bulunur. pH duyarlı bir DDS, yüklü ilacı <b>kanda (pH 7,3–7,4)</b> korumalı ve ilacı tümörün interstisyel boşluğunda (pH 6,8–7,2), sitoplazmada (~7), <b>endozomlarda (pH 5–6)</b> ve <b>lizozomlarda (pH 4,5–5,5)</b> serbest bırakmalıdır. Salım, tümörün hafif asidik hücre dışı sıvılarında ve <b>EPR (artırılmış geçirgenlik ve tutulma)</b> etkisiyle tümör birikiminde de gerçekleşir; endozom/lizozomlarda hidroliz (örn. katepsin B) salımı destekler. Geliştirmede protonize olabilen gruplar (amin, imid, –COOH), pH-hassas polimerler, aside hassas kimyasal yapılar ve <b>yük dönüştürücü (charge-reversal)</b> sistemler (nötrde negatif, düşük pH'da pozitif yük) kullanılır.</p>
+
+      <h3>Redoks potansiyele duyarlı DDS</h3>
+      <p><b>Glutatyon (GSH)</b>, hücre sitoplazmasında üretilen, tiyol-disülfid değişim reaksiyonunu kolaylaştıran ana indirgeyici tripeptittir. Redoks duyarlı sistemlerde <b>disülfid bağlarının azalması (indirgenmesi)</b>, nanotaşıyıcının hızla bozunmasına ve özellikle kanserde terapötik etkinin artmasına yol açar (RS–SR + 2 R′SH → 2 RS⁻ + R′S–SR′).</p>
+
+      <h3>Enzim duyarlı DDS</h3>
+      <p>Kanser hücreleri hızlı büyüme için belirli molekülleri — enzimatik aktiviteli proteinler dahil — <b>aşırı eksprese</b> eder ve tümör mikroçevresini normalden farklı kılar. Bunların en önemlisi <b>matriks metalloproteinazlardır (MMP'ler)</b>; kanser ilerlemesindeki mikroçevre değişikliklerinin ana aracılarıdır ve hem biyobelirteç hem de salım tetikleyici olarak kullanılır. Örnek: kendi kendine birleşen, <b>MMP2'ye duyarlı</b>, TATp ile modifiye edilmiş, paklitaksel (PTX) yüklü misel nanopreparasyonu.</p>
+
+      <hr>
+      <h2><span class="n">5.</span>DIŞSAL (FİZİKSEL) UYARANLAR</h2>
+
+      <h3>Termo-duyarlı DDS</h3>
+      <p>Lokal <b>hipertermi</b>, kanser ve inflamasyonun karakteristiğidir; normal-patolojik doku sıcaklık farkı bir tetikleyicidir. Doku, mikrodalga, yüksek frekanslı akım, optik lazer, ultrason veya interstisyel lazer fotokoagülasyonla dışarıdan ısıtılabilir. Tümör çevreden daha sıcak (≥37 °C) olabilir; kanser tedavisinde tümör bölgesi <b>42–44 °C</b>'ye ısıtılarak hücreler öldürülür veya radyo/kemoterapiye duyarlı hale getirilir. Isıtmayla endotelyal gözenek boyutu ve kan akışı artar, DDS ekstravazasyonu yükselir. Sıcaklığa duyarlı yanıt için lipozomlar, <b>40–42 °C'de</b> maksimum membran kararsızlaşması/ilaç salımı veren spesifik <b>jel-sıvı faz geçiş</b> sıcaklıklı lipidlerle hazırlanır. Isıya duyarlı polimerler ise <b>LCST (düşük kritik çözelti sıcaklığı)</b> ilkesiyle çalışır; en yaygın termosensitif polimer <b>PNIPAAm</b>'dir — LCST altında hidrofilik, üstünde kompakt hidrofobik yapıya geçer. Örnek: 5-FU için kitosan-g-PNIPAAm ve CMC-g-PNIPAAm graft kopolimerlerinden polielektrolit kompleks miseller.</p>
+
+      <h3>Manyetik olarak duyarlı DDS</h3>
+      <p>Manyetik nanopreparatlar; MR görüntüleme kontrastını artırma, manyetik alan destekli radyonüklid tedavisi, hipertermi ve dokuya özel salım için kullanılır. En popüler ajan <b>demir oksittir</b> (<b>maghemit</b> veya <b>manyetit</b>), biyouyumlu polimerlerle (dekstran, PEG, PEI, PVA) stabilize edilir. Lokalizasyon harici bir <b>manyetik alanla</b> kontrol edilir. <b>SPION</b>'lar (süperparamanyetik demir oksit nanopartikülleri) çekirdekte demir oksit taşır, biyouyumlu polimerle kaplıdır ve ilaç/protein/gen taşıyabilir.</p>
+
+      <h3>Ultrasona duyarlı DDS</h3>
+      <p>Ultrason köklü bir görüntüleme yöntemidir; çözünürlüğü artırmak için <b>mikrokabarcıklar</b> kontrast ajanı olarak kullanılır. Ultrason, DDS'nin lokalize yıkımıyla tetiklenen salım için de güvenle kullanılır; salım, ultrasonun zaman/frekans/güç yoğunluğuna, tipine (puls/sürekli dalga) ve ilaç lipofilisitesine bağlıdır. Mikrokabarcıklar, gaz çekirdeğini saran lipid/protein/polimer kabuktan oluşan, ~1–10 µm yapılardır; kabuk mekanik/akustik tepkiyi, gaz çekirdeği akustik yanıtı belirler. Hedef bölgede ultrason uygulanınca kabarcıklar titreşir/parçalanır (<b>kavitasyon</b>) ve ilaç tam o bölgeye salınır; oluşan mekanik kuvvetler geri dönüşümlü hücre zarı geçirgenliği üreterek ilaç verilmesini kolaylaştırır (<b>sonoporasyon</b>). FDA onaylı örnekler: <b>Optison®, Definity®, Lumason®</b> (~1–4 µm). Gaz sızmasını önlemek için <b>perflorokarbon</b> veya nitrojen gibi ağır gazlar kullanılır.</p>
+
+      <h3>Işığa duyarlı DDS</h3>
+      <p><b>Fotoaktivasyon</b>, salımı tetiklemek için kullanılan bir başka seçenektir; ışık geniş bir ayarlanabilir parametre yelpazesi (dalga boyu, süre, yoğunluk) sunar ve mekansal-zamansal kontrol sağlar. <b>NIR (yakın kızılötesi, 700–1000 nm)</b> ışık, UV/görünür ışıktan daha uygundur çünkü dokuya derin nüfuz eder ve normal hücrelere daha az zarar verir. Işığa duyarlı gruplar/kromoforlar DDS içine kapsüllenir veya yüzeye konjuge edilir; foto-izomerizasyon, foto-çapraz bağlama, fotooksidasyon, ışıkla tetiklenen polarite geçişi veya foto-bozunma gibi mekanizmalarla salım indüklenir. Tersinir gruplara örnek <b>azobenzen ve spiropiran</b>. En çok kullanılan nanotaşıyıcılar polimerik miseller ve lipozomlardır; ayrıca dendrimerler, silika/altın nanopartikülleri ve nanojeller de kullanılır.</p>
+
+      <h2><span class="n">6.</span>Sonuç ve Gelecek</h2>
+      <p>Uyaranlara duyarlı DDS, geleneksel sistemlere kıyasla ilaçların <b>zamansal ve mekansal salımı</b> üzerinde daha iyi kontrol sağlar. Yine de hedef dışı etkileri en aza indirmek için uyaran duyarlılığının dikkatle anlaşılması; hedefleme parçalarının uyaran duyarlılığıyla <b>birleştirilmesi</b> gerekir. Gelecekteki zorluk, çok düşük konsantrasyonlu biyobelirteçlere yanıt veren ve sinyal amplifikasyonu yapabilen DDS geliştirmektir. Klinik örnekler: transplant reddini durduran uyaran-duyarlı sistemler ve invazif olmayan glikoz izlemi sağlayan <b>GlucoWatch G2 Biographer</b>.</p>
+    </section>
+
+    <section class="panel" id="uc-bosluk">
+      <div class="scorebar">
+        <div class="sc"><div class="l">Yanıtlanan</div><div class="v"><span id="uc-ans">0</span> / 20</div></div>
+        <div class="sc"><div class="l">Doğru</div><div class="v" id="uc-correct" style="color:var(--correct-line)">0</div></div>
+        <div class="sc"><div class="l">Başarı</div><div class="v" id="uc-pct">—</div></div>
+      </div>
+      <div class="intro-note">Boşluğu tamamlayan şıkka tıklayın: doğruysa <b>yeşil</b>, yanlışsa <b>kırmızı</b> yanar, doğru cevap yeşille işaretlenir.</div>
+      <div id="uc-fill"></div>
+    </section>
+
+    <section class="panel" id="uc-terim">
+      <div class="intro-note">Terime tıklayın; <b>···</b> ile anlamı açılır.</div>
+      <div id="uc-terms"></div>
+    </section>
+
+    <section class="panel" id="uc-klasik">
+      <div class="intro-note">Soruyu düşünün, ardından <b>···</b> ile model cevabı açın.</div>
+      <div id="uc-classic"></div>
+    </section>
+  </div>
+
+  <footer>
+    <div>Çalışma materyali eğitim amaçlıdır. Sınav/klinik kullanım öncesi ders notlarıyla karşılaştırın.</div>
+    <div class="tools">
+      <button class="toolbtn" id="expandAll">Açık sekmedeki tümünü aç</button>
+      <button class="toolbtn" id="collapseAll">Tümünü kapat</button>
+      <button class="toolbtn" onclick="location.reload()">↺ Sıfırla</button>
+    </div>
+  </footer>
+</div>
+
+<script>
+/* ---------------- DATA: TABLET KAPLAMA ---------------- */
+const TK_FILL=[
+  {q:"Kaplama, granül/tablet yüzeylerinin ince bir ___ filmi tabakasıyla kaplanması işlemidir.",o:["protein","polimer","mineral","yağ"],a:1},
+  {q:"Hoş olmayan tat ve kokuyu ___, kaplamanın yaygın nedenlerindendir.",o:["artırma","maskeleme","yoğunlaştırma","çözme"],a:1},
+  {q:"Tablet kaplamanın bir dezavantajı, formülasyon ___ artırmasıdır.",o:["hızını","maliyetini","saflığını","stabilitesini"],a:1},
+  {q:"Kaplama çözeltisi, sıcak hava ile ısıtılmış hareketli tabletlerin üzerine ___.",o:["dökülür","püskürtülür","sürülür","damlatılır"],a:1},
+  {q:"İlaç endüstrisinde en popüler kaplama tekniği ___ kaplamadır.",o:["şeker","film","basınçla","enterik"],a:1},
+  {q:"Şeker kaplama, çekirdek tabletlere ___ bazlı formülasyonun ardışık uygulanmasıdır.",o:["sakaroz","polimer","lipid","protein"],a:0},
+  {q:"Basınçla (kompresyonla) kaplama esasen ___ bir işlemdir.",o:["sulu","kuru","sıcak","vakumlu"],a:1},
+  {q:"Film kaplama en çok elde edilen ilaç ___ özelliğine göre sınıflandırılır.",o:["renk","salım","sertlik","tat"],a:1},
+  {q:"Hemen-salan film kaplamalar genellikle suda ___.",o:["çözünmez","çözünür","şişer","erimez"],a:1},
+  {q:"Gastro-dirençli kaplamalar suda yalnızca pH ___ üzerindeki değerlerde çözünür.",o:["1-2","5-6","8-9","3-4"],a:1},
+  {q:"Uzatılmış-salan film kaplamalar suda ___.",o:["çözünür","çözünmez","hızla dağılır","erir"],a:1},
+  {q:"Film kaplamada en yaygın kullanılan selüloz türevi ___ dir.",o:["EC","HPMC","CAP","PVA"],a:1},
+  {q:"Farmasötikte en çok kullanılan vinil polimeri ___ dir.",o:["PVA","PVP","PEG","EC"],a:1},
+  {q:"PVP'nin film kaplamada kullanımı ___ olması nedeniyle sınırlıdır.",o:["pahalı","yapışkan","toksik","renksiz"],a:1},
+  {q:"Polivinil alkol (PVA), polivinil asetatın kısmi ___ ile elde edilir.",o:["oksidasyonu","hidrolizi","polimerizasyonu","nötralizasyonu"],a:1},
+  {q:"Aminoalkil metakrilat kopolimerleri düşük pH'da çözündüğü için ___ etkilidir.",o:["renk verme","tat maskeleme","sertleştirme","koruma"],a:1},
+  {q:"Modifiye-salan kaplamada kullanılan, suda çözünmeyen bir selüloz türevi ___ dir.",o:["HPMC","EC (etil selüloz)","MC","HPC"],a:1},
+  {q:"Metakrilik asit kopolimerleri ___ pH'da çözünmez, pH yükseldikçe çözünür.",o:["yüksek","düşük","nötr","sabit"],a:1},
+  {q:"Poli(met)akrilatların ticari adı ___ dir.",o:["Carbopol","Eudragit","Sephadex","Pluronic"],a:1},
+  {q:"Fitalat-ester polimerlerine örnek ___ dir.",o:["HPMC","CAP (selüloz asetat fitalat)","PVP","PEG"],a:1},
+  {q:"Çözünmeyen film kaplama formüllerinde boya yerine ___ tercih edilir.",o:["pigment","tampon","plastifiyan","surfaktan"],a:0},
+  {q:"Bir renk maddesi örneği ___ dir.",o:["talk","titanyum dioksit","laktoz","nişasta"],a:1},
+  {q:"Film kaplamada organik çözücü olarak ___ kullanılabilir.",o:["su","aseton","gliserin","etanolamin"],a:1},
+  {q:"Sulu polimer dispersiyonu, bir polimerin sulu ___ ifade eder.",o:["çözeltisini","süspansiyonunu","emülsiyonunu","jelini"],a:1},
+  {q:"Şeker kaplamada koruyucu (sealing) tabaka için geleneksel olarak ___ kullanılmıştır.",o:["talk","şellak","mum","jelatin"],a:1},
+  {q:"Şeker kaplamada alt kaplamada hacim verici olarak ___ eklenir.",o:["kalsiyum karbonat","laktoz","nişasta","selüloz"],a:0},
+  {q:"Tabletlerin birbirine yapışmasını önlemek için ___ gibi antiaderentler kullanılır.",o:["arap zamkı","talk","sakaroz","TiO2"],a:1},
+  {q:"Parlatma (polishing) aşamasında ___ (karnauba mumu, balmumu) uygulanır.",o:["pigment","mum","şellak","jelatin"],a:1},
+  {q:"Kompresyonla kaplama ___ maddeleri ayırmak için de kullanılır.",o:["çözünür","geçimsiz (uyumsuz)","renkli","steril"],a:1},
+  {q:"Ekstrüzyon-sferonizasyonla 0,4–3,0 mm boyutunda ___ üretilir.",o:["tablet","pellet (sferoid)","kapsül","granül tozu"],a:1}
+];
+const TK_TERMS=[
+  ["Kaplama","Granül/tablet yüzeyinin ince bir polimer film tabakasıyla kaplanması işlemi."],
+  ["Film kaplama","Tablet/kapsül/çok partiküllü çekirdek yüzeyine çözelti püskürtülerek ince polimer film oluşturma; en popüler teknik."],
+  ["Şeker kaplama","Çekirdek tablete sakaroz bazlı formülasyonun ardışık uygulanmasıyla kalın şeker tabakası oluşturma."],
+  ["Enterik (gastro-dirençli) kaplama","Mide ortamına dayanıklı, yalnızca pH 5-6 üzerinde çözünen kaplama; asitte dayanıksız veya midede irritan ilaçlar için."],
+  ["Basınçla (kompresyon) kaplama","Çekirdek tablet etrafında granülün tablet makinesinde sıkıştırılarak basılması; esasen kuru proses."],
+  ["Hemen-salan film kaplama","Genellikle suda çözünür, ilacı hızla serbestleştiren film kaplama."],
+  ["Uzatılmış-salan film kaplama","Suda çözünmeyen, ilacı tipik 6-12 saat kontrollü salan, doz sayısını azaltan kaplama."],
+  ["HPMC","Film kaplamada en yaygın selüloz eteri; suda çözünür, iyi mekanik özellikli film verir."],
+  ["EC (etil selüloz)","Yüksek sübstitüsyonlu, suda çözünmeyen, modifiye salan selüloz türevi."],
+  ["PVP","Farmasötikte yaygın vinil polimeri; yapışkanlığı film kaplamada kullanımını sınırlar."],
+  ["PVA","Polivinil asetatın kısmi hidroliziyle elde edilen, gaz bariyeri oluşturan film polimeri."],
+  ["Aminoalkil metakrilat kopolimerleri","Düşük pH'da çözünen, tat maskelemede etkili akrilat kopolimerleri."],
+  ["Eudragit","Poli(met)akrilatların ticari adı."],
+  ["Metakrilik asit kopolimerleri","Düşük pH'da çözünmeyen, pH yükselince çözünen mide-dirençli polimerler; sulu dispersiyonda kullanılır."],
+  ["Fitalat-ester polimerleri","Geciktirilmiş salım için uygun polimerler; HPMCP, CAP, PVAP örnekleridir."],
+  ["CAP","Selüloz asetat fitalat."],
+  ["HPMCP","Hidroksipropilmetil selüloz fitalat."],
+  ["PVAP","Polivinil asetat fitalat."],
+  ["Plastifiyan","Film esnekliğini artıran yardımcı madde."],
+  ["Pigment","Çözünmeyen renk maddesi; ışığa dayanıklı, opak, yüksek kaplayıcılıkta."],
+  ["Alüminyum lakı","Suda çözünen boyanın bağlanmış (çözünmez) şekli."],
+  ["Sulu polimer dispersiyonu","Polimerin sulu süspansiyonu; modern film kaplamada organik çözücüye tercih edilir."],
+  ["Film kaplama prosesi","Islanma/adhezyon → birikme-kısmi kuruma → yayılma → koalesans-kohezyon aşamaları."],
+  ["Film kaplama kusurları","Beneklenme, kapaklanma, çatlama, köprüleme gibi tipik kusurlar."],
+  ["Görsel kusur","Film kaplı tabletlerde proses (püskürtme/buharlaşma dengesizliği) veya formülasyon kaynaklı görünüm hataları."],
+  ["Fonksiyonel kusur","İlaç salımını etkileyen, çoğunlukla modifiye-salım ürünleriyle ilgili kusurlar."],
+  ["Kazanda kaplama","Yan havalandırma kanallı kazanda püskürtmeyle kaplama (Accela Cota, Hi-Coater vb.)."],
+  ["Akışkanlaştırıcı-yatak kaplama","Partiküllerin hava akımıyla askıda tutulup püskürtülerek kaplanması (Glatt, GEA vb.)."],
+  ["Koruyucu kaplama (sealing)","Şeker kaplamada çekirdeği sudan koruyan sızdırmazlık tabakası (şellak, CAP, PVAP)."],
+  ["Alt kaplama (subcoating)","Tablet kenarlarını yuvarlayan, ağırlığı %50-100 artıran tabaka; kalsiyum karbonat, talk, arap zamkı içerir."],
+  ["Düzeltici (pürüzsüzleştirici) tabaka","Renk vericiden önce pürüzsüz yüzey sağlayan, genellikle TiO2 ile beyazlatılan tabaka."],
+  ["Renklendirme tabakası","Renk maddesi içeren sakaroz şurubu; suda çözünen boya veya çözünmeyen pigment kullanılır."],
+  ["Parlatma (polishing)","Toz mumların (karnauba mumu, balmumu) uygulanmasıyla cila verme."],
+  ["Baskı (printing)","Logo/ürün adı/doz kodunun ink-jet veya tampon baskıyla basılması."],
+  ["Kaplı multipartiküller","Pellet/boncuk (bead); modifiye/gecikmiş salan, GİS'te iyi dağılan dozaj formları."],
+  ["Pellet avantajı","Hızlı/öngörülebilir gastrik boşalma, az lokal tahriş, homojen salım, artırılmış biyoyararlanım."],
+  ["Pellet dezavantajı","Düşük ilaç yükleme, çok adımlı üretim, yüksek maliyet, ileri teknoloji ve eğitimli personel ihtiyacı."],
+  ["Ekstrüzyon-sferonizasyon","Islak kütle ekstrüzyonu sonrası sferonizasyonla 0,4-3,0 mm küresel pellet üretimi."],
+  ["Tabakalama tekniği","Çözelti/süspansiyon/kuru tozun çekirdek (tohum) üzerine ardışık biriktirilmesi."],
+  ["Kriyopelletizasyon","Sıvı damlacıkların sıvı azot ile katı küresel pellete dönüştürülmesi; dondurarak pelletlemede kurutma gerekmez."]
+];
+const TK_CLASSIC=[
+  ["Tablet kaplama nedir ve hangi amaçlarla yapılır?","Granül/tablet yüzeyinin ince polimer filmle kaplanması işlemidir. Amaç: kaplanmamış formun özelliklerini düzeltmek ve yararlarını artırmak — stabilite/koruma, tat-koku maskeleme, teşhis kolaylığı, görünüm, geçimsiz maddeleri ayırma ve ilaç salımını kontrol/modifiye etme."],
+  ["Oral katı dozaj formlarının kaplanma nedenlerini (en az 5) sayınız.","(1) İlacı çevreden koruma/stabilite; (2) tat-koku maskeleme; (3) ürün teşhisini kolaylaştırma; (4) görünümü iyileştirme; (5) geçimsiz maddeler arası etkileşim riskini azaltma; (6) salımı kontrol etme; (7) enterik kaplamadaki gibi salımı değiştirme/sürekli etki."],
+  ["Tablet kaplamanın dezavantajları nelerdir?","Formülasyon maliyetini artırır; farmakodinamik özellikleri etkileyebilir; beneklenme/kapaklanma/çatlama/köprüleme gibi film kusurlarına yol açabilir; işlem karmaşıktır."],
+  ["Film kaplama prosesinin aşamalarını sayınız.","Islanma/adhesif özellik kazandırma; birikme ve kısmi kuruma; yayılma (yüzeyi kaplama); koalesans ve kohezyon."],
+  ["İlaç endüstrisinde kullanılan başlıca kaplama tiplerini sayınız.","Film kaplama, şeker kaplama ve enterik kaplama; ayrıca ilaç salımını modifiye etmek için kaplama ve basınçla (kompresyonla) kaplama."],
+  ["Film kaplamada kullanılan formülasyon bileşenleri nelerdir?","Polimer, plastifiyan, renk verici madde ve solvan/vehikül. Tüm maddeler ilgili mevzuat ve farmakope gereksinimlerine uymalıdır."],
+  ["Hemen-salan ve uzatılmış-salan film kaplamayı karşılaştırınız.","Hemen-salan: genellikle suda çözünür, ilacı hızla salar (gastro-dirençli alt tipi pH 5-6 üstünde çözünür). Uzatılmış-salan: suda çözünmez, ilacı tipik 6-12 saat kontrollü salar, günlük doz sayısını azaltır ve salım profilini değiştirir."],
+  ["Gastro-dirençli (enterik) kaplama ne işe yarar?","İlacı mide ortamından korur (asitte dayanıksız ilaçlar) veya ilacın midede serbestleşmesini önler (midede irritan ilaçlar); pH 5-6 üzerinde çözünür. Ayrıca kolona ilaç taşıyıcı sistemlerin parçası olarak kullanılır."],
+  ["Film kaplamada kullanılan hemen-salan polimerleri açıklayınız.","Selüloz türevleri (en yaygın HPMC; ayrıca MC, HPC); vinil türevleri (PVP — yapışkan, kopolimeri tercih edilir; PVA — adhezyonlu, gaz bariyeri; vinil alkol-etilen glikol kopolimerleri); aminoalkil metakrilat kopolimerleri (tat maskeleme)."],
+  ["Modifiye salan kaplamada kullanılan polimerleri açıklayınız.","Yüksek sübstitüsyonlu/çözünmeyen selüloz türevleri (EC, selüloz asetat); metilmetakrilat ve metakrilik asit kopolimerleri (Eudragit — düşük pH'da çözünmez, pH artınca çözünür, mide-dirençli); fitalat-ester polimerleri (HPMCP, CAP, PVAP — geciktirilmiş salım)."],
+  ["Film kaplama hatalarını (görsel ve fonksiyonel) açıklayınız.","Görsel kusurlar: proses sorunları (kurutmada püskürtme hızı ile çözücü buharlaşma oranı dengesizliği) ve formülasyon sorunları (çekirdek/kaplama). Fonksiyonel kusurlar: ilaç salımını etkileyenler, çoğunlukla modifiye-salım ürünleriyle ilgilidir."],
+  ["Şeker kaplamanın kademelerini sırasıyla sayınız.","1) Koruyucu kaplama (sealing), 2) Alt kaplama, 3) Düzeltici (pürüzsüzleştirici), 4) Renklendirme, 5) Parlatma (polishing), 6) Baskı."],
+  ["Basınçla (kompresyonla) kaplamayı açıklayınız.","Önceden hazırlanan çekirdek tablet etrafında özel granülün tablet makinesinde sıkıştırılıp basılmasıdır; kuru prosestir. Geçimsiz maddeleri ayırmak için kullanılır; arada inert plasebo ara tabaka stabiliteyi sağlar. Hem hemen-salan hem modifiye-salan formlarda kullanılır."],
+  ["Kaplı multipartiküllerin (pellet) avantaj ve dezavantajlarını sayınız.","Avantaj: hızlı/öngörülebilir gastrik boşalma, beslenmeye az bağımlılık, GİS'te yüksek dağılım, az lokal tahriş, homojen salım, artırılmış biyoyararlanım, daha yüksek stabilite/uyum. Dezavantaj: düşük ilaç yükleme, yardımcı maddeye yüksek ihtiyaç, çok adımlı üretim, çok değişken, yüksek maliyet, ileri teknoloji/personel ihtiyacı."],
+  ["Pelletizasyon tekniklerini sayınız ve ekstrüzyon-sferonizasyonu açıklayınız.","Teknikler: ekstrüzyon-sferonizasyon, tabakalama, kriyopelletizasyon, sıcak eriyik ekstrüzyonu, dondurarak pelletleme. Ekstrüzyon-sferonizasyon: ıslak kütlenin ekstrüzyonu sonrası sferonizasyonla tek tip boyutlu küresel partiküller (0,4-3,0 mm) üretilir; yüksek toksisiteli potent ilaçlar için uygundur."]
+];
+
+/* ---------------- DATA: UYARANLARA CEVAP ---------------- */
+const UC_FILL=[
+  {q:"Uyaranlara cevap veren sistemlerde ilaç serbestleşmesini ___ kontrol eder.",o:["besinler","uyaranlar (stimülanlar)","enzimler tek başına","sıcaklık tek başına"],a:1},
+  {q:"Tümörlerin, iltihaplı ve hipoksik alanların iyi bilinen bir özelliği ___ pH'dır.",o:["yüksek","düşük","nötr","değişmeyen"],a:1},
+  {q:"Tümör hücreleri glikozu ___ aside dönüştürür.",o:["asetik","laktik","sitrik","ürik"],a:1},
+  {q:"pH duyarlı DDS ilacı kanda (pH ~7,4) korur, tümörün asidik ortamında ise ___.",o:["yıkar","serbest bırakır","tutar","kristalize eder"],a:1},
+  {q:"Endozomların pH'sı yaklaşık ___ aralığındadır.",o:["7-8","5-6","2-3","9-10"],a:1},
+  {q:"Tümörde nanotaşıyıcıların pasif birikimi ___ etkisiyle olur.",o:["EPR","first-pass","ADME","HLB"],a:0},
+  {q:"Redoks duyarlı DDS'de ana indirgeyici ajan ___ dir.",o:["glutatyon (GSH)","insülin","albümin","kolesterol"],a:0},
+  {q:"Redoks sistemlerde ___ bağlarının azalması nanotaşıyıcıyı bozar.",o:["peptit","disülfid","hidrojen","iyonik"],a:1},
+  {q:"Enzim duyarlı DDS'de kanser ilerlemesinin ana aracısı enzim grubu ___ dir.",o:["MMP (matriks metalloproteinaz)","lipaz","amilaz","laktaz"],a:0},
+  {q:"Kanser tedavisinde hipertermi yöntemi tümör bölgesini ___ °C'ye ısıtır.",o:["20-25","42-44","60-70","32-34"],a:1},
+  {q:"Termo-duyarlı lipozomlar ___ faz geçiş sıcaklığına sahip lipidlerle hazırlanır.",o:["katı-katı","jel-sıvı","sıvı-gaz","amorf"],a:1},
+  {q:"DDS'de en yaygın kullanılan termosensitif polimer ___ dir.",o:["HPMC","PNIPAAm","PVP","kitosan"],a:1},
+  {q:"PNIPAAm, ___ altında hidrofilik, üstünde hidrofobiktir.",o:["pK","LCST","CMC","Tg"],a:1},
+  {q:"Manyetik duyarlı DDS'de en popüler ajan ___ dir.",o:["altın","demir oksit","gümüş","bakır"],a:1},
+  {q:"Çekirdeğinde demir oksit bulunan, polimerle kaplı manyetik nanopartiküller ___ olarak adlandırılır.",o:["SLN","SPION","NLC","misel"],a:1},
+  {q:"Ultrasonla ilaç salımında kullanılan, gaz çekirdekli mikrometre yapılar ___ dir.",o:["lipozom","mikrokabarcık","dendrimer","nanojel"],a:1},
+  {q:"Ultrasonun mikrokabarcıkları titreştirip patlatmasıyla oluşan olaya ___ denir.",o:["difüzyon","kavitasyon","ozmoz","adsorpsiyon"],a:1},
+  {q:"FDA onaylı bir mikrokabarcık ürünü ___ dir.",o:["Eudragit","Optison® / Definity® / Lumason®","Carbopol","Pluronic"],a:1},
+  {q:"Işığa duyarlı DDS için biyomedikal uygulamalarda en uygun dalga boyu aralığı ___ ışıktır.",o:["UV","NIR (yakın kızılötesi, 700-1000 nm)","X-ışını","mor"],a:1},
+  {q:"Işığa duyarlı DDS'de kullanılan tersinir foto-duyarlı gruplara örnek ___ dir.",o:["HPMC","azobenzen / spiropiran","glutatyon","demir oksit"],a:1}
+];
+const UC_TERMS=[
+  ["Uyaranlara duyarlı (stimuli-responsive) DDS","Uyaranların taşıyıcının davranışını ve ilaç salımını kontrol ettiği 'akıllı' ilaç taşıyıcı sistemler."],
+  ["İçsel (endojen) uyaranlar","Patolojik bölgenin kendi özellikleri: pH, sıcaklık, redoks durumu, enzim aşırı ekspresyonu, hipoksi."],
+  ["Dışsal (eksojen) uyaranlar","Vücut dışından uygulanan fiziksel uyaranlar: ultrason, sıcaklık, manyetik alan, ışık."],
+  ["Nanotaşıyıcı","Hidrofilik/hidrofobik ilaç taşıyabilen, stabilite ve yarı ömrü artıran, kontrollü salım sağlayan partiküler taşıyıcı."],
+  ["EPR etkisi","Artırılmış geçirgenlik ve tutulma; nanotaşıyıcıların tümörde pasif birikimini sağlayan etki."],
+  ["pH duyarlı DDS","Ortam pH'sındaki değişime göre ilaç salan sistem; ilacı kanda korur, asidik tümör/hücre içi bölmelerde salar."],
+  ["Yük dönüştürücü (charge-reversal) DDS","Nötr pH'da negatif, düşük pH'da pozitif yüke dönüşerek hücre alımını artıran sistem."],
+  ["Laktik asit","Tümör hücrelerinin glikozu dönüştürdüğü, düşük pH'a yol açan asit (pK 3.7)."],
+  ["Endozom/lizozom pH","Hücre içi asidik bölmeler: endozom pH 5-6, lizozom pH 4,5-5,5."],
+  ["Redoks duyarlı DDS","Disülfid bağlarının indirgenmesiyle hızla bozunan, özellikle kanserde etkinliği artıran sistem."],
+  ["Glutatyon (GSH)","Sitoplazmada üretilen, tiyol-disülfid değişimini kolaylaştıran ana indirgeyici tripeptit."],
+  ["Disülfid bağı","Redoks duyarlı sistemlerde GSH ile kırılarak salımı tetikleyen bağ."],
+  ["Enzim duyarlı DDS","Tümörde lokal olarak aşırı eksprese edilen enzimlerce tetiklenen salım sistemi."],
+  ["MMP (matriks metalloproteinaz)","Kanser ilerlemesinde mikroçevre değişikliklerinin ana aracısı; hem biyobelirteç hem salım tetikleyici."],
+  ["Termo-duyarlı DDS","Sıcaklık değişimine yanıt veren, hiperterminin tetiklediği sistem."],
+  ["Hipertermi","Tümör bölgesinin 42-44 °C'ye ısıtılması; kanser hücrelerini öldürür veya radyo/kemoterapiye duyarlılaştırır."],
+  ["LCST","Düşük kritik çözelti sıcaklığı; polimerin çözünür/çözünmez hale geçtiği sıcaklık."],
+  ["PNIPAAm","Poli(N-izopropilakrilamid); en yaygın termosensitif polimer (LCST altı hidrofilik, üstü hidrofobik)."],
+  ["Jel-sıvı faz geçişi","Termo-duyarlı lipozomda 40-42 °C'de membranın kararsızlaşıp ilacı salması."],
+  ["Manyetik duyarlı DDS","Harici manyetik alanla lokalizasyonu kontrol edilen sistem."],
+  ["SPION","Süperparamanyetik demir oksit nanopartikülü; biyouyumlu polimerle kaplı, ilaç/protein/gen taşır."],
+  ["Maghemit / manyetit","Manyetik DDS'de kullanılan demir oksit formları."],
+  ["Ultrasona duyarlı DDS","Ultrasonun lokalize yıkımıyla salım tetikleyen sistem."],
+  ["Mikrokabarcık","Gaz çekirdekli, lipid/protein/polimer kabuklu, ~1-10 µm boyutlu yapı."],
+  ["Kavitasyon","Ultrasonla kabarcıkların salınım/çökmesi; ilaç salımını ve doku penetrasyonunu sağlar."],
+  ["Sonoporasyon","Ultrason aracılı, hücre zarı geçirgenliğini geçici artırarak ilaç verme."],
+  ["Perflorokarbon","Mikrokabarcıkta gaz sızmasını önleyen, dolaşım ömrünü uzatan ağır gaz."],
+  ["Işığa duyarlı DDS","Fotoaktivasyonla (foto-izomerizasyon, foto-bozunma vb.) ilaç salan sistem."],
+  ["NIR (yakın kızılötesi)","700-1000 nm ışık; dokuya derin nüfuz eder, normal hücrelere daha az zarar verir."],
+  ["Azobenzen / spiropiran","Işığa duyarlı DDS'de kullanılan tersinir foto-duyarlı gruplar."]
+];
+const UC_CLASSIC=[
+  ["Uyaranlara duyarlı DDS nedir ve hangi uyaranlar kullanılır?","Uyaranların taşıyıcının davranışını ve ilaç salımını kontrol ettiği akıllı sistemlerdir. İçsel uyaranlar: pH, sıcaklık, redoks, enzim ekspresyonu, hipoksi. Dışsal uyaranlar: ultrason, sıcaklık (ısı), manyetik alan, ışık."],
+  ["İçsel ve dışsal uyaranları örneklerle ayırınız.","İçsel: patolojik bölgenin kendi özellikleri — düşük pH (tümör/iltihap), redoks (GSH), aşırı enzim (MMP), hipoksi. Dışsal: vücut dışından uygulanan ultrason, ısı/hipertermi, manyetik alan ve ışık (NIR)."],
+  ["Partiküler sistem tasarımında dikkat edilecek faktörleri sayınız.","Dolaşımda uzun kalma, ikincil etkilerin azalması, ilgili organda birikme, kontrollü degradasyon, partiküllerin fiziksel/kimyasal özellikleri, yüzey kimyası (protein adsorpsiyonu/fagositoz), boyut (10 nm-15 µm) ve salımı kontrol eden matriks."],
+  ["pH duyarlı DDS'nin çalışma prensibini ve tümör mikroçevresini açıklayınız.","Tümör hücreleri glikozu laktik aside çevirir; düşük perfüzyon ve yüksek CO2 ile ortam asidik olur. pH duyarlı DDS ilacı kanda (pH 7,3-7,4) korur, tümör interstisyumu (6,8-7,2), endozom (5-6) ve lizozomlarda (4,5-5,5) salar. EPR etkisiyle tümörde birikir; protonize gruplar, pH-hassas polimerler veya yük dönüştürücü sistemlerle tasarlanır."],
+  ["Redoks duyarlı DDS'yi açıklayınız.","Sitoplazmada yüksek bulunan glutatyon (GSH), tiyol-disülfid değişimiyle nanotaşıyıcıdaki disülfid bağlarını indirger; bu bağların kopması taşıyıcıyı hızla bozar ve özellikle kanserde terapötik etkinliği artırır."],
+  ["Enzim duyarlı DDS'yi ve MMP'lerin rolünü açıklayınız.","Kanser hücreleri enzimatik aktiviteli proteinleri aşırı eksprese ederek mikroçevreyi değiştirir. MMP'ler bu değişikliklerin ana aracısıdır; hem biyobelirteç hem salım tetikleyici olarak kullanılır (örn. MMP2'ye duyarlı, paklitaksel yüklü misel)."],
+  ["Termo-duyarlı DDS'yi açıklayınız.","Hipertermi (tümör 42-44 °C'ye ısıtılır) tetikleyicidir; ısı gözenek boyutu/kan akışını artırarak ekstravazasyonu yükseltir. Lipozomlar 40-42 °C jel-sıvı faz geçişli lipidlerle; polimerler LCST ilkesiyle (PNIPAAm: altı hidrofilik, üstü hidrofobik) tasarlanır."],
+  ["Manyetik duyarlı DDS'yi açıklayınız.","Demir oksit (maghemit/manyetit) temelli, biyouyumlu polimerlerle (dekstran, PEG, PEI, PVA) kaplı nanopartiküller harici manyetik alanla yönlendirilir. SPION'lar demir oksit çekirdekli, polimer kaplı olup ilaç/protein/gen taşıyabilir; MR kontrastı, hipertermi ve dokuya özel salımda kullanılır."],
+  ["Ultrasona duyarlı DDS ve mikrokabarcıkların rolünü açıklayınız.","Ultrason, DDS'nin lokalize yıkımıyla salımı tetikler. Mikrokabarcıklar (gaz çekirdekli, lipid/protein/polimer kabuklu) hedef bölgede ultrasonla kavitasyona uğrar; oluşan mekanik kuvvetler geri dönüşümlü zar geçirgenliği (sonoporasyon) sağlar. FDA onaylı örnekler Optison, Definity, Lumason; gaz sızmasını önlemek için perflorokarbon kullanılır."],
+  ["Işığa duyarlı DDS'yi açıklayınız.","Fotoaktivasyonla salım tetiklenir; ışık dalga boyu/süre/yoğunluk olarak ayarlanabilir ve mekansal-zamansal kontrol sağlar. NIR (700-1000 nm) dokuya derin nüfuz eder, az zarar verir. Foto-izomerizasyon, foto-çapraz bağlama, fotooksidasyon veya foto-bozunma gibi mekanizmalar (azobenzen, spiropiran) salımı indükler; en çok misel ve lipozom kullanılır."]
+];
+
+/* ---------------- RENDER HELPERS ---------------- */
+function renderFill(boxId, arr, prefix, total){
+  const box=document.getElementById(boxId);
+  arr.forEach((it,i)=>{
+    const card=document.createElement('div');card.className='q';
+    const qHtml=it.q.replace('___','<span class="blank">______</span>');
+    const opts=it.o.map((t,oi)=>`<button class="opt" data-c="${oi===it.a}"><span class="mark"><span>${String.fromCharCode(65+oi)}</span></span><span>${t}</span></button>`).join('');
+    card.innerHTML=`<div class="q-top"><div class="q-no">${i+1}</div><div class="q-text">${qHtml}</div></div><div class="opts">${opts}</div>`;
+    box.appendChild(card);
+  });
+  let ans=0,cor=0;
+  box.addEventListener('click',e=>{
+    const b=e.target.closest('.opt');if(!b)return;
+    const card=b.closest('.q');if(card.dataset.done)return;card.dataset.done="1";
+    const right=b.dataset.c==='true';
+    card.querySelectorAll('.opt').forEach(o=>{o.disabled=true;if(o.dataset.c==='true')o.classList.add('correct');});
+    if(!right)b.classList.add('wrong');
+    ans++;if(right)cor++;
+    document.getElementById(prefix+'-ans').textContent=ans;
+    document.getElementById(prefix+'-correct').textContent=cor;
+    document.getElementById(prefix+'-pct').textContent=Math.round(cor/ans*100)+'%';
+  });
+}
+function renderReveal(boxId, list){
+  const box=document.getElementById(boxId);
+  list.forEach((item,i)=>{
+    const [head,body]=item;
+    const el=document.createElement('div');el.className='reveal';
+    el.innerHTML=`<div class="reveal-head"><div class="reveal-no">${i+1}</div><div class="reveal-term">${head}</div><div class="dots">···</div></div><div class="reveal-body">${body}</div>`;
+    el.querySelector('.reveal-head').addEventListener('click',()=>el.classList.toggle('open'));
+    box.appendChild(el);
+  });
+}
+
+renderFill('tk-fill',TK_FILL,'tk',30);
+renderReveal('tk-terms',TK_TERMS);
+renderReveal('tk-classic',TK_CLASSIC);
+renderFill('uc-fill',UC_FILL,'uc',20);
+renderReveal('uc-terms',UC_TERMS);
+renderReveal('uc-classic',UC_CLASSIC);
+
+/* ---------------- NAVIGATION ---------------- */
+document.querySelectorAll('.topbtn').forEach(b=>{
+  b.addEventListener('click',()=>{
+    document.querySelectorAll('.topbtn').forEach(x=>x.classList.remove('active'));
+    document.querySelectorAll('.topic-wrap').forEach(x=>x.classList.remove('active'));
+    b.classList.add('active');
+    document.getElementById(b.dataset.topic).classList.add('active');
+    window.scrollTo({top:0,behavior:'smooth'});
+  });
+});
+document.querySelectorAll('.tabs').forEach(nav=>{
+  nav.addEventListener('click',e=>{
+    const t=e.target.closest('.tab');if(!t)return;
+    const wrap=nav.closest('.topic-wrap');
+    nav.querySelectorAll('.tab').forEach(x=>x.classList.remove('active'));
+    wrap.querySelectorAll('.panel').forEach(x=>x.classList.remove('active'));
+    t.classList.add('active');
+    document.getElementById(t.dataset.sub).classList.add('active');
+    window.scrollTo({top:0,behavior:'smooth'});
+  });
+});
+document.getElementById('expandAll').addEventListener('click',()=>{
+  document.querySelectorAll('.topic-wrap.active .panel.active .reveal').forEach(r=>r.classList.add('open'));
+});
+document.getElementById('collapseAll').addEventListener('click',()=>{
+  document.querySelectorAll('.reveal').forEach(r=>r.classList.remove('open'));
+});
+</script>
+</body>
+</html>
