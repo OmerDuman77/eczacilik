@@ -1,0 +1,505 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Modifiye İlaç Salım Sistemleri II — Kapsamlı Özet</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Spectral:ital,wght@0,400;0,600;0,800;1,500&family=Inter+Tight:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#0b1413;--panel:#11201e;--panel-2:#172a27;--ink:#e7f0ee;--muted:#8fa6a2;--line:#23423d;
+    --accent:#2bb6a3;--accent-2:#e0a458;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{scroll-behavior:smooth}
+  body{
+    background:radial-gradient(1100px 560px at 84% -10%, rgba(43,182,163,.10), transparent 60%),
+               radial-gradient(900px 520px at -10% 22%, rgba(224,164,88,.07), transparent 55%),var(--bg);
+    color:var(--ink);font-family:'Inter Tight',system-ui,sans-serif;line-height:1.65;-webkit-font-smoothing:antialiased
+  }
+  .wrap{max-width:880px;margin:0 auto;padding:48px 22px 120px}
+
+  .kicker{font-size:.72rem;letter-spacing:.3em;text-transform:uppercase;color:var(--accent);font-weight:600;margin-bottom:14px}
+  h1.title{font-family:'Spectral',serif;font-weight:800;font-size:clamp(2rem,5vw,3.2rem);line-height:1.04;letter-spacing:-.01em;margin-bottom:14px}
+  h1.title em{font-style:italic;color:var(--accent-2)}
+  .lede{color:var(--muted);font-size:1.05rem;max-width:62ch;margin-bottom:30px}
+
+  .toc{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:18px 20px;margin-bottom:42px}
+  .toc .toc-h{font-size:.74rem;letter-spacing:.22em;text-transform:uppercase;color:var(--accent);font-weight:600;margin-bottom:10px}
+  .toc ol{list-style:none;counter-reset:t;display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:6px 22px}
+  .toc li{counter-increment:t;padding:4px 0}
+  .toc li a{color:#cfe0dc;text-decoration:none;font-size:.95rem;display:flex;gap:10px;align-items:baseline;transition:.18s}
+  .toc li a::before{content:counter(t,decimal-leading-zero);color:var(--accent-2);font-family:'Spectral',serif;font-style:italic;font-size:.85rem;min-width:24px}
+  .toc li a:hover{color:var(--accent)}
+
+  section{margin-top:48px}
+  section:first-of-type{margin-top:0}
+  h2.section{font-family:'Spectral',serif;font-weight:700;font-size:clamp(1.5rem,3.4vw,2rem);line-height:1.12;letter-spacing:-.01em;margin-bottom:6px;padding-top:14px;border-top:1px solid var(--line)}
+  h2.section .num{font-style:italic;color:var(--accent);font-weight:600;margin-right:10px;font-size:.85em}
+  h3{font-size:1.08rem;font-weight:600;color:var(--accent-2);margin:22px 0 6px}
+
+  p{margin:12px 0;color:#dfeae7}
+  ul{margin:10px 0 10px 4px;padding-left:22px;color:#dfeae7}
+  ul li{margin:6px 0}
+  ol{margin:10px 0 10px 4px;padding-left:24px;color:#dfeae7}
+  ol li{margin:6px 0}
+  b{color:var(--ink)}
+
+  .lead{font-size:1.04rem;border-left:3px solid var(--accent);padding-left:16px;color:#cfe0dc;margin:14px 0}
+  .pull{background:var(--panel);border:1px solid var(--line);border-left:3px solid var(--accent-2);border-radius:0 12px 12px 0;padding:14px 18px;margin:18px 0;color:#e9d9b9;font-size:.97rem}
+  .pull b{color:#fff5dd}
+
+  .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:14px;margin:14px 0}
+  .card{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:14px 16px}
+  .card h4{font-family:'Spectral',serif;font-weight:600;font-size:1.04rem;margin-bottom:4px;color:var(--accent)}
+  .card p{margin:6px 0 0;font-size:.94rem;color:#dfeae7}
+
+  .formula{background:var(--panel-2);border:1px solid var(--line);border-radius:10px;padding:10px 14px;font-family:'Spectral',serif;color:#e9d9b9;margin:8px 0;display:inline-block}
+
+  .tag{display:inline-block;font-size:.72rem;letter-spacing:.08em;text-transform:uppercase;color:#04201c;background:var(--accent);padding:3px 8px;border-radius:6px;font-weight:600;margin-right:6px;vertical-align:1px}
+  .tag.alt{background:var(--accent-2);color:#2a1a05}
+
+  .top-link{position:fixed;right:22px;bottom:22px;background:var(--panel-2);border:1px solid var(--line);color:var(--muted);padding:10px 14px;border-radius:50px;text-decoration:none;font-size:.82rem;transition:.2s}
+  .top-link:hover{border-color:var(--accent);color:var(--accent)}
+
+  footer{margin-top:70px;padding-top:24px;border-top:1px solid var(--line);text-align:center;color:var(--muted);font-size:.82rem}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="kicker">Genel Tekrar · Modifiye İlaç Salım Sistemleri II</div>
+  <h1 class="title">Modifiye İlaç Salım <em>Sistemleri II</em></h1>
+  <p class="lede">Ozmotik pompalardan lipozomlara, mide tutucu sistemlerden in vitro–in vivo korelasyona kadar ileri ilaç taşıyıcı sistemlerin kapsamlı bir tekrarı. Aşağıdaki içindekilerden istediğiniz bölüme atlayabilirsiniz.</p>
+
+  <nav class="toc">
+    <div class="toc-h">İçindekiler</div>
+    <ol>
+      <li><a href="#s1">Giriş ve Genel Çerçeve</a></li>
+      <li><a href="#s2">Ozmotik Sistemler — Prensip</a></li>
+      <li><a href="#s3">Ozmotik Sistemler — Salım Mekanizması</a></li>
+      <li><a href="#s4">Ozmotik Sistemler — Delik Tasarımı</a></li>
+      <li><a href="#s5">Gastroretentif Sistemler — Genel</a></li>
+      <li><a href="#s6">Gastroretentif — Hangi İlaçlar İçin?</a></li>
+      <li><a href="#s7">Mukoadhesif Sistemler</a></li>
+      <li><a href="#s8">Mukoadhesif Polimerler</a></li>
+      <li><a href="#s9">Yüzen Tabletler — Prensip</a></li>
+      <li><a href="#s10">Yüzen Tabletler — Avantaj &amp; Teknik</a></li>
+      <li><a href="#s11">Şişen Sistemler</a></li>
+      <li><a href="#s12">Lipozomlar — Tanım ve Yapı</a></li>
+      <li><a href="#s13">Lipozom Yapısına Giren Maddeler</a></li>
+      <li><a href="#s14">Lipozom Sınıflandırılması</a></li>
+      <li><a href="#s15">Yapısal Türler — SUV/LUV/MLV/OLV/GUV</a></li>
+      <li><a href="#s16">Özel Lipozom Türleri</a></li>
+      <li><a href="#s17">Lipozomların Avantajları</a></li>
+      <li><a href="#s18">Hazırlama — 4 Temel Aşama</a></li>
+      <li><a href="#s19">Mekanik Dağılım Yöntemleri</a></li>
+      <li><a href="#s20">Solvan Dispersiyon Yöntemleri</a></li>
+      <li><a href="#s21">Deterjan Giderme Yöntemi</a></li>
+      <li><a href="#s22">Lipozomların Dezavantajları</a></li>
+      <li><a href="#s23">Yasal Gerekler — İlaç Salımı</a></li>
+      <li><a href="#s24">İçerik Düzgünlüğü &amp; IVIVC</a></li>
+      <li><a href="#s25">CR Sistem Tasarım Yaklaşımları</a></li>
+      <li><a href="#s26">Tek Sayfada Genel Tekrar</a></li>
+    </ol>
+  </nav>
+
+  <!-- ================= 1 ================= -->
+  <section id="s1">
+    <h2 class="section"><span class="num">01.</span>Giriş ve Genel Çerçeve</h2>
+    <p class="lead">Modifiye salım sistemleri, etkin maddenin biyolojik ortamdaki davranışını bilinçli olarak değiştiren formülasyon stratejilerinin bütünüdür. Bu özet dersin <b>ikinci bölümünü</b> kapsar.</p>
+    <p>Geleneksel hızlı salımlı tabletlerde ilaç, mide veya bağırsakta dakikalar içinde çözünür ve plazma konsantrasyonunda <b>keskin bir tepe</b> oluşturur; bu tepe terapötik pencerenin üzerine çıkarsa <b>yan etki</b>, altına düşerse <b>etkisizlik</b> anlamına gelir.</p>
+    <p>Modifiye salımlı sistemler bu dalgalanmayı yumuşatır; ilacın <b>istenen bölgede, istenen sürede ve istenen hızda</b> serbest kalmasını sağlar. Bu bölümde ele alınacak üç ana yaklaşım vardır:</p>
+    <ul>
+      <li><b>Ozmotik kontrollü sistemler</b> — fiziksel basınç ile çalışan minyatür pompalar.</li>
+      <li><b>Gastroretentif sistemler</b> — dozaj formunu midede tutmaya yönelik üç farklı strateji (mukoadhesif, yüzen, şişen).</li>
+      <li><b>Lipozomlar</b> — biyolojik membrandan ilham alan mikro/nano taşıyıcılar.</li>
+    </ul>
+    <p>Bunlara ek olarak <b>yasal gereklilikler</b> ve <b>in vitro–in vivo korelasyon (IVIVC)</b> kavramı da incelenecektir.</p>
+  </section>
+
+  <!-- ================= 2 ================= -->
+  <section id="s2">
+    <h2 class="section"><span class="num">02.</span>Ozmotik Kontrollü Sistemler — Prensip</h2>
+    <p class="lead">Ozmotik ilaç taşıyıcı sistemin çalışma prensibi, diğer kontrollü salım sistemlerinden <b>tamamen farklıdır</b>. Sistemde salım hızını difüzyon ya da çözünme değil, basit bir fiziksel olay belirler: <b>ozmoz</b>.</p>
+    <p>Sistemde <b>suda çözünen veya disperse olabilen</b> etkin madde tabletin <b>çekirdeğinde</b> bulunur. Çekirdek, suyun içeri girmesine izin veren ancak ilacın dışarı çıkmasına izin vermeyen bir <b>semipermeabl (yarı geçirgen) membranla</b> kaplanmıştır.</p>
+    <p>Membranın üzerinde, çoğunlukla selüloz asetat veya benzeri bir polimerden oluşur, <b>lazerle açılmış küçük bir delik</b> vardır. İlaç ancak bu delikten dışarı çıkabilir.</p>
+    <div class="pull"><b>Temel yapı:</b> İlaç + ozmotik ajan → semipermeabl membran ile kaplı çekirdek → membran üzerinde lazerle açılmış mikro delik.</div>
+  </section>
+
+  <!-- ================= 3 ================= -->
+  <section id="s3">
+    <h2 class="section"><span class="num">03.</span>Ozmotik Sistemler — Salım Mekanizması</h2>
+    <p>Tablet GİT sıvısı ile temas ettiğinde olaylar zinciri şu şekilde işler:</p>
+    <ol>
+      <li><b>Suyun çekirdeğe girişi</b> — Su yarı geçirgen membrandan içeri sızar; bu süreç ozmotik basınç farkı ile yönlendirilir.</li>
+      <li><b>Çözünme ve hidrostatik basınç oluşumu</b> — Çekirdekteki maddeler (ilaç + varsa NaCl, mannitol, fruktoz gibi ozmotik ajan) çözündükçe içeride <b>hidrostatik basınç</b> oluşur ve giderek <b>yükselir</b>.</li>
+      <li><b>Pompa etkisi (ekstrüzyon)</b> — Oluşan basınç ve kuvvetler birer pompa gibi davranarak çözünmüş veya dispers haldeki ilacın <b>kaplamadaki delikten kontrollü hızda dışarı çıkmasını</b> sağlar.</li>
+    </ol>
+    <p>Bu mekanizmanın en büyük üstünlüğü, salım hızının ortamın <b>pH'sından, çalkalanmasından, açlık/tokluk durumundan ve büyük ölçüde GİS motilitesinden bağımsız</b> olmasıdır. Sistem in vivo davranış olarak in vitro davranışına çok yakındır.</p>
+
+    <h3>Salım Hızını Belirleyen İki Parametre</h3>
+    <div class="grid">
+      <div class="card"><h4>Membrandan Su Geçişi</h4><p>Yarı geçirgen membranın <b>geçirgenliği</b> ve <b>ozmotik basınç farkı</b>, çekirdeğe ne kadar hızlı su gireceğini belirler.</p></div>
+      <div class="card"><h4>Delikten İlaç Çıkışı</h4><p>İlaç çözeltisinin veya süspansiyonunun <b>delikten geçme hızı</b> ikinci kritik parametredir.</p></div>
+    </div>
+  </section>
+
+  <!-- ================= 4 ================= -->
+  <section id="s4">
+    <h2 class="section"><span class="num">04.</span>Ozmotik Sistemler — Delik Tasarımı</h2>
+    <p class="lead">Delik boyutu kritik öneme sahiptir. İlacın sadece basınçla itilerek çıkmasını sağlamalı, ek bir difüzyonel kaçışa izin vermemeli; öte yandan içeride aşırı hidrostatik basınç birikip tabletin yarılmasına da neden olmamalıdır.</p>
+    <ul>
+      <li>Delik, <b>difüzyonu önleyecek kadar küçük</b> olmalıdır.</li>
+      <li>Aynı zamanda <b>hidrostatik basıncı minimuma indirecek kadar büyük</b> olmalıdır.</li>
+      <li>Tipik delik çapı <span class="formula">600 μm – 1 mm</span> arasındadır.</li>
+      <li>Delik <b>lazer ile delinerek</b> üretilir.</li>
+      <li>Ozmotik pompa için <b>sadece tek bir difüzyon prosesi</b> gereklidir; bu matematiksel modellemeyi ve doz öngörülebilirliğini kolaylaştırır.</li>
+    </ul>
+    <div class="pull"><b>Sınırlamalar:</b> Üretim maliyetinin yüksek olması, lazer teknolojisi gerekliliği ve suda çok düşük çözünürlüklü ilaçlar için yeterli ozmotik basıncın oluşturulamaması.</div>
+  </section>
+
+  <!-- ================= 5 ================= -->
+  <section id="s5">
+    <h2 class="section"><span class="num">05.</span>Gastroretentif Sistemler — Genel Çerçeve</h2>
+    <p class="lead">İlacın taşınmasını iyileştirmek ve etkinliğini artırmak için <b>midede dozaj formunun tutulması mekanizmasına Gastroretention</b> denir.</p>
+    <p>Pek çok ilacın absorpsiyonu üst gastrointestinal sistemde, özellikle <b>duodenum ve proksimal jejunumda</b> gerçekleşir. Ne var ki midenin doğal boşalma mekanizması, dozaj formunu dakikalar veya birkaç saat içinde mideden ince bağırsağa, oradan da hızla absorpsiyon penceresinin ötesine taşır.</p>
+    <p>Gastroretentif sistemlerle <b>üst GİT'te ilaç emilimi maksimum</b> olabilir. Bu yaklaşımların temel amacı; <b>midenin fizyolojik mekanizmalarını aşarak ilacı midede alıkoymaktır</b>.</p>
+
+    <div class="pull"><b>Sınırlama:</b> Gastroretention ile başarı sınırlıdır. Aşılması gereken temel güçlük, <b>mide ve mide boşalmasının getirdiği problemlerin formülasyonla aşılmasıdır</b>; bu durumun mevcut yöntemlerle aşılması da zor görünmektedir.</div>
+
+    <p>Mide boşalması açlık ve toklukta belirgin biçimde farklılaşır; tok karında <i>migrating motor complex</i> baskılanır ve dozaj formu daha uzun kalabilir, açlıkta ise kuvvetli kasılmalarla tüm dozaj formları boşaltılabilir. Bu nedenle gastroretentif sistemlerin çoğu için <b>yemekle birlikte alınma</b> tavsiye edilir.</p>
+  </section>
+
+  <!-- ================= 6 ================= -->
+  <section id="s6">
+    <h2 class="section"><span class="num">06.</span>Gastroretentif — Hangi İlaçlar İçin Yararlıdır?</h2>
+    <p>Mide tutucu yaklaşımların özellikle yararlı olduğu üç ilaç grubu vardır:</p>
+    <ul>
+      <li><b>Midede lokal etki için gerekli ilaçlar</b> — örneğin <i>Helicobacter pylori</i>'yi tedavi etmek için kullanılan antibiyotikler ve antiasitler. Etki yerine yakın ve uzun süre kalması, lokal konsantrasyonu yüksek tutar.</li>
+      <li><b>İnce bağırsakta dar bir absorpsiyon penceresi olan ilaçlar</b> — yalnızca üst ince bağırsağın belirli bir bölümünden emilen ilaçlar (riboflavin, levodopa, furosemid gibi). Sistem bu pencerede daha uzun temas süresi sağlar.</li>
+      <li><b>Kolonda degrade olan ilaçlar</b> — kolonik bakteriyel flora tarafından parçalanan ya da kolonun düşük emilim verimi nedeniyle absorbe edilemeyen ilaçlar.</li>
+    </ul>
+    <p>Gastroretentif yaklaşım üç temel strateji üzerinden işler: <b>mukozaya yapışma</b> (mukoadhesif), <b>mide sıvısında yüzme</b> (floating), <b>pilorda geçemeyecek kadar şişme</b> (swelling).</p>
+  </section>
+
+  <!-- ================= 7 ================= -->
+  <section id="s7">
+    <h2 class="section"><span class="num">07.</span>Mukoadhesif Sistemler</h2>
+    <p class="lead">Mukoadhesif yaklaşımda <b>tablet mide çeperinde yer alan mukoza tabakasına yapışır</b>. Tablet formülasyonunda mukoadhesif polimerler kullanılır.</p>
+    <p>Mukoza yüzeyini örten müsin glikoproteinleri ile formülasyondaki mukoadhesif polimer arasında <b>hidrojen bağları, hidrofobik etkileşimler, iyonik etkileşimler</b> ve polimer zincirlerinin müsin ağına diffüze olarak iç içe geçmesi (<i>interpenetration</i>) gerçekleşir.</p>
+    <p>Sonuçta tablet mide içinde <b>sabitlenir</b> ve mide boşalmasından bağımsız olarak <b>uzun süre orada kalır</b>; ilaç da kontrollü bir hızla salınmaya devam eder.</p>
+
+    <div class="pull"><b>Gerekli polimer özellikleri:</b> Yüksek molekül ağırlığı, esnek zincir yapısı, mukozayla etkileşime girebilen yüklü ya da hidrojen bağı verebilen gruplar (–OH, –COOH, –NH₂), yüzey ıslanmasını destekleyen hidrofiliklik ve toksik olmayan biyouyumlu yapı.</div>
+  </section>
+
+  <!-- ================= 8 ================= -->
+  <section id="s8">
+    <h2 class="section"><span class="num">08.</span>Mukoadhesif Polimerler</h2>
+    <p>Ders kapsamında özellikle vurgulanan üç polimer:</p>
+    <div class="grid">
+      <div class="card"><h4>Kitozan</h4><p>Kitin'in deasetilasyonuyla elde edilen <b>katyonik</b> doğal polisakkarit. Pozitif yüklü amin grupları, mukozanın negatif yüklü sialik asit ve sülfat gruplarıyla <b>elektrostatik etkileşim</b> kurar. Biyouyumlu ve biyodegrade.</p></div>
+      <div class="card"><h4>Karbopol</h4><p>Çapraz bağlı poliakrilik asit türevi. <b>Anyonik karboksil grupları</b> sayesinde özellikle mide gibi düşük pH ortamlarında protonlanır ve hidrojen bağı yoluyla güçlü mukoadezyon sağlar.</p></div>
+      <div class="card"><h4>Polycarbophil</h4><p><b>Poliakrilik asitin divinil glikol ile çapraz bağlanmış formu</b> (polyacrylic acid cross-linked with divinyl glycol). Karbopolden daha yüksek MA ve daha sıkı çapraz bağ yapısı nedeniyle mukozada genişler ve mekanik olarak da tutunur.</p></div>
+    </div>
+    <p>Sınırlama: Mide mukozasının sürekli yenilenmesi nedeniyle yapışma belirli bir süre sonra kaybolur; mide içeriğinin değişen viskozitesi de yapışma kuvvetini etkiler.</p>
+  </section>
+
+  <!-- ================= 9 ================= -->
+  <section id="s9">
+    <h2 class="section"><span class="num">09.</span>Yüzen (Floating) Tabletler — Prensip</h2>
+    <p class="lead">Yüzen tabletler, mide sıvısının <b>üst kısmında</b> kalmayı sağlayacak şekilde tasarlanmıştır.</p>
+    <p>Sistemin yoğunluğu <b>mide sıvısının yoğunluğundan</b> (yaklaşık 1.004 g/cm³) daha düşük olduğu için tablet, kaldırma kuvvetiyle yüzeyde kalır. Bu durumda dozaj formu, pilora doğru hareket eden mide içeriği akışından <b>fiziksel olarak korunur</b> ve mide boşalmasının etkisinden büyük ölçüde kurtulur.</p>
+    <p>Sistem yüzerken etkin madde yavaşça mide sıvısına salınır ve doğal mide boşalmasıyla birlikte aşağıya, absorpsiyon bölgesine taşınır.</p>
+
+    <h3>İki Ön Koşul</h3>
+    <ul>
+      <li><b>Bikarbonat gibi gaz üreten ajanların</b> formülasyona dahil edilmesi — mide asidi ile reaksiyona girerek CO₂ oluşturur ve gaz, polimerik matriks içinde hapsolarak yoğunluğu düşürür.</li>
+      <li><b>Ortamda yeterli besin ve sıvı bulunması</b> — aç midede sistem yüzecek yeterli sıvıya sahip olmaz ve hızlı pilorik kasılmalar tableti aşağı süpürür.</li>
+    </ul>
+    <p>Klasik bir piyasa örneği <b>Gaviscon</b>'dur; reflü tedavisinde mide içeriğinin üzerinde alkalin jel tabaka oluşturur.</p>
+  </section>
+
+  <!-- ================= 10 ================= -->
+  <section id="s10">
+    <h2 class="section"><span class="num">10.</span>Yüzen Tabletler — Avantajlar &amp; Hazırlama Teknikleri</h2>
+
+    <h3>Yüzen Tabletlerle Sağlanan Avantajlar</h3>
+    <ul>
+      <li>İlacın <b>midede kalış süresi uzar</b> — bazı sistemlerde 6–8 saate kadar.</li>
+      <li><b>Biyoyararlanım artar</b> — özellikle dar absorpsiyon penceresi olan ilaçlar için.</li>
+      <li>Mide içinde <b>istenen lokal etkinlik artar</b> — antiasit, antibiyotik ve mide ülseri ilaçları için kritik.</li>
+    </ul>
+
+    <h3>İki Farklı Hazırlama Tekniği</h3>
+    <div class="grid">
+      <div class="card"><h4>1 — Efervesan Teknik <span class="tag">CO₂</span></h4><p>Mide ortamında efervesan özellik gösteren ve <b>gaz oluşturan</b> maddelerle formüle edilir. Tipik olarak sodyum bikarbonat ile sitrik/tartarik asit kombinasyonu kullanılır; mide asidiyle reaksiyona girerek CO₂ açığa çıkar, jel oluşturan polimerin (HPMC, sodyum aljinat) içinde tutulur ve yüzme sağlanır.</p></div>
+      <div class="card"><h4>2 — Non-efervesan Teknik <span class="tag alt">Jel</span></h4><p>Gaz oluşumundan yararlanılmaz. Bunun yerine <b>hidrodinamik denge</b> ilkesine dayanır. Hidrokolloidler (HPMC, hidroksietil selüloz, sodyum aljinat) mide sıvısıyla temas edince yüzeyde jel tabakası oluşturur ve bu jelin yoğunluğu mide sıvısından düşük kalır.</p></div>
+    </div>
+
+    <div class="pull"><b>Klinik not:</b> GİT'ten transit geçiş ve mide boşalması, kişinin <b>açlık veya tokluk durumuna</b> ve ilaç taşıyıcı sistemin <b>fiziksel durumuna</b> (katı/sıvı) bağlıdır. <i>(Expert Opin. Drug Deliv., 2011; 8(7))</i></div>
+  </section>
+
+  <!-- ================= 11 ================= -->
+  <section id="s11">
+    <h2 class="section"><span class="num">11.</span>Şişen İlaç Taşıyıcı Sistemler</h2>
+    <p class="lead">Sistemin mantığı son derece basittir ama etkilidir: <b>tablet hacminin genişlemesi, pilordan geçişini fiziksel olarak imkânsız hale getirir</b>.</p>
+    <p>Pilorik sfinkter, mide ile duodenum arasındaki dar bir geçittir; çapı sıkışık olarak yaklaşık <b>12–13 mm</b> civarındadır. Mideye ulaştığında hızla şişerek bu çapın üzerine çıkan bir dozaj formu pilordan geçemez ve <b>midede mahsur kalır</b>.</p>
+    <p>Yutulurken yeterince <b>küçük</b> (örneğin sert kapsül boyutunda), şişince ise yeterince <b>büyük</b> olmak gerekir; bu boyut farkı sistemin başarısının temelidir.</p>
+
+    <h3>Kullanılan Şişebilen Polimerler</h3>
+    <div class="grid">
+      <div class="card"><h4>HPMC</h4><p>Hidroksipropil metilselüloz — en yaygın kullanılan şişebilen polimer. Farklı viskozite kalitelerinde bulunur; şişme kinetiği ayarlanabilir.</p></div>
+      <div class="card"><h4>Polietilen Oksit (PEO)</h4><p>Yüksek molekül ağırlığında, suda çok iyi şişen sentetik polimer.</p></div>
+      <div class="card"><h4>Ksantan Zamkı</h4><p>Doğal kaynaklı polisakkarit; viskoz jel oluşturur.</p></div>
+    </div>
+
+    <div class="pull"><b>Uygulama notu:</b> İlaç <b>tok karında</b> verilmelidir. Tok midede mide boşalma etkisi geciktirilir ve tabletin yeterli şişme süresine ulaşması sağlanır. Aç karında verilirse tablet henüz yeterince şişmeden pilordan geçebilir.</div>
+  </section>
+
+  <!-- ================= 12 ================= -->
+  <section id="s12">
+    <h2 class="section"><span class="num">12.</span>Lipozomlar — Tanım ve Yapı</h2>
+    <p class="lead">Lipozomlar, aralarında sulu faz bulunan, <b>bir veya daha çok sayıda biyolojik membrana benzer yapıdaki lipid tabakalarının</b> oluşturduğu, mikroskopik boyutlarda, genellikle <b>küre şeklinde</b> cisimciklerdir.</p>
+    <p>Yapısal olarak <b>hücre zarına</b> son derece benzerler: lipid çift tabakası dış ve iç tarafta sulu fazlarla temas eden <b>polar başlardan</b>, ortada ise birbirine bakan <b>hidrofobik kuyruklardan</b> oluşur.</p>
+    <p>Bu özel yapı sayesinde lipozomlar:</p>
+    <ul>
+      <li><b>Suda çözünen</b> ilaçları sulu çekirdeklerinde taşıyabilir.</li>
+      <li><b>Yağda çözünen</b> ilaçları lipid tabakası içinde taşıyabilir.</li>
+    </ul>
+    <p>Bu da onları <b>çok yönlü taşıyıcılar</b> yapar — nanotaşıyıcı sistemlerin öncüsü konumundadırlar.</p>
+  </section>
+
+  <!-- ================= 13 ================= -->
+  <section id="s13">
+    <h2 class="section"><span class="num">13.</span>Lipozom Yapısına Giren Maddeler</h2>
+    <p>Lipozomların temel yapı taşı <b>fosfolipidlerdir</b> — başta <b>fosfatidilkolin (lesitin)</b>, fosfatidiletanolamin ve fosfatidilserin. Bu iskele üzerine üç grup yardımcı madde eklenir:</p>
+    <div class="grid">
+      <div class="card"><h4>1 — Stabiliteyi Artırıcılar</h4><p><b>Kolesterol</b> ve <b>α-tokoferol</b> (E vitamini). Kolesterol lipid tabakasının akıcılığını düzenler ve geçirgenliği azaltır; α-tokoferol fosfolipidlerin oksidasyonunu engeller.</p></div>
+      <div class="card"><h4>2 — Hedeflenmeyi Sağlayıcılar</h4><p><b>İmmunoglobulinler</b> (özellikle monoklonal antikorlar) hücreye spesifik tanıma sağlar; <b>stearilamin, setil fosfat</b> yüzey yükünü değiştirir; <b>glikolipidler</b> belirli reseptörlere tutunmayı kolaylaştırır.</p></div>
+      <div class="card"><h4>3 — Etken Maddeler</h4><p><b>Antineoplastik (kanser) ilaçlar</b> lipozomların en başarılı uygulama alanını oluşturur; ayrıca enzimler, hormonlar ve kelat yapıcı ajanlar da kapsüllenebilir.</p></div>
+    </div>
+  </section>
+
+  <!-- ================= 14 ================= -->
+  <section id="s14">
+    <h2 class="section"><span class="num">14.</span>Lipozomların Sınıflandırılması</h2>
+    <p>Lipozomlar <b>üç temel kritere</b> göre sınıflandırılır:</p>
+    <ol>
+      <li><b>Yapısal parametreler</b> — lamel sayısı ve boyut.</li>
+      <li><b>Hazırlama yöntemi</b> — mekanik dağılım, solvan dispersiyonu, deterjan giderme.</li>
+      <li><b>Kompozisyon ve uygulamalar</b> — fonksiyonel/özel lipozom tipleri.</li>
+    </ol>
+  </section>
+
+  <!-- ================= 15 ================= -->
+  <section id="s15">
+    <h2 class="section"><span class="num">15.</span>Yapısal Türler — SUV / LUV / MLV / OLV / GUV</h2>
+    <div class="grid">
+      <div class="card"><h4>SUV</h4><p><b>Small Unilamellar Vesicles</b><br>Küçük, <b>tek lipid çift tabakası</b><br>~20–100 nm</p></div>
+      <div class="card"><h4>LUV</h4><p><b>Large Unilamellar Vesicles</b><br>Tek tabakalı, büyük<br>&gt; 100 nm</p></div>
+      <div class="card"><h4>MLV</h4><p><b>Multilamellar Vesicles</b><br>Soğan benzeri çok katmanlı yapı<br>500 nm – birkaç μm</p></div>
+      <div class="card"><h4>OLV</h4><p><b>Oligolamellar Vesicles</b><br><b>2 ila 10 çift</b> lipid tabakası, çevreleyen iç hacim<br><b>100–500 nm</b></p></div>
+      <div class="card"><h4>GUV</h4><p><b>Giant Unilamellar Vesicles</b><br>Dev tek tabakalı veziküller<br><b>&gt; 1000 nm</b></p></div>
+    </div>
+  </section>
+
+  <!-- ================= 16 ================= -->
+  <section id="s16">
+    <h2 class="section"><span class="num">16.</span>Özel (Fonksiyonel) Lipozom Türleri</h2>
+    <div class="grid">
+      <div class="card"><h4>İmmüno-lipozomlar</h4><p>Konvansiyonel veya uzun dolaşımlı (stealth) yapıda olabilir. <b>Reseptör aracılı endositoza</b> tabidir; yüzeylerine kovalent bağlanmış <b>antikor (Ab) veya hedefleme ligandı</b> sayesinde <b>hücreye özgü</b> tedavi sağlar. Özellikle tümör antijenlerini hedefleyen uygulamalar yaygındır.</p></div>
+      <div class="card"><h4>Manyetik Lipozomlar</h4><p>Yapılarında fosfatidilkolin, kolesterol ve <b>manyetik demir oksit</b> partikülleri bulunur. <b>Harici bir titreşimli manyetik alandan</b> faydalanılarak vücut içinde belirli bir bölgeye yönlendirilebilirler.</p></div>
+      <div class="card"><h4>Sıcaklığa Hassas Lipozomlar</h4><p>Yapılarında faz geçiş sıcaklığı vücut sıcaklığına yakın olan <b>dipalmitoil fosfatidilkolin (DPPC)</b> bulunur. <b>Lokal hipertermi</b> uygulanan bölgede lipid tabakası faz değiştirir ve ilaç o noktada yoğun olarak salınır — kanser tedavisinde lokal kemoterapiyi destekler.</p></div>
+    </div>
+  </section>
+
+  <!-- ================= 17 ================= -->
+  <section id="s17">
+    <h2 class="section"><span class="num">17.</span>Lipozomların Avantajları</h2>
+    <p class="lead">Lipozomların avantajları onları <b>nanotaşıyıcı sistemlerin öncüsü</b> haline getirmiştir.</p>
+    <ul>
+      <li><b>Tümöre seçici pasif hedefleme</b> sağlar — tümör damarlarındaki kaçaklar ve azalmış lenfatik drenaj nedeniyle nanopartiküller tümör dokusunda birikir (EPR etkisi). Klasik örnek: <b>Lipozomal Doksorubisin (Doxil/Caelyx)</b>; serbest doksorubisinin kardiyotoksisitesi lipozomal formda belirgin biçimde azalmıştır.</li>
+      <li><b>Artan etkinlik ve terapötik indeks</b> — daha düşük dozda daha yüksek etki.</li>
+      <li><b>Kapsülleme yoluyla artan kararlılık</b> — etken madde dış ortamdan korunur.</li>
+      <li><b>Kapsüllenen maddenin toksisitesinde azalma</b> — özellikle sitotoksik ilaçlarda kritik.</li>
+      <li><b>Geliştirilmiş farmakokinetik profil</b> — özellikle PEG ile kaplandığında <i>azaltılmış eliminasyon ve artmış dolaşım ömrü</i>.</li>
+      <li><b>Sahaya özel ligandlarla eşleşme esnekliği</b> — yüzey modifikasyonu kolay.</li>
+      <li><b>Aktif hedeflemeye ulaşmak</b> mümkündür (antikor, peptid vb. ile).</li>
+    </ul>
+  </section>
+
+  <!-- ================= 18 ================= -->
+  <section id="s18">
+    <h2 class="section"><span class="num">18.</span>Hazırlama — 4 Temel Aşama &amp; İlaç Yükleme</h2>
+    <p>Lipozom üretimi yöntem ne olursa olsun <b>dört temel aşamadan</b> geçer:</p>
+    <ol>
+      <li><b>Lipidlerin organik çözücüden kurutulması.</b></li>
+      <li><b>Lipidin sulu ortamda dağıtılması.</b></li>
+      <li><b>Elde edilen lipozomun saflaştırılması</b> (kapsüllenmemiş ilaçtan ayırma).</li>
+      <li><b>Nihai ürünün analiz edilmesi</b> (boyut dağılımı, kapsülleme verimliliği, lamellarite, zeta potansiyeli).</li>
+    </ol>
+
+    <h3>İki İlaç Yükleme Stratejisi</h3>
+    <div class="grid">
+      <div class="card"><h4>Pasif Yükleme</h4><p>İlaç, lipozom hazırlama prosedürü <b>öncesinde veya sırasında</b> hapsedilir. Lipofilik maddeler için tipik yaklaşımdır.</p></div>
+      <div class="card"><h4>Uzaktan (Aktif) Yükleme</h4><p>İyonlaşabilen gruplar içeren ve hem lipidde hem suda çözünebilen bileşikler, <b>önceden oluşturulmuş sağlam lipozomlara</b> sonradan eklenir. Doksorubisin gibi zayıf bazik ilaçlar genellikle <b>amonyum sülfat gradyanıyla</b> uzaktan yüklenir.</p></div>
+    </div>
+  </section>
+
+  <!-- ================= 19 ================= -->
+  <section id="s19">
+    <h2 class="section"><span class="num">19.</span>Mekanik Dağılım Yöntemleri</h2>
+    <ul>
+      <li><b>Sonikasyon</b> — Önceden hazırlanmış MLV süspansiyonu probu veya bath tipinde ultrasonik enerjiye maruz bırakılarak <b>SUV'lara</b> parçalanır. Hızlıdır, ancak yüksek enerji ısı oluşumuna ve lipid degradasyonuna yol açabilir.</li>
+      <li><b>Fransız basınç hücresi (ekstrüzyon)</b> — Süspansiyon yüksek basınç altında dar bir delikten geçirilir; bu sırada veziküller <b>homojen boyuta</b> indirgenir.</li>
+      <li><b>Dondurularak çözülen lipozomlar (freeze-thaw)</b> — Süspansiyon sıvı azotta dondurulup ardından çözülür; bu döngü tek tabakalı veziküllerin oluşumunu destekler ve <b>kapsülleme verimini artırır</b>.</li>
+      <li><b>Lipid film hidrasyonu</b> — Klasik <b>Bangham yöntemi</b>. Lipidler organik çözücüde çözülür, rotari evaporatörle balon çeperinde ince bir film oluşturulur; üzerine sulu faz eklenip çalkalanarak veya dondurularak kurutularak <b>MLV'ler</b> elde edilir.</li>
+      <li><b>Mikroemülsifikasyon</b> — Yüksek hızlı homojenizatörlerle veziküller emülsiyon prensibine göre üretilir.</li>
+      <li><b>Membran ekstrüzyonu</b> — Lipozomlar belirli por çapına sahip polikarbonat membrandan tekrar tekrar geçirilerek hedeflenen boyuta indirilir; klinik üretimde yaygın olarak kullanılır.</li>
+    </ul>
+  </section>
+
+  <!-- ================= 20 ================= -->
+  <section id="s20">
+    <h2 class="section"><span class="num">20.</span>Solvan (Çözücü) Dispersiyon Yöntemleri</h2>
+    <p>Lipidlerin önce bir organik çözücüde çözüldüğü ve sulu fazla buluşturulduğu yaklaşımlardır.</p>
+    <div class="grid">
+      <div class="card"><h4>Eter Enjeksiyonu</h4><p><b>Dietil eter veya eter-metanol</b> karışımı içinde çözülen lipidler, kapsüllenecek maddeyi içeren <b>55–65 °C veya altındaki</b> sulu çözeltiye kademeli olarak enjekte edilir. Eterin vakum altında uçurulması <b>lipozomların oluşumuna</b> yol açar. <i>Avantajı:</i> yüksek kapsülleme verimi. <i>Dezavantajı:</i> eterin yanıcılığı ve toksisitesi.</p></div>
+      <div class="card"><h4>Etanol Enjeksiyonu</h4><p>Etanol içindeki lipid çözeltisi, <b>hızla sulu tampona</b> enjekte edilir; etanol seyrelir ve lipidler kendiliğinden <b>MLV'ler</b> halinde organize olur. Çok basit ve hızlıdır, ancak etanol kalıntısı kalır.</p></div>
+      <div class="card"><h4>Ters Fazlı Buharlaşma</h4><p>Önce <b>ters miseller</b> oluşturulur. Suda çözünür molekülleri içeren tamponlu sulu faz, lipidlerin bulunduğu organik çözücü ile karıştırılır ve sonikasyona tabi tutulur. Organik çözücünün uzaklaştırılmasıyla bu yapılar lipozomlara dönüşür. <b>Suya çözünen büyük moleküller için yüksek kapsülleme verimi</b> sağlar.</p></div>
+    </div>
+  </section>
+
+  <!-- ================= 21 ================= -->
+  <section id="s21">
+    <h2 class="section"><span class="num">21.</span>Deterjan Giderme Yöntemi</h2>
+    <p class="lead">Lipidlerin önce deterjanlarla karışık miseller oluşturduğu ve sonra deterjanın uzaklaştırılmasıyla <b>LUV'ların</b> oluşturulduğu yaklaşım. Kapsüllenmemiş materyal de bu işlem sırasında ayrılır.</p>
+    <p>Deterjanlar <b>kritik misel konsantrasyonları (CMC)</b> üzerinde lipitleri çözer. Deterjan ortamdan uzaklaştırıldıkça miseller birleşerek LUV'leri oluşturur. Kullanılan tipik deterjanlar: <b>kolat, alkil glikozit, Triton X-100</b>.</p>
+
+    <h3>Üç Deterjan Uzaklaştırma Yöntemi</h3>
+    <ul>
+      <li><b>Diyaliz</b> — Deterjan, diyaliz membranı yoluyla uzaklaştırılır.</li>
+      <li><b>Karışık miselden deterjan giderme (adsorpsiyon)</b> — Karışık misel çözeltisinin <b>çalkalanmasıyla</b> deterjan, <b>boncuklu organik polistirene adsorbe</b> edilerek uzaklaştırılır.</li>
+      <li><b>Jel-permeasyon kromatografisi</b> — Deterjan, <b>boyut bazlı kromatografi</b> ile (Sephadex G-50 veya Sephadex G-100 kullanılarak) tüketilir.</li>
+    </ul>
+  </section>
+
+  <!-- ================= 22 ================= -->
+  <section id="s22">
+    <h2 class="section"><span class="num">22.</span>Lipozomların Dezavantajları</h2>
+    <p>Tüm avantajlara rağmen lipozomların ciddi sınırlamaları vardır:</p>
+    <ul>
+      <li><b>Stabilite sorunu</b> — termodinamik olarak kararsız sistemlerdir; <b>raf ömrü kısadır</b>.</li>
+      <li><b>Düşük çözünürlük</b> — suda çözünürlükleri sınırlı, formülasyon zordur.</li>
+      <li><b>Kısa yarı ömür</b>.</li>
+      <li><b>Fosfolipidler oksidasyona ve hidrolize uğrar</b>; membran bütünlüğü bozulur.</li>
+      <li><b>Sızıntı (leakage) ve füzyon</b> — lipozomların birleşmesi; dozun değişmesine yol açar.</li>
+      <li><b>Yüksek üretim maliyeti</b> — steril, GMP uyumlu üretim ciddi yatırım gerektirir.</li>
+      <li><b>Lipozom bileşenlerine karşı alerjik reaksiyonlar</b> — özellikle PEG'lenmiş fosfolipidler kompleman aktivasyonuna bağlı psödo-anafilaktik reaksiyonlara neden olabilir.</li>
+    </ul>
+  </section>
+
+  <!-- ================= 23 ================= -->
+  <section id="s23">
+    <h2 class="section"><span class="num">23.</span>Yasal Gerekler — 1. İlaç Salımı (Drug Release)</h2>
+    <p class="lead">Modifiye salımlı bir ürünün ruhsatlandırılması için karşılaması gereken <b>üç temel yasal gereklilik</b> vardır. Birincisi: ilaç salımı.</p>
+    <p>USP ve diğer farmakopeler her modifiye salımlı ürün için spesifik bir <b>çözünme/salım profili</b> tanımlar; ürünün çeşitli zaman noktalarında salınması gereken ilaç yüzdesi sınırları belirlenmiştir.</p>
+
+    <h3>Örnek: Aspirin Uzatılmış Salım Tabletleri (USP)</h3>
+    <ul>
+      <li><b>1.0 saat</b>: %15 – %40</li>
+      <li><b>2.0 saat</b>: %25 – %60</li>
+      <li><b>4.0 saat</b>: %35 – %75</li>
+      <li><b>8.0 saat</b>: en az %70</li>
+    </ul>
+    <p>Bu tablo, USP'nin tipik bir genişletilmiş salım ürününden beklediği <b>kademeli salım profilini</b> gösterir.</p>
+  </section>
+
+  <!-- ================= 24 ================= -->
+  <section id="s24">
+    <h2 class="section"><span class="num">24.</span>Yasal Gerekler — İçerik Düzgünlüğü &amp; IVIVC</h2>
+
+    <h3>2. İçerik Düzgünlüğü (Uniformity of Dosage Units)</h3>
+    <p>Her bir doz biriminin <b>etken madde içeriğinin tutarlı</b> olmasını garanti eden test. Hem birimler arasında hem de partiler arasındaki varyasyon belirli sınırlar içinde kalmalıdır. <b>Modifiye salımlı sistemlerde küçük bir doz farkı bile salım profilini ciddi biçimde değiştirebilir</b>; bu yüzden bu kriter özellikle önemlidir.</p>
+
+    <h3>3. In Vitro – In Vivo Korelasyon (IVIVC)</h3>
+    <p class="lead">IVIVC, laboratuvar koşullarında ölçülen <b>dissolüsyon</b> davranışı ile vücut içinde gözlenen <b>plazma konsantrasyonu</b> davranışı arasında <b>kantitatif matematiksel bir ilişki</b> kurmaktır.</p>
+    <p>IVIVC, oral genişletilmiş etkili ilaç geliştirmede <b>çok önemlidir</b>. Başarılı bir IVIVC, klinik dışı çözünme verilerinden in vivo davranışın <b>öngörülebilmesini</b> sağlar; bu da her formülasyon değişikliğinde tekrar tekrar biyoeşdeğerlik çalışması yapma zorunluluğunu ortadan kaldırır.</p>
+
+    <div class="pull">
+      <b>IVIVC Düzeyleri:</b><br>
+      • <b>Level A</b> — Nokta–nokta korelasyon, en yüksek güvenilirlik. FDA'nın tercih ettiği düzey.<br>
+      • <b>Level B</b> — İstatistiksel parametreler arası korelasyon.<br>
+      • <b>Level C</b> — Tek nokta korelasyonu.
+    </div>
+
+    <h3>IVIVC'nin Önemli Olduğu Süreçler</h3>
+    <ul>
+      <li><b>İlaç geliştirme</b> — formülasyon optimizasyonunda klinik çalışma sayısını azaltır.</li>
+      <li><b>Klinik çalışmalar</b> — biyoeşdeğerlik sonuçlarını öngörmek için.</li>
+      <li><b>Onay aşaması</b> — regulatuar başvurularda kanıt olarak kullanılır.</li>
+      <li><b>Post-approval (onay sonrası)</b> — formülasyon, üretim yeri veya ölçek değişikliklerinde klinik çalışma yapma zorunluluğunu azaltır ya da tamamen kaldırır.</li>
+    </ul>
+  </section>
+
+  <!-- ================= 25 ================= -->
+  <section id="s25">
+    <h2 class="section"><span class="num">25.</span>CR Sistem Tasarım Yaklaşımları — Sonuç</h2>
+    <p>Kontrollü salım (Controlled Release — CR) sistemlerinin tasarımında pek çok farklı yaklaşım vardır; gerçek hayattaki formülasyonlar genellikle bunların birkaçını birlikte kullanır:</p>
+    <div class="grid">
+      <div class="card"><h4>Ön İlaçlar</h4><p>Prodrug yaklaşımı ile etkin formun hedefte ortaya çıkması.</p></div>
+      <div class="card"><h4>Difüzyon Kontrollü</h4><p>Matris veya rezervuar sistemleri; ilaç difüzyonla salınır.</p></div>
+      <div class="card"><h4>Dissolüsyon Kontrollü</h4><p>İlacın çözünme hızı salım hızını belirler.</p></div>
+      <div class="card"><h4>Ozmotik Basınç Kontrollü</h4><p>Bu özette detaylı incelenen sistemler.</p></div>
+      <div class="card"><h4>Gastrikretentif</h4><p>Mukoadhesif, yüzen ve şişen sistemler.</p></div>
+      <div class="card"><h4>Device Kontrollü</h4><p>Mekanik pompalar, mikroçipler vb.</p></div>
+      <div class="card"><h4>Biyodegrade Polimerik</h4><p>PLGA, PLA gibi vücutta parçalanan polimerler.</p></div>
+      <div class="card"><h4>Vektör-temelli</h4><p>Viral veya viral olmayan taşıyıcılar.</p></div>
+      <div class="card"><h4>Hedeflendirilmiş</h4><p>Organ veya hücre düzeyinde hedefleme.</p></div>
+      <div class="card"><h4>Ligand-temelli</h4><p>Reseptör-ligand tanıma esaslı.</p></div>
+      <div class="card"><h4>Programlanmış</h4><p>Zaman/uyaranla tetiklenen akıllı sistemler.</p></div>
+    </div>
+    <div class="pull"><b>Genel sonuç:</b> Tüm yaklaşımların ortak amacı aynıdır: <b>doğru ilacı, doğru yerde, doğru zamanda ve doğru miktarda</b> vermek. Tasarımda ilacın fizikokimyasal özellikleri, hedef bölge, hasta uyumu, üretim olanakları, maliyet ve yasal gereklilikler bir bütün olarak değerlendirilmelidir.</div>
+  </section>
+
+  <!-- ================= 26 ================= -->
+  <section id="s26">
+    <h2 class="section"><span class="num">26.</span>Tek Sayfada Genel Tekrar — Çekirdek Notlar</h2>
+    <div class="grid">
+      <div class="card"><h4>Ozmotik prensip</h4><p>Çekirdek + semipermeabl membran + lazer delik. Suyun girişi → hidrostatik basınç → ilacın delikten itilmesi. <b>pH ve motiliteden bağımsız</b>.</p></div>
+      <div class="card"><h4>Delik çapı</h4><p><b>600 μm – 1 mm</b>. Lazerle açılır. Tek difüzyon prosesi yeterli.</p></div>
+      <div class="card"><h4>Gastroretention</h4><p>Dozaj formunu midede tutma; üst GİT'te emilim maksimum. Başarısı <b>sınırlıdır</b>.</p></div>
+      <div class="card"><h4>Hangi ilaçlar?</h4><p>Midede lokal etki (<i>H. pylori</i>), <b>dar absorpsiyon penceresi</b>, <b>kolonda degrade</b> olanlar.</p></div>
+      <div class="card"><h4>Mukoadhesif</h4><p>Tablet mukozaya yapışır. Polimerler: <b>kitozan</b> (katyonik), <b>karbopol</b> (anyonik), <b>polycarbophil</b> (divinil glikol ile çapraz bağlı).</p></div>
+      <div class="card"><h4>Yüzen tabletler</h4><p>Mide sıvısında yüzer (yoğunluk &lt; 1.004). <b>Bikarbonat</b> gibi gaz üreten ajanlar; ortamda <b>besin gerekli</b>. Örnek: Gaviscon.</p></div>
+      <div class="card"><h4>2 hazırlama tekniği</h4><p><b>Efervesan</b> (CO₂ üretimi) vs <b>Non-efervesan</b> (hidrodinamik denge, jel oluşumu).</p></div>
+      <div class="card"><h4>Yüzen — fayda</h4><p>Midede kalış uzar, biyoyararlanım artar, lokal etkinlik artar.</p></div>
+      <div class="card"><h4>Şişen sistem</h4><p>Pilordan geçemez (pilor ≈ 12-13 mm). Polimerler: <b>HPMC, PEO, ksantan</b>. <b>Tok karın</b>!</p></div>
+      <div class="card"><h4>Lipozom tanım</h4><p>Aralarında sulu faz olan, biyolojik membrana benzer lipid tabakalarından oluşan mikro küreler. Hem suda hem yağda çözünen ilaç taşır.</p></div>
+      <div class="card"><h4>3 yardımcı grup</h4><p><b>Stabilite</b> (kolesterol, α-tokoferol) / <b>Hedefleme</b> (Ig, stearilamin, glikolipid) / <b>Etken madde</b> (antineoplastik, enzim, hormon).</p></div>
+      <div class="card"><h4>5 yapısal tip</h4><p>SUV (~20-100 nm) / LUV (&gt;100 nm) / MLV (çok katmanlı) / <b>OLV</b> (2-10 tabaka, 100-500 nm) / <b>GUV</b> (&gt;1000 nm).</p></div>
+      <div class="card"><h4>Özel tipler</h4><p><b>İmmüno</b> (Ab ile hücre hedefleme) / <b>Manyetik</b> (Fe-oksit + manyetik alan) / <b>Termosensitif</b> (DPPC + hipertermi).</p></div>
+      <div class="card"><h4>Avantajlar</h4><p>Pasif hedefleme (EPR — Doxil), terapötik indeks↑, stabilite↑, toksisite↓, dolaşım ömrü↑ (PEG), aktif hedefleme.</p></div>
+      <div class="card"><h4>4 hazırlama aşaması</h4><p>Lipidlerin kurutulması → sulu ortamda dağıtılması → saflaştırma → analiz.</p></div>
+      <div class="card"><h4>2 yükleme stratejisi</h4><p><b>Pasif</b> (hazırlama sırasında) / <b>Aktif=uzaktan</b> (önceden oluşturulmuş lipozoma sonradan).</p></div>
+      <div class="card"><h4>Mekanik dağılım</h4><p>Sonikasyon, Fransız basıncı (ekstrüzyon), freeze-thaw, <b>lipid film hidrasyonu (Bangham)</b>, mikroemülsifikasyon, membran ekstrüzyonu.</p></div>
+      <div class="card"><h4>Solvan dispersiyon</h4><p><b>Eter enjeksiyonu</b> (55-65°C) / <b>Etanol enjeksiyonu</b> (MLV) / <b>Ters fazlı buharlaşma</b> (ters miseller, suda çözünen büyük moleküller).</p></div>
+      <div class="card"><h4>Deterjan giderme</h4><p>CMC üzerinde lipid çözünür. Yöntemler: <b>diyaliz</b> / <b>boncuklu polistirene adsorpsiyon</b> / <b>jel-permeasyon</b> (Sephadex). LUV oluşur.</p></div>
+      <div class="card"><h4>Dezavantajlar</h4><p>Stabilite, düşük çözünürlük, kısa yarı ömür, oksidasyon/hidroliz, sızıntı, füzyon, yüksek maliyet, alerjik reaksiyon.</p></div>
+      <div class="card"><h4>3 yasal gereklilik</h4><p>1. <b>Drug Release</b> (USP profili) / 2. <b>İçerik düzgünlüğü</b> / 3. <b>IVIVC</b>.</p></div>
+      <div class="card"><h4>USP — Aspirin ER</h4><p>1h: %15-40 / 2h: %25-60 / 4h: %35-75 / 8h: ≥%70.</p></div>
+      <div class="card"><h4>IVIVC</h4><p>In vitro dissolüsyon — in vivo plazma korelasyonu. <b>Level A</b> = nokta-nokta (en güçlü). Geliştirme, klinik, onay, post-approval'da kritik.</p></div>
+      <div class="card"><h4>CR tasarım</h4><p>Ön ilaç, difüzyon, dissolüsyon, ozmotik, gastrikretentif, device, biyodegrade, vektör, hedeflendirilmiş, ligand, programlanmış.</p></div>
+    </div>
+  </section>
+
+  <footer>
+    Çalışma materyali eğitim amaçlıdır. Sınav/klinik kullanım öncesi ders notlarıyla karşılaştırınız.
+  </footer>
+</div>
+
+<a href="#" class="top-link">↑ Başa dön</a>
+</body>
+</html>

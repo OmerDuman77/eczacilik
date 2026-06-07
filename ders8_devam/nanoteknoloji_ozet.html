@@ -1,0 +1,352 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Nanoteknoloji Ürünü İlaçlar — Kapsamlı Özet</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Spectral:ital,wght@0,400;0,600;0,800;1,500&family=Inter+Tight:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#0b1413;--panel:#11201e;--panel-2:#172a27;--ink:#e7f0ee;--muted:#8fa6a2;--line:#23423d;
+    --accent:#2bb6a3;--accent-2:#e0a458;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{scroll-behavior:smooth}
+  body{
+    background:radial-gradient(1100px 560px at 84% -10%, rgba(43,182,163,.10), transparent 60%),
+               radial-gradient(900px 520px at -10% 22%, rgba(224,164,88,.07), transparent 55%),var(--bg);
+    color:var(--ink);font-family:'Inter Tight',system-ui,sans-serif;line-height:1.65;-webkit-font-smoothing:antialiased
+  }
+  .wrap{max-width:880px;margin:0 auto;padding:48px 22px 120px}
+
+  .kicker{font-size:.72rem;letter-spacing:.3em;text-transform:uppercase;color:var(--accent);font-weight:600;margin-bottom:14px}
+  h1.title{font-family:'Spectral',serif;font-weight:800;font-size:clamp(2rem,5vw,3.2rem);line-height:1.04;letter-spacing:-.01em;margin-bottom:14px}
+  h1.title em{font-style:italic;color:var(--accent-2)}
+  .lede{color:var(--muted);font-size:1.05rem;max-width:62ch;margin-bottom:30px}
+
+  /* TOC */
+  .toc{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:18px 20px;margin-bottom:42px}
+  .toc .toc-h{font-size:.74rem;letter-spacing:.22em;text-transform:uppercase;color:var(--accent);font-weight:600;margin-bottom:10px}
+  .toc ol{list-style:none;counter-reset:t;display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:6px 22px}
+  .toc li{counter-increment:t;padding:4px 0}
+  .toc li a{color:#cfe0dc;text-decoration:none;font-size:.95rem;display:flex;gap:10px;align-items:baseline;transition:.18s}
+  .toc li a::before{content:counter(t,decimal-leading-zero);color:var(--accent-2);font-family:'Spectral',serif;font-style:italic;font-size:.85rem;min-width:24px}
+  .toc li a:hover{color:var(--accent)}
+
+  /* Sections */
+  section{margin-top:48px}
+  section:first-of-type{margin-top:0}
+  h2.section{font-family:'Spectral',serif;font-weight:700;font-size:clamp(1.5rem,3.4vw,2rem);line-height:1.12;letter-spacing:-.01em;margin-bottom:6px;padding-top:14px;border-top:1px solid var(--line)}
+  h2.section .num{font-style:italic;color:var(--accent);font-weight:600;margin-right:10px;font-size:.85em}
+  h3{font-size:1.08rem;font-weight:600;color:var(--accent-2);margin:22px 0 6px}
+
+  p{margin:12px 0;color:#dfeae7}
+  ul{margin:10px 0 10px 4px;padding-left:22px;color:#dfeae7}
+  ul li{margin:6px 0}
+  b{color:var(--ink)}
+
+  .lead{font-size:1.04rem;border-left:3px solid var(--accent);padding-left:16px;color:#cfe0dc;margin:14px 0}
+  .pull{background:var(--panel);border:1px solid var(--line);border-left:3px solid var(--accent-2);border-radius:0 12px 12px 0;padding:14px 18px;margin:18px 0;color:#e9d9b9;font-size:.97rem}
+  .pull b{color:#fff5dd}
+
+  .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:14px;margin:14px 0}
+  .card{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:14px 16px}
+  .card h4{font-family:'Spectral',serif;font-weight:600;font-size:1.04rem;margin-bottom:4px;color:var(--accent)}
+  .card p{margin:6px 0 0;font-size:.94rem;color:#dfeae7}
+
+  .tag{display:inline-block;font-size:.72rem;letter-spacing:.08em;text-transform:uppercase;color:#04201c;background:var(--accent);padding:3px 8px;border-radius:6px;font-weight:600;margin-right:6px;vertical-align:1px}
+  .tag.alt{background:var(--accent-2);color:#2a1a05}
+
+  .top-link{position:fixed;right:22px;bottom:22px;background:var(--panel-2);border:1px solid var(--line);color:var(--muted);padding:10px 14px;border-radius:50px;text-decoration:none;font-size:.82rem;transition:.2s}
+  .top-link:hover{border-color:var(--accent);color:var(--accent)}
+
+  footer{margin-top:70px;padding-top:24px;border-top:1px solid var(--line);text-align:center;color:var(--muted);font-size:.82rem}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="kicker">Genel Tekrar · Ders Notları</div>
+  <h1 class="title">Nanoteknoloji Ürünü <em>İlaçlar</em></h1>
+  <p class="lede">Sunumun tüm önemli içeriğinin tek sayfada toplandığı kapsamlı çalışma özeti. Aşağıdaki içindekilerden istediğiniz bölüme atlayabilirsiniz.</p>
+
+  <nav class="toc">
+    <div class="toc-h">İçindekiler</div>
+    <ol>
+      <li><a href="#s1">Giriş ve Tanım</a></li>
+      <li><a href="#s2">Geleneksel Formların Dezavantajları</a></li>
+      <li><a href="#s3">Nanopartiküller — Avantajlar</a></li>
+      <li><a href="#s4">İlaç Taşıyıcılarda Gelişmeler</a></li>
+      <li><a href="#s5">NP Türleri ve Yapı Malzemeleri</a></li>
+      <li><a href="#s6">İlaç Hedefleme</a></li>
+      <li><a href="#s7">EPR Etkisi</a></li>
+      <li><a href="#s8">Sistemik Uygulamanın Problemleri</a></li>
+      <li><a href="#s9">Hücre Bazlı Taşıyıcılar &amp; Ghostlar</a></li>
+      <li><a href="#s10">Nanotaşıyıcı Tipleri</a></li>
+      <li><a href="#s11">Karbon Nanoyapılar (Grafen, CNT)</a></li>
+      <li><a href="#s12">NP vs Nanoküme</a></li>
+      <li><a href="#s13">Zorluklar &amp; Optimal DDS Tasarımı</a></li>
+      <li><a href="#s14">Genel Tekrar Notu</a></li>
+    </ol>
+  </nav>
+
+  <!-- ================= 1 ================= -->
+  <section id="s1">
+    <h2 class="section"><span class="num">01.</span>Giriş ve Tanım</h2>
+    <p class="lead">Nanoteknoloji; istenen <b>moleküler boyut aralığında</b> malzemeleri tekrarlanabilir biçimde geliştirme ve kontrol etme kapasitesine sahip, ilerleyici bir tıp alanıdır. Bu malzemeler genellikle üzerlerinde büyük kontrol sergilenen yaklaşımlarla hazırlanır.</p>
+    <p>İlaç alanında nanoteknoloji, etkin maddeyle hastalık ve farklı anomalilerin tedavisinde kullanılmıştır. <b>Temel amaç:</b> ilacın istenen dozunun, <b>istenmeyen yan etkileri sınırlanarak</b>, istenen etki yerine (örn. tümörler ve sağlıksız dokular) taşınmasında aracı olmaktır.</p>
+    <div class="pull"><b>Anahtar fikir:</b> "Doğru ilacı, doğru bölgeye, doğru miktarda" verme hedefi. Nanoteknoloji, bunu sağlamak için boyut/yüzey/işlev kontrolüyle tasarlanmış taşıyıcılar sunar.</div>
+  </section>
+
+  <!-- ================= 2 ================= -->
+  <section id="s2">
+    <h2 class="section"><span class="num">02.</span>Geleneksel Dozaj Formlarının Dezavantajları</h2>
+    <p>Geleneksel ilaç dozaj formları — tablet, kapsül, oral çözelti, parenteral, süspansiyon, emülsiyon vb. — şu temel dezavantajları taşır:</p>
+    <ul>
+      <li><b>Yüksek doz ve düşük biyoyararlanım</b>,</li>
+      <li>Plazma geçiş seviyelerinde <b>ilk geçiş (first-pass) etkisi</b>,</li>
+      <li><b>İntolerans</b>,</li>
+      <li><b>İnstabilite</b>,</li>
+      <li>Kişiler arası <b>varyasyonlar</b>,</li>
+      <li>İstenen <b>terapötik etkinin oluşmaması</b>.</li>
+    </ul>
+    <p>Yeni ilaç taşıyıcı sistemler bu farklı talepleri ve ihtiyaçları karşılayabilir. Bu sayede <b>farmakokinetik, immünojenisite, farmakodinamik, toksisite ve ilaç etkisi</b> konularında yeni fikirler ve yaklaşımlar geliştirilmiştir.</p>
+  </section>
+
+  <!-- ================= 3 ================= -->
+  <section id="s3">
+    <h2 class="section"><span class="num">03.</span>Nanopartiküller (NP) — Tanım ve Avantajlar</h2>
+    <p><b>Nanopartiküller (NP'ler)</b>, nano boyutta, etkili formülasyonda <b>kolloidal ilaç taşıyıcı sistemlerdir</b>. NP'lerin temel avantajları:</p>
+    <ul>
+      <li>Çözünürlüğü, <b>kalış süresini</b> ve <b>yarılanma ömrünü</b> artırarak ve hedefleme yaparak <b>etki bölgesinde ilaç biyoyararlanımını</b> artırır,</li>
+      <li>İlacın etki bölgesine <b>güvenli taşınmasını</b> sağlar,</li>
+      <li><b>Hedef olmayan</b> doku/hücrelerde yan etkilerin azalmasını sağlar,</li>
+      <li>NP'ler hücreler tarafından <b>daha büyük mikromoleküllerden daha iyi</b> alınır.</li>
+    </ul>
+    <p>Nano-ilaç-taşıyıcı sistemler özellikle <b>tümör, diyabet ve nörodejeneratif bozukluklar</b> başta olmak üzere birçok hastalığın tedavi ve tanısındaki güçlüklerin çözümüne odaklanmıştır. Uygulamada etkin madde, ya <b>molekülün matrisinde</b> ya da <b>molekül yüzeyinde</b> taşınır.</p>
+  </section>
+
+  <!-- ================= 4 ================= -->
+  <section id="s4">
+    <h2 class="section"><span class="num">04.</span>İlaç Taşıyıcı Sistemlerdeki Gelişmeler</h2>
+    <p>Bir <b>ilaç taşıyıcı</b>, ilaç taşınma prosedürünün parçası olarak kullanılan herhangi bir substrattır; <b>uygulamanın seçiciliğini, etkililiğini ve stabilitesini</b> artırmaya yarar. Taşıyıcılar prensip olarak ilacın <b>salım modelini</b> kontrol eder:</p>
+    <ul>
+      <li>İlacın öngörülen sürede belli bir şekilde salınması (<b>normal dağılım</b>),</li>
+      <li>Hedefte değişiklik veya <b>uyarana karşı aktif salım</b> ile sistemik dolaşıma geçiş.</li>
+    </ul>
+    <p>Tetikleyici <b>uyaranlar</b> örneğin <b>pH değişimleri, sıcaklık ve ışık</b> olabilir. İlaç taşıyıcı sistemler ayrıca ilacın <b>farmakokinetik özelliklerini değiştirmek</b> ve suda çözünürlüğü zayıf ilaçların <b>biyoyararlanımı ile membran geçirgenliğini artırmak</b> için kullanılır.</p>
+  </section>
+
+  <!-- ================= 5 ================= -->
+  <section id="s5">
+    <h2 class="section"><span class="num">05.</span>NP Türleri ve Yapı Malzemeleri</h2>
+    <p>Değişik boyut, şekil, düzenleme ve işlevselliklere sahip <b>çok sayıda NP türü</b> vardır. İstenen özellikte üretim için NP'ler iki ana grupta hazırlanır:</p>
+    <div class="grid">
+      <div class="card">
+        <h4>Doğal NP'ler</h4>
+        <p>Lipitler, laktik asit, dekstran, kitosan ve fosfolipidler; ayrıca albümin, jelatin, kitosan gibi kaynaklar.</p>
+      </div>
+      <div class="card">
+        <h4>İnorganik / Sentetik NP'ler</h4>
+        <p>Daha fazla "harmanlanmış niteliğe" sahip farklı polimer, silika, metal ve karbon türleri; metal NP'ler, silika NP'ler ve polimerik NP'ler.</p>
+      </div>
+    </div>
+    <p>Çeşitli ilaç taşıyıcıları arasında <b>mikropartiküller, miseller, dendrimerler, karbon nanotüpler (CNT), hücreler, lipozomlar ve lipoproteinler</b> terapötik ve tanısal müdahaleler için geniş çapta araştırılmıştır. Bu sistemler;</p>
+    <ul>
+      <li><b>Aşınma</b>,</li>
+      <li><b>Uyaranlara duyarlı salım</b> (pH ve sıcaklığa duyarlı bağlantılar),</li>
+      <li>Dokuya/hücreye özgü <b>seçici hedefleme</b> (belirli antikorlarla konjugasyon)</li>
+    </ul>
+    <p>ile <b>etki alanının karakteristik bölgesine</b> yönlendirilebilir. Ayrıca NP'lerin kanda kalma süresi, dış yüzeylerinin <b>kan hücre zarı</b> ile veya <b>PEG</b> ile kaplanmasıyla artırılabilir; ligandlarla yeni tasarlanmış NP'lerle <b>tümörü hedefleyen uyaran-duyarlı ajanlar</b>, damar geçirgenliğini artırma veya <b>cilt malignitelerinde RNA ekleme</b> gibi yaklaşımlar üzerine araştırmalar devam etmektedir.</p>
+  </section>
+
+  <!-- ================= 6 ================= -->
+  <section id="s6">
+    <h2 class="section"><span class="num">06.</span>İlaç Hedefleme</h2>
+    <p class="lead"><b>Hedefleme</b>, ilacın yalnızca <b>patolojik bölgede</b> etki göstermesi için hedef dokuda <b>seçici ve kantitatif</b> olarak bulunmasıdır. Bu teknik, <b>ilaç uygulama şeklinden bağımsızdır</b>.</p>
+    <p>İki temel mekanizma:</p>
+    <ul>
+      <li><span class="tag">PASİF</span> Sızdıran vaskülatür ve doğrudan uygulama/implantasyonla seçici taşınma; <b>EPR etkisi</b> olan bölgelerde kendiliğinden ilaç birikimi.</li>
+      <li><span class="tag alt">AKTİF</span> <b>Reseptör ve antikor aracılı</b> hedefleme.</li>
+    </ul>
+    <h3>İlaç hedeflemenin tipleri</h3>
+    <ul>
+      <li>Bir ilacın <b>etki bölgesine doğrudan uygulanması</b>,</li>
+      <li><b>Pasif ilaç hedeflemesi</b> (vaskülatür sızması veya EPR etkisi),</li>
+      <li><b>Fiziksel hedefleme</b>: patolojik bölgenin <b>anormal pH ve/veya sıcaklığına</b> dayanma,</li>
+      <li><b>Manyetik hedefleme</b>: harici bir <b>manyetik alanın</b> etkisi altında ilacın yönlendirilmesi,</li>
+      <li><b>Vektör molekülleriyle hedefleme</b>: ilgi alanına yüksek afiniteli <b>ligandlar</b> kullanma.</li>
+    </ul>
+    <div class="pull">Vektör aracılı hedeflemede farmasötik taşıyıcılar; <b>mikrokapsüller, mikropartiküller, hücreler, cell ghosts, lipozomlar ve miseller</b>'i içerir.</div>
+  </section>
+
+  <!-- ================= 7 ================= -->
+  <section id="s7">
+    <h2 class="section"><span class="num">07.</span>Gelişmiş Geçirgenlik ve Tutma (EPR) Etkisi</h2>
+    <p><b>EPR (Enhanced Permeability and Retention) etkisi</b>; küçük boyutlu nanopartiküllerin ve makromoleküler ilaçların <b>tümörde normal dokulara göre daha fazla birikebilme özelliğidir</b>. Bu etki:</p>
+    <ul>
+      <li>Tümör <b>neo-vaskülatürünün</b> daha büyük gözenek boyutuna,</li>
+      <li>Tümörlerin <b>zayıf lenfatik klerensine</b>,</li>
+      <li>Ve küçük moleküllerin (nanopartiküller dahil) <b>boyutuna</b> güçlü biçimde bağlıdır.</li>
+    </ul>
+    <p>EPR etkisi, geleneksel antikanser ilaçlarına bir alternatif olarak kabul edilmiştir; uygun biyo-dağılımlı kanser terapötik nanopartiküllerinin <b>katı tümörlerde yüksek seviyede biriktiği</b> görülmüştür. Bu prensibe dayanarak kanser tedavisi için <b>nano taşıyıcı sistemlerde çeşitli ilaçlar</b> geliştirilmiştir.</p>
+    <p>Ayrıca EPR, yüksek moleküler ağırlıklı <b>hedeflenmemiş ilaçların ve ön ilaçların</b> da iltihaplanma veya kanser gibi <b>artan vasküler geçirgenlik</b> sunan dokularda biriktiği mekanizmadır.</p>
+  </section>
+
+  <!-- ================= 8 ================= -->
+  <section id="s8">
+    <h2 class="section"><span class="num">08.</span>Sistemik Uygulamanın Ana Problemleri</h2>
+    <ul>
+      <li>İlaçların vücutta <b>biyo-dağılımı</b>,</li>
+      <li>Patolojik bölgeye özgü <b>ilaç afinite eksikliği</b>,</li>
+      <li>Etkili/yüksek konsantrasyona ulaşmak için gereken <b>büyük toplam doz</b>,</li>
+      <li>Yüksek dozlara bağlı <b>spesifik olmayan toksisite</b> ve diğer olumsuz yan etkiler.</li>
+    </ul>
+  </section>
+
+  <!-- ================= 9 ================= -->
+  <section id="s9">
+    <h2 class="section"><span class="num">09.</span>Hücre Bazlı Taşıyıcılar ve Hücre Ghostları</h2>
+    <p>Hücre bazlı ilaç taşıyıcı sistemleri, avantajları nedeniyle yeni ve etkili taşıyıcılar olarak dikkat çekmektedir:</p>
+    <ul>
+      <li><b>Sürekli taşıma</b>,</li>
+      <li>Hedef dokuya <b>seçici taşıma</b>,</li>
+      <li><b>Biyouyumluluk</b> ve <b>in vivo ilaç stabilitesinin</b> iyileştirilmesi.</li>
+    </ul>
+    <p><b>Hücre bazlı sistemler:</b> eritrositler, lökositler, virüsler, <b>tasarlanmış kök hücreler</b> ve <b>bakterilerden</b> oluşur.</p>
+    <h3>Hücre Ghostları (Hayaletler)</h3>
+    <ul>
+      <li><b>Kırmızı kan hücresi (RBC) hayaletleri</b>: sitokinlerin <b>iltihaplanma bölgelerine</b> hedeflenmiş verilmesi için etkili ilaç taşıyıcılarıdır; iltihaplı hastalıkların tedavi sonuçlarını iyileştirme potansiyeline sahiptir.</li>
+      <li><b>Bakteriyel hayaletler (BG'ler)</b>: birçok tümör hücresi için <b>potansiyel ilaç taşıyıcı sistem</b> olarak kabul edilmiştir.</li>
+    </ul>
+  </section>
+
+  <!-- ================= 10 ================= -->
+  <section id="s10">
+    <h2 class="section"><span class="num">10.</span>İleri Nanotaşıyıcı Tipleri</h2>
+    <p>Sunumda öne çıkan nanotaşıyıcı tipleri ve özellikleri:</p>
+
+    <h3>Polimerik Nanopartiküller</h3>
+    <p>Polimerik NP'ler aşağıdakiler için potansiyel taşıyıcı sistemdir:</p>
+    <ul>
+      <li><b>Kansere hedefleme</b> ve tedavi,</li>
+      <li><b>Gen taşıma</b>,</li>
+      <li>Gelişmiş <b>oral biyoyararlanım</b>,</li>
+      <li><b>Kan-beyin bariyeri (BBB) geçişi</b>.</li>
+    </ul>
+
+    <h3>Katı Lipit Nanoparçacık (SLN)</h3>
+    <p>SLN'lerin tıbbi uygulamaları, ilacın <b>lipit çekirdeğindeki çözünebilirliği</b>, lipit ağının polimerik durumu/yapısı ve <b>lipit çapraz bağ oluşumu</b> ile ilgilidir.</p>
+    <p><b>Avantajlar:</b></p>
+    <ul>
+      <li>Lipitten <b>ilaç salımını daha iyi kontrol edebilir</b>,</li>
+      <li><b>Formülasyon stabilitesi</b> ve <b>ilaç yükleme kapasitesi</b> artmıştır,</li>
+      <li><b>Basit yöntemlerle</b> hazırlanabilir.</li>
+    </ul>
+
+    <h3>Kübozomlar (Cubosomes)</h3>
+    <p>Amfifilik parçacıklar kendi yapılarından dolayı ilaç taşınmasında önemli bir role sahiptir. <b>Amfifilik lipitlerin</b> hidrofobik etki ile kendiliğinden bir araya gelmesiyle <b>termodinamik olarak stabil yapılar</b> oluşur — <b>lameller, altıgen ve kübik (kübozom)</b> oluşumlar.</p>
+
+    <h3>Transferozomlar</h3>
+    <p>Kontrollü ve potansiyel olarak <b>hedeflenmiş ilaç verme</b> için uygun bir hücre vezikülünün özelliklerini taşımak üzere tasarlanmış <b>yapay vezikülüdür</b>. <b>Cilt tahrişine neden olmadan</b> ilaç verilmesinde etkinliği gösterilmiştir; <b>cilt kanseri</b> tedavisinde potansiyeli vardır.</p>
+
+    <h3>Dendrimerler</h3>
+    <p>Ağaç dallanması gibi yapıya sahip, yüksek kontrollü nanotaşıyıcılardır; yüzlerce ilaç/ligand bağlanabilir.</p>
+
+    <h3>Diğer İleri Taşıyıcılar (Hatırlatma)</h3>
+    <p>Çeşitli ilaç taşıyıcıları arasında <b>mikropartiküller, miseller, lipozomlar, lipoproteinler</b> ve karbon temelli yapılar (sonraki bölüm) yer alır. Uyaranlara duyarlı salım (pH/sıcaklık) ve antikor konjugasyonu ile <b>seçici hedefleme</b> sağlanabilir.</p>
+  </section>
+
+  <!-- ================= 11 ================= -->
+  <section id="s11">
+    <h2 class="section"><span class="num">11.</span>Karbon Nanoyapılar: Grafen ve Karbon Nanotüpler</h2>
+    <h3>Grafen</h3>
+    <p><b>Grafen</b>, iki boyutlu (2D), <b>bal peteği kristal kafes</b> karbonudur; karbon atomlarının düz tek bir tabakasından oluşur. Farklı tipleri:</p>
+    <ul>
+      <li><b>Fulleren</b> (küresel karbon allotropu),</li>
+      <li><b>Karbon nanotüpler</b> (1D),</li>
+      <li><b>Grafit</b> (3D).</li>
+    </ul>
+    <p>Grafen nanomalzemeler ilaç taşıma için <b>mükemmel taşıyıcı malzemelerdir</b>. Yapıyla ilişkili spesifik özellikleri sayesinde <b>yüksek yükleme verimliliği, hedefleme, görüntüleme, algılama ve uyaranlara duyarlı salınım</b> için işlevselleştirilebilir. Grafenin özellikleri:</p>
+    <ul>
+      <li>Mono atomik düzlemsel yapı ve <b>geniş yüzey alanı</b>,</li>
+      <li><b>Kimyasal ve mekanik stabilite</b>,</li>
+      <li><b>Üstün elektriksel iletkenlik</b>,</li>
+      <li><b>İyi biyouyumluluk</b>.</li>
+    </ul>
+    <div class="pull"><b>En büyük zorluk:</b> Grafen nanomalzemeleri kullanılırken karşılaşılan en büyük zorluk <b>toksisite riskidir</b>.</div>
+
+    <h3>Karbon Nanotüpler (CNT)</h3>
+    <ul>
+      <li>1991'de keşifleri malzeme biliminde yeni bir dönem başlattı,</li>
+      <li><b>Elektronik, manyetik ve mekanik</b> özelliklere sahiptirler,</li>
+      <li>1991'de <b>Sumio Iijima</b> önce başka bir karbon nanoyapı düzenlemesini tarif etti ve "grafit karbonun sarmal mikrotübülleri" olarak adlandırdı,</li>
+      <li>Bir <b>katottan karbon-ark deşarj</b> stratejisi ile hazırlandı (fullerenlerin gelişimi yoluyla),</li>
+      <li>CNT'ler, <b>grafen levhaların moleküler ölçekli tüpü</b> olarak düşünülebilir; genişlik birkaç nanometreye kadar, uzunluk <b>santimetreye kadar</b> olabilir.</li>
+    </ul>
+  </section>
+
+  <!-- ================= 12 ================= -->
+  <section id="s12">
+    <h2 class="section"><span class="num">12.</span>Nanopartikül ile Nanoküme Arasındaki Fark</h2>
+    <div class="grid">
+      <div class="card">
+        <h4>Nanopartikül</h4>
+        <p>Boyutu <b>1–100 nm</b> arasında olan parçacıklardır. <b>Geniş bir yüzey alanı/hacim oranına</b> sahiptir.</p>
+      </div>
+      <div class="card">
+        <h4>Nanoküme (cluster)</h4>
+        <p>Bir <b>nanopartikül koleksiyonudur</b> — yani nanopartiküllerin oluşturduğu topluluk.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= 13 ================= -->
+  <section id="s13">
+    <h2 class="section"><span class="num">13.</span>Zorluklar ve Optimal DDS Tasarımı</h2>
+    <p>Optimal özellikte bir ilaç taşıyıcı sistem (DDS) geliştirirken dikkate alınan kriterler:</p>
+    <ul>
+      <li><b>İlaç taşıma kapasitesi</b>,</li>
+      <li>İlacın <b>sistem dışına sızması</b>,</li>
+      <li><b>Stabilite ve raf ömrü</b>,</li>
+      <li><b>Biyouyumluluk</b>,</li>
+      <li><b>Biyolojik dağılım</b>,</li>
+      <li><b>Tekrarlanabilirlik</b>.</li>
+    </ul>
+    <p>Yeni nanomalzemelerde (örn. grafen) başlıca zorluk <b>toksisite riskidir</b>. Sistemik uygulamada ise yukarıdaki "Sistemik Uygulamanın Ana Problemleri" başlığında listelenen tüm engellerin (biyo-dağılım, afinite eksikliği, yüksek doz gereksinimi, spesifik olmayan toksisite) aşılması gerekir.</p>
+  </section>
+
+  <!-- ================= 14 ================= -->
+  <section id="s14">
+    <h2 class="section"><span class="num">14.</span>Tek Sayfada Genel Tekrar — Çekirdek Notlar</h2>
+    <div class="grid">
+      <div class="card"><h4>Amaç</h4><p>Doğru ilacı, doğru bölgeye, doğru miktarda; yan etkiyi minimize ederek vermek.</p></div>
+      <div class="card"><h4>Geleneksel sorunlar</h4><p>Yüksek doz, düşük biyoyararlanım, ilk geçiş, intolerans, instabilite, varyasyon.</p></div>
+      <div class="card"><h4>NP avantajı</h4><p>Çözünürlük + yarı ömür + hedefleme → biyoyararlanım artar, yan etki azalır.</p></div>
+      <div class="card"><h4>NP boyutu</h4><p><b>1–100 nm</b>; geniş yüzey/hacim oranı.</p></div>
+      <div class="card"><h4>Yapı malzemesi</h4><p>Doğal (lipit, dekstran, kitosan, albümin, jelatin) ve inorganik (metal, silika, polimer).</p></div>
+      <div class="card"><h4>Hedefleme</h4><p>Pasif (EPR), aktif (reseptör/antikor), fiziksel (pH/ısı), manyetik, vektör (ligand).</p></div>
+      <div class="card"><h4>EPR</h4><p>Tümörde gözenekli neo-vaskülatür + zayıf lenfatik klerens → NP birikimi.</p></div>
+      <div class="card"><h4>Sistemik sorunlar</h4><p>Biyo-dağılım, afinite eksikliği, yüksek doz gereği, spesifik olmayan toksisite.</p></div>
+      <div class="card"><h4>Hücre taşıyıcı</h4><p>Eritrosit/lökosit/virüs/kök hücre/bakteri; RBC ghost = sitokin → iltihap; BG = tümör.</p></div>
+      <div class="card"><h4>Polimerik NP</h4><p>Kanser, gen, oral biyoyararlanım, BBB geçişi.</p></div>
+      <div class="card"><h4>SLN</h4><p>Lipit çekirdek; iyi salım kontrolü, stabilite, basit hazırlama.</p></div>
+      <div class="card"><h4>Kübozom</h4><p>Amfifilik lipitlerin kübik (termodinamik stabil) yapısı.</p></div>
+      <div class="card"><h4>Transferozom</h4><p>Yapay vezikül; cilt tahrişsiz, cilt kanseri potansiyeli.</p></div>
+      <div class="card"><h4>Dendrimer</h4><p>Ağaç dallı; çok sayıda ilaç/ligand bağlanabilir.</p></div>
+      <div class="card"><h4>Grafen</h4><p>2D bal peteği; tipleri fulleren / CNT (1D) / grafit (3D). En büyük zorluk: toksisite.</p></div>
+      <div class="card"><h4>CNT</h4><p>1991, Sumio Iijima; grafen levhanın moleküler ölçekli tüpü; elektronik/manyetik/mekanik özellikler.</p></div>
+      <div class="card"><h4>NP vs nanoküme</h4><p>NP = 1–100 nm parçacık; nanoküme = NP koleksiyonu.</p></div>
+      <div class="card"><h4>Optimal DDS</h4><p>Kapasite, sızma, stabilite/raf ömrü, biyouyumluluk, biyo-dağılım, tekrarlanabilirlik.</p></div>
+    </div>
+  </section>
+
+  <footer>
+    Çalışma materyali eğitim amaçlıdır. Sınav/klinik kullanım öncesi ders notlarıyla karşılaştırınız.
+  </footer>
+</div>
+
+<a href="#" class="top-link">↑ Başa dön</a>
+</body>
+</html>
