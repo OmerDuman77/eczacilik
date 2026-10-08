@@ -1,0 +1,1025 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Zehirlerin Etki Şekilleri - Özet & Test</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=Source+Sans+3:wght@300;400;600;700&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #0f1119;
+  --surface: #181b27;
+  --surface2: #1e2235;
+  --accent: #e8a838;
+  --accent2: #d4573b;
+  --accent3: #3b8ed4;
+  --text: #e0e0e8;
+  --text-muted: #8b8fa4;
+  --border: #2a2e42;
+  --correct: #38c97a;
+  --wrong: #e04858;
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+body {
+  font-family: 'Source Sans 3', sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  line-height: 1.7;
+  overflow-x: hidden;
+}
+
+.hero {
+  position: relative;
+  min-height: 50vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 60px 20px;
+  background: linear-gradient(135deg, #0f1119 0%, #1a1530 40%, #251a2e 70%, #0f1119 100%);
+  overflow: hidden;
+}
+
+.hero::before {
+  content: '';
+  position: absolute;
+  top: -50%;
+  left: -50%;
+  width: 200%;
+  height: 200%;
+  background: radial-gradient(ellipse at 30% 50%, rgba(232,168,56,0.06) 0%, transparent 50%),
+              radial-gradient(ellipse at 70% 60%, rgba(212,87,59,0.05) 0%, transparent 50%);
+  animation: drift 20s ease-in-out infinite;
+}
+
+@keyframes drift {
+  0%, 100% { transform: translate(0, 0); }
+  50% { transform: translate(-30px, 20px); }
+}
+
+.hero-content {
+  position: relative;
+  z-index: 1;
+  max-width: 800px;
+}
+
+.hero h1 {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(2.2rem, 5vw, 3.8rem);
+  font-weight: 900;
+  background: linear-gradient(135deg, var(--accent), var(--accent2));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  margin-bottom: 12px;
+  letter-spacing: -0.5px;
+}
+
+.hero .subtitle {
+  font-size: 1.1rem;
+  color: var(--text-muted);
+  font-weight: 300;
+}
+
+.hero .meta {
+  margin-top: 20px;
+  font-size: 0.85rem;
+  color: var(--text-muted);
+  opacity: 0.7;
+}
+
+nav.tabs {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  background: rgba(15,17,25,0.92);
+  backdrop-filter: blur(16px);
+  border-bottom: 1px solid var(--border);
+  display: flex;
+  justify-content: center;
+  gap: 0;
+}
+
+nav.tabs button {
+  background: none;
+  border: none;
+  color: var(--text-muted);
+  font-family: 'Source Sans 3', sans-serif;
+  font-size: 1rem;
+  font-weight: 600;
+  padding: 16px 32px;
+  cursor: pointer;
+  position: relative;
+  transition: color 0.3s;
+}
+
+nav.tabs button:hover { color: var(--text); }
+
+nav.tabs button.active {
+  color: var(--accent);
+}
+
+nav.tabs button.active::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 20%;
+  width: 60%;
+  height: 2px;
+  background: var(--accent);
+  border-radius: 2px;
+}
+
+.container {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 40px 24px 80px;
+}
+
+.section-hidden { display: none; }
+
+/* SUMMARY STYLES */
+.summary-section {
+  margin-bottom: 48px;
+  animation: fadeUp 0.5s ease-out;
+}
+
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.summary-section h2 {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.7rem;
+  font-weight: 700;
+  color: var(--accent);
+  margin-bottom: 20px;
+  padding-bottom: 10px;
+  border-bottom: 1px solid var(--border);
+  position: relative;
+}
+
+.summary-section h2::before {
+  content: '';
+  position: absolute;
+  bottom: -1px;
+  left: 0;
+  width: 60px;
+  height: 2px;
+  background: var(--accent);
+}
+
+.summary-section h3 {
+  font-size: 1.15rem;
+  font-weight: 700;
+  color: var(--accent3);
+  margin: 24px 0 10px;
+}
+
+.summary-section p {
+  margin-bottom: 14px;
+  color: var(--text);
+  font-weight: 300;
+}
+
+.summary-section strong {
+  color: var(--accent);
+  font-weight: 600;
+}
+
+.key-box {
+  background: var(--surface);
+  border-left: 3px solid var(--accent);
+  padding: 16px 20px;
+  border-radius: 0 8px 8px 0;
+  margin: 16px 0;
+}
+
+.key-box p { margin-bottom: 6px; }
+
+.table-wrapper {
+  overflow-x: auto;
+  margin: 20px 0;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.9rem;
+}
+
+th {
+  background: var(--surface2);
+  color: var(--accent);
+  font-weight: 700;
+  text-align: left;
+  padding: 12px 14px;
+  border-bottom: 2px solid var(--border);
+}
+
+td {
+  padding: 10px 14px;
+  border-bottom: 1px solid var(--border);
+  color: var(--text);
+  font-weight: 300;
+}
+
+tr:hover td { background: rgba(232,168,56,0.03); }
+
+/* TEST STYLES */
+.test-header {
+  text-align: center;
+  margin-bottom: 36px;
+}
+
+.test-header h2 {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.8rem;
+  color: var(--accent);
+  margin-bottom: 8px;
+}
+
+.test-header p { color: var(--text-muted); font-weight: 300; }
+
+.score-bar {
+  background: var(--surface);
+  border-radius: 12px;
+  padding: 20px 28px;
+  margin-bottom: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 16px;
+  border: 1px solid var(--border);
+}
+
+.score-display {
+  font-size: 1.4rem;
+  font-weight: 700;
+  color: var(--accent);
+}
+
+.score-display span { font-weight: 300; color: var(--text-muted); font-size: 1rem; }
+
+.btn {
+  padding: 10px 24px;
+  border: none;
+  border-radius: 8px;
+  font-family: 'Source Sans 3', sans-serif;
+  font-size: 0.95rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.25s;
+}
+
+.btn-primary {
+  background: linear-gradient(135deg, var(--accent), var(--accent2));
+  color: #fff;
+}
+
+.btn-primary:hover { transform: translateY(-1px); box-shadow: 0 4px 20px rgba(232,168,56,0.25); }
+
+.btn-outline {
+  background: transparent;
+  border: 1px solid var(--border);
+  color: var(--text-muted);
+}
+
+.btn-outline:hover { border-color: var(--accent); color: var(--accent); }
+
+.question-card {
+  background: var(--surface);
+  border-radius: 12px;
+  padding: 24px 28px;
+  margin-bottom: 20px;
+  border: 1px solid var(--border);
+  transition: border-color 0.3s;
+}
+
+.question-card.answered-correct { border-color: var(--correct); }
+.question-card.answered-wrong { border-color: var(--wrong); }
+
+.q-number {
+  display: inline-block;
+  background: var(--surface2);
+  color: var(--accent);
+  font-weight: 700;
+  font-size: 0.8rem;
+  padding: 4px 10px;
+  border-radius: 20px;
+  margin-bottom: 12px;
+}
+
+.q-text {
+  font-size: 1.02rem;
+  font-weight: 600;
+  color: var(--text);
+  margin-bottom: 16px;
+  line-height: 1.6;
+}
+
+.options { display: flex; flex-direction: column; gap: 8px; }
+
+.option-btn {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  background: var(--surface2);
+  border: 1px solid transparent;
+  border-radius: 8px;
+  padding: 12px 16px;
+  cursor: pointer;
+  transition: all 0.2s;
+  text-align: left;
+  font-family: 'Source Sans 3', sans-serif;
+  font-size: 0.92rem;
+  color: var(--text);
+  line-height: 1.5;
+}
+
+.option-btn:hover:not(.disabled) {
+  border-color: var(--accent);
+  background: rgba(232,168,56,0.05);
+}
+
+.option-btn .letter {
+  flex-shrink: 0;
+  width: 26px;
+  height: 26px;
+  border-radius: 50%;
+  background: var(--border);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 700;
+  font-size: 0.8rem;
+  color: var(--text-muted);
+  margin-top: 1px;
+}
+
+.option-btn.selected { border-color: var(--accent3); background: rgba(59,142,212,0.08); }
+.option-btn.selected .letter { background: var(--accent3); color: #fff; }
+
+.option-btn.correct-answer { border-color: var(--correct); background: rgba(56,201,122,0.08); }
+.option-btn.correct-answer .letter { background: var(--correct); color: #fff; }
+
+.option-btn.wrong-answer { border-color: var(--wrong); background: rgba(224,72,88,0.06); }
+.option-btn.wrong-answer .letter { background: var(--wrong); color: #fff; }
+
+.option-btn.disabled { cursor: default; opacity: 0.7; }
+
+.explanation {
+  margin-top: 14px;
+  padding: 12px 16px;
+  background: rgba(59,142,212,0.06);
+  border-left: 3px solid var(--accent3);
+  border-radius: 0 8px 8px 0;
+  font-size: 0.88rem;
+  color: var(--text-muted);
+  display: none;
+}
+
+.explanation.show { display: block; }
+
+/* Answer Key */
+.answer-key {
+  margin-top: 40px;
+  background: var(--surface);
+  border-radius: 12px;
+  padding: 28px;
+  border: 1px solid var(--border);
+}
+
+.answer-key h3 {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.3rem;
+  color: var(--accent);
+  margin-bottom: 20px;
+}
+
+.key-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
+  gap: 8px;
+}
+
+.key-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 10px;
+  background: var(--surface2);
+  border-radius: 6px;
+  font-size: 0.85rem;
+}
+
+.key-item .kn { font-weight: 700; color: var(--accent); min-width: 28px; }
+.key-item .ka { font-weight: 600; color: var(--correct); }
+
+footer {
+  text-align: center;
+  padding: 40px 20px;
+  color: var(--text-muted);
+  font-size: 0.8rem;
+  border-top: 1px solid var(--border);
+}
+
+@media (max-width: 600px) {
+  .container { padding: 24px 16px 60px; }
+  .question-card { padding: 18px 16px; }
+  nav.tabs button { padding: 14px 16px; font-size: 0.9rem; }
+  .score-bar { flex-direction: column; text-align: center; }
+}
+</style>
+</head>
+<body>
+
+<div class="hero">
+  <div class="hero-content">
+    <h1>Zehirlerin Etki Şekilleri</h1>
+    <p class="subtitle">Kimyasal Karsinojenezis & Toksik Yanıtlar — Detaylı Özet ve Test</p>
+    <p class="meta">Prof. Dr. Gülden Z. Omurtag · Doç. Dr. Esma Söylemez Yeşilçimen · 2025-2026 Bahar</p>
+  </div>
+</div>
+
+<nav class="tabs">
+  <button class="active" onclick="showSection('summary', this)">Detaylı Özet</button>
+  <button onclick="showSection('test', this)">40 Soruluk Test</button>
+  <button onclick="showSection('key', this)">Cevap Anahtarı</button>
+</nav>
+
+<!-- ===== SUMMARY SECTION ===== -->
+<div id="summary" class="container">
+
+<div class="summary-section">
+  <h2>1. Zehirlerin Genel Etki Şekilleri</h2>
+  <p>Zehirler organizma üzerinde çeşitli düzeylerde toksik etki gösterir. Bu etkiler temel olarak şu başlıklar altında incelenir:</p>
+  <div class="key-box">
+    <p><strong>Enzim sistemleri üzerine etkiler</strong> — Enzimlerin inhibisyonu veya aktivasyonu yoluyla metabolik süreçlerin bozulması.</p>
+    <p><strong>Hemoglobin üzerine etkiler</strong> — Oksijen taşıma kapasitesinin değiştirilmesi (ör. CO zehirlenmesi, methemoglobinemi).</p>
+    <p><strong>Genel hücre fonksiyonları üzerine etkiler</strong> — Organik çözücülerin narkotik etkisi, sinaptik iletimin bozulması, nöromediyatör sentez/salınımının etkilenmesi.</p>
+    <p><strong>RNA ve DNA sentezi ile etkileşme</strong> — Mutajenik, karsinojenik ve teratojenik etkiler.</p>
+    <p><strong>Teratojen etkiler</strong> — Embriyonik gelişim sırasında yapısal anomaliler.</p>
+    <p><strong>Allerjik reaksiyonlar</strong> — İmmün sistem aracılı hipersensitivite.</p>
+    <p><strong>Dokulara doğrudan etkiler</strong> — Doku nekrozu ve hasar.</p>
+  </div>
+</div>
+
+<div class="summary-section">
+  <h2>2. Ksenobiyotiklere Karşı Toksik Yanıtlar</h2>
+  <p>Ksenobiyotiklere (yabancı kimyasallara) karşı organizmada beş temel toksik yanıt tipi görülür: <strong>karsinojenezis</strong> (kanser oluşumu), <strong>genotoksisite/mutajenezis</strong> (DNA'da kalıcı hasar ve mutasyon), <strong>teratojenizis</strong> (fetüste gelişimsel bozukluklar), <strong>hedef organ toksisitesi</strong> (sistemik toksisite — belirli organların hasar görmesi) ve <strong>immünotoksisite</strong> (alerjik reaksiyonlar ve immün sistem baskılanması).</p>
+</div>
+
+<div class="summary-section">
+  <h2>3. Genel Hücre Fonksiyonları Üzerine Etkiler</h2>
+  <p>Birçok organik çözücü <strong>narkotik etki</strong> gösterir; yani merkezi sinir sistemini deprese ederek bilinç kaybına yol açabilir. Toksik maddeler, bir sinir hücresinden diğerine ya da efektör hücreye olan <strong>impuls aktarımını sinapslarda</strong> etkileyerek toksik tesir oluştururlar. Ayrıca maddelerin <strong>nöromediyatör sentezi veya salıverilmesi</strong> üzerine etkisi sonucunda toksik etkiler ortaya çıkabilir.</p>
+</div>
+
+<div class="summary-section">
+  <h2>4. DNA ve RNA Üzerine Etkiler</h2>
+  <p>Zehirlerin DNA ve RNA üzerine etkileri şu düzeylerde olabilir:</p>
+  <p>Hücre bölünmesi sırasında <strong>DNA replikasyonu</strong>, DNA'daki bilgilerin RNA'ya aktarılması (<strong>transkripsiyon</strong>), RNA'daki bilgilerin protein sentezine yönlenmesi (<strong>translasyon</strong>), protein ve nükleik asit sentezinde rol alan <strong>enzimler</strong> ve hücrenin aktivite kalıbını belirleyen işlemler üzerine etkili olabilirler.</p>
+  <h3>Genetik Materyal Hakkında Temel Bilgiler</h3>
+  <p>İnsan hücrelerinde <strong>23 çift kromozom</strong> bulunur. DNA, heliks yapıda olup <strong>3 milyar baz çiftinden</strong> oluşur ve <strong>A, C, G, T</strong> bazlarını içerir. İnsan genomunda yaklaşık <strong>20.000–25.000 gen</strong> mevcuttur. Protein kodlayan DNA kısmındaki her üçlü baz bir <strong>kodon</strong> oluşturur; her kodon ribozomda bir aminoasiti kodlar. Aminoasitlerin birleşmesi ile proteinler oluşur.</p>
+  <p><strong>Gen</strong>: DNA molekülü üzerinde bulunan ve herhangi bir ürünün sentezi için gerekli bilgiyi içeren spesifik nükleotid bölgesidir. <strong>Nükleotidler</strong>: pentoz monosakkarit (riboz/deoksiriboz) + azot içeren baz (pürin/pirimidin) + fosfat grubundan oluşur.</p>
+</div>
+
+<div class="summary-section">
+  <h2>5. RNA ve DNA Sentezi ile Etkileşme — Özel Toksik Etkiler</h2>
+  <p>Mutajenik, karsinojenik ve teratojenik etki gibi hücre çekirdeği düzeyinde oluşan ve genellikle kalıcı nitelikte olan toksik etkiler arasındaki benzerlikler nedeniyle bunlara <strong>özel toksik etkiler</strong> denir.</p>
+  <p>Mutajenik ve karsinojenik etki, maddelerin hücrelerin DNA'sında <strong>kalıcı bozukluk</strong> yapmaları esasına dayanır. Bu sonuca varılmasının nedenleri:</p>
+  <div class="key-box">
+    <p>• Birçok karsinojen madde <strong>elektrofildir</strong> veya elektrofilik metabolitlerine dönüşür.</p>
+    <p>• Birçok karsinojen madde aynı zamanda <strong>mutajendir</strong>.</p>
+    <p>• <strong>DNA tamiri mekanizmasındaki eksiklikler</strong> kanser için uygun ortam hazırlar.</p>
+    <p>• Kalıtımsal ve kromozomal bozukluklar kanser gelişimine zemin hazırlar.</p>
+    <p>• Birçok kanser vakasında <strong>kromozom bozuklukları</strong> saptanmıştır.</p>
+  </div>
+</div>
+
+<div class="summary-section">
+  <h2>6. Karsinojenik (Onkojenik) Etki — Kimyasal Karsinojenezis</h2>
+  <p><strong>Kanser (Karsinoma)</strong>: Vücuttaki hücrelerin yeterli derecede farklılaşmaya uğramaksızın, kontrolsüz ve hızlı bir şekilde bölünmeleri ile kendini gösteren patolojik bir durumdur. Kanser hücresinin farklılığının temeli, büyük bir olasılıkla DNA yapısında oluşan bozukluktur.</p>
+  <p>Kimyasal maddelerin kanser yapabileceği ilk kez 18. yy.'da İngiltere'de <strong>Dr. Sir Percival Pott</strong> tarafından baca temizleyicilerde <strong>skrotum kanserlerinin</strong> yüksek insidansının gözlenmesiyle ortaya konmuştur. İs içindeki <strong>polisiklik aromatik hidrokarbonlar (PAH)</strong> kansere neden olmaktaydı.</p>
+
+  <h3>Temel Terminoloji</h3>
+  <div class="table-wrapper">
+    <table>
+      <tr><th>Terim</th><th>Tanım</th></tr>
+      <tr><td><strong>Neoplazi</strong></td><td>Yeni veya otonom büyüyen doku</td></tr>
+      <tr><td><strong>Neoplazma (Benign)</strong></td><td>Diğer dokuları istila etmeden, yavaş proliferasyon ile büyüyen lezyonlar</td></tr>
+      <tr><td><strong>Neoplazma (Malign)</strong></td><td>Metastaz yapabilen, invaziv büyüme gösteren lezyonlar</td></tr>
+      <tr><td><strong>Metastaz</strong></td><td>Primer malign bir neoplazmadan türeyen sekonder doku büyümeleri</td></tr>
+      <tr><td><strong>Karsinoma</strong></td><td>Epitel hücrelerin malign tümörü</td></tr>
+      <tr><td><strong>Sarkoma</strong></td><td>Mezodermal kaynaklı malign tümör</td></tr>
+      <tr><td><strong>Genotoksik</strong></td><td>DNA ile etkileşime girerek mutasyona yol açan karsinojenler</td></tr>
+      <tr><td><strong>Genotoksik olmayan</strong></td><td>Gen ekspresyonunu değiştiren ancak DNA hasarı oluşturmayan karsinojenler</td></tr>
+    </table>
+  </div>
+
+  <h3>Karsinojenezis Mekanizmaları</h3>
+  <p>Karsinojenezis şu mekanizmalarla meydana gelir: <strong>mutasyonlar</strong>, onarım mekanizmalarında yetersizlik/hasar, <strong>proto-onkojenlerin onkojenlere dönüşümü</strong>, tümör baskılayıcı genlerin inaktivasyonu ve apoptozu kontrol eden genlerin inaktivasyonu.</p>
+
+  <h3>Kanserden Sorumlu Etkenler</h3>
+  <p>Kansere neden olan etkenler üç ana gruba ayrılır: <strong>kimyasal ajanlar</strong> (aflatoksin, benzen, asbest, tütün dumanı vb.), <strong>fiziksel ajanlar</strong> (UV ışınları, X ışınları) ve <strong>biyolojik ajanlar</strong> (Hepatit B/C, Epstein-Barr virüsü, Papillomavirüs).</p>
+</div>
+
+<div class="summary-section">
+  <h2>7. IARC Sınıflandırması</h2>
+  <p>IARC (Uluslararası Kanser Araştırmaları Ajansı) karsinojenleri kanıt düzeyine göre sınıflandırır:</p>
+  <div class="table-wrapper">
+    <table>
+      <tr><th>Grup</th><th>Tanım</th><th>Ajan Sayısı</th><th>Örnek</th></tr>
+      <tr><td><strong>Grup 1</strong></td><td>İnsanda kesin karsinojen</td><td>132</td><td>Asbest, Aflatoksin, Tütün, Benzen, As</td></tr>
+      <tr><td><strong>Grup 2A</strong></td><td>İnsanda muhtemelen karsinojen</td><td>96</td><td>Akrilamid, Kloramfenikol, PBB, TCE</td></tr>
+      <tr><td><strong>Grup 2B</strong></td><td>İnsanda olasılıkla karsinojen</td><td>320</td><td>Kurşun, DDT, Kloroform</td></tr>
+      <tr><td><strong>Grup 3</strong></td><td>Sınıflandırılamayan</td><td>499</td><td>Civa, Malation</td></tr>
+      <tr><td><strong>Grup 4</strong></td><td>Karsinojenik etkisi olmayan</td><td>1</td><td>Kaprolaktam</td></tr>
+    </table>
+  </div>
+  <p>Bir kimyasal etkenin kanserojen olduğunu belirleyen <strong>3 ana kriter</strong>: (1) Kontrol grubunda görülmeyen kendine özgü tümör çeşitlerini oluşturması, (2) Doğal tümörlerin insidensini artırması, (3) Tümörleri daha erken yaşta veya birey başına daha fazla oluşturması.</p>
+</div>
+
+<div class="summary-section">
+  <h2>8. Kimyasal Karsinojenlerin Sınıflandırılması</h2>
+  <p>Kanserojen kimyasal etkenler, hücre DNA'sının yapısını bozup bozmamasına bağlı olarak iki ana gruba ayrılır:</p>
+
+  <h3>A) Genotoksik Karsinojenler</h3>
+  <p>Elektrofilik özelliktedirler. DNA veya genetik ekspresyonu <strong>irreversibl</strong> olarak değiştirerek kalıtsal değişime yol açarlar. Aynı zamanda <strong>mutajenik</strong> maddelerdir. DNA'ya bağlanma sonucu <strong>DNA-eklentisi (DNA-adduct)</strong> oluştururlar.</p>
+  <p><strong>1. Primer (Doğrudan etkili):</strong> Biyotransformasyona gerek duymaksızın doğrudan DNA ile nükleofilik kovalent etkileşime girerler. Yüksek derecede reaktif, elektrofilik moleküllerdir. Örnekler: alkil sülfonatlar, dimetilsülfat, bazı nitrozo bileşikleri, kükürtlü/azotlu hardal gazı (iki fonksiyonlu alkilleyici etkenler).</p>
+  <p><strong>2. Sekonder (Dolaylı etkili):</strong> Vücutta enzimatik olarak reaktif metabolitlere (ultimate karsinojen) dönüştükten sonra etkinlik kazanır. <strong>Prokarsinojen</strong> → <strong>Proximate karsinojen</strong> → <strong>Ultimate karsinojen</strong> şeklinde aktifleşirler. Örnekler: PAH'lar, aflatoksin.</p>
+
+  <h3>B) Epigenetik (Nongenotoksik) Karsinojenler</h3>
+  <p>Genetik materyalle doğrudan etkileşme özellikleri yoktur. DNA ile kovalent reaksiyona girmezler. Uzun süre ve yüksek dozda etkili olurlar. Beş alt gruba ayrılırlar:</p>
+  <div class="key-box">
+    <p><strong>1. Promoter aktivite gösterenler</strong> — Kroton yağı (forbol esterleri), fazla yağ tüketimi-safra asitleri ilişkisi.</p>
+    <p><strong>2. Hormon modifikasyonu aktivitesi olanlar</strong> — Prolaktin-DMBA-meme tümörü ilişkisi.</p>
+    <p><strong>3. Katı hal karsinojenezisi</strong> — Polimer/metal levhalar, asbest (latent devresi 25 yıl).</p>
+    <p><strong>4. İmmunosupresörler</strong> — DNA sentezini değiştirirler ama DNA ile reaksiyona girmezler. AIDS'li kişilerde Kaposi sarkomu, lenfoma, lösemi riski artar.</p>
+    <p><strong>5. Peroksizom çoğalması yapanlar</strong> — Klofibrat, tibrik asit, ftalatlar, laktofen.</p>
+  </div>
+
+  <h3>Kokarsinojenler</h3>
+  <p>Primer karsinojenik maddenin etkinliğini artıran maddelerdir. Karsinojen maddeden hemen önce veya beraber uygulandığında daha çok tümör oluşumuna yol açar. Örnekler: alkol, sigara dumanı, kroton yağı, katekol. Etanol, sigaradaki genotoksik prokarsinojenlerin elektrofilik metabolitlere dönüşüm hızını artırır.</p>
+</div>
+
+<div class="summary-section">
+  <h2>9. Kimyasal Karsinojenezis Mekanizması Hipotezleri</h2>
+  <p><strong>Somatik mutasyon hipotezi:</strong> En çok kabul gören görüş — genotoksik karsinojenlerin somatik hücrelerde mutasyon yaparak kanser oluşturduğudur. Mutajenik etkisi olan maddelerin çoğunun karsinojenik etkilerinin olması bu görüşü destekler.</p>
+  <p><strong>Hücrelerarası iletişim hipotezi:</strong> Başlatıcı etkene maruz kalmanın hücrelerarası iletişimi bozduğu ve hücreyi diğer hücrelerin kontrolünden çıkardığı ileri sürülmüştür.</p>
+  <p><strong>İmmünite hipotezi:</strong> Kanser hücresine karşı olan immünitenin ilaçlar tarafından bozulması.</p>
+  <p><strong>Onkojen hipotezi:</strong> Kimyasal etkenler ökaryotik hücrelerdeki onkogenleri aktive ederek tümör oluşturur. İnsan hücrelerinde en az <strong>30 çeşit onkogen</strong> saptanmıştır.</p>
+</div>
+
+<div class="summary-section">
+  <h2>10. Başlıca Karsinojenik Maddeler</h2>
+  <div class="table-wrapper">
+    <table>
+      <tr><th>Grup</th><th>Örnekler</th><th>Hedef Organ / Not</th></tr>
+      <tr><td><strong>PAH'lar</strong></td><td>Benzo(a)piren, DMBA, 3-metilkolantren</td><td>Deri, akciğer; epoksid metabolitleri DNA'yı ariller</td></tr>
+      <tr><td><strong>Alkil nitrozaminler</strong></td><td>Dimetilnitrozamin</td><td>Karaciğer, böbrek, akciğer, mesane; DNA/RNA alkilasyonu</td></tr>
+      <tr><td><strong>Antineoplastik ilaçlar</strong></td><td>Klorambusil, siklofosfamid, karmustin</td><td>Sekonder kanser riski; en fazla alkilleyici tipler</td></tr>
+      <tr><td><strong>Aromatik aminler</strong></td><td>Anilin, 2-aminonaftalen, o-toluidin</td><td>Mesane kanseri (15-20 yıl latent dönem)</td></tr>
+      <tr><td><strong>Nitro aromatikler</strong></td><td>5-nitrofuranlar, nitroimidazoller</td><td>Dizel egzoz, karbon siyahı partiküllerinde bulunur</td></tr>
+      <tr><td><strong>Azo boyaları</strong></td><td>4-dimetilaminobenzen (tereyağı sarısı)</td><td>Karaciğer; N-hidroksilasyon ile aktifleşir</td></tr>
+      <tr><td><strong>Bitkisel karsinojenler</strong></td><td>Aflatoksin B₁, senecio alkaloidleri, safrol</td><td>Hepatoma; epoksid metaboliti guanin-N7'ye bağlanır</td></tr>
+      <tr><td><strong>Karsinojenik metaller</strong></td><td>Be, Co, As, Ni, Pb, Cr, Al, Ti</td><td>Mesleki maruziyet — çeşitli kanserler</td></tr>
+      <tr><td><strong>Halojenli HC</strong></td><td>CCl₄, CHCl₃, DDT, TCDD (dioksin)</td><td>Dioksin: cilt, akciğer, karaciğer kanseri</td></tr>
+      <tr><td><strong>Besinsel pirolizis ürünleri</strong></td><td>Benzo(a)piren (kızartma, ızgara)</td><td>Et/balığın yüksek ısıda pişirilmesi</td></tr>
+    </table>
+  </div>
+</div>
+
+<div class="summary-section">
+  <h2>11. Kimyasal Karsinojenezin Dönemleri</h2>
+  <h3>1. Başlatma (Initiation)</h3>
+  <p>Genotoksik bir kimyasal etken DNA'da <strong>irreversibl kalıcı mutasyon</strong> yapar. Kısa sürede (dakikalar-günler) tamamlanabilir. Bir kez maruz kalma yeterli olabilir. Etkisi <strong>aditif</strong> niteliktedir. Saf başlatıcılar tek başına kanser oluşturamazlar. Deneysel başlatıcı olarak genellikle <strong>DMBA</strong> kullanılır.</p>
+
+  <h3>2. Geliştirme / Promosyon (Promotion)</h3>
+  <p>Bu dönemin etkenleri genellikle <strong>epigenetik nitelikli</strong>, sitotoksik maddelerdir. Mutajenik etkinlik göstermezler. Belirli eşik dozun üstünde uygulanmaları gerekir. Başlatıcı dönemden sonra gelmelidir. Uzun zaman alır (aylar-yıllar) ve maddenin ortamda devamlı bulunmasını gerektirir. <strong>Reversibl</strong> bir olaydır — madde kesilirse gelişme durur. Deneysel promoter olarak genellikle <strong>forbol esteri (TPA)</strong> kullanılır.</p>
+
+  <h3>3. İlerleme (Progression)</h3>
+  <p>Geliştirme dönemini izler. Bazı maddelerin hem geliştirici hem ilerletici etkinliği olabilir. Hem başlatıcı hem geliştirici etkiye sahip maddelere <strong>tam (complete) karsinojen</strong> denir (ör. kömür katranı, PAH'lar). Sadece başlatıcı etkisi olanlara <strong>saf (pure) başlatıcılar</strong> denir.</p>
+
+  <div class="key-box">
+    <p><strong>Önemli fark:</strong> Geliştiriciler için bir <strong>eşik doz</strong> ve güvenli doz aralığı vardır. Başlatıcılarda böyle bir durum söz konusu değildir. En güvenceli sınır <strong>"sıfır" tolerans limitidir</strong>.</p>
+  </div>
+</div>
+
+<div class="summary-section">
+  <h2>12. Karsinojeneziste Rol Oynayan Diğer Faktörler</h2>
+  <p><strong>Tür ve metabolizma kalıbı:</strong> Aflatoksin farelerde etki yapmaz ama kuşlarda, balıklarda, sıçan/maymunlarda hepatomaya neden olur.</p>
+  <p><strong>Genetik predispozisyon:</strong> Bazı ailelerde belirli kanser tipleri (meme, kolon) daha sık görülür.</p>
+  <p><strong>Doz:</strong> Karsinojenik etki doza bağımlıdır. Dimetilnitrozamin düşük dozda kronik olarak karaciğer, yüksek dozda tek seferde böbrek kanseri yapar.</p>
+  <p><strong>Cinsiyet ve hormon dengesi:</strong> DMBA erkek farelerde daha sık deri kanseri, dişi hayvanlarda ise bazı maddeler daha sık hepatoma ve meme kanseri yapar.</p>
+  <p><strong>Yaş:</strong> Yenidoğanlar karsinojenlere daha duyarlı; ancak doğal kanser türlerinin çoğu ileri yaşta daha sık (DNA onarım kapasitesinin azalması).</p>
+  <p><strong>Diyet:</strong> Yağ ve kolesterolden zengin beslenme kolon kanseri insidansını artırır.</p>
+  <p><strong>Çevresel faktörler:</strong> Diyet alışkanlıkları, sigara dumanı, radyasyon kazaları (ör. Chernobyl).</p>
+</div>
+
+<div class="summary-section">
+  <h2>13. DNA Onarım Mekanizmaları</h2>
+  <p>Hücre DNA hasarına üç şekilde cevap verir: (a) Hasar onarılarak molekül eski haline döner — mutasyon oluşmaz, (b) DNA adduktu oluşursa hücre replikasyonu engellenerek ölür veya protein sentezini bloke eder, (c) Hücre mutasyona rağmen bölünmeye devam eder.</p>
+  <p>Onarım mekanizmasında görevli enzimler: <strong>metil transferazlar, endonükleaz, glikozilaz, polimeraz ve ligaz</strong>. DNA onarım etkinliğinin yaşlanmayla azaldığı bulunmuştur.</p>
+</div>
+
+</div>
+
+<!-- ===== TEST SECTION ===== -->
+<div id="test" class="container section-hidden">
+
+<div class="test-header">
+  <h2>40 Soruluk Çoktan Seçmeli Test</h2>
+  <p>Her sorunun yalnızca bir doğru cevabı vardır. Seçiminizi yapın ve sonuçları kontrol edin.</p>
+</div>
+
+<div class="score-bar">
+  <div class="score-display" id="scoreDisplay">0 / 40 <span>doğru</span></div>
+  <div>
+    <button class="btn btn-primary" onclick="checkAll()">Tümünü Kontrol Et</button>
+    <button class="btn btn-outline" onclick="resetAll()" style="margin-left:8px;">Sıfırla</button>
+  </div>
+</div>
+
+<div id="questionsContainer"></div>
+
+<div class="answer-key" id="inlineKey" style="display:none;">
+  <h3>Cevap Anahtarı</h3>
+  <div class="key-grid" id="inlineKeyGrid"></div>
+</div>
+
+</div>
+
+<!-- ===== ANSWER KEY SECTION ===== -->
+<div id="key" class="container section-hidden">
+  <div class="test-header">
+    <h2>Cevap Anahtarı</h2>
+    <p>40 sorunun doğru cevapları</p>
+  </div>
+  <div class="answer-key">
+    <div class="key-grid" id="keyGrid"></div>
+  </div>
+</div>
+
+<footer>
+  İstanbul Medipol Üniversitesi · Zehirlerin Etki Şekilleri · 2025-2026 Bahar Dönemi
+</footer>
+
+<script>
+const questions = [
+  {
+    q: "Kimyasal maddelerin kanser yapabileceğini ilk kez gösteren bilim insanı kimdir?",
+    o: ["Robert Koch", "Sir Percival Pott", "Louis Pasteur", "Paul Ehrlich"],
+    a: 1,
+    e: "18. yy.'da İngiltere'de baca temizleyicilerde skrotum kanseri gözlemleriyle ilk kez ortaya konmuştur."
+  },
+  {
+    q: "Aşağıdakilerden hangisi IARC Grup 1 (insanda kesin karsinojen) sınıfına girer?",
+    o: ["Kaprolaktam", "DDT", "Asbest", "Malation"],
+    a: 2,
+    e: "Asbest, aflatoksin, tütün, benzen ve arsenik Grup 1'dedir."
+  },
+  {
+    q: "Neoplazma (Neo: Yeni, Plasia: Büyüme) terimi neyi ifade eder?",
+    o: ["Normal hücre büyümesi", "Anormal hücre çoğalması", "Hücre apoptozu", "Doku rejenerasyonu"],
+    a: 1,
+    e: "Neoplazma, normal doku kontrol mekanizmalarından bağımsız olarak gelişen anormal hücre çoğalmasıdır."
+  },
+  {
+    q: "Epitel hücrelerin malign tümörlerine ne ad verilir?",
+    o: ["Sarkoma", "Karsinoma", "Lenfoma", "Melanoma"],
+    a: 1,
+    e: "Karsinoma epitel kaynaklı, sarkoma mezodermal kaynaklı malign tümörlerdir."
+  },
+  {
+    q: "Mezodermal kaynaklı malign tümörlere ne ad verilir?",
+    o: ["Karsinoma", "Adenoma", "Sarkoma", "Papilloma"],
+    a: 2,
+    e: "Sarkoma mezodermal kaynaklı malign tümörlerin genel adıdır."
+  },
+  {
+    q: "Genotoksik karsinojenler için aşağıdakilerden hangisi YANLIŞTIR?",
+    o: ["DNA ile kovalent bağ oluştururlar", "Elektrofilik özelliktedirler", "Reversibl etki gösterirler", "Mutajenik maddelerdir"],
+    a: 2,
+    e: "Genotoksik karsinojenlerin etkisi irreversibldır, reversibl değildir."
+  },
+  {
+    q: "Prokarsinojen kavramı neyi ifade eder?",
+    o: ["Doğrudan DNA'ya bağlanan karsinojen", "Biyoaktivasyonla aktifleşen inaktif ana bileşik", "Epigenetik karsinojen", "DNA onarım enzimi"],
+    a: 1,
+    e: "Prokarsinojen, vücutta enzimatik dönüşüme uğrayarak aktif hale gelen inaktif ana bileşiktir."
+  },
+  {
+    q: "Kimyasal karsinojenezin 'başlatma' (initiation) dönemi için hangisi doğrudur?",
+    o: ["Reversibl bir olaydır", "Uzun zaman alır", "İrreversibl ve kısa sürede tamamlanır", "Sadece epigenetik maddeler rol alır"],
+    a: 2,
+    e: "Başlatma dönemi kısa zamanda tamamlanır, irreversibldır ve genotoksik maddeler rol alır."
+  },
+  {
+    q: "Kimyasal karsinojenezin 'geliştirme' (promotion) dönemi için hangisi YANLIŞTIR?",
+    o: ["Reversibl bir olaydır", "Epigenetik maddeler rol alır", "Kısa sürede (dakikalarda) tamamlanır", "Eşik doz gerektirir"],
+    a: 2,
+    e: "Geliştirme dönemi aylarca/yıllarca sürebilir, kısa sürede tamamlanmaz."
+  },
+  {
+    q: "Hem başlatıcı hem de geliştirici etkiye sahip olan maddelere ne denir?",
+    o: ["Saf başlatıcı", "Kokarsinojen", "Tam (complete) karsinojen", "Promoter"],
+    a: 2,
+    e: "Tam karsinojenler hem başlatıcı hem geliştirici etki gösterir (ör. kömür katranı, PAH'lar)."
+  },
+  {
+    q: "Aşağıdakilerden hangisi epigenetik karsinojenlerin alt grubu DEĞİLDİR?",
+    o: ["Promoter aktivite gösterenler", "Primer alkilleyici ajanlar", "İmmunosupresörler", "Peroksizom çoğalması yapanlar"],
+    a: 1,
+    e: "Primer alkilleyici ajanlar genotoksik karsinojenlerin alt grubudur, epigenetik değildir."
+  },
+  {
+    q: "DNA-eklentisi (DNA-adduct) kavramı hangi karsinojen türü ile ilişkilidir?",
+    o: ["Epigenetik karsinojenler", "Genotoksik karsinojenler", "Promoterler", "Kokarsinojenler"],
+    a: 1,
+    e: "Genotoksik karsinojenler DNA'ya bağlanarak DNA-adduct oluştururlar."
+  },
+  {
+    q: "Aflatoksin B₁'in asıl karsinojen metaboliti nedir?",
+    o: ["Sülfat esteri", "Epoksid metaboliti", "Glukuronid konjugatı", "Asetil metaboliti"],
+    a: 1,
+    e: "Aflatoksinin karsinojen etkisi karaciğerde oluşan epoksid metaboliti sayesindedir."
+  },
+  {
+    q: "Aflatoksin hangi küf mantarı tarafından üretilir?",
+    o: ["Aspergillus niger", "Aspergillus flavus", "Penicillium notatum", "Candida albicans"],
+    a: 1,
+    e: "Aspergillus flavus adlı küf mantarı aflatoksinleri üretir."
+  },
+  {
+    q: "İnsanlarda en yaygın maruz kalınan alkil nitrozamin hangisidir?",
+    o: ["Dietilnitrozamin", "Dimetilnitrozamin", "Metilnitrozourea", "Nitrozoprolin"],
+    a: 1,
+    e: "Dimetilnitrozamin insanların en yaygın maruz kaldığı nitrozamindir."
+  },
+  {
+    q: "Benzo(a)piren hangi karsinojen sınıfına girer?",
+    o: ["Alkil nitrozaminler", "Polisiklik aromatik hidrokarbonlar (PAH)", "Aromatik aminler", "Azo boyaları"],
+    a: 1,
+    e: "Benzo(a)piren PAH grubunun en önemli bileşiklerinden biridir."
+  },
+  {
+    q: "Aromatik aminlere mesleki maruziyette en sık görülen kanser tipi hangisidir?",
+    o: ["Karaciğer kanseri", "Akciğer kanseri", "Mesane kanseri", "Deri kanseri"],
+    a: 2,
+    e: "Aromatik aminlere uzun süre maruz kalan işçilerde özellikle mesane kanseri gelişir."
+  },
+  {
+    q: "TCDD (dioksin) aşağıdakilerden hangisinin kontaminantıdır?",
+    o: ["Gıda boyaları", "Fenoksiasetik asit türevi herbisitler", "Kozmetik ürünler", "Antibiyotikler"],
+    a: 1,
+    e: "Dioksin, herbisid ve defoliant olarak kullanılan fenoksiasetik asit türevlerinin kontaminantıdır."
+  },
+  {
+    q: "Asbestin karsinojenik latent devresi yaklaşık kaç yıldır?",
+    o: ["5 yıl", "10 yıl", "25 yıl", "50 yıl"],
+    a: 2,
+    e: "Asbestin karsinojenik latent devresi 25 yıldır."
+  },
+  {
+    q: "Fare derisi üzerinde yapılan rutin kimyasal karsinojenezis deneylerinde başlatıcı olarak genellikle ne kullanılır?",
+    o: ["Forbol esteri (TPA)", "Benzo(a)piren", "7,12-dimetil-benz(α)antrasen (DMBA)", "Aflatoksin B₁"],
+    a: 2,
+    e: "Başlatıcı olarak genellikle DMBA, geliştirici olarak forbol esteri (TPA) kullanılır."
+  },
+  {
+    q: "DNA onarım mekanizmasında görevli olmayan enzim hangisidir?",
+    o: ["Endonükleaz", "Ligaz", "Lipaz", "Polimeraz"],
+    a: 2,
+    e: "Lipaz yağ sindiriminde görevli bir enzimdir, DNA onarımında rolü yoktur."
+  },
+  {
+    q: "İnsan genomundaki gen sayısı yaklaşık kaçtır?",
+    o: ["5.000-10.000", "20.000-25.000", "50.000-100.000", "1.000.000"],
+    a: 1,
+    e: "İnsan genomundaki gen sayısı 20-25 bin civarındadır."
+  },
+  {
+    q: "İnsan DNA'sı yaklaşık kaç baz çiftinden oluşur?",
+    o: ["1 milyon", "100 milyon", "3 milyar", "30 milyar"],
+    a: 2,
+    e: "İnsan DNA'sı yaklaşık 3 milyar baz çiftinden oluşmaktadır."
+  },
+  {
+    q: "Protein kodlayan DNA kısmındaki her üçlü baza ne ad verilir?",
+    o: ["Gen", "Kodon", "İntron", "Ekson"],
+    a: 1,
+    e: "Her üçlü baz bir kodon oluşturur ve ribozomda bir aminoasiti kodlar."
+  },
+  {
+    q: "Aşağıdakilerden hangisi karsinojenezis mekanizmalarından biri DEĞİLDİR?",
+    o: ["Mutasyonlar", "Proto-onkojenlerin onkojenlere dönüşümü", "DNA replikasyonunun hızlanması", "Tümör baskılayıcı genlerin inaktivasyonu"],
+    a: 2,
+    e: "DNA replikasyonunun hızlanması bir karsinojenezis mekanizması olarak sayılmaz."
+  },
+  {
+    q: "İnsan hücrelerinde saptanan onkogen çeşidi en az kaçtır?",
+    o: ["5", "15", "30", "100"],
+    a: 2,
+    e: "İnsan hücrelerinde en az 30 çeşit onkogenin varlığı saptanmıştır."
+  },
+  {
+    q: "Kokarsinojen kavramı aşağıdakilerden hangisini ifade eder?",
+    o: ["Tek başına kanser yapan madde", "Karsinojenik maddenin etkinliğini artıran madde", "Antikanser ilaç", "DNA onarım enzimi"],
+    a: 1,
+    e: "Kokarsinojen, primer karsinojenik maddenin karsinojenik etkinliğini artırır."
+  },
+  {
+    q: "Etanolün kokarsinojenik etkisi aşağıdakilerden hangisi ile açıklanır?",
+    o: ["DNA'yı doğrudan alkille etmesi", "Prokarsinojenlerin elektrofilik metabolitlere dönüşüm hızını artırması", "İmmün sistemi güçlendirmesi", "DNA onarımını hızlandırması"],
+    a: 1,
+    e: "Etanol, sigaradaki prokarsinojenlerin aktif metabolitlere dönüşüm hızını artırarak kokarsinojenik etki gösterir."
+  },
+  {
+    q: "Kanserojen PAH'lar vücutta hangi enzim sistemi tarafından epoksid türevlerine dönüştürülür?",
+    o: ["Karaciğer mikrozomal enzimleri", "Pankreas enzimleri", "Mide pepsinleri", "Böbrek tubüler enzimleri"],
+    a: 0,
+    e: "PAH'lar karaciğer mikrozomal enzimleri tarafından epoksid türevlerine dönüştürülür."
+  },
+  {
+    q: "Japonya ve Kolombiya'da mide kanseri insidansının yüksek olmasından hangi faktör sorumlu tutulur?",
+    o: ["PAH maruziyeti", "Nitritle temasta güçlü mutajenlere dönüşen besin ögeleri", "Asbest maruziyeti", "Aflatoksin kontaminasyonu"],
+    a: 1,
+    e: "Soya sosu, kurutulmuş balık ve bakla gibi besinler nitritle temas sonrası mutajenlere dönüşür."
+  },
+  {
+    q: "IARC Grup 4 sınıflandırmasında yer alan tek madde hangisidir?",
+    o: ["Benzen", "Kaprolaktam", "DDT", "Asbest"],
+    a: 1,
+    e: "Kaprolaktam, insanda karsinojenik etkisi olmayan tek madde olarak Grup 4'te yer alır."
+  },
+  {
+    q: "Geliştirici (promoter) maddeler için hangisi doğrudur?",
+    o: ["Mutajenik etki gösterirler", "İrreversibl etki yaparlar", "Eşik doz gerektirirler ve reversibl etki gösterirler", "DNA ile kovalent bağ oluştururlar"],
+    a: 2,
+    e: "Promoterler eşik doz gerektiren ve reversibl etki gösteren epigenetik nitelikli maddelerdir."
+  },
+  {
+    q: "Aşağıdakilerden hangisi ksenobiyotiklere karşı toksik yanıt tiplerinden biri DEĞİLDİR?",
+    o: ["Karsinojenezis", "Teratojenezis", "Fotosensitizasyon", "Hedef organ toksisitesi"],
+    a: 2,
+    e: "Sunumda belirtilen 5 temel yanıt: karsinojenezis, genotoksisite/mutajenezis, teratojenezis, hedef organ toksisitesi, immünotoksisite."
+  },
+  {
+    q: "Primer (doğrudan etkili) organik karsinojenler için hangisi YANLIŞTIR?",
+    o: ["Biyotransformasyona gerek duymazlar", "Elektrofilik özellik taşırlar", "Vücutta metabolize olduktan sonra etki gösterirler", "DNA ile nükleofilik kovalent etkileşime girerler"],
+    a: 2,
+    e: "Primer karsinojenler biyotransformasyona GEREK DUYMADAN doğrudan etki ederler."
+  },
+  {
+    q: "Dimetilnitrozamin sıçanlara yem içinde kronik düşük dozda verildiğinde hangi organ kanseri oluşturur?",
+    o: ["Böbrek", "Karaciğer", "Akciğer", "Mesane"],
+    a: 1,
+    e: "Düşük dozda kronik olarak karaciğer kanseri, yüksek dozda tek seferde böbrek kanseri yapar."
+  },
+  {
+    q: "Deneysel karsinojenezde geliştirici (promoter) olarak genellikle hangi madde kullanılır?",
+    o: ["DMBA", "Aflatoksin B₁", "Forbol esteri (TPA)", "Dimetilnitrozamin"],
+    a: 2,
+    e: "Fare derisi deneylerinde geliştirici olarak genellikle forbol esteri (TPA=2-o-tetradekanoyl-forbol-13-asetat) kullanılır."
+  },
+  {
+    q: "Aşağıdakilerden hangisi DNA bazlarından biri DEĞİLDİR?",
+    o: ["Adenin (A)", "Urasil (U)", "Guanin (G)", "Timin (T)"],
+    a: 1,
+    e: "DNA bazları A, C, G, T'dir. Urasil (U) RNA'da bulunur, DNA'da bulunmaz."
+  },
+  {
+    q: "İnsan hücrelerinde kaç çift kromozom bulunur?",
+    o: ["22 çift", "23 çift", "24 çift", "46 çift"],
+    a: 1,
+    e: "İnsan hücrelerinde 23 çift (toplam 46) kromozom bulunur."
+  },
+  {
+    q: "Kimyasal karsinojenlerin diğer toksinlerden farkı olarak biyolojik etkileri nasıl tanımlanır?",
+    o: ["Akut ve reversibl", "Persistent, kümülatif ve gecikmeli", "Hızlı ve kendini sınırlayan", "Yalnızca yüksek dozda etkili"],
+    a: 1,
+    e: "Kimyasal karsinojenlerin etkileri persistent (ısrarlı), kümülatif ve gecikmelidir."
+  },
+  {
+    q: "Aşağıdakilerden hangisi besinsel pirolizis ürünlerine örnek verilebilir?",
+    o: ["Aflatoksin", "Benzo(a)piren", "DDT", "Formaldehit"],
+    a: 1,
+    e: "Izgara, kızartma, kavurma gibi işlemler sırasında benzo(a)piren oluşur."
+  }
+];
+
+const letters = ['A','B','C','D'];
+
+function buildQuestions() {
+  const container = document.getElementById('questionsContainer');
+  let html = '';
+  questions.forEach((q, i) => {
+    html += `<div class="question-card" id="qcard${i}">
+      <div class="q-number">Soru ${i+1}</div>
+      <div class="q-text">${q.q}</div>
+      <div class="options">
+        ${q.o.map((opt, j) => `
+          <button class="option-btn" id="q${i}o${j}" onclick="selectOption(${i},${j})">
+            <span class="letter">${letters[j]}</span>
+            <span>${opt}</span>
+          </button>
+        `).join('')}
+      </div>
+      <div class="explanation" id="exp${i}">${q.e}</div>
+    </div>`;
+  });
+  container.innerHTML = html;
+}
+
+const userAnswers = new Array(questions.length).fill(-1);
+
+function selectOption(qi, oi) {
+  const card = document.getElementById(`qcard${qi}`);
+  if (card.classList.contains('answered-correct') || card.classList.contains('answered-wrong')) return;
+  
+  questions[qi].o.forEach((_, j) => {
+    document.getElementById(`q${qi}o${j}`).classList.remove('selected');
+  });
+  document.getElementById(`q${qi}o${oi}`).classList.add('selected');
+  userAnswers[qi] = oi;
+}
+
+function checkAll() {
+  let score = 0;
+  questions.forEach((q, i) => {
+    const card = document.getElementById(`qcard${i}`);
+    const selected = userAnswers[i];
+    
+    // Remove previous states
+    card.classList.remove('answered-correct', 'answered-wrong');
+    q.o.forEach((_, j) => {
+      const btn = document.getElementById(`q${i}o${j}`);
+      btn.classList.remove('correct-answer', 'wrong-answer', 'selected');
+      btn.classList.add('disabled');
+    });
+    
+    // Show correct
+    document.getElementById(`q${i}o${q.a}`).classList.add('correct-answer');
+    
+    if (selected === q.a) {
+      score++;
+      card.classList.add('answered-correct');
+    } else {
+      card.classList.add('answered-wrong');
+      if (selected >= 0) {
+        document.getElementById(`q${i}o${selected}`).classList.add('wrong-answer');
+      }
+    }
+    
+    document.getElementById(`exp${i}`).classList.add('show');
+  });
+  
+  document.getElementById('scoreDisplay').innerHTML = `${score} / 40 <span>doğru (${Math.round(score/40*100)}%)</span>`;
+  document.getElementById('inlineKey').style.display = 'block';
+}
+
+function resetAll() {
+  questions.forEach((q, i) => {
+    const card = document.getElementById(`qcard${i}`);
+    card.classList.remove('answered-correct', 'answered-wrong');
+    q.o.forEach((_, j) => {
+      const btn = document.getElementById(`q${i}o${j}`);
+      btn.classList.remove('correct-answer', 'wrong-answer', 'selected', 'disabled');
+    });
+    document.getElementById(`exp${i}`).classList.remove('show');
+    userAnswers[i] = -1;
+  });
+  document.getElementById('scoreDisplay').innerHTML = `0 / 40 <span>doğru</span>`;
+  document.getElementById('inlineKey').style.display = 'none';
+  window.scrollTo({ top: document.getElementById('test').offsetTop - 60, behavior: 'smooth' });
+}
+
+function buildKeyGrids() {
+  const grids = [document.getElementById('keyGrid'), document.getElementById('inlineKeyGrid')];
+  let html = '';
+  questions.forEach((q, i) => {
+    html += `<div class="key-item"><span class="kn">${i+1}.</span><span class="ka">${letters[q.a]}</span></div>`;
+  });
+  grids.forEach(g => g.innerHTML = html);
+}
+
+function showSection(id, btn) {
+  document.querySelectorAll('.container').forEach(el => el.classList.add('section-hidden'));
+  document.getElementById(id).classList.remove('section-hidden');
+  document.querySelectorAll('nav.tabs button').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+// Init
+buildQuestions();
+buildKeyGrids();
+</script>
+
+</body>
+</html>

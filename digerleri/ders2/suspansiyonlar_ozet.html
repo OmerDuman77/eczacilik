@@ -1,0 +1,494 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Süspansiyonlar - Detaylı Özet</title>
+<link href="https://fonts.googleapis.com/css2?family=Merriweather:wght@400;700;900&family=Source+Sans+Pro:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #faf9f6;
+    --text: #2c2c2c;
+    --accent: #1a6b8a;
+    --accent-light: #e8f4f8;
+    --border: #d4d0c8;
+    --section-bg: #fff;
+    --highlight: #d4a853;
+    --red: #c0392b;
+    --green: #27ae60;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    font-family: 'Source Sans Pro', sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.7;
+    padding: 2rem 1rem;
+  }
+  .container {
+    max-width: 860px;
+    margin: 0 auto;
+  }
+  h1 {
+    font-family: 'Merriweather', serif;
+    font-size: 2rem;
+    color: var(--accent);
+    text-align: center;
+    margin-bottom: 0.3rem;
+  }
+  .subtitle {
+    text-align: center;
+    color: #888;
+    font-size: 0.95rem;
+    margin-bottom: 2.5rem;
+    padding-bottom: 1.5rem;
+    border-bottom: 2px solid var(--border);
+  }
+  .section {
+    background: var(--section-bg);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 1.5rem 1.8rem;
+    margin-bottom: 1.5rem;
+  }
+  .section h2 {
+    font-family: 'Merriweather', serif;
+    font-size: 1.3rem;
+    color: var(--accent);
+    margin-bottom: 1rem;
+    padding-bottom: 0.5rem;
+    border-bottom: 2px solid var(--accent-light);
+  }
+  .section h3 {
+    font-size: 1.05rem;
+    color: var(--accent);
+    margin: 1.2rem 0 0.5rem;
+    font-weight: 700;
+  }
+  .section h4 {
+    font-size: 0.95rem;
+    color: #555;
+    margin: 0.8rem 0 0.4rem;
+    font-weight: 700;
+  }
+  p { margin-bottom: 0.7rem; }
+  ul {
+    margin: 0.4rem 0 0.8rem 1.4rem;
+  }
+  li { margin-bottom: 0.35rem; }
+  .highlight-box {
+    background: var(--accent-light);
+    border-left: 4px solid var(--accent);
+    padding: 0.8rem 1rem;
+    margin: 0.8rem 0;
+    border-radius: 0 6px 6px 0;
+  }
+  .warning-box {
+    background: #fdf2f2;
+    border-left: 4px solid var(--red);
+    padding: 0.8rem 1rem;
+    margin: 0.8rem 0;
+    border-radius: 0 6px 6px 0;
+    font-weight: 600;
+  }
+  .formula-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 0.8rem 0;
+    font-size: 0.92rem;
+  }
+  .formula-table th {
+    background: var(--accent);
+    color: #fff;
+    padding: 0.5rem 0.8rem;
+    text-align: left;
+  }
+  .formula-table td {
+    padding: 0.4rem 0.8rem;
+    border-bottom: 1px solid var(--border);
+  }
+  .formula-table tr:nth-child(even) { background: #f8f8f5; }
+  .tag {
+    display: inline-block;
+    background: var(--accent-light);
+    color: var(--accent);
+    padding: 2px 8px;
+    border-radius: 4px;
+    font-size: 0.82rem;
+    font-weight: 600;
+    margin: 2px;
+  }
+  .compare-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+    margin: 0.8rem 0;
+  }
+  .compare-card {
+    padding: 1rem;
+    border-radius: 6px;
+    font-size: 0.93rem;
+  }
+  .compare-card.good {
+    background: #eafaf1;
+    border: 1px solid #a9dfbf;
+  }
+  .compare-card.bad {
+    background: #fdf2f2;
+    border: 1px solid #f5b7b1;
+  }
+  .compare-card strong {
+    display: block;
+    margin-bottom: 0.4rem;
+    font-size: 1rem;
+  }
+  .formula-box {
+    background: #f5f3ee;
+    border: 1px solid var(--border);
+    padding: 0.8rem 1rem;
+    border-radius: 6px;
+    margin: 0.6rem 0;
+    font-family: monospace;
+    text-align: center;
+    font-size: 1.05rem;
+  }
+  @media (max-width: 600px) {
+    .compare-grid { grid-template-columns: 1fr; }
+    h1 { font-size: 1.5rem; }
+    .section { padding: 1rem 1.2rem; }
+  }
+</style>
+</head>
+<body>
+<div class="container">
+
+<h1>Süspansiyonlar</h1>
+<p class="subtitle">Farmasötik Teknoloji II — Kapsamlı Ders Özeti</p>
+
+<!-- 1. TANIM -->
+<div class="section">
+  <h2>1. Tanım ve Genel Özellikler</h2>
+  <p>Süspansiyonlar, çözünmeyen katı partiküllerin bir sıvı ortamda (dispersiyon ortamı) dağıtılmasıyla oluşturulan <strong>heterojen, kaba dispersiyon</strong> şeklindeki sıvı ilaç formlarıdır.</p>
+  <ul>
+    <li><strong>Dispers faz:</strong> Katı partikül (0,5 nm – 100 µm)</li>
+    <li><strong>Dispersiyon ortamı:</strong> Sulu veya yağlı sıvı faz</li>
+    <li>Katı faz, dispersiyon ortamında çözünmez; sadece dağılır</li>
+  </ul>
+  <div class="warning-box">
+    ⚠️ Süspansiyonlar hazırlandıktan sonra süzülmez! Her kullanımdan önce mutlaka çalkalanmalıdır!
+  </div>
+</div>
+
+<!-- 2. ÜSTÜNLÜKLER / SAKINCALAR -->
+<div class="section">
+  <h2>2. Üstünlükleri ve Sakıncaları</h2>
+  <div class="compare-grid">
+    <div class="compare-card good">
+      <strong>✅ Üstünlükleri</strong>
+      <ul>
+        <li>Yutma güçlüğü çekenlerde (bebek, yaşlı) uygulama kolaylığı</li>
+        <li>Çözeltide kimyasal olarak dayanıksız maddeler için uygun</li>
+        <li>Sıvı olduğu için homojen dozlama</li>
+        <li>Kötü tat giderilebilir</li>
+        <li>Hiçbir çözücüde çözünmeyen etken maddeler verilebilir</li>
+        <li>Kuru toz preparatlar sonradan sulandırılarak uzun süreli dayanıklılık sağlar</li>
+      </ul>
+    </div>
+    <div class="compare-card bad">
+      <strong>❌ Sakıncaları</strong>
+      <ul>
+        <li>Katı ilaç şekillerine göre doz homojenliği düşük</li>
+        <li>Partiküllerin çökmesi ve topaklanması</li>
+        <li>Görünüş ve tat problemleri katı dozaj formlarına göre daha fazla</li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+<!-- 3. İDEAL SÜSPANSİYON -->
+<div class="section">
+  <h2>3. İyi Formüle Edilmiş Süspansiyonun Özellikleri</h2>
+  <ul>
+    <li>Partikül büyüklüğü dağılımı dar aralıkta olmalı</li>
+    <li>Çöktüklerinde kek oluşturmamalı</li>
+    <li>Çalkalandığında kolayca dağılmalı</li>
+    <li>Ambalajından kolayca dökülebilmeli</li>
+    <li>Akışı kolay olacak viskozitede olmalı</li>
+    <li>Kimyasal yönden stabil, mikrobiyal kontaminasyona dayanıklı, homojen görünüm</li>
+    <li>Parenteral ve oftalmik süspansiyonlar <strong>steril</strong> olmalı</li>
+  </ul>
+</div>
+
+<!-- 4. UYGULAMA YOLLARI -->
+<div class="section">
+  <h2>4. Uygulama Yollarına Göre Süspansiyonlar</h2>
+
+  <h3>4.1 Oral Süspansiyonlar</h3>
+  <ul>
+    <li>En sık hazırlanan süspansiyon türü</li>
+    <li>Taşıyıcı genellikle su; biyoyararlanım katı formlardan yüksek</li>
+    <li>Antibiyotiklerde katı madde oranı %2,5–5; antasit ve radyopaklarda yüksek</li>
+    <li>Mikronize baryum sülfat (%150–200) → mide kaplaması, lezyon tanıma</li>
+    <li>Yüksek basınçlı homojenizasyonla <strong>nanosüspansiyonlar</strong> hazırlanabilir</li>
+  </ul>
+  <div class="highlight-box">
+    <strong>Rekonstitüye (yeniden oluşturulan) süspansiyonlar:</strong> Kuru toz halinde raf ömrü 1–2 yıl olan antibiyotik, sulandırıldıktan sonra yalnızca 1–2 hafta stabil kalır. Çocuklar için antibiyotik süspansiyonları tipik örnektir.
+  </div>
+
+  <h3>4.2 Topikal Süspansiyonlar</h3>
+  <ul>
+    <li>Dermatolojik, kozmetik veya koruyucu amaçlı</li>
+    <li>Katı madde oranı genellikle >%20</li>
+    <li>Dispersiyon ortamı: su, alkol, gliserin, propilen glikol</li>
+    <li>Losyonlar yüksek alkol içerir → uygulama sonrası sıvı buharlaşır, katı kalır</li>
+    <li><strong>Örnekler:</strong> Benzoil peroksit (akne), Kalamin losyon USP</li>
+    <li><strong>Kozmetik:</strong> Güneş kremleri, antiperspiranlar, şampuanlar, sulu pudralar, diş macunları</li>
+  </ul>
+
+  <h3>4.3 Parenteral Süspansiyonlar</h3>
+  <ul>
+    <li>Steril, aseptik koşullarda hazırlanır</li>
+    <li>Katı partikül oranı genellikle %0,5–5 (penisilinlerde >%20)</li>
+    <li>Partikül boyutu <strong>&lt; 5 µm</strong> (ağrı/iritasyon önleme)</li>
+    <li>Uygulama: im, sc, ia, intratümoral, intralezyonal</li>
+    <li><strong>iv ve it (intratekal) uygulanmaz!</strong></li>
+    <li>Emilim yavaş → <strong>depo etki</strong> sağlar (kontraseptif hormonlar, çinko-insülin)</li>
+    <li>Dispersiyon fazı: serum fizyolojik veya bitkisel yağlar</li>
+    <li>Yardımcı maddeler toksik, pirojenik, antijenik, iritan, hemolitik olmamalı</li>
+  </ul>
+
+  <h3>4.4 Oftalmik Süspansiyonlar</h3>
+  <ul>
+    <li>Steril; antimikrobiyal madde içermeli</li>
+    <li>Partikül boyutu <strong>&lt; 10 µm</strong></li>
+    <li>10 µg etken maddeli süspansiyonda: >25 µm maks. 20 partikül, >50 µm maks. 2 partikül, >90 µm hiç partikül yok</li>
+    <li>Antienflamatuvar ve glokom tedavisinde kullanılır</li>
+  </ul>
+
+  <h3>4.5 Aerosol Süspansiyonlar</h3>
+  <ul>
+    <li>Etken madde sıvılaştırılmış itici gaz içinde süspande</li>
+    <li>Uygun partikül büyüklüğü: <strong>3–5 µm</strong></li>
+    <li>Çabuk etki, ilk geçiş etkisine uğramaz</li>
+    <li>Steroidler, bronkodilatörler (salbutamol), epinefrin bitartarat</li>
+  </ul>
+</div>
+
+<!-- 5. FORMÜLASYON BİLEŞENLERİ -->
+<div class="section">
+  <h2>5. Süspansiyon Formülasyonu Bileşenleri</h2>
+
+  <h3>5.1 Etken Madde</h3>
+  <p>Kaba süspansiyonlarda partikül büyüklüğü <strong>1–50 µm</strong>. Küçültme yöntemleri: öğütme, püskürterek kurutma, sıvı enerji değirmenleri, kontrollü kristalizasyon. Polimorfik özellikler de önemlidir.</p>
+
+  <h3>5.2 Dispersiyon Ortamı</h3>
+  <p>Genellikle su. Ayrıca alkoller, polioller (gliserin), glikoller (propilen glikol) ve bitkisel yağlar da kullanılabilir.</p>
+
+  <h3>5.3 Islatma Ajanları</h3>
+  <p>Hidrofobik etken maddelerin dispersiyon ortamında dağılması için kullanılır. Genellikle non-iyonik ve anyonik yüzey etkin maddeler (%0,05–0,5). HLB değeri 7–9 arası en iyi ıslatıcı özellik gösterir.</p>
+  <p><strong>Non-iyonikler</strong> daha geçimli ama acı tatlı. En sık: <strong>Polisorbat 80 (Tween 80)</strong> — toksisitesi yok.</p>
+  <p><strong>Anyonikler:</strong> pH'ya hassas, geçimsizlik riski. En sık: <strong>SLS (Sodyum lauril sülfat)</strong>.</p>
+  <p>Diğerleri: Sodyum dokusat, sorbitan monolaurat, Poloxamerler, Na CMC, bentonit, veegum.</p>
+
+  <h3>5.4 Süspansiyon Ajanları (Viskozite Arttırıcılar)</h3>
+  <p>Viskoziteyi arttırarak çökmeyi yavaşlatmak amacıyla %0,1–10 oranında kullanılır. Akış özellikleri <strong>plastik, psödoplastik veya tiksotropik</strong> olmalıdır.</p>
+
+  <h4>Organik Maddeler (Polisakkaritler)</h4>
+  <table class="formula-table">
+    <tr><th>Madde</th><th>Kaynak / Özellik</th><th>Kullanım</th></tr>
+    <tr><td>Arap zamkı (Acacia)</td><td>Acacia senegal; anyonik; su/gliserin/PG'de çözünür</td><td>Süsp. ajanı (%5–10), emülsiyon ajanı (%10–20)</td></tr>
+    <tr><td>Kitre zamkı (Tragacanth)</td><td>Astragalus türleri; bassorin (%60-70) + tragakantin</td><td>Süsp. ajanı, viskozite arttırıcı</td></tr>
+    <tr><td>Pektin</td><td>Turunçgil/elma kabukları; anyonik heteropolisakkarit</td><td>Süsp. ajanı, emülsiyon ajanı, bağlayıcı</td></tr>
+    <tr><td>Karragen</td><td>Kırmızı alg (Chondrus crispus); soğukta sol, sıcakta jel</td><td>Süsp./emülsiyon ajanı (%0,1–0,5)</td></tr>
+    <tr><td>Agar</td><td>Deniz algleri; agaroz + agaropektin; tiksotropik</td><td>Süsp. ajanı</td></tr>
+    <tr><td>Nişasta</td><td>Amiloz + amilopektin; sıcakla şişme artar; tiksotropik</td><td>Süsp. ajanı, seyreltici, dağıtıcı, bağlayıcı</td></tr>
+    <tr><td>Aljinatlar</td><td>Deniz algleri; negatif yüklü; Na aljinat suda çözünür</td><td>Süsp. ajanı (%1–5), viskozite arttırıcı</td></tr>
+  </table>
+
+  <h4>Yarı Sentetik Maddeler (Selüloz Türevleri)</h4>
+  <table class="formula-table">
+    <tr><th>Madde</th><th>Özellik</th></tr>
+    <tr><td>Metil selüloz (MC)</td><td>Soğuk suda şişer → kolloidal jel; süsp./emülsiyon ajanı, kaplama</td></tr>
+    <tr><td>Na CMC</td><td>Sıcak ve soğuk suda çözünür; non-iyonik; süsp. ajanı (%4–6)</td></tr>
+    <tr><td>HEC</td><td>Sıcak/soğuk suda çözünür; süsp./emülsiyon ajanı</td></tr>
+    <tr><td>HEMC</td><td>Higroskopik, suda çözünmez; süsp. ajanı, kaplama</td></tr>
+    <tr><td>HPC (Klucel)</td><td>&lt;38°C suda çözünür; 40–45°C'de çözünmez topak oluşur</td></tr>
+    <tr><td>HPMC (Hypermellose)</td><td>Soğuk suda kolloidal; göz damlalarında %0,45–1</td></tr>
+    <tr><td>Karbopol (Carbomer)</td><td>Su/alkol/gliserinde çözünür; alkollü süspansiyonlar için en uygun</td></tr>
+  </table>
+
+  <h4>Anorganik Maddeler (Silikatlar)</h4>
+  <table class="formula-table">
+    <tr><th>Madde</th><th>Özellik</th></tr>
+    <tr><td>Kil</td><td>Hidrate alüminyum silikat; (-) yüklü; su alarak şişer; koruyucu kolloid</td></tr>
+    <tr><td>Bentonit</td><td>Montmorillonit; 12 kat şişer; tiksotropik; süsp. ajanı (%0,5–5)</td></tr>
+    <tr><td>Veegum</td><td>Mg-Al silikat; anyonik; tiksotropik; süsp. ajanı (%0,5–10)</td></tr>
+    <tr><td>Hektorit</td><td>Mg-Al silikat (Al içermez); harici kullanım</td></tr>
+    <tr><td>Aerosil</td><td>Kolloidal SiO₂; 1 g = 200 m² yüzey alanı; süsp. ajanı (%1,5–4)</td></tr>
+  </table>
+
+  <h4>Sentetik Maddeler</h4>
+  <table class="formula-table">
+    <tr><th>Madde</th><th>Özellik</th></tr>
+    <tr><td>PVP (Povidone)</td><td>MA: 10.000–360.000; higroskopik; süsp. ajanı (&lt;%5)</td></tr>
+    <tr><td>PVA</td><td>MA: 20.000–200.000; sıcak suda çözünür; süsp. ajanı, kaplama</td></tr>
+  </table>
+
+  <h3>5.5 Flokülasyon Ajanları</h3>
+  <p>Partiküllerin gevşek bağlarla birbirine bağlanmasını sağlar. İyi süspansiyon <strong>floküle</strong> olarak hazırlanır. Konsantrasyon: %0,001–1.</p>
+  <ul>
+    <li><strong>Yüzey etkin maddeler:</strong> Elektrostatik, sterik veya elektrosterik mekanizmalarla stabilize eder. SLS, Polisorbat 80, benzalkonyum klorür, setilpiridinyum klorür</li>
+    <li><strong>Elektrolitler:</strong> Zeta potansiyelini düşürür → gevşek bağlanma. KH₂PO₄, NaCl, AlCl₃</li>
+    <li><strong>Hidrofilik polimerler:</strong> Zincirin bir kısmı yüzeye adsorbe, kalan kısım flok oluşturur. Kitosan, HPMC, Na CMC, PEG, ksantan zamkı</li>
+    <li><strong>Killer:</strong> Attapulgit, bentonit, veegum</li>
+  </ul>
+
+  <h3>5.6 Diğer Yardımcı Maddeler</h3>
+  <ul>
+    <li><strong>Tatlandırıcılar:</strong> Sorbitol çözeltisi, basit şurup (ayrıca viskozite arttırır), mannitol, aspartam, siklamat, sodyum sakkarin (%0,05–0,5)</li>
+    <li><strong>Koku/lezzet vericiler:</strong> Portakal, üzüm, kiraz, vanilya, nane aromaları</li>
+    <li><strong>Renk vericiler:</strong> FD&C ve D&C kodlu boyalar</li>
+    <li><strong>Antimikrobiyaller (prezervatifler):</strong> Parabenler, benzoatlar, askorbat (%0,5–1)</li>
+    <li><strong>Tampon / pH ayarlayıcılar:</strong> Sitrik asit, fumarik asit, sodyum sitrat, amonyak çözeltisi</li>
+  </ul>
+</div>
+
+<!-- 6. ÖRNEK FORMÜLASYONLAR -->
+<div class="section">
+  <h2>6. Örnek Formülasyonlar</h2>
+
+  <h3>Antasit Süspansiyonu</h3>
+  <table class="formula-table">
+    <tr><th>Bileşen</th><th>Miktar</th></tr>
+    <tr><td>Alüminyum hidroksit sıkıştırılmış jel</td><td>326,8 g</td></tr>
+    <tr><td>Sorbitol çözeltisi (%70)</td><td>282,0 mL</td></tr>
+    <tr><td>Şurup</td><td>93,0 mL</td></tr>
+    <tr><td>Gliserin</td><td>25,0 mL</td></tr>
+    <tr><td>Metil paraben</td><td>0,9 g</td></tr>
+    <tr><td>Propil paraben</td><td>0,3 g</td></tr>
+    <tr><td>Aroma</td><td>km</td></tr>
+    <tr><td>Distile su</td><td>km 1000 mL</td></tr>
+  </table>
+
+  <h3>Rekonstitüye Süspansiyon (Ampisilin)</h3>
+  <table class="formula-table">
+    <tr><th>Bileşen</th><th>%</th></tr>
+    <tr><td>Ampisilin trihidrat</td><td>5,77</td></tr>
+    <tr><td>Sakaroz</td><td>60,0</td></tr>
+    <tr><td>Sodyum aljinat</td><td>1,5</td></tr>
+    <tr><td>Sodyum benzoat</td><td>0,2</td></tr>
+    <tr><td>Sodyum sitrat</td><td>0,125</td></tr>
+    <tr><td>Sitrik asit</td><td>0,051</td></tr>
+    <tr><td>Polisorbat 80</td><td>0,08</td></tr>
+  </table>
+
+  <h3>Parenteral Süspansiyon (Triamsinolon)</h3>
+  <table class="formula-table">
+    <tr><th>Bileşen</th><th>Miktar</th></tr>
+    <tr><td>Triamsinolon diasetat</td><td>40 mg</td></tr>
+    <tr><td>PEG 4000</td><td>3,0 mg</td></tr>
+    <tr><td>Polisorbat 80</td><td>2,0 mg</td></tr>
+    <tr><td>Sodyum klorür</td><td>8,5 mg</td></tr>
+    <tr><td>Benzil alkol</td><td>9,0 mg</td></tr>
+    <tr><td>NaOH veya HCl (pH 6,0)</td><td>km</td></tr>
+    <tr><td>Enjeksiyonluk su</td><td>km 1,0 mL</td></tr>
+  </table>
+</div>
+
+<!-- 7. HAZIRLANMA -->
+<div class="section">
+  <h2>7. Süspansiyonların Hazırlanması</h2>
+  <p>Laboratuvarda küçük ölçekte havan ile partikül küçültme yapılır. <strong>Geometrik seyreltme</strong> yöntemiyle tozlar karıştırılır. Dispersiyon ortamının bir kısmıyla tozlar ıslatılıp karıştırılarak ambalaja aktarılır.</p>
+  <p>Büyük ölçekte: homojenizatörler ve karıştırıcılar. Endüstride: bilyalı ve <strong>koloit değirmenler</strong> (rotor: 3.000–20.000 rpm).</p>
+  <div class="warning-box">📌 Ambalaja mutlaka "ÇALKALAYINIZ" etiketi yapıştırılmalıdır!</div>
+
+  <h3>Floküle vs. Defloküle Süspansiyon</h3>
+  <div class="compare-grid">
+    <div class="compare-card good">
+      <strong>Floküle Süspansiyon ✅</strong>
+      <ul>
+        <li>Gevşek agregatlar halinde çöker</li>
+        <li>Çökme hızı yüksek</li>
+        <li>Çökelti gevşek, kekleşme yok</li>
+        <li>Çalkalandığında kolayca dağılır</li>
+        <li>Üst sıvı berrak</li>
+        <li>Flokülasyon ajanları ile hazırlanır</li>
+      </ul>
+    </div>
+    <div class="compare-card bad">
+      <strong>Defloküle Süspansiyon ❌</strong>
+      <ul>
+        <li>Partiküller ayrı ayrı çöker</li>
+        <li>Çökme hızı yavaş</li>
+        <li>Zamanla sıkı bağlanma → kekleşme</li>
+        <li>Çalkalama ile eski haline dönmesi zor</li>
+        <li>Üst sıvı bulanık</li>
+        <li>Viskozite arttırılarak hazırlanır</li>
+      </ul>
+    </div>
+  </div>
+
+  <h3>Kontrollü Floküle Süspansiyon Hazırlama Aşamaları</h3>
+  <ol style="margin-left:1.4rem">
+    <li>Etken madde partiküllerinin ıslatıcı ajan içeren ortamda dağıtılması</li>
+    <li>Flokülasyon ajanlarının ilavesi</li>
+    <li>Süspansiyon ajanlarının ilavesi</li>
+    <li>Yeterli su ilavesi (hidrasyon)</li>
+    <li>Diğer yardımcı maddelerin suda çözülerek ilavesi</li>
+    <li>Karıştırma ve koloit değirmenden geçirme</li>
+    <li>Havasının alınması</li>
+  </ol>
+</div>
+
+<!-- 8. KONTROLLER -->
+<div class="section">
+  <h2>8. Süspansiyonlarda Yapılan Kontroller</h2>
+
+  <h3>8.1 Çökme Hacmi Tayini</h3>
+  <p>Çökelti hacmi zamana bağlı değerlendirilir. İdeal süspansiyonda <strong>F = 1</strong> olması istenir.</p>
+  <div class="formula-box">F = H<sub>u</sub> / H<sub>0</sub></div>
+  <p>H<sub>u</sub>: Çökelti yüksekliği &nbsp;|&nbsp; H<sub>0</sub>: Süspansiyon yüksekliği. F değeri en yüksek olan en iyi süspansiyondur.</p>
+
+  <h3>8.2 Flokülasyon Derecesi</h3>
+  <div class="formula-box">β = F / F<sub>∞</sub></div>
+  <p>F: Floküle haldeki çökme hacmi &nbsp;|&nbsp; F<sub>∞</sub>: Defloküle haldeki çökme hacmi. β en yüksek olan en iyisidir.</p>
+
+  <h3>8.3 Zeta Potansiyel Tayini</h3>
+  <p>En sık yöntem: elektroforez. Helmholtz-Smoluchowski eşitliği ile hesaplanır.</p>
+  <div class="formula-box">Z = (4 η π ν / D) × 9 × 10<sup>4</sup></div>
+  <p>Z: Zeta potansiyel (mV), η: Viskozite (Poise), ν: Elektroforetik mobilite, D: Dielektrik sabiti</p>
+
+  <h3>8.4 Partikül Büyüklüğü ve Dağılımı</h3>
+  <ul>
+    <li><strong>Mikroskop yöntemi:</strong> 0,2–100 µm arası; optik ve elektron mikroskobu</li>
+    <li><strong>Andreasen pipeti (Sedimentasyon):</strong> Farklı çökelme hızlarından ortalama boyut hesaplanır</li>
+    <li><strong>Coulter Counter (İletkenlik):</strong> Elektrolit çözeltisinde iletkenlik değişikliği → hacim hesabı</li>
+  </ul>
+
+  <h3>8.5 Yeniden Dağılabilme (Redispersibility)</h3>
+  <p>20 rpm / 360° dönen cihaz veya 90°'lik çalkalama sistemiyle test edilir.</p>
+
+  <h3>8.6 Viskozite Tayini</h3>
+  <p>Viskometre cihazları ile akış özelliklerinin uygunluğu değerlendirilir.</p>
+</div>
+
+<!-- 9. DEĞİŞMELER -->
+<div class="section">
+  <h2>9. Süspansiyonlarda Görülen Değişmeler</h2>
+  <div style="display:flex; flex-wrap:wrap; gap:6px; margin-top:0.5rem">
+    <span class="tag">Agregasyon</span>
+    <span class="tag">Kekleşme</span>
+    <span class="tag">Flotasyon</span>
+    <span class="tag">Deflokülasyon</span>
+    <span class="tag">Kristal büyümesi</span>
+    <span class="tag">Zayıf yeniden dağıtılabilme</span>
+    <span class="tag">Renk/koku/tat değişiklikleri</span>
+    <span class="tag">pH değişiklikleri</span>
+  </div>
+</div>
+
+<p style="text-align:center; color:#aaa; font-size:0.82rem; margin-top:2rem;">Farmasötik Teknoloji II — Süspansiyonlar Ders Notu Özeti</p>
+
+</div>
+</body>
+</html>

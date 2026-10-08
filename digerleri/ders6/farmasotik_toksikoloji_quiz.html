@@ -1,0 +1,590 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Farmasötik Toksikoloji - Quiz</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #f5f0eb;
+    --card: #ffffff;
+    --text: #2a2a2a;
+    --muted: #7a7a7a;
+    --accent: #6c5ce7;
+    --accent-light: #a29bfe;
+    --green: #00b894;
+    --green-bg: #d4f5ec;
+    --green-border: #00b894;
+    --red: #e05252;
+    --red-bg: #fde8e8;
+    --red-border: #e05252;
+    --border: #e8e2db;
+    --shadow: 0 2px 16px rgba(0,0,0,0.06);
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.6;
+    min-height: 100vh;
+  }
+
+  .hero {
+    background: linear-gradient(135deg, #6c5ce7 0%, #a29bfe 50%, #dfe6e9 100%);
+    padding: 60px 20px 50px;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .hero::before {
+    content: '';
+    position: absolute;
+    width: 300px; height: 300px;
+    background: rgba(255,255,255,0.08);
+    border-radius: 50%;
+    top: -80px; right: -60px;
+  }
+
+  .hero::after {
+    content: '';
+    position: absolute;
+    width: 200px; height: 200px;
+    background: rgba(255,255,255,0.06);
+    border-radius: 50%;
+    bottom: -40px; left: -40px;
+  }
+
+  .hero h1 {
+    font-family: 'DM Serif Display', serif;
+    font-size: clamp(1.8rem, 4vw, 2.8rem);
+    color: #fff;
+    margin-bottom: 8px;
+    position: relative;
+    z-index: 1;
+  }
+
+  .hero p {
+    color: rgba(255,255,255,0.85);
+    font-size: 1rem;
+    position: relative;
+    z-index: 1;
+  }
+
+  .score-bar {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    background: rgba(255,255,255,0.95);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--border);
+    padding: 12px 20px;
+    display: flex;
+    justify-content: center;
+    gap: 24px;
+    font-weight: 600;
+    font-size: 0.95rem;
+  }
+
+  .score-bar span { display: flex; align-items: center; gap: 6px; }
+  .dot-green { width: 10px; height: 10px; border-radius: 50%; background: var(--green); }
+  .dot-red { width: 10px; height: 10px; border-radius: 50%; background: var(--red); }
+  .dot-total { width: 10px; height: 10px; border-radius: 50%; background: var(--accent); }
+
+  .container {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 30px 16px 80px;
+  }
+
+  .question-card {
+    background: var(--card);
+    border-radius: 16px;
+    padding: 28px 24px;
+    margin-bottom: 20px;
+    box-shadow: var(--shadow);
+    border: 1px solid var(--border);
+    transition: border-color 0.3s;
+  }
+
+  .question-card.answered-correct { border-color: var(--green); }
+  .question-card.answered-wrong { border-color: var(--red); }
+
+  .q-number {
+    font-family: 'DM Serif Display', serif;
+    font-size: 0.85rem;
+    color: var(--accent);
+    margin-bottom: 6px;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+  }
+
+  .q-text {
+    font-size: 1.05rem;
+    font-weight: 600;
+    margin-bottom: 18px;
+    line-height: 1.5;
+  }
+
+  .options { display: flex; flex-direction: column; gap: 8px; }
+
+  .option-btn {
+    display: block;
+    width: 100%;
+    text-align: left;
+    padding: 12px 16px;
+    border: 2px solid var(--border);
+    border-radius: 10px;
+    background: #fafaf8;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.95rem;
+    color: var(--text);
+    cursor: pointer;
+    transition: all 0.2s;
+    line-height: 1.45;
+  }
+
+  .option-btn:hover:not(.disabled) {
+    border-color: var(--accent-light);
+    background: #f0edfa;
+  }
+
+  .option-btn.correct {
+    background: var(--green-bg) !important;
+    border-color: var(--green-border) !important;
+    color: #065f46 !important;
+    font-weight: 600;
+  }
+
+  .option-btn.wrong {
+    background: var(--red-bg) !important;
+    border-color: var(--red-border) !important;
+    color: #991b1b !important;
+  }
+
+  .option-btn.disabled {
+    cursor: default;
+    opacity: 0.7;
+  }
+
+  .option-btn.disabled.correct { opacity: 1; }
+
+  .result-banner {
+    display: none;
+    margin-top: 12px;
+    padding: 10px 14px;
+    border-radius: 8px;
+    font-size: 0.9rem;
+    font-weight: 500;
+  }
+
+  .result-banner.show { display: block; }
+  .result-banner.correct-banner { background: var(--green-bg); color: #065f46; }
+  .result-banner.wrong-banner { background: var(--red-bg); color: #991b1b; }
+
+  .final-result {
+    display: none;
+    text-align: center;
+    background: var(--card);
+    border-radius: 16px;
+    padding: 40px 24px;
+    box-shadow: var(--shadow);
+    border: 1px solid var(--border);
+    margin-top: 30px;
+  }
+
+  .final-result.show { display: block; }
+
+  .final-result h2 {
+    font-family: 'DM Serif Display', serif;
+    font-size: 1.8rem;
+    margin-bottom: 12px;
+  }
+
+  .final-score {
+    font-size: 3rem;
+    font-weight: 700;
+    color: var(--accent);
+  }
+
+  .reset-btn {
+    margin-top: 20px;
+    padding: 12px 32px;
+    background: var(--accent);
+    color: #fff;
+    border: none;
+    border-radius: 10px;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background 0.2s;
+  }
+
+  .reset-btn:hover { background: #5a4bd1; }
+
+  @media (max-width: 600px) {
+    .question-card { padding: 20px 16px; }
+    .hero { padding: 40px 16px 35px; }
+  }
+</style>
+</head>
+<body>
+
+<div class="hero">
+  <h1>Farmasötik Toksikoloji Lab Quiz</h1>
+  <p>50 Soru &bull; 5 Seçenek &bull; Hemen Test Et</p>
+</div>
+
+<div class="score-bar">
+  <span><span class="dot-green"></span> Doğru: <span id="correctCount">0</span></span>
+  <span><span class="dot-red"></span> Yanlış: <span id="wrongCount">0</span></span>
+  <span><span class="dot-total"></span> Kalan: <span id="remainCount">50</span></span>
+</div>
+
+<div class="container" id="quizContainer"></div>
+
+<script>
+const questions = [
+  {
+    q: "Salisilatların kalitatif analizinde kullanılan renk reaksiyonu hangi iyona dayanır?",
+    opts: ["Fe²⁺ (demir-2)", "Fe³⁺ (demir-3)", "Cu²⁺ (bakır-2)", "Zn²⁺ (çinko-2)", "Ag⁺ (gümüş)"],
+    ans: 1
+  },
+  {
+    q: "Trinder reaktifi salisilik asit ile hangi renk kompleksi oluşturur?",
+    opts: ["Mavi", "Sarı", "Mor/Viyole", "Yeşil", "Turuncu"],
+    ans: 2
+  },
+  {
+    q: "Salisilik asit kantitatif tayininde ölçüm hangi dalga boyunda yapılır?",
+    opts: ["450 nm", "540 nm", "630 nm", "700 nm", "280 nm"],
+    ans: 1
+  },
+  {
+    q: "Kalibrasyon eğrisi çizimi için hazırlanan standart çözeltilerin konsantrasyonları nelerdir?",
+    opts: ["0, 100, 200, 400 mg/L", "0, 200, 400, 800 mg/L", "0, 50, 100, 200 mg/L", "0, 500, 1000, 2000 mg/L", "0, 250, 500, 750 mg/L"],
+    ans: 1
+  },
+  {
+    q: "Kantitatif tayinde numune alındıktan sonra hangi hacimde santrifüj tüplerine yerleştirilir?",
+    opts: ["5 mL", "10 mL", "15 mL", "20 mL", "50 mL"],
+    ans: 2
+  },
+  {
+    q: "Done Nomogramı ne amaçla kullanılır?",
+    opts: ["İlacın yarı ömrünü hesaplamak", "Kandaki salisilat düzeyine göre zehirlenme şiddetini belirlemek", "İlacın biyoyararlanımını ölçmek", "Dozaj hesaplamak", "İlacın plazma protein bağlanmasını ölçmek"],
+    ans: 1
+  },
+  {
+    q: "Done Nomogramına göre kan düzeyi 50 µg/mL olan bireyin 24. saatteki zehirlenme şiddeti nedir?",
+    opts: ["Asemptomatik", "Hafif (Mild)", "Orta (Moderate)", "Şiddetli (Severe)", "Muhtemelen Öldürücü"],
+    ans: 2
+  },
+  {
+    q: "Salisilat zehirlenmesinde karakteristik olan metabolik bozukluk hangisidir?",
+    opts: ["Metabolik alkaloz", "Metabolik asidoz", "Respiratuar alkaloz", "Respiratuar asidoz", "Mikst alkaloz"],
+    ans: 1
+  },
+  {
+    q: "Yetişkinlerde tedavi sırasında plazma salisilat seviyeleri en fazla ne kadar yükselebilir?",
+    opts: ["10 mg/100 ml", "20 mg/100 ml", "30 mg/100 ml", "50 mg/100 ml", "60 mg/100 ml"],
+    ans: 2
+  },
+  {
+    q: "Şiddetli salisilat zehirlenmesinde plazma salisilat düzeyi ne kadardır?",
+    opts: ["30-65 mg/100 ml", "65-90 mg/100 ml", "90-120 mg/100 ml", "120-150 mg/100 ml", "10-30 mg/100 ml"],
+    ans: 2
+  },
+  {
+    q: "Salisilat zehirlenmesinde öldürücü doz yaklaşık kaç gramdır?",
+    opts: ["10 gram", "20 gram", "30 gram", "50 gram", "5 gram"],
+    ans: 2
+  },
+  {
+    q: "325 mg aspirin tabletinden kaç adet alındığında öldürücü doz oluşur?",
+    opts: ["50 tablet", "75 tablet", "105 tablet", "150 tablet", "200 tablet"],
+    ans: 2
+  },
+  {
+    q: "Kandaki salisilat düzeyi kaç mg/100 ml'yi aştığında koma ve ölüm meydana gelir?",
+    opts: ["60 mg/100 ml", "90 mg/100 ml", "100 mg/100 ml", "120 mg/100 ml", "150 mg/100 ml"],
+    ans: 3
+  },
+  {
+    q: "Done Nomogramı'nın kullanılamayacağı durumlar arasında hangisi YER ALMAZ?",
+    opts: ["Şiddetli asidoz vakaları", "Birkaç kez ilaca maruz kalan kişiler", "Akut tek doz zehirlenme", "Yavaş salınımlı preparatlar", "Kronik salisilat zehirlenmesi"],
+    ans: 2
+  },
+  {
+    q: "Salisilat zehirlenmesinde emilimin engellenmesi için hangisi uygulanmaz?",
+    opts: ["Kusma/Lavaj", "Aktif karbon", "Katartik", "Metilen mavisi", "Mide yıkama"],
+    ans: 3
+  },
+  {
+    q: "Salisilat zehirlenmesinde eliminasyonu artırmak için hangi yöntem kullanılır?",
+    opts: ["İdrarın asidifikasyonu", "İdrarın alkalinizasyonu ve diürez", "Kan transfüzyonu", "Metilen mavisi enjeksiyonu", "Askorbik asit verilmesi"],
+    ans: 1
+  },
+  {
+    q: "Asetaminofen (parasetamol) hangi tür bir analjeziktir?",
+    opts: ["Opioid analjezik", "Opioid olmayan analjezik", "Kas gevşetici", "NSAİİ", "Kortikosteroid"],
+    ans: 1
+  },
+  {
+    q: "Asetaminofen metabolizmasında en büyük paya sahip yol hangisidir?",
+    opts: ["Sülfat ile konjugasyon (%50-70)", "Glukuronid ile konjugasyon (%50-70)", "CYP2E1 ile oksidasyon (%50-70)", "Deasetilasyon (%50-70)", "Glutation ile konjugasyon (%50-70)"],
+    ans: 1
+  },
+  {
+    q: "Asetaminofenin CYP2E1 ile oksidasyonu sonucu oluşan toksik metabolit hangisidir?",
+    opts: ["Parasetamol sülfat", "Parasetamol glukuronid", "NAPQI", "p-aminofenol", "AM404"],
+    ans: 2
+  },
+  {
+    q: "NAPQI normalde hangi madde ile detoksifiye edilir?",
+    opts: ["Askorbik asit", "Glutatyon (GSH)", "NADPH", "Metilen mavisi", "Sistein"],
+    ans: 1
+  },
+  {
+    q: "Parasetamol kalitatif tayininde idrara eklenen asit hangisidir?",
+    opts: ["Sülfürik asit", "Nitrik asit", "Hidroklorik asit", "Asetik asit", "Fosforik asit"],
+    ans: 2
+  },
+  {
+    q: "Parasetamol kalitatif testinde numune kaç °C'de ısıtılır?",
+    opts: ["50°C", "70°C", "80°C", "100°C", "120°C"],
+    ans: 3
+  },
+  {
+    q: "Parasetamol varlığında oluşan renk nedir?",
+    opts: ["Mor", "Yeşil", "Mavi", "Sarı", "Kırmızı"],
+    ans: 2
+  },
+  {
+    q: "Parasetamol kalitatif testinde kullanılan reaktiflerden biri hangisidir?",
+    opts: ["Trinder reaktifi", "%1 o-kresol çözeltisi", "Nessler reaktifi", "Ansties reaktifi", "Kromotropik asit"],
+    ans: 1
+  },
+  {
+    q: "Uçucu zehirlerin biyolojik materyalden ayrılmasında kullanılan yöntem hangisidir?",
+    opts: ["Santrifüjleme", "Su buharı distilasyonu", "Kromatografi", "Elektroforez", "Ultrafiltrasyon"],
+    ans: 1
+  },
+  {
+    q: "Mikrodifüzyon deneyinde alkollerin tespitinde kullanılan renk reaktifi hangisidir?",
+    opts: ["Nessler reaktifi", "Trinder reaktifi", "Ansties reaktifi", "Kromotropik asit", "CdSO₄"],
+    ans: 2
+  },
+  {
+    q: "Ansties reaktifi ile alkoller hangi rengi verir?",
+    opts: ["Mor", "Mavi", "Yeşil", "Turuncu", "Sarı"],
+    ans: 2
+  },
+  {
+    q: "Metil alkol tespitinde hangi renk reaktifi kullanılır?",
+    opts: ["Ansties reaktifi", "Nessler reaktifi", "Kromotropik asit", "CdSO₄", "Trinder reaktifi"],
+    ans: 2
+  },
+  {
+    q: "Metil alkol ile kromotropik asit reaksiyonu hangi renk verir?",
+    opts: ["Yeşil", "Mavi", "Pembe-viyole", "Sarı", "Turuncu"],
+    ans: 2
+  },
+  {
+    q: "Amonyak tayininde kullanılan reaktif hangisidir?",
+    opts: ["Ansties reaktifi", "Nessler reaktifi", "Kromotropik asit", "CdSO₄", "Trinder reaktifi"],
+    ans: 1
+  },
+  {
+    q: "Nessler reaktifi amonyak ile hangi rengi verir?",
+    opts: ["Yeşil", "Mavi", "Mor", "Turuncu", "Sarı"],
+    ans: 3
+  },
+  {
+    q: "Sülfür tayininde iç odacığa eklenen renk reaktifi hangisidir?",
+    opts: ["Ansties reaktifi", "Nessler reaktifi", "%10 CdSO₄", "Kromotropik asit", "Trinder reaktifi"],
+    ans: 2
+  },
+  {
+    q: "Hemoglobindeki demirin +2'den +3'e yükselmesiyle oluşan yapı nedir?",
+    opts: ["Oksihemoglobin", "Karboksihemoglobin", "Methemoglobin", "Deoksihemoglobin", "Siyanomethemoglobin"],
+    ans: 2
+  },
+  {
+    q: "Normal şartlarda eritrositlerde methemoglobin düzeyi yüzde kaçtır?",
+    opts: ["%0.1", "%1", "%5", "%10", "%15"],
+    ans: 1
+  },
+  {
+    q: "Methemoglobin düzeyini normal şartlarda düşük tutan enzim hangisidir?",
+    opts: ["Süperoksit dismutaz", "Katalaz", "Methemoglobin redüktaz", "Glutatyon peroksidaz", "Sitokrom oksidaz"],
+    ans: 2
+  },
+  {
+    q: "Methemoglobineminin ilk belirtisi olan siyanoz, MetHb düzeyi yüzde kaça ulaştığında görülür?",
+    opts: ["%5", "%10", "%15", "%20", "%30"],
+    ans: 2
+  },
+  {
+    q: "Methemoglobinemi tedavisinde birinci basamak ilaç hangisidir?",
+    opts: ["Askorbik asit", "N-asetilsistein", "Metilen mavisi", "Hidroksikobalamin", "Dikobalt EDTA"],
+    ans: 2
+  },
+  {
+    q: "Metilen mavisi methemoglobinemi tedavisinde hangi dozda uygulanır?",
+    opts: ["0.01-0.05 ml/kg", "0.1-0.2 ml/kg", "0.5-1 ml/kg", "2-3 ml/kg", "5 ml/kg"],
+    ans: 1
+  },
+  {
+    q: "Metilen mavisi tedavisinde toplam doz kaç mg/kg'ı geçmemelidir?",
+    opts: ["1 mg/kg", "2 mg/kg", "4 mg/kg", "8 mg/kg", "10 mg/kg"],
+    ans: 2
+  },
+  {
+    q: "Metilen mavisi tedavisi işe yaramıyorsa hangi enzim eksikliği akla gelmelidir?",
+    opts: ["Katalaz eksikliği", "Süperoksit dismutaz eksikliği", "Glukoz-6-fosfat dehidrojenaz eksikliği", "Sitokrom P450 eksikliği", "Methemoglobin redüktaz fazlalığı"],
+    ans: 2
+  },
+  {
+    q: "Methemoglobin miktar tayininde ölçüm hangi dalga boyunda yapılır?",
+    opts: ["450 nm", "540 nm", "580 nm", "630 nm", "700 nm"],
+    ans: 3
+  },
+  {
+    q: "Reinsch deneyinde bakır levha hangi asitle temizlenir?",
+    opts: ["HCl", "H₂SO₄", "HNO₃ (1:1 seyreltik)", "H₃PO₄", "CH₃COOH"],
+    ans: 2
+  },
+  {
+    q: "Reinsch deneyinde bakır levha üzerinde gümüşi renk hangi metalin varlığını gösterir?",
+    opts: ["Arsenik", "Antimon", "Bizmut", "Cıva", "Kurşun"],
+    ans: 3
+  },
+  {
+    q: "Reinsch deneyinde bakır levha üzerinde parlak siyah renk hangi metalin varlığını gösterir?",
+    opts: ["Cıva", "Arsenik", "Bizmut", "Antimon", "Kadmiyum"],
+    ans: 1
+  },
+  {
+    q: "Reinsch deneyinde bakır levha üzerinde mor renk hangi metalin varlığını gösterir?",
+    opts: ["Arsenik", "Cıva", "Bizmut", "Antimon", "Kurşun"],
+    ans: 3
+  },
+  {
+    q: "Bizmut aranmasında kinin sülfat-KI reaktifi ile hangi renk oluşur?",
+    opts: ["Mavi", "Yeşil", "Mor", "Turuncu", "Sarı"],
+    ans: 3
+  },
+  {
+    q: "Siyanürün toksik etkisi öncelikle hangi enzimin inhibisyonuna bağlıdır?",
+    opts: ["Asetilkolinesteraz", "Monoamin oksidaz", "Sitokrom oksidaz", "Karbonik anhidraz", "Tirozin kinaz"],
+    ans: 2
+  },
+  {
+    q: "Siyanür zehirlenmesinde cildin pembe-kiraz kırmızısı renk almasının nedeni nedir?",
+    opts: ["Methemoglobin artışı", "Karboksihemoglobin artışı", "Kandaki oksijen konsantrasyonunun artması", "Hemoglobin yıkımı", "Bilirubin artışı"],
+    ans: 2
+  },
+  {
+    q: "HCN (hidrojen siyanür) nasıl bir maddedir?",
+    opts: ["Kırmızı renkli sıvı", "Acı badem kokusunda renksiz gaz", "Sarı renkli kristal", "Kokusuz beyaz toz", "Mor renkli sıvı"],
+    ans: 1
+  },
+  {
+    q: "Siyanür tayininde Gettler-Goldbaum aparatı ile elde edilen filtre kâğıdına ne damlatılır?",
+    opts: ["%10 NaOH", "%15 TCA", "%30 HCl", "%5 H₂SO₄", "%20 FeSO₄"],
+    ans: 2
+  },
+  {
+    q: "Siyanür varlığında filtre kâğıdında oluşan renk nedir?",
+    opts: ["Kırmızı", "Yeşil", "Turuncu", "Prusya mavisi", "Mor"],
+    ans: 3
+  }
+];
+
+const container = document.getElementById('quizContainer');
+let correct = 0, wrong = 0, answered = 0;
+
+function updateScores() {
+  document.getElementById('correctCount').textContent = correct;
+  document.getElementById('wrongCount').textContent = wrong;
+  document.getElementById('remainCount').textContent = 50 - answered;
+  if (answered === 50) showFinal();
+}
+
+function showFinal() {
+  const div = document.getElementById('finalResult');
+  div.classList.add('show');
+  document.getElementById('finalScore').textContent = correct + ' / 50';
+  const pct = Math.round((correct / 50) * 100);
+  let msg = pct >= 80 ? 'Harika! Mükemmel bir performans!' : pct >= 60 ? 'İyi iş! Biraz daha çalışarak daha da iyileşebilirsin.' : 'Konuları tekrar gözden geçirmeni öneririm.';
+  document.getElementById('finalMsg').textContent = msg + ' (' + pct + '%)';
+}
+
+questions.forEach((q, i) => {
+  const card = document.createElement('div');
+  card.className = 'question-card';
+  card.id = 'card-' + i;
+
+  const labels = ['A', 'B', 'C', 'D', 'E'];
+  let optsHtml = '';
+  q.opts.forEach((o, j) => {
+    optsHtml += `<button class="option-btn" data-q="${i}" data-o="${j}" onclick="selectAnswer(${i}, ${j})">${labels[j]}) ${o}</button>`;
+  });
+
+  card.innerHTML = `
+    <div class="q-number">Soru ${i + 1}</div>
+    <div class="q-text">${q.q}</div>
+    <div class="options">${optsHtml}</div>
+    <div class="result-banner" id="banner-${i}"></div>
+  `;
+  container.appendChild(card);
+});
+
+const finalDiv = document.createElement('div');
+finalDiv.className = 'final-result';
+finalDiv.id = 'finalResult';
+finalDiv.innerHTML = `
+  <h2>Quiz Tamamlandı!</h2>
+  <div class="final-score" id="finalScore"></div>
+  <p id="finalMsg" style="margin-top:8px;color:var(--muted);font-size:1.05rem;"></p>
+  <button class="reset-btn" onclick="location.reload()">Tekrar Dene</button>
+`;
+container.appendChild(finalDiv);
+
+function selectAnswer(qi, oi) {
+  const card = document.getElementById('card-' + qi);
+  if (card.classList.contains('answered-correct') || card.classList.contains('answered-wrong')) return;
+
+  const btns = card.querySelectorAll('.option-btn');
+  const correctIdx = questions[qi].ans;
+  const banner = document.getElementById('banner-' + qi);
+
+  btns.forEach(b => b.classList.add('disabled'));
+  btns[correctIdx].classList.add('correct');
+
+  if (oi === correctIdx) {
+    card.classList.add('answered-correct');
+    banner.className = 'result-banner show correct-banner';
+    banner.textContent = '✓ Doğru cevap!';
+    correct++;
+  } else {
+    btns[oi].classList.add('wrong');
+    card.classList.add('answered-wrong');
+    banner.className = 'result-banner show wrong-banner';
+    const labels = ['A', 'B', 'C', 'D', 'E'];
+    banner.textContent = '✗ Yanlış! Doğru cevap: ' + labels[correctIdx] + ') ' + questions[qi].opts[correctIdx];
+    wrong++;
+  }
+
+  answered++;
+  updateScores();
+}
+</script>
+</body>
+</html>

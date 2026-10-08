@@ -1,0 +1,679 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Zehirlerin Etki Şekilleri – Özet & Test</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=Source+Serif+4:ital,wght@0,400;0,600;1,400&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #0f1117;
+  --surface: #181b24;
+  --surface-alt: #1e2230;
+  --border: #2a2e3d;
+  --accent: #4ecdc4;
+  --accent2: #ff6b6b;
+  --accent3: #ffe66d;
+  --text: #e8e6e3;
+  --text-muted: #9ca3af;
+  --correct: #22c55e;
+  --wrong: #ef4444;
+  --radius: 12px;
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+body {
+  font-family: 'Source Serif 4', Georgia, serif;
+  background: var(--bg);
+  color: var(--text);
+  line-height: 1.75;
+  font-size: 17px;
+}
+
+.noise {
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  opacity: 0.03;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+
+header {
+  text-align: center;
+  padding: 80px 20px 60px;
+  position: relative;
+  overflow: hidden;
+}
+
+header::before {
+  content: '';
+  position: absolute;
+  top: -50%;
+  left: -50%;
+  width: 200%;
+  height: 200%;
+  background: radial-gradient(ellipse at 30% 50%, rgba(78,205,196,0.08) 0%, transparent 50%),
+              radial-gradient(ellipse at 70% 50%, rgba(255,107,107,0.06) 0%, transparent 50%);
+  z-index: 0;
+}
+
+header > * { position: relative; z-index: 1; }
+
+header h1 {
+  font-family: 'Playfair Display', serif;
+  font-weight: 900;
+  font-size: clamp(2.2rem, 5vw, 3.6rem);
+  background: linear-gradient(135deg, var(--accent), var(--accent3));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  letter-spacing: -1px;
+  margin-bottom: 12px;
+}
+
+header .subtitle {
+  color: var(--text-muted);
+  font-size: 1.05rem;
+  font-style: italic;
+}
+
+.container {
+  max-width: 880px;
+  margin: 0 auto;
+  padding: 0 24px 100px;
+}
+
+/* TAB NAVIGATION */
+.tabs {
+  display: flex;
+  gap: 0;
+  margin-bottom: 48px;
+  border-bottom: 2px solid var(--border);
+  position: sticky;
+  top: 0;
+  background: var(--bg);
+  z-index: 100;
+  padding-top: 12px;
+}
+
+.tab-btn {
+  flex: 1;
+  padding: 16px 20px;
+  background: none;
+  border: none;
+  color: var(--text-muted);
+  font-family: 'Source Serif 4', serif;
+  font-size: 1.05rem;
+  font-weight: 600;
+  cursor: pointer;
+  position: relative;
+  transition: color 0.3s;
+}
+
+.tab-btn:hover { color: var(--text); }
+
+.tab-btn.active {
+  color: var(--accent);
+}
+
+.tab-btn.active::after {
+  content: '';
+  position: absolute;
+  bottom: -2px;
+  left: 0;
+  width: 100%;
+  height: 2px;
+  background: var(--accent);
+}
+
+.tab-content { display: none; animation: fadeUp 0.4s ease; }
+.tab-content.active { display: block; }
+
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(16px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* SUMMARY STYLES */
+.section {
+  margin-bottom: 44px;
+  padding: 32px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  position: relative;
+}
+
+.section::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0;
+  width: 4px;
+  height: 100%;
+  border-radius: var(--radius) 0 0 var(--radius);
+}
+
+.section:nth-child(odd)::before { background: var(--accent); }
+.section:nth-child(even)::before { background: var(--accent2); }
+
+.section h2 {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.55rem;
+  margin-bottom: 16px;
+  color: var(--accent);
+}
+
+.section h3 {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.15rem;
+  margin: 20px 0 8px;
+  color: var(--accent3);
+}
+
+.section p { margin-bottom: 12px; }
+
+.highlight {
+  background: rgba(78,205,196,0.08);
+  border-left: 3px solid var(--accent);
+  padding: 12px 18px;
+  margin: 14px 0;
+  border-radius: 0 8px 8px 0;
+  font-size: 0.97rem;
+}
+
+.tag {
+  display: inline-block;
+  padding: 2px 10px;
+  background: rgba(255,107,107,0.12);
+  color: var(--accent2);
+  border-radius: 20px;
+  font-size: 0.82rem;
+  font-weight: 600;
+  margin-right: 6px;
+}
+
+/* TEST STYLES */
+.test-header {
+  text-align: center;
+  margin-bottom: 36px;
+}
+
+.test-header h2 {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.8rem;
+  color: var(--accent);
+}
+
+.score-bar {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 24px;
+  padding: 20px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  margin-bottom: 32px;
+  flex-wrap: wrap;
+}
+
+.score-bar .score-label {
+  font-size: 0.9rem;
+  color: var(--text-muted);
+}
+
+.score-bar .score-value {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 1.6rem;
+  font-weight: 600;
+  color: var(--accent);
+}
+
+.score-bar button {
+  padding: 10px 28px;
+  background: linear-gradient(135deg, var(--accent), #3ba89f);
+  color: var(--bg);
+  border: none;
+  border-radius: 8px;
+  font-family: 'Source Serif 4', serif;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.score-bar button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(78,205,196,0.3);
+}
+
+.question-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 28px 32px;
+  margin-bottom: 20px;
+  transition: border-color 0.3s;
+}
+
+.question-card.answered-correct { border-color: var(--correct); }
+.question-card.answered-wrong { border-color: var(--wrong); }
+
+.q-number {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.8rem;
+  color: var(--accent);
+  letter-spacing: 1px;
+  margin-bottom: 8px;
+}
+
+.q-text {
+  font-weight: 600;
+  margin-bottom: 16px;
+  font-size: 1.02rem;
+}
+
+.options { display: flex; flex-direction: column; gap: 8px; }
+
+.option {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  padding: 12px 16px;
+  background: var(--surface-alt);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.25s;
+  user-select: none;
+}
+
+.option:hover:not(.disabled) {
+  border-color: var(--accent);
+  background: rgba(78,205,196,0.05);
+}
+
+.option.selected { border-color: var(--accent); background: rgba(78,205,196,0.1); }
+.option.correct-answer { border-color: var(--correct); background: rgba(34,197,94,0.1); }
+.option.wrong-answer { border-color: var(--wrong); background: rgba(239,68,68,0.1); }
+.option.disabled { cursor: default; opacity: 0.75; }
+
+.option-letter {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.82rem;
+  font-weight: 600;
+  min-width: 26px;
+  height: 26px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  border: 1px solid var(--border);
+  flex-shrink: 0;
+  margin-top: 1px;
+}
+
+.option.correct-answer .option-letter { border-color: var(--correct); color: var(--correct); }
+.option.wrong-answer .option-letter { border-color: var(--wrong); color: var(--wrong); }
+
+.explanation {
+  margin-top: 14px;
+  padding: 12px 16px;
+  background: rgba(78,205,196,0.06);
+  border-radius: 8px;
+  font-size: 0.92rem;
+  color: var(--text-muted);
+  display: none;
+}
+
+.explanation.visible { display: block; }
+
+/* ANSWER KEY */
+.answer-key {
+  margin-top: 48px;
+  padding: 32px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+}
+
+.answer-key h3 {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.4rem;
+  color: var(--accent3);
+  margin-bottom: 20px;
+  text-align: center;
+}
+
+.key-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
+  gap: 8px;
+}
+
+.key-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 12px;
+  background: var(--surface-alt);
+  border-radius: 6px;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.88rem;
+}
+
+.key-item span:first-child { color: var(--text-muted); }
+.key-item span:last-child { color: var(--accent); font-weight: 600; }
+
+@media (max-width: 600px) {
+  .section, .question-card { padding: 20px; }
+  .key-grid { grid-template-columns: repeat(4, 1fr); }
+}
+</style>
+</head>
+<body>
+<div class="noise"></div>
+
+<header>
+  <h1>Zehirlerin Etki Şekilleri</h1>
+  <p class="subtitle">Prof. Dr. Gülden Z. Omurtag & Doç. Dr. Esma Söylemez Yeşilçimen — Medipol Üniversitesi</p>
+</header>
+
+<div class="container">
+  <div class="tabs">
+    <button class="tab-btn active" onclick="switchTab('summary')">Detaylı Özet</button>
+    <button class="tab-btn" onclick="switchTab('test')">40 Soruluk Test</button>
+    <button class="tab-btn" onclick="switchTab('key')">Cevap Anahtarı</button>
+  </div>
+
+  <!-- ==================== ÖZET ==================== -->
+  <div id="summary" class="tab-content active">
+
+    <div class="section">
+      <h2>1. Mutasyon — Temel Kavramlar</h2>
+      <p>Genetik bilginin yapısında meydana gelen değişmelere <strong>mutasyon</strong> adı verilir. Mutasyonlar DNA bazları, genler, kromozomlar veya total genom düzeyinde gerçekleşebilir.</p>
+      <p>Mutasyonlar kendiliğinden (spontan) gelişebileceği gibi; sıcaklık, kimyasal maddeler, UV ışınları ve iyonize radyasyon gibi dış etkenlere bağlı olarak da ortaya çıkabilir. Çevredeki kimyasal madde sayısı arttıkça mutasyon gelişim oranının da arttığı gösterilmiştir; bu nedenle mutajen maddelerin kontrolü büyük önem taşır.</p>
+
+      <h3>Somatik Hücreler vs. Eşey (Germ) Hücreleri</h3>
+      <p>Memelilerde iki temel hücre tipi vardır: <strong>Somatik hücreler</strong> (diploid, organizmanın büyük bölümünü oluşturur) ve <strong>eşey (germ) hücreleri</strong> (haploid, üreme hücreleri).</p>
+      <div class="highlight">
+        <strong>Kritik fark:</strong> Somatik hücrelerdeki mutasyonlar mitoz yoluyla yavru hücrelere aktarılabilir ancak <em>gelecek nesillere geçmez</em>. Eşey hücrelerindeki mutasyonlar ise sonraki nesillere aktarılarak genetik hastalıklara, konjenital malformasyonlara ve çeşitli genetik bozukluklara neden olur.
+      </div>
+    </div>
+
+    <div class="section">
+      <h2>2. Mutasyon Tipleri ve Oluşum Mekanizmaları</h2>
+      <p>Genetik materyalde meydana gelen mutasyonlar üç ana gruba ayrılır:</p>
+
+      <h3>A) Nokta Mutasyonları</h3>
+      <p>En basit mutasyon türüdür. DNA molekülünde bir baz çifti yerine diğeri gelir (ör. G:C → T:A veya G:C → A:T). Bir gen lokusuna kısıtlı kalmasıyla diğer türlerden ayrılır. Kimyasal etken veya ışınlamanın bir-birkaç DNA bazı üzerinde kopmaya yol açmayan minimal bir zedelenme oluşturması söz konusudur.</p>
+
+      <h3>B) Kromozomal Aberasyonlar</h3>
+      <p>Hücre döngüsü sırasında kromozomlarda meydana gelen kırılmalar, silinmeler, değişimler ve yeniden düzenlemeler sonucu ortaya çıkar. Bu lezyonlara <strong>klastojenezis</strong>, neden olan maddelere <strong>klastojenik madde</strong> denir. Çoğu hücre ölümüne yol açar; ancak bazı durumlarda hücre yaşar ve mutasyon gelişir.</p>
+
+      <p><span class="tag">Delesyon</span> Kromozomun bir parçasının kopup kaybolması. Ciddi genetik hastalıklara yol açar.</p>
+      <p><span class="tag">Duplikasyon</span> Belirli genlerin iki veya daha fazla kopya halinde bulunması. Delesyonun aksine parça çoğalması söz konusudur.</p>
+      <p><span class="tag">Halka Kromozom</span> Kromozomun uçlarından kopan parçaların halka şeklinde kendiyle birleşmesidir.</p>
+      <p><span class="tag">İnsersiyon</span> DNA dizisine bir veya daha fazla baz çiftinin eklenmesi. DNA polimerazın replikasyon sırasında kayma yapmasıyla oluşur; mikrosatellit bölgelerde daha sık görülür. Okuma çerçevesini değiştirebilir.</p>
+      <p><span class="tag">Translokasyon</span> Bir kromozomdan kopan parçanın başka bir kromozoma yapışması.</p>
+      <p><span class="tag">İnversiyon</span> Kromozomda bir parçanın 180° ters dönerek aynı kromozoma bağlanması. Genellikle genom miktarında dengesizlik oluşturmaz, fenotipik anormallik göstermez.</p>
+
+      <h3>C) Genomik Mutasyonlar</h3>
+      <p>Kromozom sayısının değişmesine bağlı olarak ortaya çıkar. İki ana alt gruba ayrılır:</p>
+
+      <p><strong>Öploidi:</strong> Haploidi (n=23), Diploidi (2n=46), Triploidi (3n=69), Tetraploidi (4n=92), Miksoploidi (Mozaisizm).</p>
+
+      <p><strong>Anöploidi:</strong> Diploid sayıdaki artış ya da eksilmelerdir. Hücre bölünmesinde ayrılamama veya kromozom kayıpları nedeniyle oluşur.</p>
+      <div class="highlight">
+        <strong>Hiperploidi:</strong> Belirli kromozomların diploidlerden fazla olması → Trizomi (2n+1=47, ör. Down sendromu).<br>
+        <strong>Hipoploidi:</strong> Nüllizomi (2n-2=44, letal), Monozomi (2n-1=45, ör. Turner sendromu), Mozaisizm, Uniparental dizomi.
+      </div>
+
+      <p><strong>Önemli trizomi örnekleri:</strong> 21. kromozom → Down sendromu; 13. kromozom → Patau sendromu; 18. kromozom → Edward sendromu.</p>
+    </div>
+
+    <div class="section">
+      <h2>3. DNA Onarımı</h2>
+      <p>DNA'daki her değişim potansiyel mutasyondur. Bazı değişimler hücre ölümüne veya bölünme yeteneğinin kaybına neden olur (vücut için zararsız). Ancak mutasyona uğramış hücre yaşamaya devam edip aşırı bölünürse <strong>kanser</strong> gelişebilir.</p>
+      <p>Hücrelerdeki DNA onarım mekanizmaları çeşitli enzimler aracılığıyla devreye girer. Değişmiş bazlar, baz çiftleri veya DNA segmentleri ortamdan uzaklaştırılarak da onarım sağlanabilir.</p>
+    </div>
+
+    <div class="section">
+      <h2>4. Teratojenez</h2>
+      <p>Bazı ilaçlar ve kimyasal maddeler gebe kadınlar tarafından alındığında plasentadan fötal dolaşıma geçerek fötusta malformasyonlara neden olur; buna <strong>teratojenezis</strong> denir. Bu maddelere <strong>teratojen</strong> adı verilir.</p>
+      <p><strong>"Konjenital defekt"</strong> deyimi doğumdan önce ve sonra görülen her türlü morfolojik, biyokimyasal ve fonksiyonel anormallikler için kullanılır. Yalnızca embriyonik somatik hücreler etkilenir ve genetik materyal bundan etkilenmezse, etki sadece doğan bireyde gözlenir — dolayısıyla konjenital defektler kalıtsal olmayabilir.</p>
+      <p>İnsandaki konjenital malformasyonların %1-5'i ilaç ve kimyasal maddelerle ilgilidir.</p>
+
+      <h3>Teratoloji</h3>
+      <p>Prenatal yapısal ve fonksiyonel gelişme anormalliklerinin nedenlerini ve mekanizmalarını inceleyen bilimdir.</p>
+    </div>
+
+    <div class="section">
+      <h2>5. Teratojenezise Etki Eden Faktörler</h2>
+
+      <h3>A) Genetik Faktörler</h3>
+      <p>Teratojenlere duyarlık organizmanın genotipine bağlıdır. Türlere ve soylara göre farklılık gösterir. Teratojen maddenin maternal metabolizması, dağılımı, transplasental geçişi ve biyotransformasyonundaki farklılıklar "ultimate teratojen" (asıl teratojen metabolit) maruziyetini belirler.</p>
+      <div class="highlight">
+        <strong>Örnek:</strong> Tavşan ve fareler kortizonun teratojenik etkisine (yarık damak) duyarlıyken, sıçanlarda bu etki görülmez. İnsanlar ve yüksek sınıf primatlar talidomite çok duyarlıyken, birçok memeli etkilenmez.
+      </div>
+
+      <h3>B) Teratojenezise Duyarlı Dönemler (Kritik Periyot)</h3>
+      <p>Organojenezisin erken ve kısa döneminde maruz kalındığında konjenital defektler indüklenir. Embriyojenezis dönemi; hücre çoğalması, göçü, organ oluşumu-farklılaşması ve kartilaj oluşumunu kapsar.</p>
+      <div class="highlight">
+        <strong>Döllenmeden sonraki ilk 2 hafta:</strong> Hücre bölünme/çoğalma dönemi. Teratojenler ya embriyoyu öldürür ya da hasar bırakmadan geçer ("Ya hep ya hiç" dönemi).<br><br>
+        <strong>18-55. günler (insanda):</strong> Asıl duyarlı dönem — döl yatağı oluşumu ve organojenezis.<br><br>
+        <strong>Gebeliğin 9-12. haftasına kadar:</strong> Embriyo teratojen etkilere karşı çok hassastır.
+      </div>
+      <p><strong>Organların duyarlı dönemleri:</strong> SSS: 3-5. hafta; Kalp: 3-6. hafta; Kollar/bacaklar: 4-7. hafta; Gözler: 4-8. hafta; Dişler/damak: 7-8. hafta; Kulaklar: 4-12. hafta; Dış genital organlar: 7-12. hafta.</p>
+
+      <h3>C) Plasenta Geçişi</h3>
+      <p>Plasenta bir engel değil, iki yönlü geçiş sağlayan bir lipid membrandır. Molekül ağırlığı &lt;600 dalton olan maddeler kolayca geçer; &gt;1000 dalton moleküller geçemez (heparin, insülin, glikojen gibi istisnalar eser miktarda geçebilir).</p>
+
+      <h3>D) Teratojenik Etki Mekanizmaları</h3>
+      <p>Mutasyon (%20-30), nükleik asit fonksiyonlarıyla etkileşim, beslenme eksikliği (vitamin/mineral), enerji eksikliği/kullanılamaması, enzim inhibisyonu (ör. folik asit antagonistleri), osmolarite bozukluğu ve hücre membranı özelliklerinin bozulması.</p>
+    </div>
+
+    <div class="section">
+      <h2>6. Başlıca Teratojen Etkenler</h2>
+
+      <h3>Thalidomide (Talidomit)</h3>
+      <p>1957'de Batı Almanya'da piyasaya sürülen, hamilelik bulantıları için kullanılan ilaç. 46 ülkede 5 yıl boyunca kullanıldı. Yaklaşık 20.000 bebeğin sakat doğmasına yol açtı. 1962'de piyasadan çekildi. İnsanda gözlenen en önemli teratojen maddedir. L-ftalil glutamik asit asıl teratojen olarak gösterilmiştir. Fokomeli (kol-bacaklarda sakatlık) ile korelasyonu kanıtlanmıştır.</p>
+
+      <h3>Kızamıkçık Virüsü (Rubella)</h3>
+      <p>Katarakt, göz anormallikleri, sağırlık, kalp defektleri ve zeka gelişimi yavaşlaması. Risk: ilk 4 hafta %61, 5-8. hafta %26, 9-12. hafta %8.</p>
+
+      <h3>Etil Alkol — Fötal Alkol Sendromu (FAS)</h3>
+      <p>Büyüme noksanlığı, yüz anomalileri (mikrosefali, küçük göz, üst dudak inceliği), miyop, iskelet anomalisi, kalp defektleri, SSS bozuklukları.</p>
+
+      <h3>Folik Asit Antagonistleri</h3>
+      <p>Aminopterin kullanımında fetüs ölmezse: hidrosefali, kafa kemiklerinde oluşmama/kısmi kemikleşme, altçenenin küçük olması.</p>
+
+      <h3>Valproik Asit</h3>
+      <p>Antiepileptik, bipolar bozukluk ve migren profilaksisi için kullanılan geniş spektrumlu ilaç. Nöral tüp defektleri, damak ve böbrek bozuklukları riskini artırır.</p>
+
+      <h3>Diğer Teratojenler</h3>
+      <p><strong>Androjenik hormonlar:</strong> Maskülinize dişi fetüs doğumu. <strong>Sigara:</strong> Plasenta gelişimini bozar, düşük doğum ağırlığı, SIDS riski artışı (CO ve nikotin sorumlu). <strong>Metil cıva:</strong> Fötal Minamata Hastalığı — Japonya'da kontamine balıktan kaynaklanan nörolojik semptomlar. <strong>Dietilstilbestrol (DES):</strong> Transplasental karsinojenezis — dişi bebeklerde vajinal kanser (15-22 yaş), 1976'ya kadar 400'den fazla kanser vakası.</p>
+    </div>
+
+    <div class="section">
+      <h2>7. Teratojenik Etkenlerin İstatistiksel Dağılımı</h2>
+      <p>Her 100 bebekten 2-7'si ciddi doğumsal anomali ile doğar. Bebek ölümlerinin ~%20'si doğumsal defektlerdendir.</p>
+      <div class="highlight">
+        Genetik nedenler: %25 | İlaç ve kimyasal maddeler: %4-5 | Fiziksel etkenler: %1 | Enfeksiyonlar: %2-3 | Maternal metabolik bozukluklar: %1-2 | Bilinmeyen nedenler: %65-70
+      </div>
+    </div>
+
+    <div class="section">
+      <h2>8. Teratojenite Testleri ve FDA Sınıflandırması</h2>
+      <p>Kimyasal madde en az 2 hayvan türünde, en az 3 doz aralığında uygulanır. Sıçan/fare kullanıldığında gebeliğin 7-15. günleri arasında uygulanır. Hayvanlar gebelik sonunda (fare 20., sıçan 21., tavşan 31. gün) öldürülerek patolojik inceleme yapılır.</p>
+
+      <h3>FDA Gebelikte İlaç Riski Sınıflandırması</h3>
+      <p><strong>A:</strong> Gebelerde en güvenilir | <strong>B:</strong> Gebelerde kontrollü inceleme yok, hayvanlarda fötotoksik etki yok | <strong>C:</strong> Hayvanlarda teratojenik etki var | <strong>D:</strong> Fetüse zararlı | <strong>E (X):</strong> Deney hayvanı ve insanlarda fötotoksik etki var.</p>
+    </div>
+  </div>
+
+  <!-- ==================== TEST ==================== -->
+  <div id="test" class="tab-content">
+    <div class="test-header">
+      <h2>40 Soruluk Çoktan Seçmeli Test</h2>
+    </div>
+
+    <div class="score-bar">
+      <div>
+        <div class="score-label">Doğru</div>
+        <div class="score-value" id="correctCount">0</div>
+      </div>
+      <div>
+        <div class="score-label">Yanlış</div>
+        <div class="score-value" id="wrongCount" style="color: var(--accent2)">0</div>
+      </div>
+      <div>
+        <div class="score-label">Puan</div>
+        <div class="score-value" id="scorePercent" style="color: var(--accent3)">–</div>
+      </div>
+      <button onclick="resetTest()">Sıfırla</button>
+    </div>
+
+    <div id="questionsContainer"></div>
+  </div>
+
+  <!-- ==================== CEVAP ANAHTARI ==================== -->
+  <div id="key" class="tab-content">
+    <div class="answer-key">
+      <h3>Cevap Anahtarı</h3>
+      <div class="key-grid" id="keyGrid"></div>
+    </div>
+  </div>
+</div>
+
+<script>
+const questions = [
+  {q:"Genetik bilginin yapısında meydana gelen değişmelere ne ad verilir?", o:["Translokasyon","Mutasyon","Replikasyon","Transkripsiyon"], a:1},
+  {q:"Aşağıdakilerden hangisi mutasyona yol açan dış etkenlerden biri DEĞİLDİR?", o:["UV ışınları","İyonize radyasyon","Mitoz bölünme","Kimyasal maddeler"], a:2},
+  {q:"Somatik hücrelerin genomu genellikle hangi yapıdadır?", o:["Haploid","Diploid","Triploid","Tetraploid"], a:1},
+  {q:"Somatik hücrelerdeki mutasyonlar gelecek nesillere aktarılabilir mi?", o:["Evet, her zaman","Hayır, aktarılamaz","Yalnızca erkeklerde aktarılır","Yalnızca dominant ise aktarılır"], a:1},
+  {q:"Eşey hücrelerinde meydana gelen mutasyonların sonucu aşağıdakilerden hangisidir?", o:["Sadece hücre ölümü","Kanser","Genetik hastalıklar ve konjenital malformasyonlar","Bağışıklık güçlenmesi"], a:2},
+  {q:"Olgun eşey hücreleri hangi bölünme sonucunda oluşur?", o:["Mitoz","Mayoz","Amitoz","Binarik fisyon"], a:1},
+  {q:"Genetik materyaldeki mutasyonlar kaç gruba ayrılır?", o:["2","3","4","5"], a:1},
+  {q:"DNA molekülünde bir baz çiftinin yerine diğerinin gelmesine ne ad verilir?", o:["Delesyon","Duplikasyon","Nokta mutasyonu","İnversiyon"], a:2},
+  {q:"Kromozomlarda meydana gelen lezyonlara ne ad verilir?", o:["Teratojenezis","Klastojenezis","Karsinojenezis","Mutagenezis"], a:1},
+  {q:"Klastojenik madde ne demektir?", o:["Kanser yapıcı madde","Kromozomal lezyonlara neden olan madde","Protein sentezini bozan madde","Hücre zarını parçalayan madde"], a:1},
+  {q:"Kromozomun bir parçasının kopup kaybolmasına ne denir?", o:["Duplikasyon","Translokasyon","Delesyon","İnsersiyon"], a:2},
+  {q:"Duplikasyon (artma) nedir?", o:["Kromozomun kaybı","Genlerin iki veya daha fazla kopya halinde bulunması","Baz çifti değişimi","Kromozom sayısı artışı"], a:1},
+  {q:"Halka kromozom nasıl oluşur?", o:["İki kromozom birleşerek","Kromozom uçlarından kopan parçaların halka şeklinde birleşmesiyle","Sentromerin kaybolmasıyla","DNA polimerazın hatasıyla"], a:1},
+  {q:"İnsersiyon mutasyonu hangi mekanizmayla sıklıkla ortaya çıkar?", o:["UV hasarı","DNA polimerazın replikasyonda kayma yapması","Hücre zarı geçirgenliği","Protein katlanma hatası"], a:1},
+  {q:"Translokasyonda ne olur?", o:["Kromozom ters döner","Bir baz çifti silinir","Bir kromozomdan kopan parça başka kromozoma yapışır","Kromozom sayısı artar"], a:2},
+  {q:"İnversiyon genellikle fenotipik anormallik gösterir mi?", o:["Evet, her zaman ciddi","Genellikle hayır","Yalnızca erkeklerde","Yalnızca X kromozomunda"], a:1},
+  {q:"Genom mutasyonları neye bağlı olarak ortaya çıkar?", o:["Baz çifti değişimine","Kromozom sayısının değişmesine","Protein sentezi durmasına","Enzim inhibisyonuna"], a:1},
+  {q:"Down sendromu hangi kromozomun trizomisine bağlıdır?", o:["13. kromozom","18. kromozom","21. kromozom","X kromozomu"], a:2},
+  {q:"Patau sendromu hangi kromozomun trizomisine bağlıdır?", o:["13. kromozom","18. kromozom","21. kromozom","15. kromozom"], a:0},
+  {q:"Anöploidinin alt tiplerinden hiperploidi ne anlama gelir?", o:["Kromozom kaybı","Belirli kromozomların diploidlerden fazla olması","Tüm kromozomların iki katına çıkması","Haploid sayıya dönüşme"], a:1},
+  {q:"Turner sendromu hangi tip anöploidiye örnektir?", o:["Trizomi","Nüllizomi","Monozomi","Tetrazomi"], a:2},
+  {q:"Mutasyona uğramış hücre aşırı bölünürse ne gelişebilir?", o:["Apoptoz","Kanser","DNA onarımı","Diferansiyasyon"], a:1},
+  {q:"Teratojenezis ne demektir?", o:["Kanserin oluşma süreci","DNA onarım mekanizması","İlaç/kimyasal maddelerin fötusta malformasyon oluşturması","Genetik mutasyonların kalıtımı"], a:2},
+  {q:"Thalidomide ne zaman piyasaya verilmiştir?", o:["1947","1957","1967","1977"], a:1},
+  {q:"Thalidomide hangi amaçla kullanılmıştır?", o:["Ağrı kesici","Hamilelik bulantılarının önlenmesi","Tansiyon düşürücü","Antibiyotik"], a:1},
+  {q:"Konjenital defektler her zaman kalıtsal mıdır?", o:["Evet","Hayır, kalıtsal olmayabilir","Yalnızca erkeklerde kalıtsal","Yalnızca otozomal dominant ise"], a:1},
+  {q:"İnsandaki konjenital malformasyonların yüzde kaçı ilaç ve kimyasal maddelerle ilişkilidir?", o:["%1-5","%10-15","%20-25","%30-35"], a:0},
+  {q:"Teratojenezise en duyarlı dönem insanda hangi günler arasıdır?", o:["1-7. günler","18-55. günler","60-90. günler","100-120. günler"], a:1},
+  {q:"Döllenmeden sonraki ilk 2 hafta teratojenler ne yapar?", o:["Ciddi malformasyonlar oluşturur","Ya embriyoyu öldürür ya da hasar bırakmaz","Her zaman kalp defektine yol açar","SSS'yi etkiler"], a:1},
+  {q:"Molekül ağırlığı kaç daltondan düşük maddeler plasentayı kolayca geçer?", o:["200","400","600","1000"], a:2},
+  {q:"Rubella enfeksiyonuna bağlı malformasyon riski ilk 4 haftada yüzde kaçtır?", o:["%8","%26","%61","%45"], a:2},
+  {q:"Fötal Alkol Sendromu'nda (FAS) aşağıdaki bulgulardan hangisi görülmez?", o:["Mikrosefali","Küçük göz","Polidaktili (fazla parmak)","Üst dudak inceliği"], a:2},
+  {q:"Fötal Minamata Hastalığı hangi maddeye bağlıdır?", o:["Kurşun","Metil cıva","Arsenik","Kadmiyum"], a:1},
+  {q:"DES (Dietilstilbestrol) hangi tür kansere yol açmıştır?", o:["Akciğer kanseri","Vajinal kanser","Meme kanseri","Kolon kanseri"], a:1},
+  {q:"Sigara içmenin fötus üzerindeki etkisinden hangi maddeler sorumlu tutulmuştur?", o:["Nikotin ve CO","Tar ve benzen","Formaldehit ve amonyak","Kadmiyum ve kurşun"], a:0},
+  {q:"Valproik asit gebelikte özellikle hangi defektlere yol açar?", o:["Kalp defektleri","Nöral tüp defektleri","Göz anomalileri","Kemik displazisi"], a:1},
+  {q:"Teratojenite testlerinde kimyasal madde en az kaç hayvan türünde uygulanır?", o:["1","2","3","5"], a:1},
+  {q:"FDA sınıflandırmasında gebelerde en güvenilir ilaçlar hangi kategoridedir?", o:["B","C","A","D"], a:2},
+  {q:"Mozaisizm (miksoploidi) ne demektir?", o:["Tüm hücrelerin aynı mutasyonu taşıması","Tek bir bireyde genetik olarak farklı hücre popülasyonlarının bulunması","Üç farklı türün genomlarının birleşmesi","Sadece eşey hücrelerindeki mutasyon"], a:1},
+  {q:"Doğumsal anomalilerin etiyolojisinde bilinmeyen nedenlerin oranı yaklaşık yüzde kaçtır?", o:["%25","%40-50","%65-70","%80-90"], a:2}
+];
+
+const answerLetters = ['A','B','C','D'];
+
+function buildQuestions() {
+  const container = document.getElementById('questionsContainer');
+  container.innerHTML = '';
+  questions.forEach((q, qi) => {
+    const card = document.createElement('div');
+    card.className = 'question-card';
+    card.id = 'q' + qi;
+    card.innerHTML = `
+      <div class="q-number">SORU ${qi + 1}</div>
+      <div class="q-text">${q.q}</div>
+      <div class="options">
+        ${q.o.map((opt, oi) => `
+          <div class="option" data-q="${qi}" data-o="${oi}" onclick="selectOption(this)">
+            <span class="option-letter">${answerLetters[oi]}</span>
+            <span>${opt}</span>
+          </div>
+        `).join('')}
+      </div>
+      <div class="explanation" id="exp${qi}"></div>
+    `;
+    container.appendChild(card);
+  });
+}
+
+let answered = {};
+
+function selectOption(el) {
+  const qi = parseInt(el.dataset.q);
+  const oi = parseInt(el.dataset.o);
+  if (answered[qi] !== undefined) return;
+  answered[qi] = oi;
+
+  const card = document.getElementById('q' + qi);
+  const options = card.querySelectorAll('.option');
+  const correct = questions[qi].a;
+
+  options.forEach(o => {
+    o.classList.add('disabled');
+    const idx = parseInt(o.dataset.o);
+    if (idx === correct) o.classList.add('correct-answer');
+    if (idx === oi && oi !== correct) o.classList.add('wrong-answer');
+  });
+
+  card.classList.add(oi === correct ? 'answered-correct' : 'answered-wrong');
+  updateScore();
+}
+
+function updateScore() {
+  let c = 0, w = 0;
+  Object.keys(answered).forEach(k => {
+    if (answered[k] === questions[k].a) c++; else w++;
+  });
+  document.getElementById('correctCount').textContent = c;
+  document.getElementById('wrongCount').textContent = w;
+  const total = Object.keys(answered).length;
+  document.getElementById('scorePercent').textContent = total > 0 ? Math.round((c / 40) * 100) + '%' : '–';
+}
+
+function resetTest() {
+  answered = {};
+  buildQuestions();
+  document.getElementById('correctCount').textContent = '0';
+  document.getElementById('wrongCount').textContent = '0';
+  document.getElementById('scorePercent').textContent = '–';
+}
+
+function buildKeyGrid() {
+  const grid = document.getElementById('keyGrid');
+  grid.innerHTML = questions.map((q, i) =>
+    `<div class="key-item"><span>${i + 1}.</span><span>${answerLetters[q.a]}</span></div>`
+  ).join('');
+}
+
+function switchTab(tab) {
+  document.querySelectorAll('.tab-content').forEach(t => t.classList.remove('active'));
+  document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+  document.getElementById(tab).classList.add('active');
+  event.target.classList.add('active');
+}
+
+buildQuestions();
+buildKeyGrid();
+</script>
+</body>
+</html>

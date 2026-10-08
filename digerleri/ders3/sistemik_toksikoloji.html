@@ -1,0 +1,790 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Sistemik Toksikoloji - Özet & Test</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=Source+Sans+3:wght@300;400;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0f1118;
+    --surface: #181b25;
+    --surface2: #1e2230;
+    --accent: #e74c3c;
+    --accent2: #f39c12;
+    --accent3: #2ecc71;
+    --accent4: #3498db;
+    --accent5: #9b59b6;
+    --text: #e8e6e3;
+    --text-dim: #8a8d98;
+    --border: #2a2d3a;
+    --correct: #2ecc71;
+    --wrong: #e74c3c;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: 'Source Sans 3', sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.7;
+    overflow-x: hidden;
+  }
+
+  /* HERO */
+  .hero {
+    min-height: 60vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+    background: linear-gradient(135deg, #0f1118 0%, #1a1020 40%, #0f1118 100%);
+  }
+
+  .hero::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background:
+      radial-gradient(circle at 20% 50%, rgba(231,76,60,0.08) 0%, transparent 50%),
+      radial-gradient(circle at 80% 30%, rgba(155,89,182,0.06) 0%, transparent 50%),
+      radial-gradient(circle at 50% 80%, rgba(52,152,219,0.05) 0%, transparent 50%);
+  }
+
+  .hero-content { position: relative; z-index: 1; padding: 3rem 2rem; }
+
+  .hero h1 {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(2.4rem, 6vw, 4.5rem);
+    font-weight: 900;
+    letter-spacing: -0.02em;
+    line-height: 1.15;
+    background: linear-gradient(135deg, #fff 0%, #e74c3c 60%, #f39c12 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    margin-bottom: 1rem;
+  }
+
+  .hero .subtitle {
+    font-size: 1.1rem;
+    color: var(--text-dim);
+    max-width: 600px;
+    margin: 0 auto 2rem;
+  }
+
+  /* NAV */
+  .tab-nav {
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
+    flex-wrap: wrap;
+  }
+
+  .tab-btn {
+    padding: 0.75rem 2rem;
+    border: 1px solid var(--border);
+    border-radius: 50px;
+    background: transparent;
+    color: var(--text-dim);
+    font-family: 'Source Sans 3', sans-serif;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s;
+  }
+
+  .tab-btn:hover, .tab-btn.active {
+    background: var(--accent);
+    border-color: var(--accent);
+    color: #fff;
+  }
+
+  /* CONTENT AREA */
+  .container {
+    max-width: 960px;
+    margin: 0 auto;
+    padding: 2rem 1.5rem 4rem;
+  }
+
+  .tab-content { display: none; animation: fadeUp 0.5s ease; }
+  .tab-content.active { display: block; }
+
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  /* SUMMARY STYLES */
+  .section {
+    margin-bottom: 2.5rem;
+    padding: 2rem;
+    background: var(--surface);
+    border-radius: 16px;
+    border-left: 4px solid var(--accent);
+    position: relative;
+    overflow: hidden;
+  }
+
+  .section::after {
+    content: '';
+    position: absolute;
+    top: 0; right: 0;
+    width: 120px; height: 120px;
+    background: radial-gradient(circle, rgba(231,76,60,0.04) 0%, transparent 70%);
+    border-radius: 50%;
+    pointer-events: none;
+  }
+
+  .section.liver { border-left-color: var(--accent2); }
+  .section.liver::after { background: radial-gradient(circle, rgba(243,156,18,0.04) 0%, transparent 70%); }
+  .section.kidney { border-left-color: var(--accent4); }
+  .section.kidney::after { background: radial-gradient(circle, rgba(52,152,219,0.04) 0%, transparent 70%); }
+  .section.nerve { border-left-color: var(--accent5); }
+  .section.nerve::after { background: radial-gradient(circle, rgba(155,89,182,0.04) 0%, transparent 70%); }
+  .section.lung { border-left-color: var(--accent3); }
+  .section.lung::after { background: radial-gradient(circle, rgba(46,204,113,0.04) 0%, transparent 70%); }
+  .section.gi { border-left-color: #e67e22; }
+  .section.heart { border-left-color: #e74c3c; }
+  .section.eye { border-left-color: #1abc9c; }
+
+  .section h2 {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.6rem;
+    margin-bottom: 1rem;
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+  }
+
+  .section h3 {
+    font-size: 1.1rem;
+    color: var(--accent2);
+    margin: 1.2rem 0 0.5rem;
+    font-weight: 700;
+  }
+
+  .section p, .section li {
+    color: var(--text);
+    font-size: 0.97rem;
+    line-height: 1.8;
+  }
+
+  .section ul {
+    list-style: none;
+    padding-left: 0;
+  }
+
+  .section ul li {
+    padding: 0.3rem 0 0.3rem 1.4rem;
+    position: relative;
+  }
+
+  .section ul li::before {
+    content: '›';
+    position: absolute;
+    left: 0;
+    color: var(--accent);
+    font-weight: 700;
+    font-size: 1.2rem;
+  }
+
+  .tag-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.4rem;
+    margin-top: 0.6rem;
+  }
+
+  .tag {
+    display: inline-block;
+    padding: 0.2rem 0.7rem;
+    background: rgba(231,76,60,0.1);
+    border: 1px solid rgba(231,76,60,0.2);
+    border-radius: 20px;
+    font-size: 0.82rem;
+    color: #f0a8a0;
+  }
+
+  .tag.yellow { background: rgba(243,156,18,0.1); border-color: rgba(243,156,18,0.2); color: #f5d89a; }
+  .tag.blue { background: rgba(52,152,219,0.1); border-color: rgba(52,152,219,0.2); color: #8ac4ea; }
+  .tag.green { background: rgba(46,204,113,0.1); border-color: rgba(46,204,113,0.2); color: #8ae6b5; }
+  .tag.purple { background: rgba(155,89,182,0.1); border-color: rgba(155,89,182,0.2); color: #c9a5db; }
+
+  .highlight-box {
+    background: rgba(231,76,60,0.06);
+    border: 1px solid rgba(231,76,60,0.15);
+    border-radius: 10px;
+    padding: 1rem 1.2rem;
+    margin: 1rem 0;
+    font-size: 0.95rem;
+  }
+
+  /* TEST STYLES */
+  .question-card {
+    background: var(--surface);
+    border-radius: 14px;
+    padding: 1.5rem 1.8rem;
+    margin-bottom: 1.2rem;
+    border: 1px solid var(--border);
+    transition: border-color 0.3s;
+  }
+
+  .question-card.answered-correct { border-color: var(--correct); }
+  .question-card.answered-wrong { border-color: var(--wrong); }
+
+  .q-number {
+    font-family: 'Playfair Display', serif;
+    font-size: 0.85rem;
+    font-weight: 700;
+    color: var(--accent);
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    margin-bottom: 0.5rem;
+  }
+
+  .q-text {
+    font-size: 1.02rem;
+    font-weight: 600;
+    margin-bottom: 1rem;
+    line-height: 1.6;
+  }
+
+  .options { display: flex; flex-direction: column; gap: 0.5rem; }
+
+  .option-btn {
+    display: flex;
+    align-items: center;
+    gap: 0.8rem;
+    padding: 0.75rem 1rem;
+    background: var(--surface2);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    color: var(--text);
+    font-size: 0.95rem;
+    cursor: pointer;
+    transition: all 0.25s;
+    font-family: 'Source Sans 3', sans-serif;
+    text-align: left;
+    width: 100%;
+  }
+
+  .option-btn:hover:not(.disabled) {
+    background: rgba(231,76,60,0.08);
+    border-color: var(--accent);
+  }
+
+  .option-btn .letter {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    background: var(--border);
+    font-weight: 700;
+    font-size: 0.85rem;
+    flex-shrink: 0;
+  }
+
+  .option-btn.selected-correct {
+    background: rgba(46,204,113,0.12);
+    border-color: var(--correct);
+  }
+  .option-btn.selected-correct .letter { background: var(--correct); color: #fff; }
+
+  .option-btn.selected-wrong {
+    background: rgba(231,76,60,0.12);
+    border-color: var(--wrong);
+  }
+  .option-btn.selected-wrong .letter { background: var(--wrong); color: #fff; }
+
+  .option-btn.show-correct {
+    border-color: var(--correct);
+    opacity: 0.7;
+  }
+  .option-btn.show-correct .letter { background: var(--correct); color: #fff; }
+
+  .option-btn.disabled { pointer-events: none; opacity: 0.6; }
+  .option-btn.selected-correct.disabled, .option-btn.selected-wrong.disabled, .option-btn.show-correct.disabled { opacity: 1; }
+
+  .feedback {
+    margin-top: 0.8rem;
+    padding: 0.6rem 1rem;
+    border-radius: 8px;
+    font-size: 0.9rem;
+    font-weight: 600;
+    display: none;
+  }
+
+  .feedback.correct {
+    display: block;
+    background: rgba(46,204,113,0.1);
+    color: var(--correct);
+  }
+
+  .feedback.wrong {
+    display: block;
+    background: rgba(231,76,60,0.1);
+    color: var(--wrong);
+  }
+
+  /* SCORE */
+  .score-bar {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    background: var(--surface);
+    border-bottom: 1px solid var(--border);
+    padding: 0.8rem 1.5rem;
+    display: none;
+    align-items: center;
+    justify-content: space-between;
+    backdrop-filter: blur(12px);
+  }
+
+  .score-bar.visible { display: flex; }
+
+  .score-text {
+    font-weight: 700;
+    font-size: 1rem;
+  }
+
+  .score-text span { color: var(--accent); }
+
+  .progress-track {
+    flex: 1;
+    max-width: 300px;
+    height: 6px;
+    background: var(--border);
+    border-radius: 3px;
+    margin-left: 1.5rem;
+    overflow: hidden;
+  }
+
+  .progress-fill {
+    height: 100%;
+    background: linear-gradient(90deg, var(--accent), var(--accent2));
+    border-radius: 3px;
+    transition: width 0.4s ease;
+    width: 0%;
+  }
+
+  .reset-btn {
+    padding: 0.5rem 1.2rem;
+    background: transparent;
+    border: 1px solid var(--border);
+    border-radius: 50px;
+    color: var(--text-dim);
+    font-family: 'Source Sans 3', sans-serif;
+    font-size: 0.85rem;
+    cursor: pointer;
+    transition: all 0.3s;
+    margin-left: 1rem;
+  }
+
+  .reset-btn:hover {
+    border-color: var(--accent);
+    color: var(--accent);
+  }
+
+  /* RESPONSIVE */
+  @media (max-width: 600px) {
+    .section { padding: 1.2rem; }
+    .question-card { padding: 1.2rem; }
+    .tab-nav { gap: 0.5rem; }
+    .tab-btn { padding: 0.6rem 1.2rem; font-size: 0.9rem; }
+    .score-bar { flex-wrap: wrap; gap: 0.5rem; }
+    .progress-track { max-width: 100%; margin-left: 0; order: 3; flex-basis: 100%; }
+  }
+</style>
+</head>
+<body>
+
+<div class="hero">
+  <div class="hero-content">
+    <h1>Sistemik Toksikoloji</h1>
+    <p class="subtitle">Prof.Dr. Gülden Z. Omurtag & Doç.Dr. Esma Söylemez Yeşilçimen — İstanbul Medipol Üniversitesi</p>
+    <div class="tab-nav">
+      <button class="tab-btn active" onclick="switchTab('summary')">Detaylı Özet</button>
+      <button class="tab-btn" onclick="switchTab('test')">40 Soruluk Test</button>
+    </div>
+  </div>
+</div>
+
+<!-- SCORE BAR (test tab) -->
+<div class="score-bar" id="scoreBar">
+  <div class="score-text">Skor: <span id="scoreVal">0</span> / 40</div>
+  <div class="progress-track"><div class="progress-fill" id="progressFill"></div></div>
+  <button class="reset-btn" onclick="resetTest()">Sıfırla</button>
+</div>
+
+<div class="container">
+
+<!-- ==================== ÖZET ==================== -->
+<div class="tab-content active" id="tab-summary">
+
+  <!-- 1. GİRİŞ -->
+  <div class="section">
+    <h2>📘 Sistemik Toksikoloji — Giriş</h2>
+    <p>Zehirlerin çeşitli amaçlarla sınıflandırılması çok eskilere dayanır. İlk kez 1813'te Fodere ve 1887'de Rabuteau tarafından "sistemik toksikoloji" kavramı ortaya konmuştur. Bu yaklaşımda zehirler üç şekilde sınıflandırılır:</p>
+    <ul>
+      <li><strong>Etkiledikleri organ ve sisteme göre:</strong> Sinir zehirleri, kas zehirleri vb.</li>
+      <li><strong>Fizyolojik etkilerine göre:</strong> SSS stimülanları, asfeksiyan zehirler vb.</li>
+      <li><strong>Etki yerleri ve semptomlarına göre:</strong> Sistemik olarak inceleme.</li>
+    </ul>
+    <div class="highlight-box">
+      <strong>Temel ilke:</strong> Bir kimyasal madde asıl etkisini belirli bir sistemde gösterirken, diğer doku ve organları da ikincil olarak etkileyebilir. Örneğin CO başlıca asfeksiyan bir zehir olup hemoglobinle birleşirken, aynı zamanda SSS'yi de etkiler. Fenoller mukozayı tahriş ederken emilim sonrası böbreklere de zarar verir.
+    </div>
+  </div>
+
+  <!-- 2. ZEHİRLERİN SINIFLANDIRILMASI -->
+  <div class="section">
+    <h2>🗂️ Zehirlerin Sınıflandırılması</h2>
+    <h3>A) Tıbbi ve Klinik Bakımdan (Vücutta Oluşturdukları Zarara Göre)</h3>
+    <p><strong>Resorptif Etkili Zehirler</strong> — Emilim sonrası etki gösterirler. Etkiledikleri organlara göre alt gruplara ayrılırlar: Kan, karaciğer, böbrek, sinir, akciğer, mide-bağırsak, kalp, göz ve immün sistem zehirleri.</p>
+    <p><strong>Lokal Etkili Zehirler</strong> — Temas noktasında etki ederler:</p>
+    <ul>
+      <li><strong>Korozif zehirler:</strong> Halojenler, asitler, alkaliler, SO₂, nitröz gazları, süblime, ZnCl₂, formaldehit, fenoller.</li>
+      <li><strong>Kapiler zehirler:</strong> Arsenik, kolşisin.</li>
+    </ul>
+    <h3>B) Kaynaklarına Göre</h3>
+    <h3>C) Toksikolojik Analiz Yönündeki Yerlerine Göre</h3>
+  </div>
+
+  <!-- 3. KAN ZEHİRLERİ -->
+  <div class="section">
+    <h2>🩸 Kan Zehirleri</h2>
+    <p>Kan elementlerinin yapılmasına <strong>hematopoezis</strong> denir. Hematopoetik sistem başlıca kemik iliği, dalak ve lenf nodüllerinden oluşur. Kanın bileşimi: Eritrosit %35-50, Lökosit %1, Plazma %42-47.</p>
+
+    <h3>1. Hemoglobini Değiştiren Zehirler</h3>
+    <ul>
+      <li><strong>CO (Karbonmonoksit):</strong> CO-hemoglobin oluşturur → <em>açık kırmızı renk</em></li>
+      <li><strong>HCN:</strong> → <em>açık kırmızı renk</em></li>
+      <li><strong>Nitrat, nitrit, anilin, klorat:</strong> Methemoglobin oluşturur → <em>kahverengi renk</em></li>
+      <li><strong>Arsin gazı, asitler, alkaliler:</strong> Hematin oluşumu → <em>kahverengi renk</em></li>
+      <li><strong>H₂S, sülfonamidler, fenasetin:</strong> Sülfhemoglobin → <em>yeşilimsi renk</em></li>
+    </ul>
+
+    <h3>2. Trombositopeni (Trombosit Azlığı)</h3>
+    <p>Kanamaya meyil artırır; direkt toksik etki veya immünolojik etki ile oluşur.</p>
+    <div class="tag-list">
+      <span class="tag">Asetominofen</span><span class="tag">Aspirin</span><span class="tag">Benzen</span>
+      <span class="tag">Kloramfenikol</span><span class="tag">Diazepam</span><span class="tag">İnsülin</span>
+      <span class="tag">Kinidin</span><span class="tag">Fenilbutazon</span><span class="tag">Digitoksin</span>
+    </div>
+
+    <h3>3. Agranülositoz (Lökosit Azalması)</h3>
+    <p>Ciddi ve ölümcül enfeksiyonlara yol açar.</p>
+    <div class="tag-list">
+      <span class="tag yellow">Benzen</span><span class="tag yellow">Kloramfenikol</span>
+      <span class="tag yellow">DDT</span><span class="tag yellow">Barbitüratlar</span>
+      <span class="tag yellow">Sülfa ilaçları</span><span class="tag yellow">Fenilbütazon</span>
+    </div>
+
+    <h3>4. Aplastik Anemi & Pansitopeni</h3>
+    <p>Kemik iliğine etki ile sadece eritrositler azalırsa <strong>aplastik anemi</strong>, bütün şekilli elementler azalırsa <strong>pansitopeni</strong> oluşur.</p>
+    <div class="tag-list">
+      <span class="tag blue">Benzen</span><span class="tag blue">Kloramfenikol</span>
+      <span class="tag blue">Kolşisin</span><span class="tag blue">Radyum</span>
+      <span class="tag blue">Arsenikli bileşikler</span><span class="tag blue">Fenilbutazon</span>
+    </div>
+
+    <h3>5. Hemolitik Anemi</h3>
+    <p>Eritrositlerin parçalanması sonucu oluşur. İki tipi vardır:</p>
+    <ul>
+      <li><strong>İmmünolojik esaslı:</strong> Vücut antikor üretir, eritrositler yıkılır.</li>
+      <li><strong>Enzim eksikliğine bağlı:</strong> G6PD enzimi eksikliği olanlarda bazı maddeler hemolize neden olur.</li>
+    </ul>
+
+    <h3>6. Methemoglobinemi</h3>
+    <p>Hemoglobindeki Fe²⁺ iyonu, oksitleyici maddelerle Fe³⁺'e yükseltgenir. MetHb yeşilimsi kahverengidir, O₂ ve CO ile birleşemez, anemik hipoksiye neden olur. Normalde MetHb, hemoglobinin yalnızca %1'idir.</p>
+
+    <h3>7. Sülfhemoglobin</h3>
+    <p>Hemoglobinin sülfür eklenmiş türevi. In vitro 620 nm'de absorbsiyon gösterir. Organizmada sülfhemoglobinemi <strong>geri dönüşümsüzdür</strong> ve MetHb'ye göre daha tehlikelidir. Ancak in vivo olarak yaşamı tehdit edecek düzeyde oluşma olasılığı düşüktür.</p>
+
+    <h3>Eritrositler — Hematokrit</h3>
+    <p>Hematokrit kanın yüzde olarak eritrosit değeridir; normal %40-45 arası. Kadında %14 g, erkekte %16 g hemoglobin bulunur.</p>
+  </div>
+
+  <!-- 4. KARACİĞER ZEHİRLERİ -->
+  <div class="section liver">
+    <h2>🫁 Karaciğer Zehirleri</h2>
+    <p>Karaciğere zarar veren kimyasal maddeler yüzyıldır bilinmektedir. 1880'lerde sarı fosforla oluşan karaciğer yağlanmasının mekanizması araştırılmıştır.</p>
+    <ul>
+      <li>İnce bağırsak mukozasından emilen zehirlerin <strong>ilk uğrak yeri</strong> karaciğerdir.</li>
+      <li>Metabolizma bozuklukları: sarılık, karaciğer şişmesi, yağlanması, yağlı dejenerasyon.</li>
+      <li>Karaciğer vücutta <strong>kendi kendine rejenere olabilen tek organdır</strong>.</li>
+      <li>Yabancı maddelerin biyotransformasyona uğradığı yer karaciğerdir; aktif metabolitler hepatotoksik maddelere dönüşebilir.</li>
+    </ul>
+
+    <h3>Hepatotoksik Maddeler</h3>
+    <div class="tag-list">
+      <span class="tag yellow">Asetaminofen</span><span class="tag yellow">Aflatoksin</span>
+      <span class="tag yellow">CCl₄</span><span class="tag yellow">CHCl₃</span>
+      <span class="tag yellow">DDT</span><span class="tag yellow">Dimetilnitrözamin</span>
+      <span class="tag yellow">Fosfor</span><span class="tag yellow">Arsenik</span>
+    </div>
+
+    <h3>Kolestatik Maddeler</h3>
+    <p>Safra akışını etkileyerek zarar verir.</p>
+    <div class="tag-list">
+      <span class="tag yellow">Anabolik steroidler</span><span class="tag yellow">Klorpromazin</span>
+      <span class="tag yellow">Diazepam</span><span class="tag yellow">Estradiol</span><span class="tag yellow">Heparin</span>
+    </div>
+
+    <h3>Karaciğer Hasarı Tipleri</h3>
+    <ul>
+      <li><strong>Akut:</strong> Lipid akümülasyonu, hepatitis, kolestasis, nekrozis</li>
+      <li><strong>Kronik:</strong> Siroz (parankim hücrelerinin hasarı), hepatoselüler karsinoma</li>
+    </ul>
+
+    <div class="highlight-box">
+      <strong>Karaciğer yağlanması:</strong> Biyokimyasal olarak lipid miktarı ağırlıkça %5'ten fazla olan karaciğer "yağlı karaciğer" olarak tanımlanır. Nekroz ise hücrelerin irreversibl dejenerasyon safhasıdır.
+    </div>
+  </div>
+
+  <!-- 5. BÖBREK ZEHİRLERİ -->
+  <div class="section kidney">
+    <h2>🫘 Böbrek Zehirleri</h2>
+    <p>Böbrek, atık maddelerin elimine edildiği en önemli organdır. Homeostaz düzenlenmesi, eritropoetin-renin-kinin hormonlarının üretimi, D vitamini aktivasyonu, kalsiyum-fosfor dengesi gibi kritik işlevleri vardır.</p>
+
+    <h3>Nefron</h3>
+    <p>Böbreğin fonksiyonel ünitesidir. Her böbrekte 1-1.5 milyon nefron bulunur. Glomerul, proksimal tübül, Henle kulbu, distal tübül ve toplayıcı kanaldan oluşur.</p>
+
+    <h3>Böbrekten Atılım Mekanizması</h3>
+    <ul>
+      <li><strong>Glomerüler Filtrasyon:</strong> İdrar oluşumunun ilk kademesi.</li>
+      <li><strong>Tübüler Sekresyon:</strong> Tübüluslar maddeleri aktif olarak idrara verir; lipofil bileşiklerin böbrekle atılımı daha azdır.</li>
+      <li><strong>Tübüler Reabsorbsiyon:</strong> Filtratın %98-99'u geri emilir (su, tuzlar, glukoz, aminoasitler).</li>
+    </ul>
+
+    <h3>Nefrotoksik Maddeler</h3>
+    <ul>
+      <li><strong>Ağır Metaller:</strong> Hg, Cr, Pb, Cd</li>
+      <li><strong>Halojenli Hidrokarbonlar:</strong> CCl₄, CHCl₃</li>
+      <li><strong>Çevre Kirleticileri:</strong> Pestisitler, PCB'ler, PBB'ler</li>
+      <li><strong>İlaçlar:</strong> Aminoglikozid antibiyotikler, analjezikler, anestezikler</li>
+    </ul>
+    <p>Hemorajik nefrit, anüri ve üremiye neden olan maddeler: süblime, okzalik asit, glikoller, fenoller. Nefron ileri derecede hasar görünce idrar akışı azalır veya tamamen durur.</p>
+  </div>
+
+  <!-- 6. SİNİR ZEHİRLERİ -->
+  <div class="section nerve">
+    <h2>🧠 Sinir Zehirleri</h2>
+    <p>Rezorptif zehirlenmede ölüm çoğunlukla solunum felcinden olur. Bazı sinir zehirleri merkezi felçten önce eksitasyon, halüsinasyon ve delirium oluşturur.</p>
+
+    <h3>Kan-Beyin Engeli (BBB)</h3>
+    <ul>
+      <li>SSS, kan-beyin engeli ile toksik maddelere karşı korunur.</li>
+      <li>Anestezikler, analjezikler, trankilizanlar ve organik kurşun bileşikleri bu engeli aşabilir.</li>
+      <li>Lipidde çözünen (apolar) maddeler periferal bölgelerde daha çok etki gösterir.</li>
+      <li>Yaş, engelin permeabilitesini etkileyen en önemli faktördür (fötal/yenidoğan döneminde daha geçirgen).</li>
+      <li>Alkoller, kobra venomu, Hg ve Pb BBB geçirgenliğini artırır.</li>
+    </ul>
+
+    <h3>Sinir Zehirlerinin Sınıflandırılması</h3>
+    <ul>
+      <li><strong>İletimi bozanlar:</strong> Bloke ediciler, depolarize ediciler, stimülanlar (kafein, pikrotoksin), depresanlar (barbitüratlar), reseptör antagonistleri, nöromüsküler kavşak blokerleri (kürar, süksinilkolin)</li>
+      <li><strong>Fiziksel hasar yapanlar:</strong> Miyelin kılıfı hasarı (talyum, izoniazid), periferal sinir hasarı (akrilamid, As, P), beyin hasarı (Pb, organik Hg)</li>
+    </ul>
+
+    <h3>Anoksi Tipleri</h3>
+    <ul>
+      <li><strong>Anoksik anoksi:</strong> CO ve nitritler hemoglobinle birleşerek oksijen taşıma kapasitesini engeller.</li>
+      <li><strong>İskemik anemi:</strong> Arteriyal kan basıncının düşmesi ile beyne yetersiz oksijen gitmesi.</li>
+      <li><strong>Sitotoksik anoksi:</strong> Hücrelerin oksijeni kullanamaması. Siyanür, azid, dinitrofenol gibi metabolik inhibitörler neden olur.</li>
+    </ul>
+  </div>
+
+  <!-- 7. AKCİĞER ZEHİRLERİ -->
+  <div class="section lung">
+    <h2>🫁 Akciğer Zehirleri</h2>
+    <h3>Akciğer Ödemi Yapanlar</h3>
+    <div class="tag-list">
+      <span class="tag green">Klor</span><span class="tag green">Fosgen</span>
+      <span class="tag green">Nitroz gazları</span><span class="tag green">Kükürt dioksit</span>
+    </div>
+
+    <h3>Toksik Gazların Etkileri</h3>
+    <p>Gazın suda çözünürlüğü etkisini belirler. Suda çözünürlüğü yüksek korozif gazlar üst hava yollarını (deri, göz, nazal mukoza) etkiler. Suda çözünmeyen gazlar alt solunum yollarına ulaşarak pulmoner ödem veya kimyasal pnömoniye neden olabilir.</p>
+
+    <h3>Pnömokonyozlar (Tozlu Akciğer Hastalıkları)</h3>
+    <ul>
+      <li><strong>Silikozis:</strong> Silis ve silikatlı tozlar → yoğun fibroz. Taş işçileri, cam fabrikası işçilerinde görülür.</li>
+      <li><strong>Antrakozis:</strong> Kömür tozları → kronik bronşit, amfizem.</li>
+      <li><strong>Asbestozis:</strong> Asbest tozları → malign akciğer tümörleri (en tehlikeli pnömokonyoz).</li>
+      <li><strong>Bissinozis:</strong> Pamuk tozları.</li>
+      <li><strong>Silikoantrakozis:</strong> Silisli + kömürlü tozlar.</li>
+      <li><strong>Siderosilikozis:</strong> Demir + silisli tozlar.</li>
+    </ul>
+  </div>
+
+  <!-- 8. MİDE-BAĞIRSAK, KALP, GÖZ -->
+  <div class="section gi">
+    <h2>🫁 Mide-Bağırsak Zehirleri</h2>
+    <p>Kusma, ishal ve şiddetli sancıların görüldüğü toksik gastroenteritis oluşturan zehirlerdir. Başlıca: As, bakteri toksinleri, kurşun. Bazı zehirler SSS'yi etkileyerek kusmaya (apomorfin), otonom sinir sistemine etki ederek kolik ve ishal yapabilir. Atılmaları sırasında da lezyon oluşturabilirler (merküriyel stomatitis).</p>
+  </div>
+
+  <div class="section heart">
+    <h2>❤️ Kalp Zehirleri</h2>
+    <p>Kalbi felce uğratarak ölüme yol açan zehirlerdir. İki tipe ayrılır:</p>
+    <ul>
+      <li><strong>Sistolik:</strong> Kalbi sistolde durdurur → Dijitalis, Scilla, Strofantus</li>
+      <li><strong>Diastolik:</strong> Kalbi diastolde durdurur → Muskarin, Nikotin</li>
+    </ul>
+    <div class="tag-list">
+      <span class="tag">Florürler</span><span class="tag">Baryum tuzları</span>
+      <span class="tag">Kinin</span><span class="tag">Emetin</span>
+      <span class="tag">Akonitin</span><span class="tag">Nikotin</span>
+    </div>
+  </div>
+
+  <div class="section eye">
+    <h2>👁️ Göz Zehirleri</h2>
+    <p>Körlüğe kadar varan görme bozukluklarına sebep olan bileşikler:</p>
+    <div class="tag-list">
+      <span class="tag purple">Metil alkol</span><span class="tag purple">Kurşun</span>
+      <span class="tag purple">Talyum</span><span class="tag purple">CS₂</span>
+      <span class="tag purple">Kinin</span><span class="tag purple">Nikotin</span>
+      <span class="tag purple">Dinitrofenol</span><span class="tag purple">Metil bromür</span>
+    </div>
+    <p style="margin-top:1rem;">Göz hasarını etkileyen faktörler: kimyasal çeşidi, konsantrasyonu, maruziyet süresi, sistemik absorbsiyon. İrritasyondan körlüğe kadar geniş bir spektrum söz konusudur.</p>
+  </div>
+
+</div>
+
+<!-- ==================== TEST ==================== -->
+<div class="tab-content" id="tab-test">
+
+<div id="questionsContainer"></div>
+
+</div>
+</div>
+
+<script>
+// TAB SWITCHING
+function switchTab(tab) {
+  document.querySelectorAll('.tab-content').forEach(t => t.classList.remove('active'));
+  document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+  document.getElementById('tab-' + tab).classList.add('active');
+  event.target.classList.add('active');
+  document.getElementById('scoreBar').classList.toggle('visible', tab === 'test');
+}
+
+// QUESTIONS DATA
+const questions = [
+  {q:"Sistemik toksikoloji kavramını ilk ortaya koyan bilim insanları ve yılları hangi seçenekte doğru verilmiştir?", o:["1800 - Pasteur ve Koch","1813 - Fodere ve 1887 - Rabuteau","1900 - Ehrlich ve Metchnikoff","1850 - Bernard ve Magendie"], a:1},
+  {q:"Aşağıdakilerden hangisi 'resorptif etkili zehirler' kapsamında etkiledikleri organlara göre sınıflandırılan zehirlerden DEĞİLDİR?", o:["Kan zehirleri","Karaciğer zehirleri","Korozif zehirler","Sinir zehirleri"], a:2},
+  {q:"Karbonmonoksit (CO) zehirlenmesinde kanda hangi renk değişimi gözlenir?", o:["Kahverengi","Yeşilimsi","Açık kırmızı (kiraz kırmızısı)","Koyu mor"], a:2},
+  {q:"Methemoglobin oluşturan maddeler kanda hangi renk değişikliğine neden olur?", o:["Açık kırmızı","Kahverengi","Yeşilimsi","Sarı"], a:1},
+  {q:"Sülfhemoglobin oluşmasına neden olan maddeler arasında hangisi YER ALMAZ?", o:["H₂S","Sülfonamidler","Fenasetin","Karbonmonoksit"], a:3},
+  {q:"Kan elementlerinin yapılmasına ne ad verilir?", o:["Hemostaz","Hematopoezis","Hemoliz","Hematokrit"], a:1},
+  {q:"Hematopoetik sistem hangi organlardan oluşur?", o:["Karaciğer, dalak, böbrek","Kemik iliği, dalak, lenf nodülleri","Timus, karaciğer, kemik iliği","Dalak, böbrek, akciğer"], a:1},
+  {q:"Trombositopeniye neden olan ksenobiyotiklerden hangisi doğru verilmiştir?", o:["Aspirin, benzen, kloramfenikol","Metil alkol, etanol, propanol","Siyanür, azid, fosgen","Asbest, silis, kalsiyum fosfat"], a:0},
+  {q:"Agranülositoz ne anlama gelir?", o:["Trombosit sayısında artış","Eritrosit sayısında artış","Lökosit (akyuvar) sayısında azalma","Plazma proteinlerinde azalma"], a:2},
+  {q:"Aplastik anemi ve pansitopeni arasındaki fark nedir?", o:["Aplastik anemide sadece eritrositler azalır, pansitopenide tüm şekilli elementler azalır","İkisi aynı anlamdadır","Aplastik anemide lökositler artar","Pansitopenide sadece trombositler azalır"], a:0},
+  {q:"G6PD enzim eksikliği olan kimselerde hangi tür anemi görülür?", o:["Aplastik anemi","Pernisiyöz anemi","Hemolitik anemi","Demir eksikliği anemisi"], a:2},
+  {q:"Hematokrit değerinin normal aralığı nedir?", o:["%20-30","%40-45","%55-60","%70-75"], a:1},
+  {q:"MetHb ile ilgili aşağıdaki ifadelerden hangisi YANLIŞTIR?", o:["Fe²⁺ iyonu Fe³⁺'e yükseltgenir","O₂ ve CO ile birleşemez","Normalde hemoglobinin %10'unu oluşturur","Anemik hipoksiye neden olur"], a:2},
+  {q:"Sülfhemoglobinemi neden methemoglobinemiye göre daha tehlikelidir?", o:["Daha sık görülür","Geri dönüşümsüzdür","Daha yüksek absorbsiyon gösterir","Daha kolay tedavi edilir"], a:1},
+  {q:"İnce bağırsak mukozasından emilen zehirlerin ilk uğrak yeri hangi organdır?", o:["Böbrek","Dalak","Karaciğer","Akciğer"], a:2},
+  {q:"Aşağıdakilerden hangisi hepatotoksik maddelerden biridir?", o:["Silis","Aflatoksin","Kürar","Kolşisin"], a:1},
+  {q:"Karaciğerin diğer organlardan farklı özelliği nedir?", o:["En büyük bez olması","Kendi kendine rejenere olabilen tek organ olması","Safra üretmesi","Protein sentez etmesi"], a:1},
+  {q:"Kolestatik maddeler karaciğerde nasıl zarar verir?", o:["Hepatositleri doğrudan öldürür","Safra akışını etkileyerek","Karaciğer kanlanmasını durdurarak","DNA hasarı yaparak"], a:1},
+  {q:"Karaciğer yağlanmasının biyokimyasal tanımında lipid miktarı ağırlıkça ne kadar olmalıdır?", o:["%1'den fazla","%5'ten fazla","%10'dan fazla","%20'den fazla"], a:1},
+  {q:"Karaciğer nekrozu hangi sürecin safhasıdır?", o:["Reversibl rejenerasyon","İrreversibl dejenerasyon","Fizyolojik adaptasyon","Kompanzatuar hiperplazi"], a:1},
+  {q:"Böbreğin fonksiyonel ünitesi hangisidir?", o:["Glomerul","Nefron","Tübül","Kaliks"], a:1},
+  {q:"Her bir böbrekte ortalama kaç nefron bulunur?", o:["100-500 bin","1-1.5 milyon","5-10 milyon","50-100 bin"], a:1},
+  {q:"Glomerüler filtrasyon idrar oluşumunun hangi kademesidir?", o:["İkinci","Üçüncü","İlk","Son"], a:2},
+  {q:"Tübüler reabsorbsiyonda filtratın yaklaşık yüzde kaçı geri emilir?", o:["%50-60","%70-80","%98-99","%100"], a:2},
+  {q:"Aşağıdakilerden hangisi nefrotoksik ağır metallerden biridir?", o:["Sodyum","Potasyum","Cıva (Hg)","Kalsiyum"], a:2},
+  {q:"SSS'nin toksik maddelere karşı korunma mekanizması nedir?", o:["Kemik yapı","Kan-beyin engeli","Serebral korteks kalınlığı","Beyin omurilik sıvısı"], a:1},
+  {q:"Kan-beyin engelinin geçirgenliğini etkileyen en önemli faktör hangisidir?", o:["Cinsiyet","Beslenme","Yaş","Kan basıncı"], a:2},
+  {q:"d-Tübokürarin hangi mekanizma ile solunum felcine neden olur?", o:["Hemoglobinle birleşerek","Asetilkolinin nöromüsküler kavşaktaki iletimini engelleyerek","Solunum merkezini deprese ederek","Oksijen taşıma kapasitesini artırarak"], a:1},
+  {q:"Sitotoksik anoksiye neden olan maddeler arasında hangisi vardır?", o:["CO","Nitritler","Siyanür","Barbitüratlar"], a:2},
+  {q:"Akciğer ödemi oluşturan toksik gazlardan hangisi YANLIŞ verilmiştir?", o:["Klor","Fosgen","Kükürt dioksit","Karbondioksit"], a:3},
+  {q:"Pnömokonyozların en tehlikeli şekli hangisidir?", o:["Silikozis","Antrakozis","Asbestozis","Bissinozis"], a:2},
+  {q:"Silikozis en çok hangi meslek gruplarında görülür?", o:["Çiftçiler","Taş işçileri ve cam fabrikası işçileri","Aşçılar","Tekstil işçileri"], a:1},
+  {q:"Bissinozis hangi tozun neden olduğu hastalıktır?", o:["Kömür tozu","Asbest tozu","Pamuk tozu","Silis tozu"], a:2},
+  {q:"Suda çözünmeyen toksik gazlar vücutta başlıca neye neden olur?", o:["Üst solunum yolu tahrişi","Alt solunum yollarında pulmoner ödem veya kimyasal pnömoni","Cilt yanıkları","Göz tahrişi"], a:1},
+  {q:"Toksik gastroenteritise neden olan zehirler arasında hangisi vardır?", o:["Arsenik (As)","Silis","Asbest","Metil alkol"], a:0},
+  {q:"Kalp zehirlerinden dijitalis kalbi hangi fazda durdurur?", o:["Diastol","Sistol","Her ikisinde","Hiçbirinde"], a:1},
+  {q:"Diastolik kalp zehirlerine örnek hangisidir?", o:["Dijitalis","Scilla","Muskarin","Strofantus"], a:2},
+  {q:"Metil alkol zehirlenmesinde en belirgin hasar hangi organda görülür?", o:["Karaciğer","Böbrek","Göz","Kalp"], a:2},
+  {q:"Aşağıdakilerden hangisi lokal etkili korozif zehirlerdendir?", o:["Arsenik","Formaldehit","Kolşisin","Apomorfin"], a:1},
+  {q:"CO ve nitritler hemoglobinle birleşerek hangi tip anoksiye neden olur?", o:["Sitotoksik anoksi","İskemik anoksi","Anoksik anoksi","Histotoksik anoksi"], a:2}
+];
+
+let score = 0;
+let answered = 0;
+
+function buildQuestions() {
+  const container = document.getElementById('questionsContainer');
+  container.innerHTML = '';
+  questions.forEach((q, qi) => {
+    const card = document.createElement('div');
+    card.className = 'question-card';
+    card.id = 'qcard-' + qi;
+    let optionsHtml = '';
+    const letters = ['A','B','C','D'];
+    q.o.forEach((opt, oi) => {
+      optionsHtml += `<button class="option-btn" data-q="${qi}" data-o="${oi}" onclick="selectAnswer(${qi},${oi})">
+        <span class="letter">${letters[oi]}</span><span>${opt}</span>
+      </button>`;
+    });
+    card.innerHTML = `
+      <div class="q-number">Soru ${qi+1}</div>
+      <div class="q-text">${q.q}</div>
+      <div class="options">${optionsHtml}</div>
+      <div class="feedback" id="fb-${qi}"></div>
+    `;
+    container.appendChild(card);
+  });
+}
+
+function selectAnswer(qi, oi) {
+  const card = document.getElementById('qcard-' + qi);
+  if (card.classList.contains('answered-correct') || card.classList.contains('answered-wrong')) return;
+
+  const btns = card.querySelectorAll('.option-btn');
+  const fb = document.getElementById('fb-' + qi);
+  const correct = questions[qi].a;
+
+  btns.forEach(b => b.classList.add('disabled'));
+
+  if (oi === correct) {
+    btns[oi].classList.add('selected-correct');
+    card.classList.add('answered-correct');
+    fb.className = 'feedback correct';
+    fb.textContent = '✓ Doğru!';
+    score++;
+  } else {
+    btns[oi].classList.add('selected-wrong');
+    btns[correct].classList.add('show-correct');
+    card.classList.add('answered-wrong');
+    fb.className = 'feedback wrong';
+    fb.textContent = '✗ Yanlış. Doğru cevap: ' + ['A','B','C','D'][correct];
+  }
+
+  answered++;
+  document.getElementById('scoreVal').textContent = score;
+  document.getElementById('progressFill').style.width = (answered / 40 * 100) + '%';
+}
+
+function resetTest() {
+  score = 0;
+  answered = 0;
+  document.getElementById('scoreVal').textContent = '0';
+  document.getElementById('progressFill').style.width = '0%';
+  buildQuestions();
+}
+
+// INIT
+buildQuestions();
+</script>
+
+</body>
+</html>

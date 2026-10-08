@@ -1,0 +1,743 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Biyokimya Sınav - 100 Soru</title>
+<link href="https://fonts.googleapis.com/css2?family=Crimson+Pro:wght@400;600;700&family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #0f1117;
+  --card: #1a1d27;
+  --card-hover: #222633;
+  --accent: #4ecdc4;
+  --accent2: #ff6b6b;
+  --accent3: #feca57;
+  --text: #e8e8e8;
+  --text-dim: #8b8fa3;
+  --correct: #2ecc71;
+  --wrong: #e74c3c;
+  --border: #2a2e3a;
+  --radius: 12px;
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+body {
+  font-family: 'DM Sans', sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  min-height: 100vh;
+  line-height: 1.6;
+}
+
+.noise {
+  position: fixed;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.03'/%3E%3C/svg%3E");
+  pointer-events: none;
+  z-index: 0;
+}
+
+.container {
+  max-width: 860px;
+  margin: 0 auto;
+  padding: 20px;
+  position: relative;
+  z-index: 1;
+}
+
+/* HEADER */
+.header {
+  text-align: center;
+  padding: 50px 20px 40px;
+}
+
+.header h1 {
+  font-family: 'Crimson Pro', serif;
+  font-size: 2.8em;
+  font-weight: 700;
+  background: linear-gradient(135deg, var(--accent), var(--accent3));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  margin-bottom: 12px;
+}
+
+.header p {
+  color: var(--text-dim);
+  font-size: 1.05em;
+}
+
+.tags {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  margin-top: 20px;
+  flex-wrap: wrap;
+}
+
+.tag {
+  padding: 6px 16px;
+  border-radius: 20px;
+  font-size: 0.82em;
+  font-weight: 600;
+  letter-spacing: 0.3px;
+}
+
+.tag-kidney { background: rgba(78,205,196,0.15); color: var(--accent); border: 1px solid rgba(78,205,196,0.3); }
+.tag-urine { background: rgba(254,202,87,0.15); color: var(--accent3); border: 1px solid rgba(254,202,87,0.3); }
+.tag-liver { background: rgba(255,107,107,0.15); color: var(--accent2); border: 1px solid rgba(255,107,107,0.3); }
+
+/* PROGRESS */
+.progress-wrap {
+  background: var(--card);
+  border-radius: var(--radius);
+  padding: 20px 24px;
+  margin-bottom: 24px;
+  border: 1px solid var(--border);
+}
+
+.progress-stats {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 10px;
+  font-size: 0.9em;
+}
+
+.progress-stats span { color: var(--text-dim); }
+.progress-stats strong { color: var(--text); }
+
+.progress-bar {
+  width: 100%;
+  height: 6px;
+  background: var(--border);
+  border-radius: 3px;
+  overflow: hidden;
+}
+
+.progress-fill {
+  height: 100%;
+  background: linear-gradient(90deg, var(--accent), var(--accent3));
+  border-radius: 3px;
+  transition: width 0.4s ease;
+  width: 0%;
+}
+
+/* FILTER */
+.filter-bar {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 24px;
+  flex-wrap: wrap;
+}
+
+.filter-btn {
+  padding: 8px 18px;
+  border-radius: 8px;
+  border: 1px solid var(--border);
+  background: var(--card);
+  color: var(--text-dim);
+  cursor: pointer;
+  font-size: 0.85em;
+  font-weight: 500;
+  transition: all 0.2s;
+}
+
+.filter-btn:hover { border-color: var(--accent); color: var(--text); }
+.filter-btn.active { background: var(--accent); color: var(--bg); border-color: var(--accent); font-weight: 700; }
+
+/* QUESTION CARD */
+.question-card {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 28px;
+  margin-bottom: 16px;
+  transition: all 0.3s;
+  animation: fadeIn 0.3s ease;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.question-card.answered-correct { border-color: var(--correct); }
+.question-card.answered-wrong { border-color: var(--wrong); }
+
+.q-header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 16px;
+}
+
+.q-number {
+  min-width: 38px;
+  height: 38px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 8px;
+  font-weight: 700;
+  font-size: 0.85em;
+  background: rgba(78,205,196,0.12);
+  color: var(--accent);
+}
+
+.q-category {
+  font-size: 0.72em;
+  padding: 3px 10px;
+  border-radius: 12px;
+  font-weight: 600;
+  margin-left: auto;
+}
+
+.cat-bobrek { background: rgba(78,205,196,0.12); color: var(--accent); }
+.cat-idrar { background: rgba(254,202,87,0.12); color: var(--accent3); }
+.cat-karaciger { background: rgba(255,107,107,0.12); color: var(--accent2); }
+
+.q-text {
+  font-family: 'Crimson Pro', serif;
+  font-size: 1.18em;
+  font-weight: 600;
+  line-height: 1.5;
+  margin-bottom: 18px;
+  color: #f0f0f0;
+}
+
+.options { display: flex; flex-direction: column; gap: 8px; }
+
+.option {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 13px 16px;
+  border-radius: 10px;
+  border: 1px solid var(--border);
+  background: rgba(255,255,255,0.02);
+  cursor: pointer;
+  transition: all 0.2s;
+  font-size: 0.95em;
+}
+
+.option:hover:not(.disabled) {
+  border-color: var(--accent);
+  background: rgba(78,205,196,0.06);
+}
+
+.option .letter {
+  min-width: 30px;
+  height: 30px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 6px;
+  background: rgba(255,255,255,0.05);
+  font-weight: 700;
+  font-size: 0.82em;
+  color: var(--text-dim);
+  transition: all 0.2s;
+}
+
+.option.selected .letter {
+  background: var(--accent);
+  color: var(--bg);
+}
+
+.option.correct {
+  border-color: var(--correct);
+  background: rgba(46,204,113,0.08);
+}
+
+.option.correct .letter {
+  background: var(--correct);
+  color: #fff;
+}
+
+.option.wrong {
+  border-color: var(--wrong);
+  background: rgba(231,76,60,0.08);
+}
+
+.option.wrong .letter {
+  background: var(--wrong);
+  color: #fff;
+}
+
+.option.disabled { cursor: default; opacity: 0.7; }
+.option.correct.disabled { opacity: 1; }
+
+/* RESULT */
+.result-panel {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 40px;
+  text-align: center;
+  margin-top: 20px;
+  display: none;
+}
+
+.result-panel h2 {
+  font-family: 'Crimson Pro', serif;
+  font-size: 2.2em;
+  margin-bottom: 10px;
+}
+
+.result-score {
+  font-size: 4em;
+  font-weight: 700;
+  margin: 20px 0;
+}
+
+.result-score .total { color: var(--text-dim); font-size: 0.5em; }
+
+.result-bar-wrap {
+  max-width: 400px;
+  margin: 20px auto;
+}
+
+.result-bar {
+  width: 100%;
+  height: 12px;
+  background: var(--border);
+  border-radius: 6px;
+  overflow: hidden;
+}
+
+.result-fill {
+  height: 100%;
+  border-radius: 6px;
+  transition: width 1s ease;
+}
+
+.result-details {
+  display: flex;
+  justify-content: center;
+  gap: 40px;
+  margin-top: 24px;
+  flex-wrap: wrap;
+}
+
+.result-details div { text-align: center; }
+.result-details .label { font-size: 0.82em; color: var(--text-dim); }
+.result-details .value { font-size: 1.4em; font-weight: 700; }
+
+.btn-reset {
+  margin-top: 30px;
+  padding: 14px 40px;
+  border-radius: 10px;
+  border: none;
+  background: linear-gradient(135deg, var(--accent), #45b7aa);
+  color: var(--bg);
+  font-weight: 700;
+  font-size: 1em;
+  cursor: pointer;
+  transition: transform 0.2s;
+}
+
+.btn-reset:hover { transform: scale(1.04); }
+
+/* NAV */
+.nav-buttons {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  margin: 30px 0;
+  flex-wrap: wrap;
+}
+
+.nav-btn {
+  width: 36px;
+  height: 36px;
+  border-radius: 8px;
+  border: 1px solid var(--border);
+  background: var(--card);
+  color: var(--text-dim);
+  font-size: 0.78em;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.nav-btn:hover { border-color: var(--accent); }
+.nav-btn.answered-c { background: rgba(46,204,113,0.2); border-color: var(--correct); color: var(--correct); }
+.nav-btn.answered-w { background: rgba(231,76,60,0.2); border-color: var(--wrong); color: var(--wrong); }
+.nav-btn.current { border-color: var(--accent); background: rgba(78,205,196,0.15); color: var(--accent); }
+
+.pagination {
+  display: flex;
+  justify-content: center;
+  gap: 12px;
+  margin-bottom: 30px;
+}
+
+.page-btn {
+  padding: 10px 24px;
+  border-radius: 8px;
+  border: 1px solid var(--border);
+  background: var(--card);
+  color: var(--text);
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.page-btn:hover { border-color: var(--accent); }
+.page-btn:disabled { opacity: 0.4; cursor: default; }
+
+.submit-btn {
+  display: block;
+  margin: 30px auto;
+  padding: 16px 50px;
+  border-radius: 10px;
+  border: none;
+  background: linear-gradient(135deg, var(--accent), var(--accent3));
+  color: var(--bg);
+  font-weight: 700;
+  font-size: 1.05em;
+  cursor: pointer;
+  transition: transform 0.2s, box-shadow 0.2s;
+  box-shadow: 0 4px 20px rgba(78,205,196,0.3);
+}
+
+.submit-btn:hover { transform: scale(1.03); box-shadow: 0 6px 30px rgba(78,205,196,0.4); }
+
+.hidden { display: none !important; }
+
+@media (max-width: 600px) {
+  .header h1 { font-size: 2em; }
+  .question-card { padding: 20px; }
+  .q-text { font-size: 1.05em; }
+  .result-score { font-size: 3em; }
+  .nav-btn { width: 32px; height: 32px; font-size: 0.7em; }
+}
+</style>
+</head>
+<body>
+<div class="noise"></div>
+<div class="container">
+
+<div class="header">
+  <h1>Biyokimya Sınav Soruları</h1>
+  <p>Böbrek Fonksiyon Testleri &bull; İdrar Analizi &bull; Karaciğer Fonksiyon Testleri</p>
+  <div class="tags">
+    <span class="tag tag-kidney">Böbrek (35 Soru)</span>
+    <span class="tag tag-urine">İdrar (30 Soru)</span>
+    <span class="tag tag-liver">Karaciğer (35 Soru)</span>
+  </div>
+</div>
+
+<div class="progress-wrap">
+  <div class="progress-stats">
+    <span>Cevaplanan: <strong id="answeredCount">0</strong> / 100</span>
+    <span>Doğru: <strong id="correctCount" style="color:var(--correct)">0</strong> &nbsp; Yanlış: <strong id="wrongCount" style="color:var(--wrong)">0</strong></span>
+  </div>
+  <div class="progress-bar"><div class="progress-fill" id="progressFill"></div></div>
+</div>
+
+<div class="filter-bar">
+  <button class="filter-btn active" onclick="filterQuestions('all')">Tümü</button>
+  <button class="filter-btn" onclick="filterQuestions('bobrek')">Böbrek</button>
+  <button class="filter-btn" onclick="filterQuestions('idrar')">İdrar</button>
+  <button class="filter-btn" onclick="filterQuestions('karaciger')">Karaciğer</button>
+</div>
+
+<div id="questionsContainer"></div>
+
+<div class="pagination">
+  <button class="page-btn" id="prevBtn" onclick="changePage(-1)">&#9664; Önceki</button>
+  <span style="display:flex;align-items:center;color:var(--text-dim);font-size:0.9em" id="pageInfo"></span>
+  <button class="page-btn" id="nextBtn" onclick="changePage(1)">Sonraki &#9654;</button>
+</div>
+
+<button class="submit-btn" id="submitBtn" onclick="showResults()">Sınavı Bitir &amp; Sonuçları Gör</button>
+
+<div class="result-panel" id="resultPanel">
+  <h2>Sınav Sonucunuz</h2>
+  <div class="result-score" id="resultScore"></div>
+  <div class="result-bar-wrap">
+    <div class="result-bar"><div class="result-fill" id="resultFill"></div></div>
+  </div>
+  <div class="result-details">
+    <div><div class="value" style="color:var(--correct)" id="rCorrect">0</div><div class="label">Doğru</div></div>
+    <div><div class="value" style="color:var(--wrong)" id="rWrong">0</div><div class="label">Yanlış</div></div>
+    <div><div class="value" style="color:var(--text-dim)" id="rEmpty">0</div><div class="label">Boş</div></div>
+  </div>
+  <button class="btn-reset" onclick="resetQuiz()">Tekrar Çöz</button>
+</div>
+
+</div>
+
+<script>
+const questions = [
+  // ===== BÖBREK FONKSİYON TESTLERİ (1-35) =====
+  {id:1, cat:"bobrek", q:"Böbrekler vücutta hangi bölgede yer alır?", opts:["İntraperitoneal","Retroperitoneal","Subperitoneal","Ekstraperitoneal","Supraperitoneal"], ans:1},
+  {id:2, cat:"bobrek", q:"Yetişkin bir erkeğin böbreği yaklaşık kaç gram ağırlığındadır?", opts:["100 g","120 g","150 g","180 g","200 g"], ans:2},
+  {id:3, cat:"bobrek", q:"Böbrekler, kalbin pompaladığı kanın yaklaşık yüzde kaçını alır?", opts:["%10","%15","%20","%25","%30"], ans:3},
+  {id:4, cat:"bobrek", q:"Böbreğin dış tabakasına ne ad verilir?", opts:["Medulla","Pelvis","Korteks","Kaliks","Papilla"], ans:2},
+  {id:5, cat:"bobrek", q:"Aşağıdakilerden hangisi böbreğin endokrin işlevlerinden biri DEĞİLDİR?", opts:["Eritropoietin salgılanması","Renin-anjiotensin sistemi aktivasyonu","Aktif vitamin D3 oluşumu","Glukoneojenez","Prostaglandin üretimi ile vazodilatasyon"], ans:3},
+  {id:6, cat:"bobrek", q:"Böbreklerin metabolik işlevlerinden olan glukoneojenezde hangi maddelerden glukoz üretilir?", opts:["Yalnızca yağ asitlerinden","Gliserol, fruktoz ve amino asitlerden","Yalnızca laktattan","Kolesterol ve safra asitlerinden","Nükleotidlerden"], ans:1},
+  {id:7, cat:"bobrek", q:"Glomerüler filtrasyonda maddelerin süzülmesinde etkili olan iki ana mekanizma hangileridir?", opts:["Osmoz ve difüzyon","Aktif transport ve endositoz","Porlar ve elektriksel yük","Hidrostatik basınç ve aktif transport","Difüzyon ve pinositoz"], ans:2},
+  {id:8, cat:"bobrek", q:"Glomerüler kapiller ağın iç kısmını kaplayan negatif yüklü tabakaya ne ad verilir?", opts:["Bazal membran","Podosit","Sialoprotein","Endotel","Mezangium"], ans:2},
+  {id:9, cat:"bobrek", q:"Normal bir kişide Glomerüler Filtrasyon Hızı (GFR) yaklaşık kaç mL/dk'dır?", opts:["80 mL/dk","100 mL/dk","125 mL/dk","150 mL/dk","180 mL/dk"], ans:2},
+  {id:10, cat:"bobrek", q:"Her iki böbrekte 24 saatte oluşan glomerüler filtrat miktarı yaklaşık ne kadardır?", opts:["50 litre","100 litre","150 litre","180 litre","200 litre"], ans:3},
+  {id:11, cat:"bobrek", q:"Filtratın yüzde kaçı tübüllerden geri emilir?", opts:["%85","%90","%95","%99","%100"], ans:3},
+  {id:12, cat:"bobrek", q:"Günlük idrar miktarı normal koşullarda yaklaşık hangi aralıktadır?", opts:["100-300 mL","300-500 mL","500-1800 mL","2000-3000 mL","3000-5000 mL"], ans:2},
+  {id:13, cat:"bobrek", q:"GFR, böbreğin hangi özelliğinin en sensitif ve spesifik ölçüsüdür?", opts:["Tübüler sekresyon kapasitesi","Fonksiyonel kapasite","Hormon üretim kapasitesi","Renal kan akımı","İdrar konsantrasyon yeteneği"], ans:1},
+  {id:14, cat:"bobrek", q:"GFR, hangi yapının sayısının göstergesi olarak düşünülebilir?", opts:["Glomerül","Fonksiyonel nefron","Toplayıcı kanal","Bowman kapsülü","Henle kulpu"], ans:1},
+  {id:15, cat:"bobrek", q:"Kronik böbrek hastalığı Evre 3'te GFR değeri hangi aralıktadır?", opts:["≥90","60-89","30-59","15-29","<15"], ans:2},
+  {id:16, cat:"bobrek", q:"Kronik böbrek hastalığı Evre 5 (böbrek yetmezliği) için GFR sınırı nedir?", opts:["<60 veya Diyaliz","<30 veya Diyaliz","<15 veya Diyaliz","<45 veya Diyaliz","<90 veya Diyaliz"], ans:2},
+  {id:17, cat:"bobrek", q:"Renal klirens formülü Cs = (Us × V) / Ps'de 'V' neyi ifade eder?", opts:["Plazma hacmi","İdrarın akış hızı (mL/dk)","Vücut ağırlığı","Kan volümü","Venöz basınç"], ans:1},
+  {id:18, cat:"bobrek", q:"Kreatinin, vücutta hangi metabolik sürecin ürünüdür?", opts:["Protein sindirimi","Yağ asidi oksidasyonu","Kas kreatin metabolizması","Glikoliz","Üre döngüsü"], ans:2},
+  {id:19, cat:"bobrek", q:"24 saatlik idrar toplanarak saptanan kreatinin klirensi, renal fonksiyonun saptanmasında ne tür bir yöntemdir?", opts:["Nadiren kullanılan","Deneysel","En yaygın kullanılan","Sadece çocuklarda kullanılan","Terk edilmiş"], ans:2},
+  {id:20, cat:"bobrek", q:"Kreatinin klirens ölçümünün dezavantajlarından biri olarak, kreatinin üretimi neye bağlıdır?", opts:["Karaciğer fonksiyonuna","Kas kitlesine","Tiroid hormonlarına","Böbrek boyutuna","Plazma hacmine"], ans:1},
+  {id:21, cat:"bobrek", q:"Serum kreatinin düzeyindeki belirgin artış, GFR'de ancak yüzde kaçlık bir düşüş olduğunda görülür?", opts:["%20","%30","%40","%50","%70"], ans:3},
+  {id:22, cat:"bobrek", q:"Serum kreatinin ölçümü hassasiyeti bakımından nasıl bir test olarak kabul edilir?", opts:["Çok sensitif","Orta derecede sensitif","Düşük hassasiyetli","Altın standart","En güvenilir"], ans:2},
+  {id:23, cat:"bobrek", q:"Sistatin-C hakkında aşağıdakilerden hangisi YANLIŞTIR?", opts:["Sabit üretim hızına sahiptir","Serum konsantrasyonu GFR tarafından belirlenir","Yaş, cinsiyet ve kas kütlesinden etkilenmez","Ucuz bir testtir","Sistein proteaz inhibitörüdür"], ans:3},
+  {id:24, cat:"bobrek", q:"Sistatin-C hangi hücreler tarafından üretilir?", opts:["Sadece böbrek hücreleri","Sadece karaciğer hücreleri","Tüm çekirdekli hücreler","Sadece kas hücreleri","Eritrositler"], ans:2},
+  {id:25, cat:"bobrek", q:"Renal yetmezlikte serum sodyum düzeyi nasıl değişir?", opts:["Artar","Azalır","Değişmez","Önce artar sonra azalır","Sadece akut dönemde artar"], ans:1},
+  {id:26, cat:"bobrek", q:"Nefrotik sendrom ve üremide serum kalsiyum düzeyi ne yönde değişir?", opts:["Artar","Azalır","Değişmez","Dalgalı seyreder","Sadece üremide artar"], ans:1},
+  {id:27, cat:"bobrek", q:"Nefrotik sendrom ve üremide serum inorganik fosfor düzeyi nasıl değişir?", opts:["Azalır","Değişmez","Artar","Önce azalır sonra artar","Sadece nefrotik sendromda artar"], ans:2},
+  {id:28, cat:"bobrek", q:"Kronik renal yetmezlikte serum magnezyum düzeyi nasıl etkilenir?", opts:["Azalır","Değişmez","Yükselir","Dalgalanır","Sadece akut dönemde değişir"], ans:2},
+  {id:29, cat:"bobrek", q:"Arteriyel kan gazlarında normal pH aralığı nedir?", opts:["7,25-7,35","7,30-7,40","7,36-7,44","7,40-7,50","7,45-7,55"], ans:2},
+  {id:30, cat:"bobrek", q:"Normal arteriyel PaCO2 değeri hangi aralıktadır?", opts:["25-35 mmHg","30-40 mmHg","36-44 mmHg","40-50 mmHg","45-55 mmHg"], ans:2},
+  {id:31, cat:"bobrek", q:"Metabolik asidozda primer değişiklik hangisidir?", opts:["pCO2 artışı","pCO2 azalması","HCO3 artışı","HCO3 azalması","pH artışı"], ans:3},
+  {id:32, cat:"bobrek", q:"eGFR hesaplamasında kullanılan CKD-EPI formülünde hangi parametreler yer alır?", opts:["Sadece kreatinin ve yaş","Kreatinin, yaş, cinsiyet ve ırk","Sadece BUN ve kreatinin","Kreatinin ve vücut ağırlığı","Sistatin-C ve albumin"], ans:1},
+  {id:33, cat:"bobrek", q:"NGAL (Nötrofil Jelatinaz ile İlişkili Lipokalin) özellikle hangi durumun erken tespitinde kullanılır?", opts:["Kronik böbrek hastalığı","Nefrotik sendrom","Akut böbrek hasarı","Böbrek taşı","Renal arter stenozu"], ans:2},
+  {id:34, cat:"bobrek", q:"Vaka: 68 yaşında diyabet ve HT öyküsü olan hasta, kreatinin 2.4, BUN 52, eGFR 28, NGAL yüksek. En olası tanı nedir?", opts:["Kronik glomerülonefrit","Nefrotik sendrom","İskemik akut tübüler nekroz","Renal arter stenozu","Polikistik böbrek hastalığı"], ans:2},
+  {id:35, cat:"bobrek", q:"Vaka: 42 yaşında antibiyotik sonrası ateş, döküntü, idrarda eozinofil, KIM-1 ve IL-18 artışı. En olası tanı nedir?", opts:["Akut tübüler nekroz","Glomerülonefrit","İlaç ilişkili akut interstisyel nefrit","Nefrotik sendrom","Böbrek taşı"], ans:2},
+
+  // ===== İDRAR ANALİZİ (36-65) =====
+  {id:36, cat:"idrar", q:"İdrar oluşumunda temel üç süreç hangileridir?", opts:["Filtrasyon, osmoz, difüzyon","Glomerüler filtrasyon, tübüler geri emilim, tübüler sekresyon","Aktif transport, pasif difüzyon, osmoz","Endositoz, ekzositoz, filtrasyon","Sekresyon, absorpsiyon, evaporasyon"], ans:1},
+  {id:37, cat:"idrar", q:"İdrarın normal bileşiminde su oranı yaklaşık yüzde kaçtır?", opts:["%80","%88","%92","%96","%99"], ans:3},
+  {id:38, cat:"idrar", q:"İdrarın inorganik bileşenlerinden olan 20-25 g'lık kısımda hangi maddeler bulunur?", opts:["Üre ve kreatinin","Na, K, Ca, Mg, Cl, fosfat, sülfat, amonyak","Glukoz ve fruktoz","Amino asitler","Yağ asitleri"], ans:1},
+  {id:39, cat:"idrar", q:"İdrar test analizleri hangi amaçla istenmez?", opts:["Böbrek patolojilerini değerlendirmek","Metabolik hastalıkların tanısı","Toksikoloji","Kan basıncı ölçümü","Endokrin hastalıkların takibi"], ans:3},
+  {id:40, cat:"idrar", q:"Rutin idrar analizi hangi üç ana bölümden oluşur?", opts:["Biyokimyasal, hematolojik, mikrobiyolojik","Fiziksel, kimyasal, sediment","Makroskopik, spektroskopik, kromatografik","Kantitatif, kalitatif, yarı kantitatif","Serolojik, sitolojik, histolojik"], ans:1},
+  {id:41, cat:"idrar", q:"Kırmızı/pembe/kahverengi idrar rengi hangi maddelerin varlığını düşündürür?", opts:["Bilirubin ve ürobilin","Eritrosit, hemoglobin, miyoglobin","Fosfat kristalleri","Biliverdin","Melanin"], ans:1},
+  {id:42, cat:"idrar", q:"Kahverengi/siyah idrar rengi aşağıdakilerden hangisiyle ilişkili olabilir?", opts:["Fosfat kristalleri","Biliverdin","Methemoglobin, homogentisik asit, melanin","Eritrosit","Ürobilin"], ans:2},
+  {id:43, cat:"idrar", q:"Mavi veya yeşil idrar rengi hangi durumlarla ilişkili olabilir?", opts:["Hematüri","Biliverdin, psödomonas enfeksiyonu, mavi bez sendromu","Hemoglobinüri","Ketonüri","Miyoglobinüri"], ans:1},
+  {id:44, cat:"idrar", q:"Çürük meyve kokusu idrarda hangi maddenin varlığına işaret eder?", opts:["Amonyak","Fenilketonüri metabolitleri","Keton","Tirozin","Bakteri"], ans:2},
+  {id:45, cat:"idrar", q:"İdrarda amonyak kokusu hangi durumu düşündürür?", opts:["Diyabetik ketoasidoz","Tirozinemi","Bakteriyel enfeksiyonlar sonucu üre parçalanması","Fenilketonüri","Maple syrup hastalığı"], ans:2},
+  {id:46, cat:"idrar", q:"Bulanık idrar görünümünün nedenleri arasında hangisi yoktur?", opts:["Ürat","Fosfat","Oksalat","Albumin","Lökosit"], ans:3},
+  {id:47, cat:"idrar", q:"Strip (dipstick) testi idrar örneğine ne kadar süre daldırılır?", opts:["10-30 saniye","60-120 saniye","180-240 saniye","5-10 dakika","30 saniyeden az"], ans:1},
+  {id:48, cat:"idrar", q:"Normal idrar pH aralığı nedir?", opts:["3,5-5,0","4,8-8,2","6,5-9,0","7,0-7,5","8,0-9,5"], ans:1},
+  {id:49, cat:"idrar", q:"Aşağıdaki durumlardan hangisinde idrar pH'sı asidik tarafa kayar?", opts:["Respiratuvar alkaloz","Metabolik alkaloz","Proteus enfeksiyonu","Diyabetik ketoasidoz","Psödomonas enfeksiyonu"], ans:3},
+  {id:50, cat:"idrar", q:"Ketonüri pozitifliği aşağıdaki durumlardan hangisinde görülebilir?", opts:["Metabolik alkaloz","Diyabetes mellitus","Respiratuvar alkaloz","Proteus enfeksiyonu","Hiperaldosteronizm"], ans:1},
+  {id:51, cat:"idrar", q:"Proteinüri derecelerinde (+++) kaç mg/dL protein anlamına gelir?", opts:["30-50 mg/dL","100-200 mg/dL","300-500 mg/dL","1000 mg/dL","20 mg/dL"], ans:2},
+  {id:52, cat:"idrar", q:"Geçici proteinürinin nedenleri arasında hangisi yer alır?", opts:["Nefritler","Diyabetik nefropati","Konjestif kalp yetmezliği, dehidratasyon, şiddetli egzersiz","Amiloidoz","Multipl miyelom"], ans:2},
+  {id:53, cat:"idrar", q:"Taşma (overflow) tipi proteinüriye örnek hangisidir?", opts:["Glomerülonefrit","Diyabetik nefropati","Hemoglobinüri, multipl miyelom, miyoglobinüri","Fankoni sendromu","Hipertansif nefroskleroz"], ans:2},
+  {id:54, cat:"idrar", q:"İdrarda kan testi (strip) için yalancı negatiflik hangi durumda oluşur?", opts:["Hipoklorit kontaminasyonu","Psödomonas enfeksiyonu","İdrar dansitesinin çok yüksek olması ve kaptopril kullanımı","Sitokrom C peroksidaz içeren bakteriler","Askorbik asit varlığı"], ans:2},
+  {id:55, cat:"idrar", q:"Bilirubin strip testinde yalancı negatifliğe hangi madde neden olur?", opts:["Mefenamik asit","Klorpromazin","Askorbik asit ve klorheksidin","Paminobenzoik asit","Sülfonamidler"], ans:2},
+  {id:56, cat:"idrar", q:"İdrarla atılan ürobilinojen normal değeri ne kadardır?", opts:["<0.1 mg/dL","<1 mg/dL","<5 mg/dL","<10 mg/dL","<20 mg/dL"], ans:1},
+  {id:57, cat:"idrar", q:"Ürobilinojen konsantrasyonlarının en yüksek olduğu saat aralığı hangisidir?", opts:["Sabah 6-8","Öğleden sonra 13-15 veya 14-16","Akşam 18-20","Gece 22-24","Sabah 8-10"], ans:1},
+  {id:58, cat:"idrar", q:"İdrarda nitrit pozitifliği hangi durumu düşündürür?", opts:["Böbrek taşı","Glomerülonefrit","Bakteriyel enfeksiyon (nitratı nitrite dönüştüren bakteriler)","Diyabet","Dehidratasyon"], ans:2},
+  {id:59, cat:"idrar", q:"Nitrit testinde yalancı negatifliğe ne neden olur?", opts:["Paminobenzoik asit","Sülfonamidler","Askorbik asit","Fenazopiridin","Formalin"], ans:2},
+  {id:60, cat:"idrar", q:"İdrar sedimentinde eritrositler iyi korunmuşlarsa nasıl görülürler?", opts:["Koyu kahverengi ve düzensiz","Açık yeşilimtrak renkte ve yuvarlak","Mor ve çubuk şeklinde","Sarı ve kübik","Renksiz ve amorf"], ans:1},
+  {id:61, cat:"idrar", q:"Asit idrarda görülebilen kristaller arasında hangisi vardır?", opts:["Amorf fosfat","Tripel fosfat","Kalsiyum okzalat, sistin, lösin, tirozin","Amonyum ürat","Tersiyer kalsiyum fosfat"], ans:2},
+  {id:62, cat:"idrar", q:"Alkalik idrarda görülebilen kristaller arasında hangisi yoktur?", opts:["Amorf fosfat","Tripel fosfat","Tersiyer kalsiyum fosfat","Amonyum ürat","Sistin"], ans:4},
+  {id:63, cat:"idrar", q:"Normal idrar dansitesi hangi aralıktadır?", opts:["1.000-1.003","1.005-1.025","1.030-1.050","1.001-1.010","1.025-1.040"], ans:1},
+  {id:64, cat:"idrar", q:"Tam idrar analizinde normalde aşağıdakilerden hangisi negatif olmalıdır?", opts:["Dansite","pH","Protein, glikoz, keton, bilirubin, eritrosit, lökosit, nitrit","Sadece glikoz","Sadece protein"], ans:2},
+  {id:65, cat:"idrar", q:"İdrar numunesinin mesanede en az kaç saat beklemiş olması nitrit testi için önemlidir?", opts:["1 saat","2 saat","4 saat","6 saat","8 saat"], ans:2},
+
+  // ===== KARACİĞER FONKSİYON TESTLERİ (66-100) =====
+  {id:66, cat:"karaciger", q:"Karaciğerin temel fonksiyonlarından biri olan detoksifikasyonda hangi enzim sistemi rol oynar?", opts:["Krebs döngüsü enzimleri","Sitokrom P450 sistemi","Glikoliz enzimleri","Beta-oksidasyon enzimleri","Pentoz fosfat yolu enzimleri"], ans:1},
+  {id:67, cat:"karaciger", q:"Karaciğer, yağ ve vitaminlerin emilimi için gerekli olan hangi maddeyi sentezler?", opts:["İnsülin","Pepsin","Safra","Trombin","Gastrin"], ans:2},
+  {id:68, cat:"karaciger", q:"Karaciğerin karbohidrat metabolizması ile ilgili fonksiyonları arasında hangisi yoktur?", opts:["Glikojen depo edilmesi","Glukoneogenez","Pentoz fosfat yolunda yıkım","Kolesterol biyosentezi","Galaktoz ve fruktozun glukoza dönüştürülmesi"], ans:3},
+  {id:69, cat:"karaciger", q:"Karaciğerin lipid metabolizması ile ilgili fonksiyonlarından hangisi doğrudur?", opts:["Sadece kolesterol yıkımı yapar","Yağ asidi sentezi, trigliserid oluşumu, fosfolipid sentezi, keton cismi sentezi yapar","Sadece safra asidi sentezler","Lipid emiliminde rolü yoktur","Yalnızca lipoprotein yıkımı yapar"], ans:1},
+  {id:70, cat:"karaciger", q:"Karaciğerin amino asit metabolizması fonksiyonları arasında hangisi yer almaz?", opts:["Deaminasyon","Transaminasyon","Üre sentezi","Hemoglobin sentezi","Plazma proteinleri sentezi"], ans:3},
+  {id:71, cat:"karaciger", q:"Karaciğerde amino asitler deamine edildikten sonra açığa çıkan amino grubu hangi maddeye dönüştürülür?", opts:["Ürik asit","Amonyak ve ardından üre","Kreatin","Bilirubin","Glutatyon"], ans:1},
+  {id:72, cat:"karaciger", q:"Karaciğerin immünolojik fonksiyonunda rol oynayan hücreler hangileridir?", opts:["Hepatositler","Kupffer hücreleri","İto hücreleri","Endotel hücreleri","Oval hücreler"], ans:1},
+  {id:73, cat:"karaciger", q:"Karaciğer hastalıklarında görülen üç temel patoloji hangileridir?", opts:["Enfeksiyon, tümör, travma","Hücre harabiyeti, kolestaz, fonksiyonel hücre kütlesinin azalması","Fibrozis, nekroz, rejenerasyon","Steatoz, siroz, kanser","İnflamasyon, iskemi, otoimmünite"], ans:1},
+  {id:74, cat:"karaciger", q:"Kolestaz durumunda hangi maddelerin retansiyonu karakteristiktir?", opts:["ALT ve AST","Konjuge bilirubin ve ALP","Albumin ve globulin","Üre ve kreatinin","Demir ve ferritin"], ans:1},
+  {id:75, cat:"karaciger", q:"Fonksiyonel karaciğer hücre kütlesinin azalması hangi proteinlerin sentezinde azalmaya yol açar?", opts:["İmmünoglobulinler","Protrombin ve albumin","Transferrin ve seruloplazmin","Kompleman proteinleri","Akut faz proteinleri"], ans:1},
+  {id:76, cat:"karaciger", q:"Karaciğer hücre harabiyetini belirleyen testler arasında hangisi yer almaz?", opts:["ALT tayini","AST tayini","LDH tayini","ALP tayini","GLDH tayini"], ans:3},
+  {id:77, cat:"karaciger", q:"Kolestazı belirleyen testler arasında hangisi bulunur?", opts:["ALT ve AST","ALP, GGT, 5'-Nükleotidaz, LAP","Albumin ve protrombin zamanı","Kolinesteraz","LDH ve GLDH"], ans:1},
+  {id:78, cat:"karaciger", q:"Karaciğerin yapım (sentetik) disfonksiyonunu belirleyen testler arasında hangisi yoktur?", opts:["Serum proteinleri tayini","Protrombin zamanı tayini","Kolinesteraz tayini","GGT tayini","Kanama ve pıhtılaşma zamanı tayini"], ans:3},
+  {id:79, cat:"karaciger", q:"Akut viral hepatitte ALT ve AST'ye göre daha az olmak üzere hangi enzim artar?", opts:["ALP","GGT","LDH (özellikle LDH5)","Kolinesteraz","5'-Nükleotidaz"], ans:2},
+  {id:80, cat:"karaciger", q:"Kolestazda serum GGT düzeyi normalin kaç katına kadar artabilir?", opts:["2-3 katı","3-5 katı","5-30 katı","50-100 katı","100 kattan fazla"], ans:2},
+  {id:81, cat:"karaciger", q:"Artmış GGT düzeylerinin görüldüğü durumlar arasında hangisi yoktur?", opts:["Diabetes mellitus","Akut pankreatit","Miyokardiyal infarktüs","Demir eksikliği anemisi","Alkolik karaciğer hastalığı"], ans:3},
+  {id:82, cat:"karaciger", q:"ALP düzeyindeki artış özellikle hangi durumda görülür?", opts:["Hemolitik anemi","Safra akışının intra ve ekstrahepatik tıkanıklığında","Demir eksikliği anemisi","Böbrek yetmezliği","Pnömoni"], ans:1},
+  {id:83, cat:"karaciger", q:"Albumin karaciğerde sentezlenen kantitatif olarak en önemli plazma proteinidir. Normal serum değeri nedir?", opts:["1.5-2.5 g/dL","2.5-3.5 g/dL","3.5-4.5 g/dL","4.5-5.5 g/dL","5.5-6.5 g/dL"], ans:2},
+  {id:84, cat:"karaciger", q:"α-1 antitripsin hangi enzimlerin inhibitörüdür?", opts:["Lipazlar","Serin proteazlar (elastaz gibi)","Karboksipeptidazlar","Aminotransferazlar","Fosfatazlar"], ans:1},
+  {id:85, cat:"karaciger", q:"α-fetoprotein düzeyleri hangi durumlarda yükselebilir?", opts:["Sadece hepatoselüler karsinom","Kronik hepatit, akut hepatitin rejenerasyon fazı, hepatik metastaz","Sadece siroz","Yalnızca gebelik","Sadece yenidoğanda"], ans:1},
+  {id:86, cat:"karaciger", q:"Prokollajen III peptid serum düzeyi hangi durumda artar?", opts:["Hemolitik anemi","Hepatik fibrozis, inflamasyon ve nekroz","Demir eksikliği","Böbrek yetmezliği","Hipotiroidi"], ans:1},
+  {id:87, cat:"karaciger", q:"Prealbumin düzeyinin düştüğü durum hangisidir?", opts:["Akut enfeksiyon","Karaciğer hastalığında azalmış sentez","Dehidratasyon","Hiperlipidemi","Polistemi"], ans:1},
+  {id:88, cat:"karaciger", q:"ALT enzimi hakkında aşağıdakilerden hangisi doğrudur?", opts:["Çeşitli dokularda yaygın olarak bulunur","Karaciğere özgü bir enzimdir ve sitozolde bulunur","Mitokondride bulunur","Sadece kalp kasında bulunur","Böbreğe spesifiktir"], ans:1},
+  {id:89, cat:"karaciger", q:"AST enzimi hangi hücresel bölmelerde bulunur?", opts:["Sadece sitozolde","Sadece mitokondride","Hem mitokondri hem sitozolde","Sadece endoplazmik retikulumda","Sadece çekirdekte"], ans:2},
+  {id:90, cat:"karaciger", q:"AST/ALT oranı 2'nin üzerinde olması hangi durumu düşündürür?", opts:["NAFLD","Akut viral hepatit","Alkole bağlı karaciğer hasarı","Kronik hepatit C","Wilson hastalığı"], ans:2},
+  {id:91, cat:"karaciger", q:"AST/ALT oranı 1'den küçük olması hangi durumu düşündürür?", opts:["Alkole bağlı hasar","NAFLD / Metabolik nedenler","Akut hepatit A","Siroz","Fulminan hepatit"], ans:1},
+  {id:92, cat:"karaciger", q:"Hepatoselüler hasarı gösteren paternde hangi enzimler belirgin yükselir?", opts:["ALP ve GGT","ALT ve AST","Albumin ve protrombin","LDH ve kolinesteraz","5'-NT ve LAP"], ans:1},
+  {id:93, cat:"karaciger", q:"Kolestatik paterni gösteren enzimler hangileridir?", opts:["ALT ve AST","Albumin ve globulin","ALP ve GGT","LDH ve ICDH","Kolinesteraz ve protrombin"], ans:2},
+  {id:94, cat:"karaciger", q:"Bilirubin metabolizmasında, hem yıkımından sonra oluşan bilirubin karaciğerde ne hale getirilir?", opts:["Yağda çözünür hale","Suda çözünür (konjuge) hale","Gaz haline","Proteine bağlı hale","Demir bileşiğine"], ans:1},
+  {id:95, cat:"karaciger", q:"Total bilirubin neyin toplamıdır?", opts:["Albumin ve globulin","Direkt ve indirekt bilirubin","AST ve ALT","Konjuge ve dekonjuge safra asitleri","Ürobilinogen ve sterkobilin"], ans:1},
+  {id:96, cat:"karaciger", q:"PT/INR yüksekliği karaciğerde hangi fonksiyonun bozulduğunu gösterir?", opts:["Detoksifikasyon","Safra üretimi","Pıhtılaşma faktörlerini sentezleme kapasitesi","Glikojen depolama","Kolesterol sentezi"], ans:2},
+  {id:97, cat:"karaciger", q:"Düşük albumin düzeyi neyi gösterir?", opts:["Akut enfeksiyon","Kronik karaciğer hastalığı ve azalmış karaciğer rezerv kapasitesi","Akut pankreatit","Böbrek yetmezliği","Hemolitik anemi"], ans:1},
+  {id:98, cat:"karaciger", q:"Olgu: 35 yaş erkek, ALT 1450, AST 980, Bilirubin 3.2, IgM pozitif. En olası tanı?", opts:["Kronik hepatit C","Alkolik hepatit","Akut hepatit B","NAFLD","Otoimmün hepatit"], ans:2},
+  {id:99, cat:"karaciger", q:"Olgu: 55 yaş kadın, ALP 780, GGT 640, Bilirubin 8, USG'de koledokta taş. Hangi patern baskındır?", opts:["Hepatoselüler","Kolestatik","Karma","Sentetik yetmezlik","İnfiltratif"], ans:1},
+  {id:100, cat:"karaciger", q:"Olgu: 42 yaş erkek, obez, DM tip 2, ALT 82, AST 65, AST/ALT<1, USG'de grade 2 hepatosteatoz. En olası tanı?", opts:["Alkolik hepatit","Akut viral hepatit","Wilson hastalığı","NAFLD (Non-alkolik yağlı karaciğer hastalığı)","Hemokromatoz"], ans:3}
+];
+
+let currentPage = 0;
+const perPage = 10;
+let currentFilter = 'all';
+let userAnswers = {};
+let quizFinished = false;
+
+function getFiltered() {
+  if (currentFilter === 'all') return questions;
+  return questions.filter(q => q.cat === currentFilter);
+}
+
+function getTotalPages() {
+  return Math.ceil(getFiltered().length / perPage);
+}
+
+function renderQuestions() {
+  const filtered = getFiltered();
+  const start = currentPage * perPage;
+  const end = Math.min(start + perPage, filtered.length);
+  const container = document.getElementById('questionsContainer');
+  const letters = ['A','B','C','D','E'];
+
+  let html = '';
+  for (let i = start; i < end; i++) {
+    const q = filtered[i];
+    const catLabel = q.cat === 'bobrek' ? 'Böbrek' : q.cat === 'idrar' ? 'İdrar' : 'Karaciğer';
+    const catClass = q.cat === 'bobrek' ? 'cat-bobrek' : q.cat === 'idrar' ? 'cat-idrar' : 'cat-karaciger';
+    const answered = userAnswers[q.id] !== undefined;
+    const isCorrect = answered && userAnswers[q.id] === q.ans;
+    const cardClass = answered ? (isCorrect ? 'answered-correct' : 'answered-wrong') : '';
+
+    html += `<div class="question-card ${cardClass}" id="qcard-${q.id}">
+      <div class="q-header">
+        <div class="q-number">${q.id}</div>
+        <span class="q-category ${catClass}">${catLabel}</span>
+      </div>
+      <div class="q-text">${q.q}</div>
+      <div class="options">`;
+
+    for (let j = 0; j < q.opts.length; j++) {
+      let optClass = '';
+      if (quizFinished || answered) {
+        if (j === q.ans) optClass = 'correct disabled';
+        else if (answered && userAnswers[q.id] === j && j !== q.ans) optClass = 'wrong disabled';
+        else optClass = 'disabled';
+      }
+      html += `<div class="option ${optClass}" onclick="selectAnswer(${q.id}, ${j})" data-qid="${q.id}" data-idx="${j}">
+        <span class="letter">${letters[j]}</span>
+        <span>${q.opts[j]}</span>
+      </div>`;
+    }
+
+    html += `</div></div>`;
+  }
+
+  container.innerHTML = html;
+  document.getElementById('pageInfo').textContent = `${currentPage + 1} / ${getTotalPages()}`;
+  document.getElementById('prevBtn').disabled = currentPage === 0;
+  document.getElementById('nextBtn').disabled = currentPage >= getTotalPages() - 1;
+}
+
+function selectAnswer(qid, idx) {
+  if (userAnswers[qid] !== undefined || quizFinished) return;
+  userAnswers[qid] = idx;
+  const q = questions.find(x => x.id === qid);
+  const isCorrect = idx === q.ans;
+
+  const card = document.getElementById(`qcard-${qid}`);
+  card.classList.add(isCorrect ? 'answered-correct' : 'answered-wrong');
+
+  const options = card.querySelectorAll('.option');
+  options.forEach((opt, i) => {
+    opt.classList.add('disabled');
+    if (i === q.ans) opt.classList.add('correct');
+    if (i === idx && idx !== q.ans) opt.classList.add('wrong');
+  });
+
+  updateStats();
+}
+
+function updateStats() {
+  const answered = Object.keys(userAnswers).length;
+  let correct = 0;
+  for (const qid in userAnswers) {
+    const q = questions.find(x => x.id === parseInt(qid));
+    if (q && userAnswers[qid] === q.ans) correct++;
+  }
+  const wrong = answered - correct;
+
+  document.getElementById('answeredCount').textContent = answered;
+  document.getElementById('correctCount').textContent = correct;
+  document.getElementById('wrongCount').textContent = wrong;
+  document.getElementById('progressFill').style.width = (answered / questions.length * 100) + '%';
+}
+
+function changePage(dir) {
+  currentPage += dir;
+  if (currentPage < 0) currentPage = 0;
+  if (currentPage >= getTotalPages()) currentPage = getTotalPages() - 1;
+  renderQuestions();
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+function filterQuestions(cat) {
+  currentFilter = cat;
+  currentPage = 0;
+  document.querySelectorAll('.filter-btn').forEach(btn => btn.classList.remove('active'));
+  event.target.classList.add('active');
+  renderQuestions();
+}
+
+function showResults() {
+  quizFinished = true;
+  const answered = Object.keys(userAnswers).length;
+  let correct = 0;
+  for (const qid in userAnswers) {
+    const q = questions.find(x => x.id === parseInt(qid));
+    if (q && userAnswers[qid] === q.ans) correct++;
+  }
+  const wrong = answered - correct;
+  const empty = questions.length - answered;
+  const pct = Math.round(correct / questions.length * 100);
+
+  document.getElementById('submitBtn').classList.add('hidden');
+  const panel = document.getElementById('resultPanel');
+  panel.style.display = 'block';
+
+  const color = pct >= 70 ? 'var(--correct)' : pct >= 50 ? 'var(--accent3)' : 'var(--wrong)';
+  document.getElementById('resultScore').innerHTML = `<span style="color:${color}">${correct}</span> <span class="total">/ 100</span>`;
+  document.getElementById('rCorrect').textContent = correct;
+  document.getElementById('rWrong').textContent = wrong;
+  document.getElementById('rEmpty').textContent = empty;
+
+  const fill = document.getElementById('resultFill');
+  fill.style.background = color;
+  setTimeout(() => { fill.style.width = pct + '%'; }, 100);
+
+  renderQuestions();
+  panel.scrollIntoView({ behavior: 'smooth' });
+}
+
+function resetQuiz() {
+  userAnswers = {};
+  quizFinished = false;
+  currentPage = 0;
+  currentFilter = 'all';
+  document.querySelectorAll('.filter-btn').forEach((btn, i) => {
+    btn.classList.toggle('active', i === 0);
+  });
+  document.getElementById('submitBtn').classList.remove('hidden');
+  document.getElementById('resultPanel').style.display = 'none';
+  updateStats();
+  renderQuestions();
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+// Init
+renderQuestions();
+updateStats();
+</script>
+</body>
+</html>

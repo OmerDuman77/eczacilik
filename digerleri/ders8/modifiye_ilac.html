@@ -1,0 +1,518 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Modifiye İlaç Salım Sistemleri — Çalışma Sayfası</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Spectral:ital,wght@0,400;0,600;0,800;1,500&family=Inter+Tight:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#0b1413;
+    --panel:#11201e;
+    --panel-2:#172a27;
+    --ink:#e7f0ee;
+    --muted:#8fa6a2;
+    --line:#23423d;
+    --accent:#2bb6a3;
+    --accent-2:#e0a458;
+    --correct-bg:rgba(43,182,131,.16);
+    --correct-line:#37c98a;
+    --wrong-bg:rgba(214,69,69,.16);
+    --wrong-line:#e25555;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{scroll-behavior:smooth}
+  body{
+    background:
+      radial-gradient(1100px 560px at 84% -10%, rgba(43,182,163,.10), transparent 60%),
+      radial-gradient(900px 520px at -10% 22%, rgba(224,164,88,.07), transparent 55%),
+      var(--bg);
+    color:var(--ink);font-family:'Inter Tight',system-ui,sans-serif;line-height:1.6;-webkit-font-smoothing:antialiased;
+  }
+  .wrap{max-width:900px;margin:0 auto;padding:46px 22px 120px}
+
+  .kicker{font-size:.72rem;letter-spacing:.3em;text-transform:uppercase;color:var(--accent);font-weight:600;margin-bottom:12px}
+  h1.title{font-family:'Spectral',serif;font-weight:800;font-size:clamp(1.9rem,4.6vw,3rem);line-height:1.05;letter-spacing:-.01em;margin-bottom:8px}
+  h1.title em{font-style:italic;color:var(--accent-2)}
+  .sub{color:var(--muted);font-size:.98rem;margin-bottom:26px}
+
+  /* TABS */
+  .tabs{position:sticky;top:0;z-index:20;display:flex;flex-wrap:wrap;gap:8px;padding:14px 0 14px;
+    background:linear-gradient(180deg,var(--bg) 78%,rgba(11,20,19,0));margin-bottom:10px}
+  .tab{flex:1 1 auto;min-width:140px;cursor:pointer;border:1px solid var(--line);background:var(--panel);
+    color:var(--muted);border-radius:12px;padding:11px 14px;font-family:inherit;font-size:.9rem;font-weight:600;
+    transition:.2s;text-align:center;line-height:1.2}
+  .tab small{display:block;font-weight:400;font-size:.74rem;opacity:.7;margin-top:2px}
+  .tab:hover{border-color:#345f57;color:var(--ink)}
+  .tab.active{background:var(--accent);border-color:var(--accent);color:#04201c}
+  .tab.active small{opacity:.85}
+
+  .panel{display:none;animation:fade .35s ease}
+  .panel.active{display:block}
+  @keyframes fade{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
+
+  /* SUMMARY */
+  .summary h2{font-family:'Spectral',serif;font-weight:600;font-size:1.5rem;margin:34px 0 6px;color:var(--ink)}
+  .summary h2:first-child{margin-top:6px}
+  .summary h2 .n{color:var(--accent);font-style:italic;margin-right:8px}
+  .summary h3{font-size:1.06rem;font-weight:600;color:var(--accent-2);margin:20px 0 4px}
+  .summary p{margin:10px 0;color:#d5e2df}
+  .summary ul{margin:8px 0 8px 4px;padding-left:20px;color:#d5e2df}
+  .summary li{margin:5px 0}
+  .summary b{color:var(--ink)}
+  .summary .lead{font-size:1.05rem;border-left:3px solid var(--accent);padding-left:16px;color:#cfe0dc}
+  .summary hr{border:none;border-top:1px solid var(--line);margin:30px 0}
+
+  /* QUESTIONS general */
+  .intro-note{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:14px 16px;color:var(--muted);font-size:.9rem;margin-bottom:18px}
+  .intro-note b{color:var(--accent)}
+
+  /* FILL-IN (test) */
+  .q{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:18px 18px 14px;margin-top:14px}
+  .q-top{display:flex;gap:11px;align-items:flex-start;margin-bottom:13px}
+  .q-no{flex:none;width:28px;height:28px;border-radius:8px;background:var(--panel-2);color:var(--accent);font-weight:700;font-size:.8rem;display:grid;place-items:center;font-family:'Spectral',serif}
+  .q-text{font-size:1rem;font-weight:500;padding-top:2px}
+  .q-text .blank{color:var(--accent-2);font-weight:700;letter-spacing:1px}
+  .opts{display:flex;flex-direction:column;gap:8px}
+  .opt{text-align:left;width:100%;cursor:pointer;background:var(--panel-2);border:1px solid var(--line);color:var(--ink);border-radius:10px;padding:11px 13px;font-family:inherit;font-size:.94rem;display:flex;gap:11px;align-items:flex-start;transition:.16s}
+  .opt:hover:not(:disabled){background:#1d322e;border-color:#39625a}
+  .opt:disabled{cursor:default}
+  .opt .mark{flex:none;width:21px;height:21px;border-radius:50%;border:1.5px solid var(--muted);color:var(--muted);font-size:.72rem;font-weight:700;display:grid;place-items:center;margin-top:1px;font-family:'Spectral',serif}
+  .opt.correct{background:var(--correct-bg);border-color:var(--correct-line);color:#d6ffe9}
+  .opt.correct .mark{border-color:var(--correct-line);background:var(--correct-line);color:#06231a}
+  .opt.correct .mark::after{content:"✓"}
+  .opt.wrong{background:var(--wrong-bg);border-color:var(--wrong-line);color:#ffe0e0}
+  .opt.wrong .mark{border-color:var(--wrong-line);background:var(--wrong-line);color:#2a0a0a}
+  .opt.wrong .mark::after{content:"✕"}
+  .opt.correct .mark span,.opt.wrong .mark span{display:none}
+
+  .scorebar{display:flex;gap:12px;flex-wrap:wrap;margin-bottom:8px}
+  .sc{flex:1 1 140px;background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:12px 14px}
+  .sc .l{font-size:.7rem;letter-spacing:.1em;text-transform:uppercase;color:var(--muted)}
+  .sc .v{font-family:'Spectral',serif;font-size:1.4rem;font-weight:600;margin-top:2px}
+
+  /* REVEAL cards (terms + classic) */
+  .reveal{background:var(--panel);border:1px solid var(--line);border-radius:14px;margin-top:12px;overflow:hidden;transition:border-color .2s}
+  .reveal:hover{border-color:#345f57}
+  .reveal-head{display:flex;gap:12px;align-items:center;padding:15px 17px;cursor:pointer}
+  .reveal-no{flex:none;width:28px;height:28px;border-radius:8px;background:var(--panel-2);color:var(--accent);font-weight:700;font-size:.8rem;display:grid;place-items:center;font-family:'Spectral',serif}
+  .reveal-term{flex:1;font-weight:600;font-size:1rem}
+  .dots{flex:none;font-family:'Spectral',serif;font-weight:800;color:var(--accent-2);font-size:1.4rem;letter-spacing:2px;line-height:1;transition:.25s;padding:0 4px}
+  .reveal.open .dots{color:var(--accent);transform:rotate(90deg)}
+  .reveal-body{max-height:0;opacity:0;padding:0 17px;transition:max-height .3s ease,opacity .25s ease,padding .3s ease;color:#d5e2df;font-size:.96rem;border-top:1px solid transparent}
+  .reveal.open .reveal-body{max-height:600px;opacity:1;padding:14px 17px 17px;border-top:1px solid var(--line)}
+  .reveal-body b{color:var(--accent-2)}
+
+  footer{margin-top:70px;text-align:center;color:var(--muted);font-size:.82rem}
+  .tools{display:flex;gap:10px;justify-content:center;flex-wrap:wrap;margin-top:14px}
+  .toolbtn{background:transparent;border:1px solid var(--line);color:var(--muted);padding:9px 16px;border-radius:10px;font-family:inherit;cursor:pointer;font-size:.84rem;transition:.2s}
+  .toolbtn:hover{border-color:var(--accent);color:var(--accent)}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="kicker">Prof. Dr. Jülide Akbuğa · Ders Notları (I &amp; II)</div>
+  <h1 class="title">Modifiye İlaç Salım<br>Sistemleri <em>Çalışma Sayfası</em></h1>
+  <div class="sub">Detaylı özet, 40 boşluk doldurma (test mantığı), 50 terim–anlam ve 20 klasik soru — tek sayfada, sekmelerle.</div>
+
+  <nav class="tabs">
+    <button class="tab active" data-tab="ozet">Detaylı Özet</button>
+    <button class="tab" data-tab="bosluk">Boşluk Doldurma<small>40 soru · yeşil/kırmızı</small></button>
+    <button class="tab" data-tab="terim">Terim–Anlam<small>50 · tıkla, aç</small></button>
+    <button class="tab" data-tab="klasik">Klasik Sorular<small>20 · tıkla, aç</small></button>
+  </nav>
+
+  <!-- ===================== ÖZET ===================== -->
+  <section class="panel summary active" id="ozet">
+    <p class="lead">Modifiye ilaç salım sistemleri, etkin maddenin farmasötik formdan (tablet, pellet, kapsül) serbestleşmesini <b>zaman, süreç ve/veya bölge</b> temelli olarak değiştirerek (modifiye/manipüle ederek) konvansiyonel "hemen salan" formların sağlayamadığı terapötik amaçlara ulaşmayı hedefler. Bu özet, iki ders sunumunun (Modifiye İlaç Salım Sistemleri I ve II) tüm başlıklarını ayrıntılı biçimde kapsar.</p>
+
+    <h2><span class="n">1.</span>Giriş ve Temel Kavram</h2>
+    <p>İlaçların büyük kısmı <b>oral</b> yolla verilir ve klasik olarak "hemen salan" (immediate release) ya da "konvansiyonel" şekiller halinde formüle edilir. Bu formlarda etkin madde, gastrointestinal sistemde (GİS) absorpsiyonu takiben etkisini <b>hızla</b> gösterir. Pek çok terapötik durumda bu uygundur; ancak <b>bazı durumlarda etkinin hızlı başlaması istenmez</b>. Bu gibi durumlarda ilacın serbestleşme profilinin/biçiminin modifiye edilmesi gerekir. Modifikasyonun iki temel amacı vardır:</p>
+    <ul>
+      <li><b>Salım hızının yavaşlatılması</b>,</li>
+      <li><b>İlacın etki süresinin uzatılması</b> (örneğin 24 saate kadar tek dozla etki).</li>
+    </ul>
+    <p>Modifiye taşıyıcı sistemler, aktif maddenin spesifik bir amaçla farmasötik formdan serbestleşmesinin modifikasyonu/manipülasyonu ile hazırlanır. Bu değişiklikle ilacın (a) <b>istenilen hızda</b>, (b) <b>önceden belirlenmiş zaman noktalarında</b> ve (c) <b>GİS'in spesifik bölgelerinde</b> salımı sağlanabilir. Hızlı-salım tarafında ise <b>ağızda dağılan tabletler (ODT)</b> / hızlı eriyen tabletler yer alır: ilave sıvıya ihtiyaç duymadan ağızda tükürükle, dil üzerinde saniyeler içinde parçalanan tabletlerdir.</p>
+
+    <h2><span class="n">2.</span>Terminoloji</h2>
+    <p>"Modifiye-salım" terimi, ilaç serbestleşmesinin <b>zaman, süreç ve/veya bölge</b> temelli özelliklere sahip olduğu dozaj şekillerini tanımlar ve konvansiyonel/hemen salan şekillerin sahip olmadığı terapötik amaçlara göre tasarlanır. <b>USP</b>, modifiye salım formlarını başlıca iki grupta farklılaştırır: <b>genişletilmiş (uzatılmış) salım</b> ve <b>gecikmeli salım</b> sistemleri. Uzatılmış salım sistemlerinin tipik kazanımı <b>dozaj sıklığında azalma</b>dır.</p>
+    <h3>Sık kullanılan terimler ve kısaltmalar</h3>
+    <ul>
+      <li><b>SR / SA</b> — sürekli etkili (sustained release / sustained action)</li>
+      <li><b>PA</b> — uzun süreli salan (prolonged action)</li>
+      <li><b>CR</b> — kontrollü salan (controlled release)</li>
+      <li><b>ER</b> — geciktirilmiş/uzatılmış salan (extended release)</li>
+      <li><b>TR</b> — zamanlı serbest bırakma (timed release)</li>
+      <li><b>LA</b> — uzun etkili (long acting)</li>
+    </ul>
+    <p>Bu formların yalnızca isimleri değil, <b>tasarım ve performansları da</b> birbirinden farklıdır. Önemli kavramsal ayrımlar:</p>
+    <ul>
+      <li><b>Kontrollü hızla salım</b>: İlaç salım hızı, GİS'in pH'sı ve ilaç transit süresi gibi <b>çevresel fizyolojik koşullardan ziyade cihazın/taşıyıcının özellikleri</b> tarafından kontrol edilir. Bu yaklaşım yalnızca belirli ilaç taşıyıcı sistemlere uygulanır.</li>
+      <li><b>Geciktirilmiş salım</b>: İlacı, alındıktan ancak <b>belli bir süre sonra</b> serbestleştirecek şekilde tasarlanır. Gecikme <b>zaman temelli</b> olabilir veya çevresel koşullardan (örn. GİS pH'sı) etkilenebilir. Hastanın ilacı alması ile kanda saptanması arasında bir <b>gecikme süresi (lag time)</b> vardır. Tipik örnek <b>enterik kaplı</b> tablet/kapsüllerdir: mideden değişmeden geçip ilacı intestinal sistemde serbest bırakırlar.</li>
+      <li><b>Yinelenen-etkili salım (repeat action)</b>: Genellikle <b>iki tek doz</b> ilaç içerir — biri hemen salan form, diğeri geciktirilmiş salan taşıyıcı sistem.</li>
+      <li><b>Hedeflendirilmiş bölgede salım</b>: İlacın vücudun belirli bölgesinde, dokusunda, absorpsiyon bölgesinde veya etki bölgesinde <b>konsantre halde</b> bulunmasını sağlayacak şekilde salınmasıdır.</li>
+      <li><b>Site-spesifik hedefleme</b>: Gecikmeli salımın bir tipidir; GİS'te belirli bölgeleri (örn. ince bağırsak veya kolon) hedeflemeyi amaçlar.</li>
+      <li><b>Prolonged/Sustained release ⇄ Controlled release</b>: Uzatılmış salan / sürekli etkili formlar, kontrollü ilaç salım sistemleri (CR) olarak da bilinir.</li>
+      <li><b>Gastroretentif sistem</b>: Extended-release sistemler midede alıkonuyorsa bu şekilde adlandırılır.</li>
+    </ul>
+    <p>Modifiye şekillerin büyük kısmı <b>oral tablet/kapsül</b>dür; ancak bazı modifiye formlar <b>oküler, parenteral, subdermal ve vajinal</b> olarak da uygulanır. <b>Transdermal yamalar (patch)</b> hız-kontrollü ilaç taşıyıcı sistemlerdir.</p>
+
+    <h2><span class="n">3.</span>Niçin Modifiye Salım? (Gerekçeler)</h2>
+    <p>Bazı ilaçlar doğal olarak <b>uzun ömürlüdür</b> ve sürekli etki için günde tek oral doz yeterlidir; bunlar hemen-salan konvansiyonel formda formüle edilir. Buna karşılık birçok ilaç doğal olarak uzun ömürlü <b>değildir</b> ve istenen etkiyi sürdürmek için <b>çoklu günlük dozaj</b> gerektirir. Çoklu dozaj ise:</p>
+    <ul>
+      <li>Hastanın ilacı almayı <b>unutmasına</b>, cevapsız (atlanan) dozlara veya rejime <b>uyumsuzluğa</b> yol açar;</li>
+      <li>Programa göre günde birden fazla alınan konvansiyonel formlar kanda <b>tepe ve vadi (peak–trough)</b> seviyeleri oluşturur; dozlar zamanında uygulanmazsa ortaya çıkan tepe/vadiler optimum tedaviden daha az etkilidir, <b>toksik yan etkiler</b> doğabilir ve hastaya yarar sağlamayabilir.</li>
+    </ul>
+    <p>Modifiye salımın başlıca gerekçeleri:</p>
+    <ul>
+      <li><b>1 – İlacı terapötik aralıkta tutmak</b>: Modifiye salım çoğu zaman daha iyi/sürdürülebilir bir tedavi elde etmek için kullanılır; uzatılmış salan form uzun süre tedavi sağlar.</li>
+      <li><b>2 – Gece ilaç seviyelerinin korunması</b>: Hastaların gece ilaç alması uyku kaybı nedeniyle çoğu zaman istenmez. Özellikle <b>ağrının gece yönetimi</b>, rahat uyku için hastayı korumak adına çok önemli olabilir.</li>
+      <li><b>3 – Kronoterapi</b>: İlacın salımında zamanlama gerektiğinde uygulanır. Salım, semptomların en kötü olduğu zamana ayarlanabilir; örneğin <b>artrit, astım veya alerji</b> belirtilerinin genellikle en ağır olduğu sabah/uyanma saatlerine.</li>
+      <li><b>4 – Yan etkinin azaltılması</b>: Hemen-salan formda ilaç çok yüksek <b>Cmax</b>'a ulaşır; Cmax güvenilirlik sınırının üstüne çıkarsa advers etki ortaya çıkar. Modifiye form bu tepe değeri sınırlar.</li>
+      <li><b>5 – Uyumun iyileştirilmesi</b>: <b>Günde tek doz</b> daha uygundur ve hasta uyumunu artırır.</li>
+      <li><b>6 – GİS bölgelerinde tedavi</b>: İnflamatuar barsak hastalıkları gibi durumlar topikal tedavi gerektirir (örn. steroidlerle). Bölgeye özgü hedeflemeyle ilaç doğrudan hastalıklı bölgeye (örn. <b>kolon</b>) verilebilir.</li>
+    </ul>
+    <p>Ek olarak; hekim, eczacı ve hasta için <b>seçenek sağlama</b> ve <b>ürün ömrünü uzatma</b> gibi avantajlar vardır. Buna karşılık <b>geliştirme maliyetleri daha yüksektir</b>; uygun yönetildiğinde tedarik/maliyet tasarrufu da sağlanabilir.</p>
+
+    <h2><span class="n">4.</span>Tasarım: Uygun İlaç ve Uygun Endikasyon</h2>
+    <p>Önemli bir ilke: <b>bütün aktif maddeler uzatılmış-etki için uygun değildir</b> ve <b>her tıbbi durum</b> bu ürünlerle tedaviye uygun değildir. Bu nedenle <b>ilaç ve terapötik endikasyon bir arada</b> düşünülmelidir. Uygun aday molekül özellikleri:</p>
+    <ul>
+      <li>Absorpsiyon ve atılım <b>ne çok hızlı ne çok yavaş</b> olmalı.</li>
+      <li><b>Çok kısa yarı ömürlü</b> ilaçlar iyi aday değildir (t½ &lt; 2 saat). Ayrıca enzim sistemini etkileyerek etki gösteren ilaçlar, t½ açısından kısa ömürlüler gibi davranabilir.</li>
+      <li>GİS'ten emilimleri <b>homojen</b> olan, <b>suda iyi çözünen</b> ve GİS'te <b>yeterli kalma süresine</b> sahip ilaçlar uygundur.</li>
+      <li><b>Küçük dozlar</b> modifiye salım için uygundur; yüksek doz uzun süreli kullanım için uygun değildir (hastanın kolayca yutması için doz boyutu önemlidir). Yine de genişletilmiş salımlı formüllerde <b>1000 mg'a kadar</b> etkili tabletler mevcuttur.</li>
+      <li><b>İyi bir güvenlik marjına</b> sahip olmalı; genişletilmiş salım için <b>çok küçük dozlar</b> veya <b>çok dar terapötik indeksli</b> moleküller kötü adaydır.</li>
+    </ul>
+
+    <h2><span class="n">5.</span>Salım Mekanizmaları, 4 Proses ve Patlama Etkisi</h2>
+    <p>İlaç serbest bırakma <b>hızı ve büyüklüğü</b> iki temel mekanizma ile kontrol edilebilir:</p>
+    <ul>
+      <li><b>(1) Dissolüsyon</b> — aktif maddenin çözünmesi,</li>
+      <li><b>(2) Difüzyon</b> — çözünmüş maddenin difüzyonu.</li>
+    </ul>
+    <p>Modifiye sistemlerde bu özelliği sağlamak için işleyen <b>dört proses</b> vardır:</p>
+    <ul>
+      <li><b>1 – Taşıyıcının hidrasyonu</b> (dozaj formundaki bazı komponentler şişer veya çözünür),</li>
+      <li><b>2 – Difüzyon</b> (suyun yapı içine difüzyonu),</li>
+      <li><b>3 – Dissolüsyon</b> (ilacın çözünmesi),</li>
+      <li><b>4 – İlacın difüzyonu</b> (device/yapı dışına çıkması).</li>
+    </ul>
+    <p>Dozaj formunun <b>yüzeyindeki</b> ilacın difüzyonu gerekmez; bu ilaç hızla çözünür ve başlangıçta ani bir salım görülür. Bu olaya <b>"patlama etkisi" (burst effect)</b> denir. Patlama etkisi, kontrollü salım sistemlerinin tasarımında önemli bir husustur; çoğu farmasötik uygulamada <b>kaçınılması gereken</b> bir olay kabul edilir ve kullanım maliyetine rağmen <b>kaplama yapılarak</b> önlenir.</p>
+
+    <h2><span class="n">6.</span>Biyoyararlanım, Hız-Kısıtlayıcı Kademeler ve BCS</h2>
+    <p>Biyoyararlanımda, ilacın dozaj formundan serbestleşip etki göstermesi için başlıca <b>üç potansiyel hız-kısıtlayıcı kademe</b> vardır:</p>
+    <ul>
+      <li>1. Dozaj formundan <b>salım</b>,</li>
+      <li>2. Etkin maddenin <b>dissolüsyonu</b>,</li>
+      <li>3. Gastrointestinal mukozadan <b>absorpsiyon</b>.</li>
+    </ul>
+    <p>İlaçlar çözünürlük ve geçirgenliklerine göre <b>dört BCS sınıfına</b> ayrılır:</p>
+    <ul>
+      <li><b>Tip I</b>: yüksek çözünürlük + yüksek geçirgenlik</li>
+      <li><b>Tip II</b>: yüksek çözünürlük + düşük geçirgenlik</li>
+      <li><b>Tip III</b>: düşük çözünürlük + yüksek geçirgenlik</li>
+      <li><b>Tip IV</b>: düşük çözünürlük + düşük geçirgenlik</li>
+    </ul>
+    <p>Modifiye form için en uygun grup <b>Sınıf I</b>'dir (yüksek çözünürlük + yüksek geçirgenlik). <b>Düşük çözünürlüklü</b> ilaçlar (&lt;1 mg/ml) düşük çözünme oranı nedeniyle doğal olarak uzun salınım davranışı gösterir; bunlarda ilacın <b>barsakta absorpsiyonu</b> hız-kısıtlayıcı kademe olabilir.</p>
+    <p>Bir diğer önemli husus <b>eliminasyon hızı</b>dır: uzun süreli salım için en uygun ilaçlar <b>nispeten kısa yarı ömürlü</b> (t½ ≈ 4–6 saat) olanlardır. Yarı ömrü uzun ilaçlar "yalancı" (gerçekte formülasyondan değil, ilacın kendi uzun ömründen kaynaklanan) sürekli salım kan seviyeleri gösterir. <b>Doz</b> da başka bir faktördür; dozaj boyutunu sınırlamak, modifiye formda etkinlik açısından kritik olabilir. Sonuç olarak dozaj formları, ilacın verilen sürede veya gerekli bölgeye ulaştıktan sonra serbestleşmesini modifiye edecek şekilde tasarlanabilir.</p>
+
+    <hr>
+
+    <h2><span class="n">7.</span>Sürekli-Salan Sistemler: Rezervuar ve Matriks</h2>
+    <p>Sürekli-salan (sustained release) sistemlerde, sürdürülen süre boyunca ilaç salım hızı <b>muhafaza edilir</b>. Dozaj formundan sürekli salım iki temel yapı ile sağlanır:</p>
+    <ul>
+      <li><b>Rezervuar sistemler</b>: Etkin maddenin bulunduğu granül veya tabletlerin uygun polimerlerle <b>kaplanması</b>. Genellikle <b>sıfırıncı-derece kinetiğini</b> takip eder (salım, zamanın fonksiyonu olarak lineer bir doğrudur).</li>
+      <li><b>Matriks sistemler</b>: İlacın bir matriks içinde <b>çözünmesi veya dağılması</b>. Salım genellikle <b>zamanın kareköküyle</b> ilişkilidir.</li>
+    </ul>
+
+    <h3>Matriks oluşturan maddeler</h3>
+    <p>Matriks, etkin maddenin (API) homojen dağıldığı/dağıtıldığı taşıyıcı veya vehiküldür. Kullanılan maddelere göre:</p>
+    <ul>
+      <li><b>Hidrofilik matriks maddeleri</b>: metilselüloz, hidroksipropilselüloz, hidroksipropil metilselüloz (HPMC), aljinatlar, bitkisel zamklar, kitosan, jelatin, pektin, karragenanlar, poliakrilatlar, polietilen oksitler.</li>
+      <li><b>Hidrofobik matriks maddeleri</b>: mumlar, yağ asitleri, yağ alkolleri ve esterleri, gliserol esterleri, polyesteramid, etilselüloz, polietilen, polipropilen, politiyoüretan, polivinil bütiral, polilaktik asit, poli(laktid-ko-glikolid).</li>
+      <li>Ayrıca <b>por oluşturucu maddeler</b> (şekerler, şeker alkolleri, PEG'ler, NaCl, hidrofilik polimerler) ve mikroçevresel pH kontrol tamponları (örn. Na-sitrat + sitrik asit), yüzey aktif maddeler, siklodekstrinler kullanılabilir.</li>
+    </ul>
+
+    <h3>Matriks tipleri (5 tip)</h3>
+    <ul>
+      <li><b>1. Hidrofobik Matrisler (plastik matrisler)</b>: İlaç bir inert/hidrofobik polimerle karıştırılıp tablet halinde basılır. Sürekli salım, çözünen ilacın <b>sıkıştırılmış polimer partikülleri arasında oluşan kanal ağı</b> yoluyla gerçekleşir. Tipik maddeler: karnauba mumu, balmumu, gliseril monostearat (GMS), stearik asit, setil alkol, setostearil alkol. Salım mekanizması <b>difüzyon</b>dur. Çözünmeyen polimerden salım hızı; matrisin <b>por boyutu</b>, porlar ve matris arasındaki <b>bükümlülük (tortuosity)</b> ve <b>por sayısı</b> ile kontrol edilir. Salım <b>sıfırıncı derece</b> kinetiğini izler; salım azaldıkça molekülün yüzeye ulaşacağı mesafe arttığından kanalların bükümlülüğü kritiktir. <b>Polimer konsantrasyonu arttıkça</b> bu kanallar kısalır ve ilaç salımı yavaşlar.</li>
+      <li><b>2. Hidrofilik Matrisler</b>: İstenen salım profilinde <b>esneklik, maliyet etkinliği ve yasal otorite kabulü</b> nedeniyle oral kontrollü taşıyıcı olarak yaygın kullanılır. Polimer toz/granül halinde genellikle <b>direkt basım</b> ile basılır; sıvıyla temas edince <b>şişmeye</b> başlar ve <b>jel matris</b> oluşturur. Jelden ilaç salımı; jelin/ilacın <b>dissolüsyonu</b> ve <b>jel erozyonu</b> ile gerçekleşir. Suyun tablete difüzyon hızı ve jelin hidrasyonu salımı etkiler; hidrasyon hızı jelin yapısından da etkilenir (jellere bir "network" olarak bakılabilir). Bu sistemlere <b>şişebilir kontrollü salınım sistemleri</b> de denir. Kullanılan polimerler: <b>A.</b> Selüloz türevleri — metilselüloz (400/4000 cP), hidroksietil selüloz, <b>HPMC</b> (25/100/4000/15000 cP), Na-karboksimetilselüloz; <b>B.</b> Selüloz olmayan doğal/yarı sentetik polimerler — agar-agar, aljinatlar, mannoz-galaktoz polisakkaritleri, kitosan, modifiye nişastalar ve akrilik asit polimerleri (en çok kullanılan çeşit <b>Carbopol-934</b>). Avantajları: standart yardımcı madde/teknolojiyle üretilebilir ve <b>yüksek oranda etkin madde</b> taşıyabilir. Risk: <b>besinlerden etkilenme</b>.</li>
+      <li><b>3. Lipid Matris Sistemleri</b>: Genellikle bir matris oluşturmak için <b>katı lipidlerin</b> (trigliseritler, gliseritler, yağ asitleri, mumlar) <b>sıvı lipidlerle</b> karıştırılmasıyla oluşur. Bu gruba <b>Katı Lipid Nanoparçacıkları (SLN)</b> ve <b>Nanoyapılı Lipid Taşıyıcılar (NLC)</b> dahildir; biyoyararlanımı artıran, kontrollü salınım sağlayan ve aktif bileşeni koruyan, biyolojik olarak uyumlu sistemlerdir. Oral, topikal ve parenteral yollar için uygundur; hem lipofilik hem hidrofilik ilaçları kapsülleyebilirler. <b>SLN</b> lipofilik ajanlar için yüksek yükleme kapasiteli katı bir çekirdeğe sahipken, <b>NLC</b> stabiliteyi artıran ve <b>ilaç sızıntısını önleyen</b> düzensiz bir matris oluşturur. Katı matris sürekli salım sağlar ve ilaç atılımını sınırlar; çözünürlüğü artırır, bozulmaya karşı korur ve hedeflemeye olanak vererek yan etkileri azaltır. Suda az çözünen ilaçların daha iyi taşınmasında son derece etkilidir.</li>
+      <li><b>4. Biyobozunur (biyodegrade) Matrisler</b>: Fonksiyonel gruplarla birbirine bağlı monomerlerden ve omurgada <b>dengesiz bağ</b> içeren polimerlerden oluşur. Hücrelerce üretilen enzimler veya diğer işlemlerle metabolize edilerek <b>oligomerlere ve monomerlere parçalanır/aşınır</b>. Örnekler: doğal polimerler (proteinler, polisakkaritler), modifiye doğal polimerler ve sentetik polimerler (alifatik poliesterler, polianhidritler).</li>
+      <li><b>5. Mineral Matrisler</b>: Çeşitli <b>deniz yosunu</b> türlerinden elde edilen polimerlerden oluşur. Örnek: kahverengi yosun türlerinden elde edilen hidrofilik bir karbonhidrat olan <b>aljinik asit</b>.</li>
+    </ul>
+    <p>Genel olarak sürekli salan sistemler için <b>hidrofilik matriksler</b> tercih edilir; polimer <b>tipi ve konsantrasyonu</b> salım hızını kontrolde önemlidir ve istenen profile göre ayarlanabilir.</p>
+
+    <h3>Polimerler</h3>
+    <p>Bir polimer, <b>tekrarlanan alt birimlerden</b> oluşan büyük bir molekül — makromoleküldür. Hem sentetik hem doğal polimerler günlük yaşamda her yerde rol oynar. "<b>n</b>" polimerizasyon derecesi olup bir polimer zincirindeki <b>monomer sayısını</b> ifade eder.</p>
+    <p><b>Isı altındaki davranışlarına göre 3 sınıf:</b></p>
+    <ul>
+      <li><b>Termoplastik</b> polimerler: amorf veya kristal halde olabilir; nispeten sünek davranır ancak çoğu kez düşük mukavemetlidir.</li>
+      <li><b>Isıyla sertleşen (termoset)</b> polimerler: her zaman amorftur; genellikle güçlü ve sert, ancak kırılgandır.</li>
+      <li><b>Elastomerler</b>: her zaman şekilsiz (amorf) olup <b>Tg'nin üstünde</b> kullanılır; kalıcı hasar vermeden son derece büyük oranda <b>elastik deforme</b> olabilirler.</li>
+    </ul>
+    <p><b>Yapılarına göre:</b></p>
+    <ul>
+      <li><b>Homopolimer</b>: tek bir monomer biriminin tekrarıyla oluşur (örn. etilenin tekrarlandığı polietilen, PE).</li>
+      <li><b>Kopolimer</b>: iki monomer karışımından oluşur ve kendi içinde sınıflanır — (a) <b>ardışık/alternatif</b> (A-B-A-B…, örn. stiren-maleikanhidrit), (b) <b>blok/düzenli</b> (örn. stiren-izopren), (c) <b>gelişigüzel</b> (örn. stiren-metilmetakrilat), (d) <b>graft/aşılı</b> (ana zincire başka monomerin yan grup olarak takıldığı polimer).</li>
+    </ul>
+
+    <h3>Rezervuar sistemler, mikroküre/nanoküre ve mikroenkapsülasyon</h3>
+    <p><b>Rezervuar sistemde</b> bir ilaç çekirdeği polimer filmle çevrilidir ve salım hızı; polimerin bileşimi ve moleküler ağırlığı, kaplamanın <b>kalınlığı</b> ve fizikokimyasal özellikler (çözünürlük, ilaç partikülünün boyut ve molekül ağırlığı) tarafından kontrol edilir. Rezervuar tabanlı sistemler özellikle iki durumda yararlıdır: (1) bir ilacın belirli bir bölgeye (organ, vücut boşluğu) <b>orta/uzun vadeli lokalize</b> verilmesi — özellikle sistemik uygulamanın zor olduğu (göz, kulak) ve/veya verilen ilaçların toksik olup uzun dozaj gerektirdiği (kanser tedavileri) durumlarda; (2) <b>uzun süreli sistemik uygulama</b> — genellikle kas içi/deri altı enjeksiyon veya <b>implantasyon</b> halinde. Bir membrandan ilaç salımı, membranın <b>kalınlık ve porozitesi</b> yanında ilacın GİS sıvılarındaki <b>çözünürlüğüne</b> bağlıdır. Membran kontrollü taşıyıcılar arasında <b>pellet</b> formu ve <b>ozmotik pompa</b> sistemleri sayılabilir.</p>
+    <p><b>Mikroküre ve nanoküreler</b>, enjektabl ve oral kullanılabilen, farklı polimerlerle kaplanmış küçük ilaç parçacıklarıdır. Uygulamadan sonra ilaç, polimerden <b>difüzyonla</b> veya polimer matrisinin <b>bozunmasıyla</b> hız-kontrollü salınır. Salım hızı; polimerin molekül ağırlığı/kompozisyonu, partikül büyüklüğü ve morfoloji ile kontrol edilir. Bunlar monomerlerin polimerizasyonuyla (emülsiyon, dispersiyon, süspansiyon; misellerin içinde polimerizasyon — dispersiyon polimerizasyonu 0,5–10 µm boyut verir) veya doğrusal polimerlerden (solvent buharlaşması, spreyle kurutma — örn. PLA, PGA, kitin, kitosan, selüloz) hazırlanabilir. <b>Mikroenkapsülasyon</b>, katıların, lipitlerin veya hatta gazların ince bir çeperle çevrilerek enkapsüllenmesi sürecidir; yaygın çeper malzemeleri jelatin, polivinil alkol, etil selüloz ve polivinil klorürdür.</p>
+
+    <hr>
+
+    <h2><span class="n">8.</span>Ozmotik Kontrollü Sistemler</h2>
+    <p>Bu sistemin çalışma prensibi diğerlerinden farklıdır. Suda çözünen veya disperse olabilen ilaç, tablet <b>çekirdeğinde</b> bulunur; çekirdek, suyun çekirdeğe geçişini sağlayan bir <b>yarı geçirgen (semipermeabl) membranla</b> kaplanmıştır. Çekirdekteki maddeler çözündükçe <b>hidrostatik basınç</b> oluşur ve giderek yükselir; bu basınç ve kuvvetler (pompa etkisi), çözünen/dispers haldeki ilacın kaplamada açılan bir <b>delikten</b> dışarı çıkmasını sağlar. İlacın salım hızı; (a) membrandan suyun geçme hızına ve (b) ilaç çözeltisinin/süspansiyonun delikten geçme hızına bağlıdır. <b>Delik</b>, difüzyonu önleyecek kadar küçük ama hidrostatik basıncı en aza indirecek kadar büyük olmalıdır (normalde <b>~600 µm – 1 mm</b> çap) ve <b>lazerle</b> delinir. Ozmotik pompa için yalnızca <b>bir difüzyon prosesi</b> gereklidir.</p>
+
+    <h2><span class="n">9.</span>Gastroretentif Sistemler</h2>
+    <p>İlaç taşınmasını iyileştirmek ve etkinliği artırmak için dozaj formunun midede tutulması mekanizmasına <b>gastroretention</b> denir. Bu sistemlerle <b>üst GİS'te ilaç emilimi</b> en üst düzeye çıkarılabilir; amaç, midenin fizyolojik mekanizmalarını (özellikle mide boşalmasını) aşarak ilacı midede alıkoymaktır. Yararlı olduğu durumlar: midede <b>lokal etki</b> gerektiren ilaçlar (örn. <b>H. pylori</b> tedavisi), ince bağırsakta <b>dar absorpsiyon penceresi</b> olan ilaçlar ve <b>kolonda degrade</b> olan ilaçlar. Gastroretention ile başarı <b>sınırlıdır</b>; temel güçlük, mide ve mide boşalmasının getirdiği sorunların formülasyonla aşılmasıdır ki bu da zor görünmektedir. GİS'ten transit geçiş ve mide boşalması; kişinin <b>açlık/tokluk</b> durumuna ve taşıyıcı sistemin fiziksel durumuna (katı/sıvı) bağlıdır. Başlıca yaklaşımlar:</p>
+    <ul>
+      <li><b>Mukoadhesif sistemler</b>: Tablet, formülasyonda kullanılan mukoadhesif polimerler sayesinde mide çeperine/<b>mukozasına</b> yapışır ve midede uzun süre kalır. Polimerler: <b>kitozan, karbopol, polikarbofil</b> (divinil glikol ile çapraz bağlı poliakrilik asit).</li>
+      <li><b>Yüzen (floating) tabletler</b>: Tablet, mide sıvısının üzerinde <b>yüzer</b> durumda kaldığından mide boşalmasının etkisinden korunur. <b>Bikarbonat</b> gibi gaz üreten ajanlar kullanılır; ortamda <b>besin bulunması</b> gerekir (örn. Gaviscon). Yararları: midede kalış süresinin uzaması, biyoyararlanımın ve mideki lokal etkinliğin artması. İki teknikle hazırlanır: <b>efervesan</b> (mide ortamında gaz oluşturan maddelerle) ve <b>non-efervesan</b> (gaz oluşumundan yararlanmaz; hidrodinamik denge ile jel oluşumuna dayanır).</li>
+      <li><b>Şişen sistemler</b>: Tablet hacminin genişlemesi pilordan geçişi zorlaştırır; şişip boyutu artan dozaj formu mideye ulaşınca <b>pilorik sfinkterden geçemez</b> ve midede kalır. <b>HPMC</b>, polietilen oksit ve ksantan zamkı gibi şişebilen polimerler kullanılır. İlaç <b>tok</b> iken verilir; böylece mide boşalması geciktirilir.</li>
+    </ul>
+
+    <h2><span class="n">10.</span>Lipozomlar</h2>
+    <p>Lipozomlar; aralarında <b>sulu faz</b> bulunan, bir veya daha çok sayıda biyolojik membrana benzer yapıdaki <b>lipid tabakalarının</b> oluşturduğu, mikroskobik boyutlarda, genellikle <b>küre şeklinde</b> cisimciklerdir. Yapılarına fosfolipidler yanında üç grup madde girer:</p>
+    <ul>
+      <li><b>Stabiliteyi artırıcılar</b>: kolesterol, α-tokoferol gibi;</li>
+      <li><b>Hedeflenmeyi sağlayıcılar</b>: immunoglobulinler, stearilamin, setil fosfat, glikolipidler gibi;</li>
+      <li><b>Etken maddeler</b>: antineoplastik maddeler, enzimler, hormonlar, kelat yapıcı ajanlar gibi.</li>
+    </ul>
+    <p>Lipozomlar <b>yapısal parametreler, hazırlama yöntemi ve kompozisyon/uygulamalara</b> göre sınıflandırılır. Örneğin boyut/lamel sayısına göre <b>OLV</b> (oligolamellar veziküller; 2–10 çift lipid tabaka, 100–500 nm) ve <b>GUV</b> (dev unilamellar veziküller; >1000 nm) gibi türler vardır. Kompozisyon/uygulamaya göre: <b>immüno-lipozomlar</b> (bağlı antikor/ligand ile hücreye özgü hedefleme, reseptör aracılı endositoz), <b>manyetik lipozomlar</b> (fosfatidilkolin, kolesterol, manyetik demir oksit; harici manyetik alanla yönlendirme) ve <b>sıcaklığa/ısıya hassas lipozomlar</b> (dipalmitoil fosfatidilkolin) sayılabilir.</p>
+    <h3>Hazırlama</h3>
+    <p>Tüm yöntemler dört temel aşama içerir: (1) lipidlerin organik çözücüden <b>kurutulması</b>, (2) lipidin sulu ortamda <b>dağıtılması</b>, (3) elde edilen lipozomun <b>saflaştırılması</b>, (4) nihai ürünün <b>analizi</b>. Genel yaklaşımda yağda çözünen (lipofilik) malzemeler organik çözeltide çözülür, çözücü buharlaştırılarak <b>lipit film</b> oluşturulur; hapsedilecek madde önce/sırasında (pasif yükleme) veya sağlam veziküller oluştuktan sonra (uzaktan yükleme) yüklenir. Başlıca yöntem grupları:</p>
+    <ul>
+      <li><b>Mekanik dağılım</b>: sonikasyon, Fransız basınç hücresi/ekstrüzyon, dondurularak çözülen lipozomlar, lipit film hidrasyonu, mikro emülsifikasyon, membran ekstrüzyonu.</li>
+      <li><b>Solvan dispersiyon</b>: eter enjeksiyonu (çözücü buharlaştırma), etanol enjeksiyonu (MLV oluşur), ters fazlı buharlaşma (ters miseller).</li>
+      <li><b>Deterjan giderme</b> (kapsüllenmemiş madde ayrılır): diyaliz, karışık misellerden deterjan giderme/adsorpsiyon, jel-permeasyon kromatografisi (Sephadex G-50/G-100).</li>
+    </ul>
+    <h3>Avantajlar ve Dezavantajlar</h3>
+    <p><b>Avantajları</b>: tümöre seçici <b>pasif hedefleme</b> (örn. lipozomal doksorubisin); artan etkinlik ve terapötik indeks; kapsülleme yoluyla artan kararlılık; kapsüllenmiş maddenin toksisitesinde azalma; geliştirilmiş farmakokinetik (azalmış eliminasyon, artan dolaşım ömrü); sahaya özel ligandlarla eşleşerek <b>aktif hedefleme</b> esnekliği. <b>Dezavantajları</b>: stabilite sorunları, düşük çözünürlük, kısa yarı ömür, fosfolipidlerin <b>oksidasyon ve hidrolize</b> uğraması, sızıntı ve füzyon, yüksek üretim maliyeti ve lipozom bileşenlerine karşı olası <b>alerjik reaksiyonlar</b>.</p>
+
+    <h2><span class="n">11.</span>Yasal Gerekler ve CR Sistem Tasarımı</h2>
+    <p>Modifiye ürünlerde başlıca yasal değerlendirmeler:</p>
+    <ul>
+      <li><b>1 – İlaç serbestleşmesi (drug release / dissolüsyon testi)</b>: Örneğin Aspirin Extended-release tabletlerde USP, belirli zamanlarda belirli çözünme yüzdeleri ister (örn. 1. saatte %15–40, 2. saatte %25–60, 4. saatte %35–75, 8. saatte en az %70).</li>
+      <li><b>2 – Dozaj birimlerinin içerik düzgünlüğü</b> (uniformity of dosage units).</li>
+      <li><b>3 – In vitro–in vivo korelasyon (IVIVC)</b>: Oral genişletilmiş etkili ilaç geliştirmede çok önemlidir — ilaç geliştirme, klinik çalışmalar, onay ve <b>onay sonrası (post-approval)</b> süreçlerde belirleyicidir.</li>
+    </ul>
+    <p><b>CR sistemlerin tasarım yaklaşımları</b>: ön ilaçlar; difüzyon kontrollü sistemler; dissolüsyon kontrollü sistemler; ozmotik basınç kontrollü sistemler; gastroretentif sistemler; device kontrollü sistemler; biyobozunur polimerik sistemler; vektör-temelli sistemler; hedeflendirilmiş sistemler; ligand-temelli sistemler ve programlanmış ilaç taşıyıcı sistemler.</p>
+  </section>
+
+  <!-- ===================== BOŞLUK DOLDURMA ===================== -->
+  <section class="panel" id="bosluk">
+    <div class="scorebar">
+      <div class="sc"><div class="l">Yanıtlanan</div><div class="v"><span id="b-ans">0</span> / 40</div></div>
+      <div class="sc"><div class="l">Doğru</div><div class="v" id="b-correct" style="color:var(--correct-line)">0</div></div>
+      <div class="sc"><div class="l">Başarı</div><div class="v" id="b-pct">—</div></div>
+    </div>
+    <div class="intro-note">Boşluğu tamamlayan şıkka tıklayın. Doğruysa <b>yeşil</b>, yanlışsa <b>kırmızı</b> yanar ve doğru cevap yeşille işaretlenir.</div>
+    <div id="fill"></div>
+  </section>
+
+  <!-- ===================== TERİM-ANLAM ===================== -->
+  <section class="panel" id="terim">
+    <div class="intro-note">Her terimin üzerine tıklayın; <b>···</b> işaretine basınca anlamı açılır.</div>
+    <div id="terms"></div>
+  </section>
+
+  <!-- ===================== KLASİK SORULAR ===================== -->
+  <section class="panel" id="klasik">
+    <div class="intro-note">Soruyu okuyun, kendi cevabınızı düşünün, sonra <b>···</b> ile model cevabı açın.</div>
+    <div id="classic"></div>
+  </section>
+
+  <footer>
+    <div>Çalışma materyali eğitim amaçlıdır. Sınav/klinik kullanım öncesi ders notlarıyla karşılaştırın.</div>
+    <div class="tools">
+      <button class="toolbtn" id="expandAll">Tümünü Aç (terim/klasik)</button>
+      <button class="toolbtn" id="collapseAll">Tümünü Kapat</button>
+      <button class="toolbtn" onclick="location.reload()">↺ Sıfırla</button>
+    </div>
+  </footer>
+</div>
+
+<script>
+/* ---------- TAB NAV ---------- */
+document.querySelectorAll('.tab').forEach(t=>{
+  t.addEventListener('click',()=>{
+    document.querySelectorAll('.tab').forEach(x=>x.classList.remove('active'));
+    document.querySelectorAll('.panel').forEach(x=>x.classList.remove('active'));
+    t.classList.add('active');
+    document.getElementById(t.dataset.tab).classList.add('active');
+    window.scrollTo({top:0,behavior:'smooth'});
+  });
+});
+
+/* ---------- FILL IN THE BLANK ---------- */
+const FILL = [
+  {q:"Konvansiyonel (hemen salan) formların aksine, modifiye ürünler etkin maddeyi ___ veya uzun süreli serbestleştirir.",o:["anında","geciktirilmiş","tek seferde tamamen","daha güçlü"],a:1},
+  {q:"İlaçların büyük kısmı ___ yolla verilir ve hemen salan/konvansiyonel şekiller olarak bilinir.",o:["intravenöz","oral","transdermal","rektal"],a:1},
+  {q:"USP, modifiye salım formlarını ___ salım ve gecikmeli salım sistemleri olarak ayırır.",o:["ani","genişletilmiş (uzatılmış)","topikal","pasif"],a:1},
+  {q:"Uzatılmış salım sistemleri dozaj ___ azalma sağlar.",o:["miktarında","sıklığında","hacminde","sertliğinde"],a:1},
+  {q:"SR kısaltması ___ anlamına gelir.",o:["slow reaction","sustained release (sürekli etkili)","site release","semi-rapid"],a:1},
+  {q:"CR kısaltması ___ anlamına gelir.",o:["controlled release (kontrollü salan)","conventional release","colon release","constant rate"],a:0},
+  {q:"Gecikmeli salım yapan formlar ilacı alındıktan ancak belli bir ___ sonra serbestleştirir.",o:["doz","süre","öğün","sıcaklık"],a:1},
+  {q:"Enterik kaplı tabletler mideden değişmeden geçip ilacı ___ serbest bırakacak şekilde tasarlanır.",o:["midede","bağırsakta (intestinal)","ağızda","özofagusta"],a:1},
+  {q:"Midede alıkonan extended-release sistemlere ___ sistem denir.",o:["mukolitik","gastroretentif","transdermal","ozmotik"],a:1},
+  {q:"Transdermal yamalar (patch) ___ kontrollü ilaç taşıyıcı sistemlerdir.",o:["pH","hız","ısı","ışık"],a:1},
+  {q:"Hemen salan formlarda ilaç çok yüksek ___ ulaşır ve güvenlik sınırı aşılırsa advers etki çıkar.",o:["Cmin","Cmax","Tmax","AUC sıfır"],a:1},
+  {q:"Yarı ömrü çok kısa (t½ < 2 saat) olan ilaçlar modifiye salım için ___ aday moleküldür.",o:["ideal","iyi değil (kötü)","tek uygun","zorunlu"],a:1},
+  {q:"İlaç serbest bırakma hızı iki temel mekanizma ile kontrol edilir: dissolüsyon ve ___.",o:["adsorpsiyon","difüzyon","filtrasyon","ekstrüzyon"],a:1},
+  {q:"Dozaj formu yüzeyindeki ilacın hızla çözünmesiyle oluşan istenmeyen ani salıma ___ etkisi denir.",o:["jel","patlama (burst)","tampon","pompa"],a:1},
+  {q:"Biyoyararlanımda üç hız-kısıtlayıcı kademe: dozaj formundan salım, dissolüsyon ve ___.",o:["metabolizma","absorpsiyon","ekskresyon","dağılım"],a:1},
+  {q:"BCS Sınıf I ilaçlar yüksek çözünürlük ve yüksek ___ sahiptir.",o:"".length ? [] : ["yoğunluk","geçirgenlik (permeabilite)","molekül ağırlığı","erime noktası"],a:1},
+  {q:"Modifiye form için en uygun BCS sınıfı ___ (yüksek çözünürlük + yüksek geçirgenlik) olandır.",o:["Sınıf I","Sınıf II","Sınıf III","Sınıf IV"],a:0},
+  {q:"Uzun süreli salım için en uygun ilaçlar nispeten ___ yarı ömürlü (t½ = 4–6 saat) olanlardır.",o:["uzun","kısa","sonsuz","değişken"],a:1},
+  {q:"Rezervuar sistemler genellikle ___ derece kinetiğini takip eder.",o:["birinci","sıfırıncı","ikinci","üçüncü"],a:1},
+  {q:"Matriks sistemlerinde ilaç salımı genellikle zamanın ___ olarak ilişkilidir.",o:["karesi","karekökü","logaritması","tersi"],a:1},
+  {q:"Etkin maddenin homojen dağıldığı taşıyıcı/vehiküle ___ denir.",o:["membran","matriks","rezervuar","film"],a:1},
+  {q:"Hidrofobik (plastik) matrislerde ilaç serbestleşme mekanizması ___ dur.",o:["erozyon","difüzyon","ozmoz","aktif transport"],a:1},
+  {q:"Hidrofilik matris tablet sıvıyla temas ettiğinde ___ başlar ve jel matris oluşturur.",o:["erimeye","şişmeye","kırılmaya","sertleşmeye"],a:1},
+  {q:"Hidrofilik matrislerde en çok kullanılan akrilik asit polimeri ___ dır.",o:["HPMC","Carbopol-934","kitosan","aljinat"],a:1},
+  {q:"Çözünmeyen matristen ilaç salımı por boyutu, por sayısı ve kanalların ___ ile kontrol edilir.",o:["renginin","bükümlülüğü (tortuosity)","sıcaklığının","yoğunluğunun"],a:1},
+  {q:"Polimer, ___ alt birimlerden oluşan büyük bir moleküldür (makromolekül).",o:["rastgele","tekrarlanan","tek","inorganik"],a:1},
+  {q:"Polimerizasyon derecesi 'n', bir polimer zincirindeki ___ sayısını ifade eder.",o:["atom","monomer","elektron","çapraz bağ"],a:1},
+  {q:"Tek bir monomer biriminin tekrarıyla oluşan polimere ___ denir.",o:["kopolimer","homopolimer","graft polimer","blok polimer"],a:1},
+  {q:"İki monomer karışımından oluşan polimere ___ denir.",o:["homopolimer","kopolimer","elastomer","termoset"],a:1},
+  {q:"Ana zincire başka bir monomerin yan grup olarak takıldığı polimer ___ polimerdir.",o:["blok","graft (aşılı)","ardışık","gelişigüzel"],a:1},
+  {q:"Ozmotik sistemde tablet çekirdeği, suyun geçişini sağlayan ___ membranla kaplanır.",o:["geçirgen olmayan","yarı geçirgen (semipermeabl)","lipofilik","metalik"],a:1},
+  {q:"Ozmotik pompada ilacın çıkışını sağlayan delik ___ ile delinir.",o:["iğne","lazer","matkap","basınç"],a:1},
+  {q:"Mukoadhesif sistemlerde tablet, midede uzun kalmak için mide ___ yapışır.",o:["kasına","mukozasına","sıvısına","tabanına"],a:1},
+  {q:"Yüzen (floating) tabletlerde gaz üreten ajan olarak ___ kullanılır.",o:["sitrik asit tek başına","bikarbonat","laktoz","talk"],a:1},
+  {q:"Şişen sistemlerde büyüyen dozaj formu mideye ulaşınca ___ sfinkterinden geçemez.",o:["özofageal","pilorik","kardiyak","anal"],a:1},
+  {q:"Lipozomlar, aralarında ___ faz bulunan lipid tabakalarından oluşan küre şeklinde cisimciklerdir.",o:["yağlı","sulu","gaz","katı"],a:1},
+  {q:"Lipozom yapısında stabiliteyi artırıcı madde olarak ___ kullanılır.",o:["kolesterol","glukoz","NaCl","talk"],a:0},
+  {q:"Lipozomların bir dezavantajı fosfolipidlerin ___ ve hidrolize uğramasıdır.",o:["polimerizasyona","oksidasyona","kristalizasyona","nötralizasyona"],a:1},
+  {q:"Aspirin uzatılmış salım tabletlerinde salımı değerlendiren USP testi ___ testidir.",o:["sertlik","ilaç salım / dissolüsyon","ufalanma","ağırlık"],a:1},
+  {q:"Oral genişletilmiş etkili ilaç geliştirmede çok önemli olan korelasyon ___ dir.",o:["IVIVC (in vitro–in vivo korelasyon)","HPLC","ADME","HLB"],a:0}
+];
+
+/* fix item 16 options (was guarded) */
+FILL[15].o = ["yoğunluk","geçirgenlik (permeabilite)","molekül ağırlığı","erime noktası"];
+
+let bAns=0,bCor=0;
+const fillBox=document.getElementById('fill');
+FILL.forEach((it,i)=>{
+  const card=document.createElement('div');card.className='q';
+  const qHtml = it.q.replace('___','<span class="blank">______</span>');
+  const opts=it.o.map((t,oi)=>`<button class="opt" data-c="${oi===it.a}"><span class="mark"><span>${String.fromCharCode(65+oi)}</span></span><span>${t}</span></button>`).join('');
+  card.innerHTML=`<div class="q-top"><div class="q-no">${i+1}</div><div class="q-text">${qHtml}</div></div><div class="opts">${opts}</div>`;
+  fillBox.appendChild(card);
+});
+fillBox.addEventListener('click',e=>{
+  const b=e.target.closest('.opt');if(!b)return;
+  const card=b.closest('.q');if(card.dataset.done)return;card.dataset.done="1";
+  const right=b.dataset.c==='true';
+  card.querySelectorAll('.opt').forEach(o=>{o.disabled=true;if(o.dataset.c==='true')o.classList.add('correct');});
+  if(!right)b.classList.add('wrong');
+  bAns++;if(right)bCor++;
+  document.getElementById('b-ans').textContent=bAns;
+  document.getElementById('b-correct').textContent=bCor;
+  document.getElementById('b-pct').textContent=Math.round(bCor/bAns*100)+'%';
+});
+
+/* ---------- TERMS ---------- */
+const TERMS=[
+  ["Konvansiyonel (hemen salan) form","Etkin maddeyi alındıktan hemen sonra serbestleştiren, etkisi hızla başlayan klasik dozaj şekli."],
+  ["Modifiye salım","İlacın serbestleşmesinin zaman, süreç ve/veya bölge temelli olarak değiştirildiği dozaj şekilleri."],
+  ["Uzatılmış salım (ER)","İlacı kontrollü hız, süre ve konumda salarak dozaj sıklığını azaltan form."],
+  ["Sürekli etkili (SR / SA)","Sürdürülen süre boyunca ilaç salım hızının korunduğu sistem."],
+  ["Kontrollü salım (CR)","Salım hızının çevresel koşullardan çok cihaz/taşıyıcının özellikleriyle kontrol edildiği sistem."],
+  ["Gecikmeli salım","İlacı alındıktan belli bir süre sonra serbestleştiren form (örn. enterik kaplı)."],
+  ["Zamanlı salım (TR)","Salımın belirli zaman noktalarına ayarlandığı sistem."],
+  ["Uzun etkili (LA)","Uzun süreli terapötik etki sağlayan formülasyon."],
+  ["Yinelenen etkili (Repeat action)","Biri hemen, diğeri geciktirilmiş salan iki doz içeren sistem."],
+  ["ODT (ağızda dağılan tablet)","İlave sıvıya gerek olmadan ağızda tükürükle saniyeler içinde parçalanan tablet."],
+  ["Enterik kaplama","Mideden değişmeden geçip ilacı bağırsakta serbest bırakan kaplama."],
+  ["Site-spesifik hedefleme","İlacı GİS'in belirli bölgesine (ince bağırsak/kolon) yönlendiren gecikmeli salım tipi."],
+  ["Gastroretentif sistem","Dozaj formunu midede tutarak üst GİS emilimini artıran sistem."],
+  ["Transdermal patch (yama)","Deri yoluyla hız-kontrollü ilaç salan sistem."],
+  ["Kronoterapi","İlacın, semptomların en kötü olduğu zamana (örn. sabah) ayarlanarak verilmesi."],
+  ["Cmax","İlacın kanda ulaştığı en yüksek konsantrasyon; güvenlik sınırı aşılırsa advers etki çıkar."],
+  ["Terapötik aralık","İlacın hem etkili hem güvenli olduğu kan konsantrasyonu aralığı."],
+  ["Dissolüsyon","Aktif maddenin çözünmesi."],
+  ["Difüzyon","Çözünmüş maddenin konsantrasyon farkıyla yer değiştirmesi."],
+  ["Patlama etkisi (burst effect)","Yüzeydeki ilacın hızla çözünmesiyle başlangıçta görülen ani salım; genellikle kaplama ile önlenir."],
+  ["BCS (Biyofarmasötik Sınıflama)","İlaçları çözünürlük ve geçirgenliğe göre dört sınıfa (I–IV) ayıran sistem."],
+  ["Hız-kısıtlayıcı kademe","Biyoyararlanımı belirleyen en yavaş basamak: salım, dissolüsyon veya absorpsiyon."],
+  ["Yarı ömür (t½)","İlaç kan düzeyinin yarıya inmesi için geçen süre."],
+  ["Rezervuar sistem","İlaç çekirdeğinin polimer filmle çevrildiği, çoğunlukla sıfırıncı derece kinetik gösteren sistem."],
+  ["Matriks sistem","İlacın bir matriks içinde dağıldığı, salımın zamanın kareköküyle ilişkili olduğu sistem."],
+  ["Matriks","Etkin maddenin (API) homojen dağıldığı taşıyıcı/vehikül."],
+  ["Sıfırıncı derece kinetik","Salımın zamanla sabit (lineer) olduğu salım kinetiği."],
+  ["Hidrofobik (plastik) matris","İlacın inert/hidrofobik polimerle karıştırıldığı, difüzyonla salan matris."],
+  ["Hidrofilik matris","Sıvıyla temasta şişip jel oluşturan, salımı dissolüsyon/erozyonla gerçekleşen matris."],
+  ["Tortuosity (bükümlülük)","Matris içindeki kanalların eğri-büğrülüğü; ilaç salım hızını etkiler."],
+  ["Lipid matris sistemi","Katı/sıvı lipidlerden oluşan, SLN ve NLC'yi içeren biyouyumlu taşıyıcı."],
+  ["SLN","Katı lipid nanopartikülü; lipofilik ajanlar için yüksek yükleme kapasiteli katı çekirdek."],
+  ["NLC","Nanoyapılı lipid taşıyıcı; düzensiz matrisle stabiliteyi artırıp ilaç sızıntısını önler."],
+  ["Biyobozunur matris","Enzim/işlemlerle oligomer ve monomerlere parçalanan polimer matris."],
+  ["Mineral matris","Deniz yosunundan elde edilen polimerlerden (örn. aljinik asit) oluşan matris."],
+  ["Polimer","Tekrarlanan alt birimlerden (monomer) oluşan makromolekül."],
+  ["Homopolimer","Tek bir monomer biriminin tekrarıyla oluşan polimer (örn. polietilen)."],
+  ["Kopolimer","İki monomer karışımından oluşan polimer (ardışık, blok, gelişigüzel, graft türleri)."],
+  ["Graft (aşılı) polimer","Ana zincire başka monomer yan grupların takıldığı polimer."],
+  ["Termoplastik polimer","Isıtılınca yumuşayan; amorf/kristal olabilen, sünek fakat düşük mukavemetli polimer."],
+  ["Termoset polimer","Amorf, güçlü ve sert ama genellikle kırılgan, ısıyla sertleşen polimer."],
+  ["Elastomer","Tg üstünde kullanılan, kalıcı hasar olmadan çok deforme olabilen amorf polimer."],
+  ["Mikroküre / nanoküre","Polimerle kaplı küçük ilaç parçacıkları; difüzyon veya matris bozunmasıyla salar."],
+  ["Mikroenkapsülasyon","Katı, lipid veya gazların ince bir çeperle çevrilerek kapsüllenmesi süreci."],
+  ["Ozmotik pompa","Yarı geçirgen membranla kaplı çekirdekte ozmotik basıncın ilacı lazer deliğinden ittiği sistem."],
+  ["Yarı geçirgen membran","Suyun geçişine izin veren, ozmotik sistemde çekirdeği kaplayan membran."],
+  ["Mukoadhesif sistem","Mukoadhesif polimerlerle (kitozan, karbopol, polikarbofil) mide mukozasına yapışan sistem."],
+  ["Yüzen (floating) tablet","Mide sıvısında yüzerek mide boşalmasından korunan tablet (efervesan/non-efervesan)."],
+  ["Şişen sistem","Mideye ulaşınca büyüyüp pilordan geçemeyen, midede kalan sistem (HPMC, PEO, ksantan)."],
+  ["Lipozom","Aralarında sulu faz bulunan, lipid tabakalarından oluşan mikroskobik küre şeklinde taşıyıcı."]
+];
+
+/* ---------- CLASSIC ---------- */
+const CLASSIC=[
+  ["Modifiye salım sistemi nedir ve konvansiyonel formdan farkı nedir?","Konvansiyonel formlar ilacı alındıktan hemen sonra salarken; modifiye sistemler salımı zaman, süreç ve/veya bölge temelli değiştirir. Amaç salım hızını yavaşlatmak ve etki süresini uzatmaktır (örn. 24 saat). Böylece konvansiyonel formların sağlayamadığı terapötik hedeflere ulaşılır."],
+  ["Modifiye ilaç salan sistem kullanmanın başlıca nedenlerini (en az 5) sayınız.","(1) İlacı terapötik aralıkta tutmak; (2) gece ilaç seviyelerini korumak (ör. ağrı yönetimi); (3) kronoterapi; (4) yan etkiyi azaltmak (yüksek Cmax'tan kaçınmak); (5) hasta uyumunu artırmak (günde tek doz); (6) GİS'te bölgeye özgü lokal tedavi (ör. kolon); ayrıca ürün ömrünü uzatma gibi ticari avantajlar."],
+  ["Konvansiyonel çoklu dozajın dezavantajları nelerdir?","Hastanın dozu unutması/uyumsuzluk; kanda tepe–vadi (peak–trough) dalgalanmaları; tepe değerlerde toksik yan etki riski; doz atlandığında optimumdan az etkinlik."],
+  ["Modifiye salım için uygun ilaç özelliklerini açıklayınız.","Ne çok hızlı ne çok yavaş absorpsiyon/atılım; t½ ne çok kısa (<2 saat) ne çok uzun olmalı; GİS'ten homojen emilim, suda iyi çözünürlük ve yeterli GİS kalma süresi; küçük doz (yüksek doz uygun değil); iyi güvenlik marjı (çok dar terapötik indeks kötü aday)."],
+  ["İlaç salım hızını kontrol eden iki temel mekanizmayı açıklayınız.","(1) Dissolüsyon: aktif maddenin çözünmesi. (2) Difüzyon: çözünmüş maddenin difüzyonu. Salımın hızı ve büyüklüğü bu iki mekanizma ile belirlenir."],
+  ["Modifiye sistemlerde salımı sağlayan 4 prosesi sayınız.","(1) Taşıyıcının hidrasyonu (komponentlerin şişmesi/çözünmesi); (2) suyun yapıya difüzyonu; (3) ilacın dissolüsyonu; (4) ilacın cihaz dışına difüzyonu."],
+  ["Patlama etkisi (burst effect) nedir, neden istenmez ve nasıl önlenir?","Dozaj formunun yüzeyindeki ilacın hızla çözünmesiyle oluşan başlangıçtaki ani salımdır. Kontrollü salım profilini bozduğu için çoğu uygulamada istenmez; maliyetine rağmen kaplama yapılarak önlenir."],
+  ["BCS sınıflamasını ve modifiye form açısından uygunluğunu açıklayınız.","Tip I: yüksek çözünürlük+yüksek geçirgenlik (modifiye için en uygun). Tip II: yüksek çözünürlük+düşük geçirgenlik. Tip III: düşük çözünürlük+yüksek geçirgenlik. Tip IV: her ikisi düşük. Düşük çözünürlükte (<1 mg/ml) absorpsiyon hız-kısıtlayıcı kademe olabilir."],
+  ["Rezervuar ve matriks sistemlerini kinetik açısından karşılaştırınız.","Rezervuar: ilaç çekirdeği polimer filmle çevrilidir, genellikle sıfırıncı derece kinetik (zamanla sabit salım). Matriks: ilaç matris içinde çözünmüş/dağılmıştır, salım genellikle zamanın kareköküyle ilişkilidir."],
+  ["Matriks sistemlerinin 5 tipini sayınız.","Hidrofobik (plastik) matrisler, hidrofilik matrisler, lipid matrisler, biyobozunur matrisler ve mineral matrisler."],
+  ["Hidrofobik (plastik) matristen ilaç salımını açıklayınız.","İlaç inert/hidrofobik polimerle karıştırılıp tablet halinde basılır. Çözünen ilaç, partiküller arasında oluşan kanal ağından difüzyonla salınır. Por boyutu/sayısı ve kanalların bükümlülüğü (tortuosity) salımı belirler; salım sıfırıncı dereceye yakındır. Polimer konsantrasyonu artınca kanallar kısalır ve salım yavaşlar."],
+  ["Hidrofilik matrisin salım mekanizması ve avantajları nedir?","Tablet sıvıyla temas edince şişer ve jel matris oluşturur; salım jelin/ilacın dissolüsyonu ve jel erozyonuyla gerçekleşir; su difüzyon hızı ve hidrasyon salımı etkiler. Avantajları: salım profilinde esneklik, maliyet etkinliği, yasal otorite kabulü ve yüksek etkin madde taşıma. Dezavantaj: besinlerden etkilenme riski."],
+  ["Polimer nedir; yapısal sınıflarını (homopolimer/kopolimer) açıklayınız.","Polimer, tekrarlanan monomerlerden oluşan makromoleküldür. Homopolimer tek monomerin tekrarıdır (ör. polietilen). Kopolimer iki monomer karışımıdır ve ardışık/alternatif, blok, gelişigüzel ve graft (aşılı) türleri vardır."],
+  ["Ozmotik kontrollü sistemin çalışma prensibini açıklayınız.","Suda çözünen ilaç tablet çekirdeğinde bulunur; çekirdek yarı geçirgen membranla kaplıdır. Su girip maddeleri çözündürdükçe hidrostatik basınç artar ve bu basınç ilacı, kaplamada lazerle açılan delikten dışarı pompalar. Salım hızı membrandan su geçişine ve delikten çözelti geçişine bağlıdır."],
+  ["Gastroretentif sistemler hangi ilaçlar için yararlıdır?","Midede lokal etki gereken ilaçlar (ör. H. pylori tedavisi), ince bağırsakta dar absorpsiyon penceresi olan ilaçlar ve kolonda degrade olan ilaçlar için yararlıdır."],
+  ["Yüzen (floating) tabletlerin avantajları ve hazırlama tekniklerini açıklayınız.","Avantaj: midede kalış süresini, biyoyararlanımı ve midedeki lokal etkinliği artırır; mide boşalmasından korunur. Teknikler: efervesan (gaz oluşturan maddelerle) ve non-efervesan (hidrodinamik denge/jel oluşumuna dayanan)."],
+  ["Mukoadhesif sistem nedir ve hangi polimerler kullanılır?","Tablet, mukoadhesif polimerler sayesinde mide mukozasına yapışarak midede uzun süre kalır. Kullanılan polimerler: kitozan, karbopol ve polikarbofil (divinil glikol ile çapraz bağlı poliakrilik asit)."],
+  ["Lipozom nedir ve yapısına hangi maddeler girer?","Aralarında sulu faz bulunan, biyolojik membrana benzer lipid tabakalarından oluşan, küre şeklinde mikroskobik taşıyıcılardır. Yapısına fosfolipid yanında stabilite artırıcılar (kolesterol, α-tokoferol), hedefleme sağlayıcılar (immunoglobulin, stearilamin, glikolipid) ve etken maddeler (antineoplastik, enzim, hormon) girer."],
+  ["Lipozomların avantaj ve dezavantajlarını sayınız.","Avantajlar: tümöre pasif hedefleme (lipozomal doksorubisin), artan etkinlik/terapötik indeks, kapsülleme ile artan kararlılık, toksisitede azalma, geliştirilmiş farmakokinetik, ligandlarla aktif hedefleme esnekliği. Dezavantajlar: düşük stabilite/çözünürlük, kısa yarı ömür, fosfolipid oksidasyon/hidrolizi, sızıntı/füzyon, yüksek üretim maliyeti, alerjik reaksiyonlar."],
+  ["IVIVC nedir ve neden önemlidir?","In vitro–in vivo korelasyon; in vitro dissolüsyon verisi ile in vivo yanıt arasındaki ilişkidir. Oral genişletilmiş etkili ilaç geliştirmede, klinik çalışmalarda, onay ve onay sonrası süreçlerde çok önemlidir. Diğer yasal gerekler arasında ilaç salım (dissolüsyon) testi ve dozaj birimi içerik düzgünlüğü de bulunur."]
+];
+
+function makeReveal(container, list){
+  list.forEach((item,i)=>{
+    const [head,body]=item;
+    const el=document.createElement('div');el.className='reveal';
+    el.innerHTML=`<div class="reveal-head"><div class="reveal-no">${i+1}</div><div class="reveal-term">${head}</div><div class="dots">···</div></div><div class="reveal-body">${body}</div>`;
+    el.querySelector('.reveal-head').addEventListener('click',()=>el.classList.toggle('open'));
+    container.appendChild(el);
+  });
+}
+makeReveal(document.getElementById('terms'),TERMS);
+makeReveal(document.getElementById('classic'),CLASSIC);
+
+document.getElementById('expandAll').addEventListener('click',()=>{
+  document.querySelectorAll('.panel.active .reveal').forEach(r=>r.classList.add('open'));
+});
+document.getElementById('collapseAll').addEventListener('click',()=>{
+  document.querySelectorAll('.reveal').forEach(r=>r.classList.remove('open'));
+});
+</script>
+</body>
+</html>

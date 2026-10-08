@@ -1,0 +1,610 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Tablet Kaplama — Kapsamlı Özet</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Spectral:ital,wght@0,400;0,600;0,800;1,500&family=Inter+Tight:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#0b1413;--panel:#11201e;--panel-2:#172a27;--ink:#e7f0ee;--muted:#8fa6a2;--line:#23423d;
+    --accent:#2bb6a3;--accent-2:#e0a458;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{scroll-behavior:smooth}
+  body{
+    background:radial-gradient(1100px 560px at 84% -10%, rgba(43,182,163,.10), transparent 60%),
+               radial-gradient(900px 520px at -10% 22%, rgba(224,164,88,.07), transparent 55%),var(--bg);
+    color:var(--ink);font-family:'Inter Tight',system-ui,sans-serif;line-height:1.65;-webkit-font-smoothing:antialiased
+  }
+  .wrap{max-width:880px;margin:0 auto;padding:48px 22px 120px}
+
+  .kicker{font-size:.72rem;letter-spacing:.3em;text-transform:uppercase;color:var(--accent);font-weight:600;margin-bottom:14px}
+  h1.title{font-family:'Spectral',serif;font-weight:800;font-size:clamp(2rem,5vw,3.2rem);line-height:1.04;letter-spacing:-.01em;margin-bottom:14px}
+  h1.title em{font-style:italic;color:var(--accent-2)}
+  .lede{color:var(--muted);font-size:1.05rem;max-width:62ch;margin-bottom:30px}
+
+  .toc{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:18px 20px;margin-bottom:42px}
+  .toc .toc-h{font-size:.74rem;letter-spacing:.22em;text-transform:uppercase;color:var(--accent);font-weight:600;margin-bottom:10px}
+  .toc ol{list-style:none;counter-reset:t;display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:6px 22px}
+  .toc li{counter-increment:t;padding:4px 0}
+  .toc li a{color:#cfe0dc;text-decoration:none;font-size:.95rem;display:flex;gap:10px;align-items:baseline;transition:.18s}
+  .toc li a::before{content:counter(t,decimal-leading-zero);color:var(--accent-2);font-family:'Spectral',serif;font-style:italic;font-size:.85rem;min-width:24px}
+  .toc li a:hover{color:var(--accent)}
+
+  section{margin-top:48px}
+  section:first-of-type{margin-top:0}
+  h2.section{font-family:'Spectral',serif;font-weight:700;font-size:clamp(1.5rem,3.4vw,2rem);line-height:1.12;letter-spacing:-.01em;margin-bottom:6px;padding-top:14px;border-top:1px solid var(--line)}
+  h2.section .num{font-style:italic;color:var(--accent);font-weight:600;margin-right:10px;font-size:.85em}
+  h3{font-size:1.08rem;font-weight:600;color:var(--accent-2);margin:22px 0 6px}
+
+  p{margin:12px 0;color:#dfeae7}
+  ul{margin:10px 0 10px 4px;padding-left:22px;color:#dfeae7}
+  ul li{margin:6px 0}
+  ol{margin:10px 0 10px 4px;padding-left:24px;color:#dfeae7}
+  ol li{margin:6px 0}
+  b{color:var(--ink)}
+
+  .lead{font-size:1.04rem;border-left:3px solid var(--accent);padding-left:16px;color:#cfe0dc;margin:14px 0}
+  .pull{background:var(--panel);border:1px solid var(--line);border-left:3px solid var(--accent-2);border-radius:0 12px 12px 0;padding:14px 18px;margin:18px 0;color:#e9d9b9;font-size:.97rem}
+  .pull b{color:#fff5dd}
+
+  .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:14px;margin:14px 0}
+  .card{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:14px 16px}
+  .card h4{font-family:'Spectral',serif;font-weight:600;font-size:1.04rem;margin-bottom:4px;color:var(--accent)}
+  .card p{margin:6px 0 0;font-size:.94rem;color:#dfeae7}
+
+  .tag{display:inline-block;font-size:.72rem;letter-spacing:.08em;text-transform:uppercase;color:#04201c;background:var(--accent);padding:3px 8px;border-radius:6px;font-weight:600;margin-right:6px;vertical-align:1px}
+  .tag.alt{background:var(--accent-2);color:#2a1a05}
+
+  .top-link{position:fixed;right:22px;bottom:22px;background:var(--panel-2);border:1px solid var(--line);color:var(--muted);padding:10px 14px;border-radius:50px;text-decoration:none;font-size:.82rem;transition:.2s}
+  .top-link:hover{border-color:var(--accent);color:var(--accent)}
+
+  footer{margin-top:70px;padding-top:24px;border-top:1px solid var(--line);text-align:center;color:var(--muted);font-size:.82rem}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="kicker">Genel Tekrar · Prof. Dr. Jülide Akbuğa</div>
+  <h1 class="title">Tablet <em>Kaplama</em></h1>
+  <p class="lede">Sunumun tüm önemli içeriğinin tek sayfada toplandığı kapsamlı çalışma özeti. Aşağıdaki içindekilerden istediğiniz bölüme atlayabilirsiniz.</p>
+
+  <nav class="toc">
+    <div class="toc-h">İçindekiler</div>
+    <ol>
+      <li><a href="#s1">Tanım ve Amaç</a></li>
+      <li><a href="#s2">Niçin Kaplanır? — 7 Neden</a></li>
+      <li><a href="#s3">Dezavantajlar</a></li>
+      <li><a href="#s4">Dikkate Alınacak Noktalar</a></li>
+      <li><a href="#s5">Tablet Özellikleri</a></li>
+      <li><a href="#s6">Kaplama Prosesi — 4 Aşama</a></li>
+      <li><a href="#s7">Çözeltinin Kompozisyonu</a></li>
+      <li><a href="#s8">Kaplama Tipleri</a></li>
+      <li><a href="#s9">Film Kaplama — Genel</a></li>
+      <li><a href="#s10">Film Kaplama Tipleri</a></li>
+      <li><a href="#s11">Formülasyon Bileşenleri</a></li>
+      <li><a href="#s12">Hemen-Salan Polimerler</a></li>
+      <li><a href="#s13">Modifiye-Salan Polimerler</a></li>
+      <li><a href="#s14">Boya Maddeleri &amp; Pigmentler</a></li>
+      <li><a href="#s15">Çözücüler &amp; Sulu Dispersiyon</a></li>
+      <li><a href="#s16">Tasarım Kriterleri</a></li>
+      <li><a href="#s17">Film Kaplama Hataları</a></li>
+      <li><a href="#s18">Proses ve Ekipman</a></li>
+      <li><a href="#s19">Şeker Kaplama — Genel</a></li>
+      <li><a href="#s20">Şeker Kaplama 6 Kademe</a></li>
+      <li><a href="#s21">Şeker Kaplama Kusurları</a></li>
+      <li><a href="#s22">Basınçla (Kompresyonla) Kaplama</a></li>
+      <li><a href="#s23">Kaplı Multipartiküller (Pellet)</a></li>
+      <li><a href="#s24">Pelletizasyon Teknikleri</a></li>
+      <li><a href="#s25">Genel Tekrar Notu</a></li>
+    </ol>
+  </nav>
+
+  <!-- ================= 1 ================= -->
+  <section id="s1">
+    <h2 class="section"><span class="num">01.</span>Tanım ve Amaç</h2>
+    <p class="lead"><b>Kaplama</b>, özel yarar sağlamak için <b>granül veya tablet yüzeylerinin ince bir polimer film tabakası ile kaplanması işlemidir</b>. Kaplamalar çok çeşitli parçacıklar ve ilaç kristalleri dahil oral katı dozaj şekillerine (tabletler, kapsüller) uygulanabilir.</p>
+    <p>Tablet kaplama, <b>kaplanmamış formların özelliklerini düzeltmek ve yararlarını artırmak</b> amacıyla yapılır.</p>
+  </section>
+
+  <!-- ================= 2 ================= -->
+  <section id="s2">
+    <h2 class="section"><span class="num">02.</span>Oral Katı Dozaj Formları Niçin Kaplanır? — 7 Neden</h2>
+    <p>Farmasötik oral katı formların kaplanma nedenleri çok çeşitlidir. En yaygın nedenler:</p>
+    <ol>
+      <li><b>İlacın çevrenin etkilerinden korunması</b>; stabilitenin sağlanması/korunması,</li>
+      <li><b>Hoş olmayan tat ve kokuyu maskeleme</b>,</li>
+      <li>Ürün <b>teşhisini</b> sağlamak/kolaylaştırmak,</li>
+      <li>Ürün <b>görünümünü iyileştirme</b>,</li>
+      <li>Uyumsuz maddeler arasında <b>etkileşim riskini azaltmak</b>,</li>
+      <li>İlacın <b>serbestleşmesini kontrol etmek</b>,</li>
+      <li>Enterik kaplıdaki gibi <b>ilaç salımının değiştirilmesi</b> ve sürekli etkinin sağlanması.</li>
+    </ol>
+  </section>
+
+  <!-- ================= 3 ================= -->
+  <section id="s3">
+    <h2 class="section"><span class="num">03.</span>Tablet Kaplamanın Dezavantajları</h2>
+    <ul>
+      <li>Tablet kaplama <b>formülasyon maliyetini artırır</b>,</li>
+      <li>Tablet kaplama, ilaç formülasyonunun <b>farmakodinamik özelliklerini etkileyebilir</b>,</li>
+      <li>Bazı kaplamalar <b>beneklenme, kapaklanma, çatlama, köprüleme</b> gibi çeşitli <b>film kusurlarına</b> neden olabilir,</li>
+      <li>İşlem <b>karmaşıktır</b>.</li>
+    </ul>
+  </section>
+
+  <!-- ================= 4 ================= -->
+  <section id="s4">
+    <h2 class="section"><span class="num">04.</span>Tablet Kaplamada Dikkate Alınacak Noktalar</h2>
+    <div class="grid">
+      <div class="card"><h4>Tablet Özellikleri</h4><p>Şekil, tolerans, yüzey alanı.</p></div>
+      <div class="card"><h4>Kaplama İşlemi</h4><p>Kaplama ekipmanı, kaplama parametreleri, tesis ve yan donanım, işlem otomasyonu.</p></div>
+      <div class="card"><h4>Çözelti Bileşimi</h4><p>Polimerler, renklendirici, plastifiyanlar, çözücü.</p></div>
+    </div>
+  </section>
+
+  <!-- ================= 5 ================= -->
+  <section id="s5">
+    <h2 class="section"><span class="num">05.</span>Tablet Özellikleri</h2>
+    <ul>
+      <li>Kaplanacak tablet <b>küresel şekil, homojen yüzey</b> gibi uygun fiziksel özelliklere sahip olmalıdır,</li>
+      <li>Kaplama sırasında tabletlerin yıpranmasını tolere etmek için <b>aşınmaya karşı dayanıklı</b> olmaları gerekir,</li>
+      <li>Isı varlığında tablet yüzeyleri kırılgan ve yumuşak olursa veya kaplama çözeltisinden etkilenirse, ya da kaplama işleminin <b>erken aşamalarında yüzeyinde pürüz oluşursa</b> film kaplaması için <b>kabul edilemez</b>.</li>
+    </ul>
+  </section>
+
+  <!-- ================= 6 ================= -->
+  <section id="s6">
+    <h2 class="section"><span class="num">06.</span>Tablet Kaplama Prosesi — 4 Aşama</h2>
+    <ol>
+      <li><b>Islanma</b>, adhesif özellik kazandırma,</li>
+      <li><b>Birikme ve kısmi kuruma</b>,</li>
+      <li><b>Yayılma</b>, yüzeyi kaplama,</li>
+      <li><b>Koalesans ve kohezyon</b>.</li>
+    </ol>
+  </section>
+
+  <!-- ================= 7 ================= -->
+  <section id="s7">
+    <h2 class="section"><span class="num">07.</span>Kaplama Çözeltisinin Kompozisyonu</h2>
+    <p>Kaplama çözeltisi <b>sıcak hava ile ısıtılmış hareket halindeki tabletlerin üzerine püskürtülür</b>; bu arada çözücü uçar. Hareketli tabletlere kaplama çözeltisi <b>dikey uygulanır</b>.</p>
+  </section>
+
+  <!-- ================= 8 ================= -->
+  <section id="s8">
+    <h2 class="section"><span class="num">08.</span>Kaplama İşleminin Tipleri</h2>
+    <p>İlaç endüstrisi başlıca şu kaplama tiplerini kullanır:</p>
+    <ul>
+      <li><b>Film kaplama</b>,</li>
+      <li><b>Şeker kaplama</b>,</li>
+      <li><b>Enterik kaplama</b>,</li>
+      <li>İlaç salımını <b>modifiye etmek için kaplama</b>,</li>
+      <li><b>Basınçla kaplama</b> (kompresyonla).</li>
+    </ul>
+  </section>
+
+  <!-- ================= 9 ================= -->
+  <section id="s9">
+    <h2 class="section"><span class="num">09.</span>Film Kaplama — Genel Bakış</h2>
+    <p class="lead"><b>En popüler kaplama tekniğidir</b>. Yeni kaplı ürünlerin büyük kısmı piyasaya <b>film kaplı olarak</b> tanıtılır.</p>
+    <p>Film kaplama; tablet, kapsül veya çok partiküllü bir çekirdek yüzeyinin <b>kaplama çözeltisi püskürtülerek ince bir polimer film tabakasıyla</b> kaplanmasıdır.</p>
+    <p>Film kaplama, polimer bazlı formülasyonları içeren sıvının tablet yüzeyine uygulanmasını içerir. Kaplama sıvısı (<b>çözelti veya süspansiyon</b>), uygun bir sıvı ortamda bir <b>polimer + pigment + plastifiyan</b> gibi yardımcı maddeleri içerir. Bu çözelti <b>dönen veya akışkanlaştırılmış tablet kütlesine</b> püskürtülür. Kurutma koşulları çözücünün uzaklaştırılmasını sağlamalıdır; sonuçta her bir tablet çekirdeğinin etrafında <b>ince bir kaplama</b> meydana gelir.</p>
+  </section>
+
+  <!-- ================= 10 ================= -->
+  <section id="s10">
+    <h2 class="section"><span class="num">10.</span>Film Kaplama Tipleri</h2>
+    <p>Film kaplama değişik şekillerde sınıflandırılabilir; en bilinen sınıflama uygulanan kaplama ile elde edilen <b>ilaç salım özelliğine</b> göre yapılır:</p>
+
+    <h3>Hemen-Salan Film Kaplama</h3>
+    <ul>
+      <li>Hemen ilaç salan kaplamalar genellikle <b>suda çözünür</b>,</li>
+      <li><b>Gastro-dirençli kaplamalar</b> suda sadece <b>pH 5-6'nın ÜZERİNDEKİ</b> değerlerde çözünür:
+        <ul>
+          <li>İlacı <b>mide ortamından korumak için</b> (asit-ortamda dayanıksız ilaçlar),</li>
+          <li>Veya ilacın <b>midede serbestleşmesini önlemek için</b> (midede irritan olan ilaçlar) kullanılır.</li>
+        </ul>
+      </li>
+      <li>Son zamanlarda gastro-dirençli kaplamalar <b>kolona ilaç taşıyıcı sistemlerin bir parçası</b> olarak da kullanılır.</li>
+    </ul>
+
+    <h3>Uzatılmış-İlaç Salan Film Kaplama</h3>
+    <ul>
+      <li>Bu kaplamalar suda <b>çözünmez</b>,</li>
+      <li>İlacın uzun süre (tipik olarak <b>6-12 saat</b>) belirli şekilde serbestleşmesini sağlar; hastanın 24 saatte alması gereken <b>doz sayısı azalır</b>,</li>
+      <li>Ek olarak ilacın <b>serbestleşme profilini değiştirmek</b> için kullanılır; böylece tedaviden beklenen yarar sağlanır, ilacın etkinliği artar.</li>
+    </ul>
+  </section>
+
+  <!-- ================= 11 ================= -->
+  <section id="s11">
+    <h2 class="section"><span class="num">11.</span>Film Kaplama Formülasyon Bileşenleri</h2>
+    <p>Film kaplamada kullanılan formülasyonlar tipik olarak şu grupları içerir:</p>
+    <div class="grid">
+      <div class="card"><h4>Polimer</h4><p>Film oluşturucu ana bileşen.</p></div>
+      <div class="card"><h4>Plastifiyan</h4><p>Film esnekliğini artıran madde.</p></div>
+      <div class="card"><h4>Renk Verici Madde</h4><p>Boya veya pigment.</p></div>
+      <div class="card"><h4>Solvan / Vehikül</h4><p>Çözücü sistem.</p></div>
+    </div>
+    <p>Film kaplama formülasyonlarında kullanılan <b>tüm maddeler ilgili mevzuata uymak zorundadır</b> ve mevcut farmakope gereksinimleri, amaçlanan pazarlama alanını karşılamalıdır.</p>
+  </section>
+
+  <!-- ================= 12 ================= -->
+  <section id="s12">
+    <h2 class="section"><span class="num">12.</span>Hemen-Salan Film Kaplamada Kullanılan Polimerler</h2>
+
+    <h3>Selüloz Türevleri</h3>
+    <ul>
+      <li>Film kaplamada en çok kullanılan selülozik polimerler <b>selüloz eterleridir</b>,</li>
+      <li><b>HPMC</b> kullanımı en yaygın selüloz türevidir; bu polimer <b>suda çözünür, uygun mekanik özelliklere sahip film oluşturur</b> ve kaplama işlemi daha kolaydır,</li>
+      <li>HPMC'ye benzer özelliklere sahip diğer selüloz türevleri: <b>MC (metil selüloz)</b> ve <b>hidroksipropil selüloz</b>.</li>
+    </ul>
+
+    <h3>Vinil Türevleri</h3>
+    <ul>
+      <li>Farmasötikte en çok kullanılan vinil polimeri <b>PVP</b>'dir,</li>
+      <li>PVP'nin film kaplamada kullanımı <b>yapışkan olması</b> nedeniyle sınırlıdır,</li>
+      <li>Daha iyi film oluşturduğu için <b>vinilpirolidon–vinilasetat kopolimeri</b> tercih edilir,</li>
+      <li><b>PVA (polivinil alkol)</b>: polivinil asetatın <b>kısmi hidroliziyle</b> elde edilir; adheren özelliği yüksek, uygun mekanik özelliklere sahip film verir; <b>çevreden gaz geçişine karşı iyi bir bariyer</b> oluşturur,</li>
+      <li>Son yıllarda <b>vinil alkol–etilen glikol kopolimerleri</b> çok kullanılır; PVA'dan <b>daha az yapışkan</b>, çok yüksek esneklik gösterir.</li>
+    </ul>
+
+    <h3>Aminoalkil Metakrilat Kopolimerleri</h3>
+    <ul>
+      <li>Sulu ortamda <b>düşük pH'da çözünürler</b>, bu özellikleri sayesinde <b>tat maskelemede etkilidirler</b>,</li>
+      <li>Organik çözücülerde de çözünürler,</li>
+      <li>Özel şekilleri <b>sulu dispersiyonlar</b> halinde hazırlanabilir.</li>
+    </ul>
+  </section>
+
+  <!-- ================= 13 ================= -->
+  <section id="s13">
+    <h2 class="section"><span class="num">13.</span>Modifiye-Salan Film Kaplamada Kullanılan Polimerler</h2>
+
+    <h3>Selüloz Türevleri</h3>
+    <ul>
+      <li>Hemen-salan film oluşturan selülozik polimerlerin <b>modifiye şekilleri</b> (örn. sübstitüe selüloz eteri) kullanılır,</li>
+      <li><b>Sübstitüsyon derecesi yüksek olursa polimer suda çözünmez</b>,</li>
+      <li>Örnek: <b>EC (etil selüloz)</b>,</li>
+      <li>Diğer selüloz türevleri ve modifiye şekilleri: <b>selüloz esterleri</b>, örn. <b>selüloz asetat</b>.</li>
+    </ul>
+
+    <h3>Metilmetakrilat ve Metakrilik Asit Kopolimerleri</h3>
+    <ul>
+      <li><b>Akrilik asit polimerleri suda çözünmez</b>; permeabilitesi farklı tipler hazırlanabilir ve <b>modifiye-salan sistemlerde</b> kullanılır,</li>
+      <li><b>Metakrilik asit kopolimerleri</b> mide ortamına dayanıklı kaplamada kullanılır; <b>düşük pH'da suda çözünmez, pH yükseldikçe çözünürlüğü artar</b>; sulu polimer dispersiyonlarında kullanılır,</li>
+      <li>Poli(met)akrilatların ticari adı <b>EUDRAGIT</b>'tir.</li>
+    </ul>
+
+    <h3>Fitalat-Ester Polimerleri</h3>
+    <ul>
+      <li>Metakrilik asit polimerlerine benzer özelliklere sahiptir; <b>geciktirilmiş-salım yapan preparatlar</b> için uygundur,</li>
+      <li><b>Fitalik asidin farklı gruplarla sübstitüsyonuyla</b> hazırlanır,</li>
+      <li>Bu gruba örnekler:
+        <ul>
+          <li><b>HPMCP</b> — Hidroksipropilmetil selüloz fitalat,</li>
+          <li><b>CAP</b> — Selüloz asetat fitalat,</li>
+          <li><b>PVAP</b> — Polivinil asetat fitalat.</li>
+        </ul>
+      </li>
+      <li><b>Organik çözücü veya sulu dispersiyon</b> halinde uygulanır.</li>
+    </ul>
+  </section>
+
+  <!-- ================= 14 ================= -->
+  <section id="s14">
+    <h2 class="section"><span class="num">14.</span>Boya Maddeleri &amp; Pigmentler</h2>
+    <ul>
+      <li><b>Çözünmeyen film kaplama formüllerinde pigmentler tercih edilir</b>,</li>
+      <li>Pigmentler ışığın etkisine karşı daha dayanıklıdır,</li>
+      <li><b>Opak bir görünüm</b> sağlar, kaplayıcı özelliği fazladır,</li>
+      <li>Permeabilite özelliği optimize edilebilir.</li>
+    </ul>
+    <h3>Renk Maddesi Örnekleri</h3>
+    <ul>
+      <li><b>Demir oksit pigmentleri</b>,</li>
+      <li><b>Titanyum dioksit</b>,</li>
+      <li><b>Alüminyum lakları</b> (suda çözünen boyanın bağlanmış şekli).</li>
+    </ul>
+    <h3>Renk Maddesi Seçim Kriterleri</h3>
+    <ul>
+      <li>Nasıl bir görünüm isteniyor,</li>
+      <li>Renk maddesinin filmin <b>mekanik özelliklerine etkisi</b>,</li>
+      <li><b>Yasal kriterler</b>.</li>
+    </ul>
+  </section>
+
+  <!-- ================= 15 ================= -->
+  <section id="s15">
+    <h2 class="section"><span class="num">15.</span>Çözücüler &amp; Sulu Polimer Dispersiyonu</h2>
+    <p>Film-kaplama prosesi kullanılan <b>organik çözücüye (aseton) ve onun buharlaşma hızına</b> bağlıdır. Ancak organik çözücülerin çok sayıda dezavantajı vardır:</p>
+    <ol>
+      <li><b>Çevre</b>,</li>
+      <li><b>Güvenlik</b> — organik çözücüler yanıcı veya çalışanlar için toksik olabilir,</li>
+      <li><b>Ekonomi</b>,</li>
+      <li><b>Çözücü atıkları</b>.</li>
+    </ol>
+
+    <h3>Sulu Polimer Dispersiyonu</h3>
+    <ul>
+      <li>Modifiye–ilaç salan kaplamalarda kullanılan tüm polimerler, amaçlarına uygun olarak genellikle <b>suda çözünmezler</b>,</li>
+      <li>Dolayısıyla <b>organik çözücüdeki çözeltileri</b> uygulanır,</li>
+      <li>Ancak <b>modern film-kaplamada sulu çözeltilerin kullanılması tercih edilir</b>,</li>
+      <li><b>"Sulu polimer dispersiyonu"</b>, genel olarak bir polimerin <b>sulu süspansiyonunu</b> ifade eder.</li>
+    </ul>
+  </section>
+
+  <!-- ================= 16 ================= -->
+  <section id="s16">
+    <h2 class="section"><span class="num">16.</span>Film-Kaplı Tabletin Tasarım Kriterleri</h2>
+    <p>Bir film-kaplı tabletin tasarımı ve üretimi aşağıdaki kriterler göz önüne alınarak yapılmalıdır:</p>
+    <ul>
+      <li>Her bir tabletin <b>kaplaması ve rengi homojen</b> olmalı, seriler arası farklılık olmamalıdır,</li>
+      <li>Bitmiş ürünün <b>görünümünde veya yapısında</b> fonksiyon ve stabilitesini etkileyecek bozukluklar olmamalıdır,</li>
+      <li>Bitmiş ürün <b>spesifikasyonları ve yasal gereklilikleri</b> karşılamak zorundadır.</li>
+    </ul>
+  </section>
+
+  <!-- ================= 17 ================= -->
+  <section id="s17">
+    <h2 class="section"><span class="num">17.</span>Film Kaplama Hataları</h2>
+    <p class="lead">Film kaplama mükemmel bir işlem değildir. Bozukluklar, özellikle kaplamadaki kusurlar; <b>(a) kaplama ve çekirdeğin formülasyonundan</b> veya <b>(b) kaplama işleminin uygun şekilde tasarlanmaması/kontrol edilmemesinden</b> kaynaklanır.</p>
+    <h3>Kusur Tipleri</h3>
+    <ul>
+      <li><b>Görsel kusurlar</b> — genellikle film kaplı tabletlerde,</li>
+      <li><b>Fonksiyonel kusurlar</b> — ilaç salımını etkileyenler; çoğunlukla <b>modifiye-salım</b> ürünleriyle ilgilidir.</li>
+    </ul>
+    <h3>Görsel Kusurların Kategorileri</h3>
+    <ul>
+      <li><b>Proses sorunları</b> — kurutma işlemi sırasında <b>kaplama sıvısının püskürtme hızı ile çözücünün buharlaşma oranı arasındaki dengesizlikten</b> kaynaklanır,</li>
+      <li><b>Formülasyon sorunları</b> — genellikle <b>çekirdek tablet veya kaplama</b> ile ilgilidir.</li>
+    </ul>
+  </section>
+
+  <!-- ================= 18 ================= -->
+  <section id="s18">
+    <h2 class="section"><span class="num">18.</span>Proses ve Ekipman</h2>
+    <p>Tablet film-kaplama işlemlerinin büyük kısmı <b>kaplama çözeltisi/süspansiyonunun tablet yüzeyine püskürtülmesiyle</b> yapılır.</p>
+
+    <h3>Kazanda Kaplama (Pan Coating)</h3>
+    <p>Modern kazanda-kaplama ekipmanları <b>yan havalandırma kanallıdır</b>. Tipik örnekleri:</p>
+    <ul>
+      <li><b>Accela Cota</b> — Thomas Engineering (USA),</li>
+      <li><b>Premier Coater</b> — Bosch-Manesty (UK),</li>
+      <li><b>Hi-Coater</b> — Freund-Vector (Japonya, USA),</li>
+      <li><b>Driacoater</b> — Driam Metallprodukt GmbH (Almanya).</li>
+    </ul>
+
+    <h3>Akışkanlaştırıcı-Yatak (Fluid-Bed)</h3>
+    <p>Tablet/partikül kaplanmasına göre 3 tipi vardır:</p>
+    <ul>
+      <li><b>GEA (Aeromatic-Fielder)</b> — İsviçre, USA, UK,</li>
+      <li><b>Glatt AG</b> — İsviçre, Almanya, USA,</li>
+      <li><b>Vector-Freund</b> — Japonya, USA.</li>
+    </ul>
+    <p>Kaplama formülasyonu <b>sprey tabancasıyla</b> çözelti veya süspansiyon şeklinde eklenir. Film kaplama spreyi tasarımı ve çalışması <b>kazanda ve akışkan yataklı kaplamalarda benzerdir</b>; yalnız sprey performansında farklılık vardır.</p>
+
+    <h3>Film Kaplama İçin Proses Gereksinimleri</h3>
+    <ul>
+      <li>Sprey sıvısını <b>atomize etmek</b> için yeterli araç veya tablet çekirdeklerine uygulama,</li>
+      <li>Tablet yatağının <b>yeterli karıştırılması ve çalkalanması</b>; sprey kaplama her bir çekirdeği kapsamalı,</li>
+      <li>Çözücüyü buharlaştırmak için <b>yeterli kurutma havası</b> (sulu bazlı uygulamalarda özellikle önemli),</li>
+      <li>Çözücü ve tozdan arındırmak için <b>iyi egzoz tesisleri</b>.</li>
+    </ul>
+  </section>
+
+  <!-- ================= 19 ================= -->
+  <section id="s19">
+    <h2 class="section"><span class="num">19.</span>Şeker Kaplama — Genel Bakış</h2>
+    <p>Şeker kaplama, farmasötik kaplama için <b>uzun zamandan beri kullanılan geleneksel bir yöntemdir</b>; ilaç endüstrisinde <b>19. yüzyılın sonlarından</b> bu yana kullanılmaktadır. Tablete <b>sakaroz bazlı kaplama formülasyonlarının</b> uygun kaplama ekipmanlarında çekirdek tablete <b>art arda uygulanmasını</b> içerir; bu sırada su buharlaşır ve tabletler <b>kalın bir şeker tabakası</b> ile kaplanır.</p>
+    <p>Şeker kaplamalar suda kolayca çözünen veya dağılan bileşenlerden oluşur. Genel olarak şeker kaplı tabletler <b>hemen-ilaç salımı</b> özelliği taşır. Ancak <b>yapışma kademesinde</b> kullanılan polimer bazlı bir madde tableti kaplayabilir; bu aşamada bazı özel polimerler kullanmak mümkündür — bunlar <b>kısmen ya da tamamen suda çözünmez</b>; böylece şeker kaplı ürünün <b>gecikmiş (midede dirençli) veya genişletilmiş serbest bırakma özellikleri</b> kazanması sağlanır.</p>
+    <div class="pull"><b>Görünüm:</b> Şeker kaplı tabletler <b>düzgün şekilli, yuvarlak konturlu ve parlak yüzeyli</b> olmalıdır. Baskılı olanlar yüksek baskı kalitesi sergilemelidir. Bitmiş ürün özellikleri yasal gereklerle uyumlu olmalıdır.</div>
+    <h3>Proses ve Ekipman</h3>
+    <p>Tipik olarak tabletler <b>KAZANDA KAPLAMA tekniğiyle</b> şeker kaplanır; kazan kurutma havası ile <b>termostatik kontrollü</b> şekilde kurutulur ve bir sistemle toz ve nemli hava giderilir. Yeni sistemlerde <b>otomatik dozajlama teknikleri ve kontrol prosedürleri</b> kullanılır.</p>
+  </section>
+
+  <!-- ================= 20 ================= -->
+  <section id="s20">
+    <h2 class="section"><span class="num">20.</span>Şeker Kaplama 6 Kademe</h2>
+    <p>Şeker kaplama çok aşamalı bir süreçtir ve şu kademeleri kapsar:</p>
+    <ol>
+      <li>Tablet çekirdeklerinin sızdırmazlığı — <b>Koruyucu kaplama (sealing)</b>,</li>
+      <li><b>Alt kaplama (subcoating)</b>,</li>
+      <li><b>Düzeltici (pürüzsüzleştirici)</b> tabaka,</li>
+      <li><b>Boyama / Renklendirme</b>,</li>
+      <li><b>Parlatma (polishing)</b>,</li>
+      <li><b>Baskı</b>.</li>
+    </ol>
+
+    <h3>① Koruyucu Kaplama (Sealing)</h3>
+    <p>Şeker kaplamalar sulu sıvılardır; doğrudan yuvarlanan tabletlerin üzerine damlatılır. Bu nedenle <b>su, çekirdek tabletle temas sonucu</b> ürünün stabilitesini etkileyebilir veya tabletin <b>erken dağılmasına</b> neden olabilir. Bunu önlemek için çekirdekler genellikle <b>su geçirmez veya sızdırmazlık sağlayan bir tabakayla</b> kaplanır. Geleneksel olarak <b>şellakın alkolik çözeltisi</b> kullanılmıştır; bugün <b>selüloz asetat fitalat (CAP)</b> veya <b>polivinil asetat fitalat (PVAP)</b> gibi sentetik polimerler tercih edilir.</p>
+
+    <h3>② Alt Kaplama (Subcoating)</h3>
+    <ul>
+      <li>Tablet kenarlarını yuvarlamak için <b>yüksek oranda</b> uygulanır (tipik olarak tablet ağırlığının <b>%50-100 kadarını</b> artırmak için),</li>
+      <li>Sukroz çözeltisine hacim verici olarak <b>kalsiyum karbonat</b> eklenir,</li>
+      <li>Tabletlerin birbirine yapışmasını önlemek için <b>talk gibi antiaderentler</b> kullanılır,</li>
+      <li>Kırılganlığı azaltmak için <b>arap zamkı gibi polisakkarit zamkları</b> ilave edilir.</li>
+    </ul>
+
+    <h3>③ Düzeltici (Pürüzsüzleştirici) Tabaka</h3>
+    <ul>
+      <li>Renk vericinin uygulanmasını kolaylaştırmak için <b>pürüzsüz bir yüzey gerektirir</b>,</li>
+      <li>Şeker çözeltisine <b>kalsiyum karbonat ve talk</b> ilave edilerek kaplama yapılır,</li>
+      <li>Genellikle <b>titanyum dioksit</b> ile istenen <b>beyazlık seviyesine</b> ayarlanır.</li>
+    </ul>
+
+    <h3>④ Renklendirme Tabakası</h3>
+    <ul>
+      <li>Hemen hemen tüm şeker kaplı tabletler renklidir; <b>görsel güzellik</b> bu dozaj formu için çok önemlidir,</li>
+      <li>Renk kaplamaları genellikle <b>renk maddesi içeren sakaroz şurubundan</b> oluşur,</li>
+      <li>Şeker kaplamada 2 tip renk maddesi kullanılır:
+        <ul>
+          <li>Suda <b>çözünen boyalar</b>,</li>
+          <li>Suda <b>çözünmeyen pigmentler</b>.</li>
+        </ul>
+      </li>
+      <li>Renk maddeleri <b>regülasyonlara uymalıdır</b>.</li>
+    </ul>
+
+    <h3>⑤ Parlatma / Cilalama (Polishing)</h3>
+    <p>Parlatma; kaplama kazanları veya kanvas kaplı cilalama kazanlarında şeker kaplı tabletlere <b>toz edilmiş mumların</b> — <b>karnauba mumu, balmumu</b> gibi — veya bu mumların organik çözücülerdeki <b>ılık çözeltilerinin</b> uygulanmasıdır.</p>
+
+    <h3>⑥ Baskı (Printing)</h3>
+    <ul>
+      <li>Tüm oral katı dozu tanımlamak yaygın bir uygulamadır,</li>
+      <li>Üreticinin logolu formları, ürün adı, doz miktarı veya diğer uygun kod basılır,</li>
+      <li>Alternatif baskı işlemleri: <b>ink-jet</b> ve <b>tampon baskı</b>.</li>
+    </ul>
+  </section>
+
+  <!-- ================= 21 ================= -->
+  <section id="s21">
+    <h2 class="section"><span class="num">21.</span>Şeker Kaplama Kusurları</h2>
+    <p>Şeker kaplama teknik ve pratik olarak zordur; <b>çok fazla beceri ve deneyim gerektirir</b>. Yaygın kusurlar:</p>
+    <ul>
+      <li><b>Görünüşte kaba olan tabletler</b> — yüzey çukurlarının parlatma aşamasında cila ile dolması,</li>
+      <li><b>Pürüzsüz fakat donuk görünen tabletler</b>,</li>
+      <li>Küçük parçaları olan tabletler (aynı partiden <b>kırılmış tabletler</b>),</li>
+      <li><b>Renk homojenliği göstermeyen tabletler</b>,</li>
+      <li>Depolama sırasında <b>yetersiz kurutma</b> nedeniyle bölünen tabletler (tabletlerin şişmesine neden olur).</li>
+    </ul>
+  </section>
+
+  <!-- ================= 22 ================= -->
+  <section id="s22">
+    <h2 class="section"><span class="num">22.</span>Basınçla (Kompresyonla) Kaplama</h2>
+    <p>Geleneksel olarak daha az popüler bir süreç olmasına rağmen son yıllarda bu yönteme <b>ilgi artmaktadır</b>. Özellikle <b>değiştirilmiş salımlı (modified-release) ürünlerde</b> kullanılır.</p>
+    <p>Basınçla kaplama, film ve şeker kaplamadan farklıdır: <b>önceden hazırlanmış çekirdek tabletin etrafında, özel olarak tasarlanmış granülün tablet makinesinde sıkıştırılarak basılması</b> prosesidir. <b>Esasen kuru bir prosestir</b> (her ne kadar kaplama formülasyonu olan granül yaş granülasyon ile üretilmiş olsa da).</p>
+
+    <h3>Çalışma Şekli</h3>
+    <ul>
+      <li>Önce <b>çekirdek tablet</b> hazırlanır ve sonra aynı veya farklı tablet makinesine taşınır,</li>
+      <li>Bu makinenin <b>mühresi daha geniştir</b> ve kaplama tozu kısmen doldurulmuştur,</li>
+      <li>Çekirdek tablet bu kısmen kaplama ile dolu mührenin <b>merkezine düşer</b>,</li>
+      <li>Çekirdeğin üstünü kaplama tozu doldurur ve <b>2. kez tablet basılır</b>.</li>
+    </ul>
+
+    <h3>Geçimsiz Maddeleri Ayırma</h3>
+    <ul>
+      <li>Kompresyonla kaplama <b>geçimsiz maddeleri ayırmak için de kullanılır</b> — biri çekirdek tablette, diğeri kaplamada bulunur,</li>
+      <li>Bu proseste bir <b>ara-tabaka</b> vardır; bu ara tabaka <b>ürünün stabilitesini sağlar</b>,</li>
+      <li>İki kaplama katmanından ilk tabaka <b>inert plasebodur</b> — çekirdeği ve final kaplamayı etkili şekilde ayırır; her biri geçimsiz ilaçları içerir.</li>
+    </ul>
+
+    <h3>Pratik Notlar</h3>
+    <ul>
+      <li>Kompresyonla kaplama <b>mekanik olarak karmaşık bir prosestir</b>,</li>
+      <li>Kaplama tabakasının formülasyonu ve hazırlanması <b>dikkat gerektirir</b>,</li>
+      <li>Büyük veya düzensiz şekilli granüller, çekirdek tabletin <b>eğri durumda kalmasına</b> ve kaplamada düzensiz/hatalı kaplamaya yol açar,</li>
+      <li>Hem <b>hemen-salan</b> hem <b>modifiye-salan</b> tablet formlarında kullanılır.</li>
+    </ul>
+  </section>
+
+  <!-- ================= 23 ================= -->
+  <section id="s23">
+    <h2 class="section"><span class="num">23.</span>Kaplı Multipartiküller (Pellet / Boncuk)</h2>
+    <p class="lead">Kaplı multipartiküller, genellikle <b>PELLET veya BONCUK (bead)</b> olarak da adlandırılan, <b>geniş bir aralıkta modifiye ilaç-salan</b> dozaj formlarıdır. Bu tip dozaj formunda değiştirilmiş veya gecikmiş salınımlı (<b>gastro-dirençli</b>) uygulamalar da yapılır.</p>
+
+    <h3>Avantajlar</h3>
+    <ol>
+      <li><b>Gastrik boşalma daha hızlıdır</b> (öngörülebilir),</li>
+      <li>Performans <b>beslenme durumu</b> gibi faktörlere daha az bağımlıdır,</li>
+      <li><b>GİS'te dağılımı yüksektir</b>,</li>
+      <li><b>Lokal tahriş daha azdır</b>,</li>
+      <li>Daha stabil, daha yüksek <b>hasta uyumu</b>,</li>
+      <li><b>İlaç serbestleşmesi homojen</b>.</li>
+    </ol>
+    <div class="pull"><b>Kısaca:</b> Artırılmış biyoyararlanım, azalmış yerel tahriş riski, düşük sistemik toksisite riski, tahmin edilebilir gastrik boşalma.</div>
+
+    <h3>Çok Partiküllerin Sorunları (Pellet Dezavantajları)</h3>
+    <ol>
+      <li><b>Düşük ilaç yükleme</b>,</li>
+      <li>Yardımcı maddeler için orantılı olarak <b>daha yüksek ihtiyaç</b>,</li>
+      <li>Üretimin <b>tekrarlanabilirliği</b> ve etki,</li>
+      <li><b>Çok sayıda işlem değişkeni</b>,</li>
+      <li><b>Çoklu formülasyon adımları</b>,</li>
+      <li><b>Yüksek üretim maliyeti</b>,</li>
+      <li><b>İleri teknoloji</b> ihtiyacı,</li>
+      <li><b>Eğitimli/yetenekli personel</b> ihtiyacı.</li>
+    </ol>
+  </section>
+
+  <!-- ================= 24 ================= -->
+  <section id="s24">
+    <h2 class="section"><span class="num">24.</span>Pelletizasyon Teknikleri</h2>
+    <ul>
+      <li><b>Ekstrüzyon-sferonizasyon</b>,</li>
+      <li><b>Tabakalama tekniği</b>,</li>
+      <li><b>Kriyopelletizasyon</b>,</li>
+      <li><b>Sıcak eriyik ekstrüzyonu (Hot Melt Extrusion)</b>,</li>
+      <li><b>Dondurarak pelletleme (Freeze Pelletization)</b>.</li>
+    </ul>
+
+    <h3>Ekstrüzyon-Sferonizasyon</h3>
+    <p>Maddelere ve kullanılan prosese bağlı olarak <b>sferoidler, peletler, boncuklar veya matris peletler</b> olarak adlandırılan tek tip boyutlu küresel partiküller üretmek için, <b>sferonizasyonun izlediği çoklu bir ıslak kütle ekstrüzyon işlemidir</b>.</p>
+    <ul>
+      <li>Yüksek sistemik toksisiteye sahip birçok potent ilacın optimum etkisi için <b>umut verici yöntemdir</b>,</li>
+      <li><b>Sferonizasyon</b>; ekstrüdatların (ekstrüderden çıkan çıktı) <b>küçük yuvarlak veya küresel granüller halinde şekillendirildiği</b> süreçtir,</li>
+      <li>Pratikte boyut olarak <b>0,4 ila yaklaşık 3,0 mm</b> arasında değişir.</li>
+    </ul>
+
+    <h3>Tabakalama Tekniği</h3>
+    <p>Yöntem, aynı maddenin <b>kristaller, granüller veya inert başlangıç tohumları</b> olabilen çekirdekler üzerinde <b>çözelti, süspansiyon veya kuru tozdan ardışık olarak tabakaların birikmesini</b> içerir. Çözelti/süspansiyon tabakalama işlemi, uygulama ortamında ilaç partiküllerinin ve diğer maddelerin bir çözeltisinin veya süspansiyonunun hazırlanmasından oluşur.</p>
+
+    <h3>Kriyopelletizasyon</h3>
+    <p>Bir <b>sıvı formülasyonun damlacıklarının</b>, sabit bir ortamda <b>sıvı nitrojen (azot)</b> kullanılarak <b>katı küresel parçacıklara veya peletlere</b> dönüştürüldüğü bir işlemdir.</p>
+
+    <h3>Dondurarak Pelletleme</h3>
+    <p>Erimiş bir <b>katı taşıyıcının, dağılmış bir aktif bileşenle birlikte</b> damlacıklar halinde <b>etkisiz ve karışmayan bir sıvı kolonuna</b> sokulduğu yeni ve basit bir tekniktir. <b>Peletler oda sıcaklığında katı olduğundan kurutma gerekli değildir</b>.</p>
+  </section>
+
+  <!-- ================= 25 ================= -->
+  <section id="s25">
+    <h2 class="section"><span class="num">25.</span>Tek Sayfada Genel Tekrar — Çekirdek Notlar</h2>
+    <div class="grid">
+      <div class="card"><h4>Tanım</h4><p>Granül/tablet yüzeyinin <b>ince polimer filmle</b> kaplanması; özelliklerin düzeltilmesi ve yararların artırılması.</p></div>
+      <div class="card"><h4>7 neden</h4><p>Koruma, tat-koku, teşhis, görünüm, geçimsizliği ayırma, salım kontrolü, enterik/sürekli etki.</p></div>
+      <div class="card"><h4>Dezavantaj</h4><p>Maliyet↑, farmakodinamik etkilenebilir, film kusurları, karmaşık işlem.</p></div>
+      <div class="card"><h4>3 odak</h4><p>Tablet özellikleri + kaplama işlemi + çözelti bileşimi.</p></div>
+      <div class="card"><h4>Tablet</h4><p>Küresel/homojen yüzey, aşınmaya dayanıklı; ısıyla yumuşayan veya pürüzlenen kabul edilemez.</p></div>
+      <div class="card"><h4>4 aşama</h4><p>Islanma → birikme/kısmi kuruma → yayılma → koalesans-kohezyon.</p></div>
+      <div class="card"><h4>5 kaplama tipi</h4><p>Film, şeker, enterik, modifiye salım, basınçla.</p></div>
+      <div class="card"><h4>Film kaplama</h4><p><b>En popüler</b>; çözelti/süspansiyon dönen/akışkan tablete püskürtülür → ince polimer film.</p></div>
+      <div class="card"><h4>Hemen-salan film</h4><p>Genelde suda çözünür; gastro-dirençli pH 5-6 üstünde çözünür (asitte dayanıksız/midede irritan).</p></div>
+      <div class="card"><h4>Uzatılmış-salan film</h4><p>Suda çözünmez; 6-12 saat salım; doz sayısı azalır.</p></div>
+      <div class="card"><h4>4 bileşen</h4><p>Polimer + plastifiyan + renk verici + solvan/vehikül.</p></div>
+      <div class="card"><h4>Hemen-salan polimerler</h4><p>HPMC (en yaygın), MC, HPC; PVP (yapışkan), PVP-VA kopolimer; PVA, vinil alkol-EG; aminoalkil metakrilatlar.</p></div>
+      <div class="card"><h4>Modifiye polimerler</h4><p>EC, selüloz asetat; metakrilik asit kopolimerleri (<b>Eudragit</b>); fitalat-esterleri <b>HPMCP/CAP/PVAP</b>.</p></div>
+      <div class="card"><h4>Mide-dirençli</h4><p>Metakrilik asit kopolimerleri — düşük pH'da çözünmez, pH artınca çözünür.</p></div>
+      <div class="card"><h4>Boya/Pigment</h4><p>Çözünmeyen kaplamada <b>pigment</b> tercih; demir oksit, TiO₂, alüminyum lakları.</p></div>
+      <div class="card"><h4>Çözücü</h4><p>Aseton — çevre/güvenlik/ekonomi/atık dezavantajı; modern tercih: <b>sulu polimer dispersiyonu</b> (süspansiyon).</p></div>
+      <div class="card"><h4>Kusur tipi</h4><p>Görsel (proses dengesizliği veya formülasyon) ve fonksiyonel (modifiye-salımda salımı etkileyen).</p></div>
+      <div class="card"><h4>Kazan</h4><p>Yan havalandırma kanallı; Accela Cota, Premier, Hi-Coater, Driacoater.</p></div>
+      <div class="card"><h4>Akışkan yatak</h4><p>GEA (Aeromatic-Fielder), Glatt, Vector-Freund.</p></div>
+      <div class="card"><h4>Şeker kaplama</h4><p>19. yy'dan beri; <b>sakaroz</b> bazlı, ardışık uygulama; kalın tabaka; genelde hemen-salım.</p></div>
+      <div class="card"><h4>6 kademe</h4><p>Sealing → alt kaplama → düzeltici → renklendirme → parlatma → baskı.</p></div>
+      <div class="card"><h4>Sealing</h4><p>Eskiden <b>şellak</b>; bugün <b>CAP veya PVAP</b>.</p></div>
+      <div class="card"><h4>Alt kaplama</h4><p>%50-100 ağırlık artışı; <b>kalsiyum karbonat</b> (hacim) + talk (antiaderent) + arap zamkı (kırılganlığı azaltır).</p></div>
+      <div class="card"><h4>Düzeltici</h4><p>Pürüzsüz yüzey için; CaCO₃ + talk + <b>TiO₂</b> (beyazlık).</p></div>
+      <div class="card"><h4>Renklendirme</h4><p>Renk maddesi içeren sakaroz şurubu; suda çözünen boya veya çözünmeyen pigment.</p></div>
+      <div class="card"><h4>Parlatma</h4><p><b>Karnauba mumu, balmumu</b> toz veya ılık organik çözeltileri.</p></div>
+      <div class="card"><h4>Baskı</h4><p>Logo/ad/doz; ink-jet veya tampon baskı.</p></div>
+      <div class="card"><h4>Şeker kusur</h4><p>Kaba görünüm, donuk, kırık parçalar, renk homojensizliği, yetersiz kurutma → bölünme.</p></div>
+      <div class="card"><h4>Basınçla kaplama</h4><p>Kuru proses; çekirdek üstü tabletin makinede ikinci kez basılması; modifiye salımda ve <b>geçimsiz maddeleri ayırmada</b> (inert ara tabaka).</p></div>
+      <div class="card"><h4>Pellet avantaj</h4><p>Hızlı/öngörülebilir gastrik boşalma; az tahriş; GİS'te yüksek dağılım; homojen salım; biyoyararlanım↑.</p></div>
+      <div class="card"><h4>Pellet dezavantaj</h4><p>Düşük yükleme, çok adım, çok değişken, yüksek maliyet, ileri teknoloji ve nitelikli personel.</p></div>
+      <div class="card"><h4>Pelletizasyon</h4><p>Ekstrüzyon-sferonizasyon (0,4–3 mm), tabakalama, kriyopelletizasyon (sıvı azot), hot melt extrusion, dondurarak pelletleme.</p></div>
+    </div>
+  </section>
+
+  <footer>
+    Çalışma materyali eğitim amaçlıdır. Sınav/klinik kullanım öncesi ders notlarıyla karşılaştırınız.
+  </footer>
+</div>
+
+<a href="#" class="top-link">↑ Başa dön</a>
+</body>
+</html>

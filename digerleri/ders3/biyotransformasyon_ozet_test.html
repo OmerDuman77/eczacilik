@@ -1,0 +1,609 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Biyotransformasyonu Etkileyen Faktörler</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=Source+Serif+4:ital,wght@0,300;0,400;0,600;1,300&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --navy: #1a1035;
+    --violet: #5c3d8f;
+    --gold: #d4a017;
+    --rose: #c0392b;
+    --mint: #1abc9c;
+    --light: #f5f3ef;
+    --card: #ffffff;
+    --text: #1a1a2e;
+    --muted: #6b6b80;
+    --correct: #27ae60;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: 'Source Serif 4', Georgia, serif; background: var(--light); color: var(--text); line-height: 1.8; }
+
+  header {
+    background: linear-gradient(135deg, var(--navy) 0%, var(--violet) 100%);
+    color: #fff; padding: 3.5rem 2rem 2.5rem; text-align: center; position: relative; overflow: hidden;
+  }
+  header::before {
+    content: ''; position: absolute; inset: 0;
+    background: repeating-linear-gradient(60deg, transparent, transparent 40px, rgba(255,255,255,.03) 40px, rgba(255,255,255,.03) 41px);
+  }
+  header .tag {
+    display: inline-block; background: var(--gold); color: var(--navy);
+    font-size: .7rem; font-weight: 600; letter-spacing: .15em; text-transform: uppercase;
+    padding: .3rem .9rem; border-radius: 2px; margin-bottom: 1rem;
+  }
+  header h1 { font-family: 'Playfair Display', serif; font-size: clamp(1.8rem,4vw,3rem); font-weight: 900; line-height: 1.15; }
+  header h1 span { color: var(--gold); }
+  header p { margin-top: .75rem; color: rgba(255,255,255,.6); font-size: .95rem; font-style: italic; }
+
+  .tabs {
+    display: flex; justify-content: center; gap: .5rem; padding: 1.25rem 1rem;
+    background: var(--navy); border-top: 1px solid rgba(255,255,255,.1); flex-wrap: wrap;
+  }
+  .tab-btn {
+    background: rgba(255,255,255,.08); color: rgba(255,255,255,.7);
+    border: 1px solid rgba(255,255,255,.15); padding: .5rem 1.4rem; border-radius: 30px;
+    cursor: pointer; font-family: 'Source Serif 4', serif; font-size: .85rem; transition: all .25s;
+  }
+  .tab-btn:hover, .tab-btn.active { background: var(--gold); color: var(--navy); border-color: var(--gold); font-weight: 600; }
+
+  section { display: none; max-width: 880px; margin: 0 auto; padding: 2.5rem 1.25rem 4rem; }
+  section.active { display: block; }
+
+  .sb {
+    background: var(--card); border-radius: 12px; padding: 2rem 2.25rem;
+    margin-bottom: 1.75rem; box-shadow: 0 2px 18px rgba(0,0,0,.07);
+    border-left: 5px solid var(--violet); animation: fadeUp .4s ease both;
+  }
+  .sb:nth-child(2) { border-left-color: var(--gold); }
+  .sb:nth-child(3) { border-left-color: var(--mint); }
+  .sb:nth-child(4) { border-left-color: #e74c3c; }
+  .sb:nth-child(5) { border-left-color: #3498db; }
+  .sb:nth-child(6) { border-left-color: #e67e22; }
+  .sb:nth-child(7) { border-left-color: var(--violet); }
+  .sb:nth-child(8) { border-left-color: var(--mint); }
+
+  .sb h2 {
+    font-family: 'Playfair Display', serif; font-size: 1.25rem; font-weight: 700;
+    color: var(--navy); margin-bottom: 1rem; display: flex; align-items: center; gap: .6rem;
+  }
+  .sb h2 .num {
+    background: var(--navy); color: var(--gold); width: 28px; height: 28px;
+    border-radius: 50%; font-size: .75rem; display: grid; place-items: center; flex-shrink: 0;
+  }
+  .sb p { margin-bottom: .75rem; font-size: .97rem; color: #2c2c3e; }
+  .sb ul { padding-left: 1.4rem; }
+  .sb li { margin-bottom: .45rem; font-size: .95rem; color: #2c2c3e; }
+  .sb li::marker { color: var(--violet); }
+
+  .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-top: .75rem; }
+  .col-box { background: var(--light); border-radius: 8px; padding: .9rem 1.1rem; }
+  .col-box h4 { font-size: .82rem; text-transform: uppercase; letter-spacing: .08em; color: var(--muted); margin-bottom: .5rem; }
+  .col-box li { font-size: .88rem; }
+
+  .badge { display: inline-block; padding: .2rem .65rem; border-radius: 4px; font-size: .78rem; font-weight: 600; margin-right: .3rem; margin-bottom: .35rem; }
+  .b-blue  { background: #dbeafe; color: #1d4ed8; }
+  .b-green { background: #d1fae5; color: #065f46; }
+  .b-red   { background: #fee2e2; color: #991b1b; }
+  .b-purple{ background: #ede9fe; color: #5b21b6; }
+  .b-orange{ background: #ffedd5; color: #9a3412; }
+  .b-gold  { background: #fef9c3; color: #713f12; }
+
+  table { width: 100%; border-collapse: collapse; margin-top: .75rem; font-size: .9rem; }
+  th { background: var(--navy); color: var(--gold); padding: .6rem .9rem; text-align: left; font-weight: 600; }
+  td { padding: .55rem .9rem; border-bottom: 1px solid #e8e8e8; vertical-align: top; }
+  tr:nth-child(even) td { background: #f9f7f4; }
+
+  /* TEST */
+  .test-controls { display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.5rem; flex-wrap: wrap; gap: .75rem; }
+  .test-controls h2 { font-family: 'Playfair Display', serif; font-size: 1.35rem; color: var(--navy); }
+  .show-all-btn { background: var(--navy); color: var(--gold); border: none; padding: .6rem 1.4rem; border-radius: 6px; cursor: pointer; font-family: 'Source Serif 4', serif; font-weight: 600; font-size: .88rem; transition: all .2s; }
+  .show-all-btn:hover { background: var(--gold); color: var(--navy); }
+
+  .question-card { background: var(--card); border-radius: 12px; padding: 1.5rem 1.75rem; margin-bottom: 1rem; box-shadow: 0 2px 14px rgba(0,0,0,.06); border-left: 4px solid #ddd; transition: border-color .2s; animation: fadeUp .3s ease both; }
+  .question-card.revealed { border-left-color: var(--correct); }
+  .q-header { display: flex; gap: .75rem; align-items: flex-start; margin-bottom: 1rem; }
+  .q-num { background: var(--navy); color: #fff; min-width: 30px; height: 30px; border-radius: 6px; font-size: .8rem; font-weight: 700; display: grid; place-items: center; flex-shrink: 0; margin-top: 2px; }
+  .q-text { font-size: .97rem; font-weight: 600; color: var(--navy); line-height: 1.5; }
+  .options { margin-left: 2.6rem; }
+  .option { display: flex; align-items: flex-start; gap: .55rem; padding: .4rem .5rem; border-radius: 6px; margin-bottom: .35rem; font-size: .92rem; }
+  .option .letter { font-weight: 700; min-width: 20px; color: var(--muted); }
+  .option.correct-opt { background: #d1fae5; color: #065f46; }
+  .option.correct-opt .letter { color: var(--correct); }
+  .answer-reveal { display: none; margin-top: .9rem; margin-left: 2.6rem; background: #f0fdf4; border: 1px solid #86efac; border-radius: 8px; padding: .75rem 1rem; font-size: .88rem; color: #14532d; }
+  .answer-reveal.show { display: block; }
+  .answer-reveal strong { color: var(--correct); }
+  .reveal-btn { margin-top: .75rem; margin-left: 2.6rem; background: none; border: 1.5px solid var(--violet); color: var(--violet); padding: .35rem .9rem; border-radius: 20px; cursor: pointer; font-size: .82rem; font-family: 'Source Serif 4', serif; transition: all .2s; }
+  .reveal-btn:hover { background: var(--violet); color: #fff; }
+  .reveal-btn.revealed { display: none; }
+
+  /* ANSWER KEY */
+  .answer-key-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(140px, 1fr)); gap: .6rem; margin-top: 1rem; }
+  .ak-item { background: var(--card); border-radius: 8px; padding: .65rem 1rem; display: flex; justify-content: space-between; align-items: center; box-shadow: 0 1px 6px rgba(0,0,0,.07); font-size: .9rem; }
+  .ak-item .ak-num { color: var(--muted); font-size: .82rem; }
+  .ak-item .ak-ans { font-weight: 700; color: var(--correct); font-size: 1rem; font-family: 'Playfair Display', serif; }
+
+  @keyframes fadeUp { from { opacity:0; transform:translateY(16px); } to { opacity:1; transform:translateY(0); } }
+  @media (max-width: 560px) { .two-col { grid-template-columns:1fr; } .answer-key-grid { grid-template-columns: repeat(3,1fr); } }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="tag">İstanbul Medipol Üniversitesi · Genel Toksikoloji</div>
+  <h1>Biyotransformasyonu <span>Etkileyen Faktörler</span></h1>
+  <p>Genel Toksikoloji Ders Notları</p>
+</header>
+
+<div class="tabs">
+  <button class="tab-btn active" onclick="switchTab('ozet',event)">📖 Detaylı Özet</button>
+  <button class="tab-btn" onclick="switchTab('test',event)">📝 40 Test Sorusu</button>
+  <button class="tab-btn" onclick="switchTab('cevap',event)">✅ Cevap Anahtarı</button>
+</div>
+
+<!-- ══════════  ÖZET  ══════════ -->
+<section id="ozet" class="active">
+
+  <div class="sb">
+    <h2><span class="num">1</span> Genel Çerçeve: Faktörlerin Sınıflandırılması</h2>
+    <p>Toksik maddelerin biyotransformasyon yolları ve hızı çeşitli faktörlerden etkilenir. Bu faktörlerdeki değişiklik, maddenin metabolizmasını ve dolayısıyla <strong>toksisitesini</strong> de değiştirir.</p>
+    <p>İki ana grup:</p>
+    <div class="two-col">
+      <div class="col-box">
+        <h4>🔬 İnternal Faktörler</h4>
+        <ul>
+          <li>Tür ve ırk (genetik)</li>
+          <li>Cinsiyet</li>
+          <li>Yaş</li>
+          <li>Hormonlar</li>
+          <li>Hamilelik</li>
+          <li>Hastalık (patoloji)</li>
+        </ul>
+      </div>
+      <div class="col-box">
+        <h4>🌍 Eksternal Faktörler</h4>
+        <ul>
+          <li>Ksenobiyotiğin fizikokimyasal özellikleri</li>
+          <li>Doz ve temas yolu</li>
+          <li>Maruz kalma süresi ve tekrarı</li>
+          <li>Çevresel faktörler</li>
+          <li>Diyet (beslenme alışkanlığı)</li>
+        </ul>
+      </div>
+    </div>
+    <p style="margin-top:.9rem"><strong>Kimyasal madde ile ilgili en kritik faktör:</strong> Enzimlerin aktif bölgesine ulaşan konsantrasyon → lipofiliklik, proteine bağlanma, doz ve uygulama yoluna bağlıdır.</p>
+  </div>
+
+  <div class="sb">
+    <h2><span class="num">2</span> Yaş</h2>
+    <p>Metabolizma yaşa bağlı olarak çok önemli değişkenlik gösterir; bu da ilacın etkinliğini ve toksisitesini etkiler.</p>
+    <p><span class="badge b-blue">Yenidoğan / Bebek</span></p>
+    <ul>
+      <li>Mikrozomal enzim sistemi <strong>tam gelişmemiştir</strong>; metabolizma hızı çok düşüktür.</li>
+      <li>Sitokrom P450'ye bağımlı monooksijenaz sistemi (CYP) doğum sonrası ilk günlerde yok veya çok düşüktür.</li>
+      <li><strong>Asetilasyon</strong> yenidoğanda yavaş olmakla birlikte 4–6 haftada normal düzeyine ulaşır.</li>
+      <li>Glisin, glutatyon, sistein konjugasyonları <strong>en geç olgunlaşan</strong> reaksiyonlardır.</li>
+      <li>Sülfat konjugasyonu ise neredeyse yetişkin düzeyindedir.</li>
+      <li><strong>Klinik örnek – Gri Bebek Sendromu:</strong> Kloramfenikolün yenidoğanda <em>glukuronil transferaz</em> yetersizliği nedeniyle inaktif metabolite dönüşememesi → toksik birikim.</li>
+    </ul>
+    <p style="margin-top:.75rem"><span class="badge b-orange">Yaşlı</span></p>
+    <ul>
+      <li>Karaciğer kitlesi <strong>%25–35</strong> azalır → fosinopril, imipramin, morfin, teofilin gibi ilaçların yarı ömrü uzar.</li>
+      <li>Hepatik kan akımı <strong>%40</strong> azalır → labetolol, metoprolol, propranolol gibi ilaçların biyoyararlanımı artar.</li>
+      <li>CYP450 oksidasyon kapasitesi yaklaşık <strong>%30</strong> azalır.</li>
+    </ul>
+    <p style="margin-top:.6rem">1998'de FDA, pediatrik kinetik çalışmalar için kılavuz oluşturmuş; çocukların Faz I ve II metabolitleri büyüklerinkine benzediği ancak miktar ve hız farklılığı olduğu bildirilmiştir.</p>
+  </div>
+
+  <div class="sb">
+    <h2><span class="num">3</span> Cinsiyet</h2>
+    <p>Erkek ve dişiler arasında toksisite farklılığı bilinmekte; biyoyararlanım, proteine bağlanma, dağılım hacmi, farmakokinetik parametreler ve biyotransformasyon kapasitesi bu farklılığa katkıda bulunmaktadır.</p>
+    <table>
+      <tr><th>Enzim</th><th>Daha Yüksek Aktivite</th></tr>
+      <tr><td>CYP3A4</td><td>Kadınlar</td></tr>
+      <tr><td>CYP2C16, CYP2D6, CYP2E1, CYP1A2</td><td>Erkekler</td></tr>
+    </table>
+    <p style="margin-top:.75rem"><strong>Hayvan Örnekleri:</strong></p>
+    <ul>
+      <li>Erkek sıçanlarda CYP aktivitesi daha yüksektir → aktif ara metabolit oluşunca toksisite erkekte daha fazladır (karbontetraklorür, halotan karaciğer hasarı).</li>
+      <li>Paration dişi sıçanlarda erkeklere göre 2 kat daha toksiktir → paraokson aktif metaboliti dişilerde daha hızlı oluşur.</li>
+    </ul>
+  </div>
+
+  <div class="sb">
+    <h2><span class="num">4</span> Genetik Faktörler (Tür ve Irk)</h2>
+    <p><strong>Tür İçi Farklar:</strong> Aynı türün bireyleri bile kimyasal maddelere farklı yanıt verir; genetik olarak enzim sistemlerinin aktivitesi bireyden bireye değişir (ırk, soy).</p>
+    <p><strong>Türler Arası Farklar:</strong></p>
+    <ul>
+      <li>Enzim <em>düzeylerindeki</em> farklılık → <strong>kantitatif (nicel)</strong> farklılık</li>
+      <li>Enzim <em>çeşitliliğindeki</em> farklılık → <strong>kalitatif (nitel)</strong> farklılık</li>
+    </ul>
+    <p><strong>Klinik Örnek – N-asetilaminofloren:</strong> N-hidroksilasyon (karsinojen metabolit) fare, tavşan, köpekte oluşur; kobaylarda oluşmaz → farklı iki CYP-450 izozimi tarafından katalizlenir.</p>
+    <p><strong>Selektif Toksisite:</strong> Bir kimyasal maddenin belirli konsantrasyonda <em>seçici olarak</em> belirli bir hücre, doku veya türe spesifik toksik etki göstermesidir. Bu ilkeden yararlanılarak antibiyotikler, antiparaziter ilaçlar ve pestisitler geliştirilmiştir.</p>
+  </div>
+
+  <div class="sb">
+    <h2><span class="num">5</span> Patolojik Durum (Hastalık)</h2>
+    <p><strong>Karaciğer Hastalıkları</strong> – Biyotransformasyonun en önemli organı karaciğerdir. KC hastalıklarında biyotransformasyon kapasitesi genelde düşer.</p>
+    <ul>
+      <li>Siroz, akut viral hepatit, kronik aktif hepatit, porfiria, hepatoma, alkolik KC</li>
+      <li>Akut hepatitte oksidasyonun bozulması → plazma yarı ömrü uzar</li>
+      <li>Tıkanma sarılığında safra asitlerinin birikmesi → bazı enzimlerin inhibisyonu → metabolizma yavaşlar</li>
+      <li>Faz II reaksiyonları da etkilenir: asetilasyon ve glukuronid konjugasyonunda azalma</li>
+    </ul>
+    <p style="margin-top:.75rem"><strong>Böbrek Hastalıkları</strong> – Böbrek, polar/suda çözünen maddelerin atılım organıdır.</p>
+    <ul>
+      <li>Renal yetmezlikte atılım yavaşlar → yarılanma süresi uzar → toksisite artabilir</li>
+      <li>Atılımı azalan ilaçlar: aminoglikozidler, tetrasiklinler, digoksin, fenobarbital, lityum klorür vb.</li>
+    </ul>
+  </div>
+
+  <div class="sb">
+    <h2><span class="num">6</span> Hamilelik ve Diyet</h2>
+    <p><span class="badge b-purple">Hamilelik</span></p>
+    <ul>
+      <li>Katekol-o-metil-transferaz, monoamin-oksidaz, <strong>glukuronozil-transferaz</strong> aktivitesi azalır.</li>
+      <li>Progesteron ve pregnandiol (glukuronozil transferaz inhibitörleri) artar → glukuronid konjugasyon kapasitesi düşer.</li>
+      <li>Anne sütüyle beslenen bebeklerde de glukuronid konjugasyonu azalır.</li>
+      <li>Bazı türlerde gebelikte CYP-450 düzeyleri düşer → biyotransformasyon hızı azalır.</li>
+    </ul>
+    <p style="margin-top:.75rem"><span class="badge b-green">Diyet</span></p>
+    <ul>
+      <li><strong>Proteince fakir diyet:</strong> Mikrozomal enzim aktivitesi düşer, glukuronik asit konjugasyonu azalır; CYP-450, NADPH-oksidaz, NADPH-sitokrom oksidaz miktarları düşer.</li>
+      <li>Eğer biyotransformasyon <em>toksisiteyi artırıyorsa</em> (metabolik aktivasyon): protein eksikliği toksisiteyi <strong>azaltır</strong> (CCl₄, heptaklor örneği).</li>
+      <li>Eğer biyotransformasyon <em>toksisiteyi azaltıyorsa</em> (detoksikasyon): protein eksikliği toksisiteyi <strong>artırır</strong> (striknin örneği).</li>
+    </ul>
+  </div>
+
+  <div class="sb">
+    <h2><span class="num">7</span> Enzim İndüksiyonu</h2>
+    <p>Bir enzimin substratı tarafından sentezinin artması ya da yıkımının yavaşlaması sonucu enzim miktarının ve etkinliğinin artmasına <strong>enzim indüksiyonu</strong> denir.</p>
+    <ul>
+      <li>Daha çok <strong>mikrozomal enzimler</strong> indüklenmeye müsaittir.</li>
+      <li><strong>Otoindüksiyon:</strong> İlacın kendi metabolizmasında rol oynayan enzimi indüklemesi → biyokimyasal tolerans.</li>
+      <li><strong>İntihar tipi inhibitörler:</strong> Reaktif ara ürün oluştuktan sonra kendi metabolizmasını yapan enzimi irreversible inhibe eden ilaçlar (etinil estradiol, kloramfenikol, sekobarbital).</li>
+    </ul>
+    <p style="margin-top:.75rem">İndüksiyon örnekleri:</p>
+    <table>
+      <tr><th>Grup</th><th>Örnek Maddeler</th></tr>
+      <tr><td>Barbitüratlar</td><td>Fenobarbital, glutetimid – otoindüksiyon</td></tr>
+      <tr><td>Antikonvülsanlar</td><td>Fenitoin, karbamazapin</td></tr>
+      <tr><td>Antibiyotikler</td><td>Rifampin, izoniazid, griseofulvin</td></tr>
+      <tr><td>İnsektisidler</td><td>DDT, BHC, endrin</td></tr>
+      <tr><td>Çevresel kirleticiler</td><td>PCB, PAH, sigara dumanı, egzoz</td></tr>
+      <tr><td>Gıdalar</td><td>İndol içeren lahana</td></tr>
+      <tr><td>Alkol</td><td>Kronik kullanım → indüksiyon; akut → inhibisyon</td></tr>
+    </table>
+    <p style="margin-top:.7rem">⚠️ Metabolizma sonucu <strong>toksik ürün oluşuyorsa</strong> indüksiyon istenmez; <strong>inhibisyon</strong> arzu edilir (örn. metanol zehirlenmesinde fomepizol veya etanol verilmesi).</p>
+  </div>
+
+  <div class="sb">
+    <h2><span class="num">8</span> Enzim İnhibisyonu ve Mikrozomal/Non-Mikrozomal Enzimler</h2>
+    <p>Biyotransformasyonda rol oynayan enzimlerin sentezinin azalması veya yıkımının artması sonucu enzim aktivitesinin düşmesidir. Genellikle iki ilacın birbirinin enzime bağlanma bölgesini <strong>yarışmalı olarak</strong> inhibe etmesiyle olur.</p>
+    <ul>
+      <li>Sonuç: Farmakolojik etki artar, etki süresi uzar, toksisite gelişebilir.</li>
+      <li>Önemli inhibitörler: kloramfenikol, simetidin, kumarin türevleri, izoniazid, etil alkol, eritromisin, oral kontraseptifler, disülfiram.</li>
+      <li><strong>Greyfurt suyu</strong> (flavonoidler + furanokumarinler): CYP1A2, CYP2A6, CYP3A4'ü güçlü inhibe eder → ilaç konsantrasyonu artar → toksik etki; etkisi <strong>72 saate</strong> kadar sürer. En sık etkileşen gruplar: kardiyovasküler ilaçlar, statinler, immünsupresifler, antibiyotikler, antihistaminikler.</li>
+      <li><strong>Disülfiram:</strong> Aldehit dehidrojenazı inhibe eder → asetaldehit birikir → baş ağrısı, kusma, taşikardi. Alkolizm tedavisinde kullanılır.</li>
+    </ul>
+    <p style="margin-top:.8rem"><strong>Mikrozomal Enzimler:</strong> KC, böbrek, bağırsak mukozası, akciğer – düz endoplazmik retikulumda; monooksijenazlar, CYP450, UGT'ler. İlaçlar, diyet ve ajanlar tarafından <strong>indüklenebilir</strong>.</p>
+    <p><strong>Non-Mikrozomal Enzimler:</strong> Sitoplazma, mitokondri, plazma – esterazlar, amidazlar, flavoprotein oksidazlar, konjugazlar. <strong>İndüklenemez</strong> ancak genetik polimorfizm gösterir.</p>
+  </div>
+
+</section>
+
+<!-- ══════════  TEST  ══════════ -->
+<section id="test">
+  <div class="test-controls">
+    <h2>40 Çoktan Seçmeli Test Sorusu</h2>
+    <button class="show-all-btn" onclick="revealAll()">Tüm Cevapları Göster</button>
+  </div>
+  <div id="questions-container"></div>
+</section>
+
+<!-- ══════════  CEVAP ANAHTARI  ══════════ -->
+<section id="cevap">
+  <div class="sb" style="border-left-color:var(--mint)">
+    <h2><span class="num">✓</span> Cevap Anahtarı – 40 Soru</h2>
+    <div class="answer-key-grid" id="ak-grid"></div>
+  </div>
+</section>
+
+<script>
+const questions = [
+  {
+    q:"Biyotransformasyonu etkileyen faktörler hangi iki ana gruba ayrılır?",
+    opts:["Fiziksel ve kimyasal","İnternal (fizyolojik/patolojik) ve eksternal","Enzimatik ve non-enzimatik","Genetik ve çevresel"],
+    ans:1,
+    exp:"İnternal faktörler: tür, genetik, cinsiyet, yaş, hormonlar, hamilelik, hastalık. Eksternal faktörler: ksenobiyotikle ilgili faktörler, çevresel ve diyet."
+  },
+  {
+    q:"Bir kimyasal maddenin biyotransformasyon hızını etkileyen en önemli faktör nedir?",
+    opts:["İlacın rengi","Enzimlerin aktif bölgesine ulaşan konsantrasyon","Molekülün fiziksel hali","Maddenin tadı"],
+    ans:1,
+    exp:"Metabolizmada yer alan enzimlerin aktif bölgesine ulaşan konsantrasyon, biyotransformasyon hızını ve yolunu etkileyen en önemli faktördür."
+  },
+  {
+    q:"Yenidoğanlarda mikrozomal enzim sistemiyle ilgili aşağıdakilerden hangisi doğrudur?",
+    opts:["Tam olarak gelişmiştir","Yetişkin düzeyinin üzerindedir","Tam olarak gelişmemiştir, metabolizma hızı düşüktür","Hiç enzim yoktur"],
+    ans:2,
+    exp:"Yenidoğanlarda mikrozomal enzim sistemi tam olarak gelişmemiştir ve metabolizma hızı çok düşüktür; bu nedenle pediatrik hastalarda ilaç uygulanırken dikkatli olunmalıdır."
+  },
+  {
+    q:"Yenidoğanda 'Gri Bebek Sendromu'na yol açan ilaç ve mekanizma hangisidir?",
+    opts:["Aspirin – siklooksijenaz inhibisyonu","Kloramfenikol – glukuronil transferaz yetersizliği","Penisilin – beta-laktamaz eksikliği","Tetrasiklin – kalsiyum bağlanması"],
+    ans:1,
+    exp:"Kloramfenikolün yenidoğanda glukuronid metabolitine dönüştürülememesi (glukuronil transferaz aktivitesi yetersiz) nedeniyle toksik birikimi gri bebek sendromunu oluşturur."
+  },
+  {
+    q:"Faz II metabolizmasında yenidoğanda en geç olgunlaşan reaksiyonlar hangileridir?",
+    opts:["Sülfat konjugasyonu","Asetilasyon","Glisin, glutatyon ve sistein konjugasyonları","Metilasyon"],
+    ans:2,
+    exp:"Glisin, glutatyon ve sistein gibi amino asitlerle konjugasyon en geç olgunlaşan metabolik reaksiyonlar arasındadır; sülfat konjugasyonu ise yetişkin düzeyini yakındır."
+  },
+  {
+    q:"Yaşlılıkta hepatik kan akımı ne oranda azalır?",
+    opts:["%10","%25","%40","%60"],
+    ans:2,
+    exp:"Yaşlılıkta hepatik kan akımı yaklaşık %40 oranında azalır; bu da labetolol, metoprolol, propranolol gibi ilaçların itrahını azaltıp biyoyararlanımını artırabilir."
+  },
+  {
+    q:"Yaşlılıkta CYP450 oksidasyon kapasitesindeki azalma yaklaşık ne kadardır?",
+    opts:["%10","%20","%30","%50"],
+    ans:2,
+    exp:"Araştırmacılar CYP450'lerin okside etme kapasitesinde yaşlılıkta yaklaşık %30 azalma olduğunu bildirmektedir."
+  },
+  {
+    q:"CYP3A4 enzim aktivitesi hangi cinsiyette daha yüksektir?",
+    opts:["Erkekler","Kadınlar","Her ikisinde eşittir","Cinsiyete bağlı değildir"],
+    ans:1,
+    exp:"CYP3A4 enzim aktivitesinin kadınlarda erkeklere göre daha yüksek olduğu bildirilmektedir."
+  },
+  {
+    q:"CYP1A2, CYP2D6 ve CYP2E1 enzimlerinin aktivitesi hangi cinsiyette daha yüksektir?",
+    opts:["Kadınlar","Erkekler","Fark yoktur","Yaşa bağlıdır"],
+    ans:1,
+    exp:"CYP2C16, CYP2D6, CYP2E1 ve CYP1A2 enzimlerinin aktivitesinin erkeklerde daha yüksek olduğu bildirilmiştir."
+  },
+  {
+    q:"Erkek sıçanlarda karbontetraklorürün dişilere göre daha fazla karaciğer hasarı oluşturmasının sebebi nedir?",
+    opts:["Dişilerde böbrek atılımı daha hızlıdır","Erkeklerde aktif metabolite dönüşüm daha hızlıdır","Erkekler daha fazla maruz kalır","Dişilerde detoks enzimleri daha aktiftir"],
+    ans:1,
+    exp:"Erkek sıçanlarda sitokrom P-450 aktivitesi daha yüksek olduğundan karbontetraklorürün aktif metabolitlere dönüşümü daha hızlı gerçekleşir ve karaciğer hasarı daha fazladır."
+  },
+  {
+    q:"Parationun dişi sıçanlarda erkeklere göre iki kat daha toksik olmasının açıklaması nedir?",
+    opts:["Dişilerde daha fazla absorbsiyon olur","Paraokson aktif metabolitinin dişilerde daha hızlı oluşması","Erkeklerde daha hızlı atılım gerçekleşir","Dişilerde proteine bağlanma daha düşüktür"],
+    ans:1,
+    exp:"Parationun aktif metaboliti paraoksonun dişi sıçanlarda daha hızlı oluşması, parationu dişilerde erkeklere göre iki kat daha toksik yapar."
+  },
+  {
+    q:"Türler arası biyotransformasyondaki 'kalitatif (nitel) farklılık' neyle açıklanır?",
+    opts:["Enzim miktarındaki farklılık","Enzim çeşitliliğindeki değişiklik (enzim eksikliği)","Doz farklılıkları","Absorpsiyon hızı farkı"],
+    ans:1,
+    exp:"Türlere göre biyotransformasyondaki nitel farklılık bazı türlerde enzim eksikliği ve genetik farklılıktan kaynaklanmaktadır. Nicel farklılık ise enzim miktarındaki fark ve genetik nedenle açıklanır."
+  },
+  {
+    q:"N-asetilaminofloren örneğinde karsinojen metabolit (N-hidroksil) hangi türlerde OLUŞMAZ?",
+    opts:["Fare","Tavşan","Kobay","Köpek"],
+    ans:2,
+    exp:"N-asetilaminoflorenin karsinojen metaboliti (N-hidroksil) fare, tavşan ve köpekte oluşurken kobaylarda oluşmaz; bu durum farklı iki CYP-450 izozimi tarafından katalizlenmesiyle açıklanır."
+  },
+  {
+    q:"'Selektif toksisite' kavramı nasıl tanımlanır?",
+    opts:["Her türe aynı dozda toksik etki","Bir kimyasal maddenin belirli konsantrasyonda seçici olarak belirli bir hücre, doku veya türe spesifik toksik etki göstermesi","Sadece karaciğer hücrelerine zarar verme","Yalnızca insanlara toksisite gösterme"],
+    ans:1,
+    exp:"Selektif toksisite, bir kimyasal maddenin belirli konsantrasyonda seçici olarak belirli bir hücre, doku veya türe spesifik toksik etki göstermesidir; antibiyotikler ve pestisitler bu ilkeyle geliştirilmiştir."
+  },
+  {
+    q:"Karaciğer hastalıklarında biyotransformasyon kapasitesine genel etki nedir?",
+    opts:["Artar","Değişmez","Düşer","Önce artar sonra azalır"],
+    ans:2,
+    exp:"Ksenobiyotiklerin biyotransformasyonunda en önemli organ karaciğerdir; karaciğer hastalıklarında biyotransformasyon kapasitesi genellikle düşer."
+  },
+  {
+    q:"Akut viral hepatitte ilaç metabolizmasına etkisi nedir?",
+    opts:["Oksidasyonu hızlandırır, yarı ömrü kısaltır","Oksidasyonu bozar, plazma yarı ömürlerini uzatır","Glukuronid konjugasyonunu artırır","Renal klerensi artırır"],
+    ans:1,
+    exp:"Akut hepatitli hastalarda ilaçların oksidasyonu bozularak plazma yarı ömürleri uzar; benzer durum kronik hepatit ve sirozda da gözlenir."
+  },
+  {
+    q:"Tıkanma sarılığında metabolizmanın yavaşlama mekanizması nedir?",
+    opts:["CYP enzim indüksiyonu","Safra asitlerinin birikmesi ile bazı enzimlerin inhibisyonu","Böbrek atılımının artması","Hepatik kan akımının artması"],
+    ans:1,
+    exp:"Tıkanma sarılığında bazı enzimlerin inhibitörü olarak etkileyen safra asitlerinin birikimi nedeniyle bazı ilaçların metabolizması yavaşlar."
+  },
+  {
+    q:"Böbrek yetmezliğinde ksenobiyotiklerin yarılanma süresine etkisi nedir?",
+    opts:["Kısalır","Değişmez","Uzar","Önce uzar sonra kısalır"],
+    ans:2,
+    exp:"Böbrek fonksiyonlarındaki yetmezlik kimyasal maddenin atılımını yavaşlatarak ksenobiyotiğin yarılanma süresini uzatır; böylece toksisite artabilir."
+  },
+  {
+    q:"Aşağıdakilerden hangisi böbrek hastalıklarında atılımı azalan ilaçlar arasında YER ALMAZ?",
+    opts:["Digoksin","Aminoglikozid antibiyotikler","Metformin (ders listesinde yok)","Fenobarbital"],
+    ans:2,
+    exp:"Böbrek hastalıklarında atılımı azalan ilaçlar arasında aminoglikozidler, tetrasiklinler, digoksin, fenobarbital, lityum klorür, safazolin, amfoterisin B, probenesid ve klorpropamid sayılmıştır. Metformin bu listede yer almamaktadır."
+  },
+  {
+    q:"Gebelik döneminde glukuronozil transferaz aktivitesini inhibe eden hormonlar hangileridir?",
+    opts:["Östrojen ve kortizol","Progesteron ve pregnandiol","Tiroksin ve prolaktin","FSH ve LH"],
+    ans:1,
+    exp:"Glukuronozil transferaz enzimi inhibitörleri olan progesteron ve pregnandiol miktarının gebelikte artması, ksenobiyotiklerin glukuronid konjugasyon kapasitesini düşürür."
+  },
+  {
+    q:"Gebelikte hangi enzimin aktivitesi azalır?",
+    opts:["Siklooksijenaz","Katekol-o-metil-transferaz, monoamin-oksidaz, glukuronozil-transferaz","Alkol dehidrojenaz","Kolinesteraz"],
+    ans:1,
+    exp:"Katekol-o-metil-transferaz, monoamin-oksidaz ve glukuronozil-transferaz gibi birçok enzimin aktivitesi gebelik döneminde azalır."
+  },
+  {
+    q:"Proteince fakir diyetin biyotransformasyona etkisi nedir?",
+    opts:["Mikrozomal enzim aktivitesini artırır","Mikrozomal enzim aktivitesini düşürür, glukuronik asit konjugasyonunu azaltır","CYP-450 miktarını artırır","Detoksikasyonu hızlandırır"],
+    ans:1,
+    exp:"Proteince fakir besinler mikrozomal enzim aktivitesinin düşmesine ve özellikle glukuronik asitle konjugasyonun azalmasına yol açar; CYP-450, NADPH-oksidaz miktarları da düşer."
+  },
+  {
+    q:"CCl₄ zehirlenmesinde biyotransformasyon toksisiteyi artırdığına göre, protein eksikliği toksisiteye ne yapar?",
+    opts:["Toksisiteyi artırır","Toksisiteyi azaltır","Toksisiteyi değiştirmez","Önce artırır sonra azaltır"],
+    ans:1,
+    exp:"Biyotransformasyon yolu toksisiteyi artırıyorsa (metabolik aktivasyon), protein eksikliği metabolizmayı yavaşlatarak toksisiteyi azaltır (CCl₄ ve heptaklor örneğinde olduğu gibi)."
+  },
+  {
+    q:"Striknin zehirlenmesinde biyotransformasyon toksisiteyi azalttığına göre, protein eksikliği toksisiteye ne yapar?",
+    opts:["Toksisiteyi azaltır","Toksisiteyi artırır","Toksisiteyi değiştirmez","Yarı ömrü kısaltır"],
+    ans:1,
+    exp:"Biyotransformasyon sonucu toksisite azalıyorsa (detoksikasyon), protein eksikliği detoksikas­yonu yavaşlatarak toksisiteyi artırır (striknin örneğinde olduğu gibi)."
+  },
+  {
+    q:"Enzim indüksiyonu nasıl tanımlanır?",
+    opts:["Bir enzimin substratı tarafından sentezinin azaltılması","Bir enzimin substratı tarafından sentezinin artması ya da yıkımının yavaşlaması sonucu enzim etkinliğinin artması","Enzim aktivitesinin komple sona ermesi","Enzimin substrata bağlanma affinitesinin azalması"],
+    ans:1,
+    exp:"Enzim indüksiyonu; bir madde tarafından enzim sentezinin artırılması ya da yıkımının yavaşlatılması sonucu doku enzim miktarının ve etkinliğinin artmasıdır."
+  },
+  {
+    q:"'Otoindüksiyon' kavramı ne anlama gelir?",
+    opts:["Bir ilacın başka bir ilacın enzimini indüklemesi","Bir ilacın kendi biyotransformasyonunda rol oynayan enzim sistemini indüklemesi","Enzimin kendi sentezini artırması","Substratın enzimi otomatik aktive etmesi"],
+    ans:1,
+    exp:"Bir ilacın kendi biyotransformasyonunda rol oynayan enzim sistemini indüklemesi 'otoindüksiyon' olarak bilinir; bu durumda ilacın farmakolojik etkisi azalır (biyokimyasal tolerans)."
+  },
+  {
+    q:"'İntihar tipi inhibitörler' nasıl çalışır?",
+    opts:["Enzimi yarışmalı olarak inhibe ederler","Reaktif bir ara metabolite oksitlendikten sonra kendi yıkımını yapan enzimi irreversible olarak inaktive ederler","Enzimi geri dönüşümlü olarak bağlarlar","Enzimlerin sentezini artırırlar"],
+    ans:1,
+    exp:"İntihar tipi inhibitörler bir CYP enzimi tarafından reaktif ara ürüne oksitlendikten sonra kendini yıkan enzimi irreversible inaktive ederek kendi yıkımlarını yavaşlatırlar (örn. etinil estradiol, kloramfenikol, sekobarbital)."
+  },
+  {
+    q:"Akut alkol kullanımının enzim sistemi üzerine etkisi nedir?",
+    opts:["Enzim indüksiyonu","Enzim inhibisyonu","Etki yoktur","Enzim sentezini artırır"],
+    ans:1,
+    exp:"Akut alkol kullanımı enzim inhibisyonuna neden olurken, kronik alkol kullanımı enzim sistemini indükler."
+  },
+  {
+    q:"Kronik alkol kullanımının enzim sistemi üzerine etkisi nedir?",
+    opts:["Enzim inhibisyonu","Enzim indüksiyonu","Etki yoktur","Enzim aktivitesini tamamen baskılar"],
+    ans:1,
+    exp:"Kronik alkol kullanımı enzim sistemini indükler; akut alkol kullanımı ise enzim inhibisyonuna neden olur."
+  },
+  {
+    q:"Kloramfenikol-fenobarbital etkileşiminde, önceden kloramfenikol verilmiş hayvanlara fenobarbital verildiğinde ne olur?",
+    opts:["Fenobarbital etkisi azalır","Fenobarbital anestezi süresi uzar","Fenobarbital daha hızlı metabolize edilir","Hiçbir değişiklik olmaz"],
+    ans:1,
+    exp:"Kloramfenikolün enzim inhibisyonu yapması nedeniyle fenobarbitali metabolize eden enzimler inhibe olur; fenobarbitalin metabolizması tam yapılamaz ve anestezi süresi uzar."
+  },
+  {
+    q:"Disülfiramın alkolizm tedavisinde kullanılmasının mekanizması nedir?",
+    opts:["Alkolü absorpsiyon aşamasında engeller","Aldehit dehidrojenazı inhibe ederek asetaldehitin birikimini sağlar; bunun oluşturduğu hoş olmayan etkiler alkolden kaçınmaya zorlar","Karaciğerde alkol dehidrojenazı aktive eder","Merkezi sinir sistemindeki alkol reseptörlerini bloke eder"],
+    ans:1,
+    exp:"Disülfiram, alkol biyotransformasyonu sırasında aldehit dehidrojenaz enzimini inhibe ederek asetaldehitin asetik aside dönüşümünü engeller; kanda aldehit birikimine bağlı baş ağrısı, kusma, taşikardi ortaya çıkar."
+  },
+  {
+    q:"Greyfurt suyu hangi CYP enzimlerini inhibe eder?",
+    opts:["CYP2C9 ve CYP2C19","CYP1A2, CYP2A6 ve CYP3A4","CYP2D6 ve CYP3A5","CYP1B1 ve CYP2E1"],
+    ans:1,
+    exp:"Greyfurtun içerdiği flavonoidler ve furanokumarinler CYP1A2, CYP2A6 ve CYP3A4'ün güçlü inhibitörü olarak etki eder; ilacın kan konsantrasyonunu artırarak toksisite riskini yükseltir."
+  },
+  {
+    q:"Greyfurt suyunun CYP inhibisyon etkisi ne kadar sürebilir?",
+    opts:["12 saat","24 saat","48 saat","72 saat"],
+    ans:3,
+    exp:"Greyfurtun CYP inhibisyon etkisi 72 saate kadar sürebilmektedir; bu nedenle ilaç kullanımı sırasında greyfurt tüketiminden kaçınılmalıdır."
+  },
+  {
+    q:"Greyfurt suyunun en sık etkileşime girdiği ilaç grupları arasında hangisi YOKTUR?",
+    opts:["Kardiyovasküler ilaçlar","Statin türevleri","NSAİİ (non-steroid antiinflamatuvarlar)","İmmünsupresif ajanlar"],
+    ans:2,
+    exp:"Greyfurt suyunun en sık etkileşimi olan gruplar: kardiyovasküler ilaçlar, statin türevleri, immünsupresif ajanlar, antibiyotikler ve antihistaminiklerdir. NSAİİ bu listede yer almaz."
+  },
+  {
+    q:"Mikrozomal enzimlerin bulunduğu başlıca yer neresidir?",
+    opts:["Mitokondri","Sitoplazma","Düz endoplazmik retikulum (karaciğer, böbrek, bağırsak mukozası, akciğer)","Hücre çekirdeği"],
+    ans:2,
+    exp:"Mikrozomal enzimler başta karaciğer olmak üzere böbrek, bağırsak mukozası ve akciğerlerde düz endoplazmik retikulum üzerinde bulunur."
+  },
+  {
+    q:"Aşağıdakilerden hangisi mikrozomal enzim grubuna dahildir?",
+    opts:["Esterazlar","Amidazlar","Sitokrom P450 (CYP450)","Monoamin oksidaz"],
+    ans:2,
+    exp:"Monooksijenazlar, sitokrom P450, UGT'ler ve epoksit hidrolazlar mikrozomal enzimlerdir. Esterazlar, amidazlar ve monoamin oksidaz ise mikrozomal olmayan enzimlerdir."
+  },
+  {
+    q:"Mikrozomal olmayan enzimler için aşağıdakilerden hangisi DOĞRUDUR?",
+    opts:["İlaçlar tarafından kolaylıkla indüklenebilir","Yalnızca karaciğerde bulunur","İndüklenemez ancak genetik polimorfizm gösterir","Tüm konjugasyon reaksiyonlarını katalize eder"],
+    ans:2,
+    exp:"Nonmikrozomal enzimler indüklenebilir değildir; ancak birçok genetik polimorfizm gösterir. Sitoplazma, mitokondri ve plazma dahil çeşitli dokularda bulunurlar."
+  },
+  {
+    q:"Enzim inhibisyonu nasıl meydana gelir?",
+    opts:["Enzim geni tamamen silinir","Genellikle bir ilacın diğer ilacın enzime bağlanma bölgesine yarışmalı olarak bağlanmasıyla","Enzim substrat miktarı azaldığı için","Sadece irreversible bağlanma ile"],
+    ans:1,
+    exp:"Enzim inhibisyonu genellikle birlikte verilen iki ilaçtan birinin diğer ilacın enzime bağlanma bölgesine yarışmalı olarak bağlanmasını inhibe etmesi sonucu ortaya çıkar."
+  },
+  {
+    q:"Enzim inhibisyonunun klinik sonuçları nelerdir?",
+    opts:["İlacın etkisi ve toksisitesi azalır","İlacın farmakolojik etki şiddeti ve/veya toksik etkisi artabilir, etki süresi uzayabilir","İlaç daha hızlı atılır","Biyoyararlanım azalır"],
+    ans:1,
+    exp:"Enzim inhibisyonu sonucunda ilaçların farmakolojik etki şiddetleri veya toksik etkileri artabilir ya da etki süreleri uzayabilir."
+  },
+  {
+    q:"Metanol zehirlenmesinde tedavi amacıyla fomepizol veya etanol kullanılmasının toksikolojik gerekçesi nedir?",
+    opts:["Metanolün böbrekten atılımını artırmak","Metanolün formaldehit ve formik aside dönüşümünü (körlük ve ölüm riski) engelleyecek enzim inhibisyonu sağlamak","Metanolü aktif metabolite dönüştürmek","Kan–beyin bariyerini güçlendirmek"],
+    ans:1,
+    exp:"Metanol metabolizması sonucu formaldehit ve formik asit gibi körlüğe ve ölüme neden olabilecek ürünler oluşur. Fomepizol veya etanol ile enzim inhibisyonu sağlanarak bu metabolitlerin oluşması engellenir."
+  },
+  {
+    q:"Aşağıdaki ilaçlardan hangisi önemli enzim inhibitörleri arasında yer ALMAZ?",
+    opts:["Kloramfenikol","Simetidin","Disülfiram","Rifampin"],
+    ans:3,
+    exp:"Önemli enzim inhibitörleri: kloramfenikol, simetidin, kumarin türevleri, izoniazid, etil alkol, eritromisin, oral kontraseptifler ve disülfiram'dır. Rifampin ise güçlü bir enzim indükleyicisidir, inhibitör değildir."
+  }
+];
+
+function renderQuestions(){
+  const c=document.getElementById('questions-container');
+  questions.forEach((q,i)=>{
+    const card=document.createElement('div');
+    card.className='question-card'; card.id='qcard-'+i;
+    const letters=['A','B','C','D'];
+    const opts=q.opts.map((o,j)=>`<div class="option" id="opt-${i}-${j}"><span class="letter">${letters[j]})</span><span>${o}</span></div>`).join('');
+    card.innerHTML=`
+      <div class="q-header"><span class="q-num">${i+1}</span><span class="q-text">${q.q}</span></div>
+      <div class="options">${opts}</div>
+      <button class="reveal-btn" id="rbtn-${i}" onclick="revealOne(${i})">Cevabı Göster</button>
+      <div class="answer-reveal" id="ans-${i}">
+        <strong>✔ Doğru cevap: ${letters[q.ans]}) ${q.opts[q.ans]}</strong><br>
+        <em style="color:#166534;font-size:.85rem;margin-top:.3rem;display:block">${q.exp}</em>
+      </div>`;
+    c.appendChild(card);
+  });
+}
+function revealOne(i){
+  const q=questions[i];
+  document.getElementById(`opt-${i}-${q.ans}`).classList.add('correct-opt');
+  document.getElementById(`ans-${i}`).classList.add('show');
+  document.getElementById(`rbtn-${i}`).classList.add('revealed');
+  document.getElementById(`qcard-${i}`).classList.add('revealed');
+}
+function revealAll(){ questions.forEach((_,i)=>revealOne(i)); }
+function renderAK(){
+  const g=document.getElementById('ak-grid');
+  ['A','B','C','D'].forEach(()=>{});
+  const L=['A','B','C','D'];
+  questions.forEach((q,i)=>{
+    const d=document.createElement('div'); d.className='ak-item';
+    d.innerHTML=`<span class="ak-num">Soru ${i+1}</span><span class="ak-ans">${L[q.ans]}</span>`;
+    g.appendChild(d);
+  });
+}
+function switchTab(id,e){
+  document.querySelectorAll('section').forEach(s=>s.classList.remove('active'));
+  document.querySelectorAll('.tab-btn').forEach(b=>b.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  e.target.classList.add('active');
+}
+renderQuestions(); renderAK();
+</script>
+</body>
+</html>
