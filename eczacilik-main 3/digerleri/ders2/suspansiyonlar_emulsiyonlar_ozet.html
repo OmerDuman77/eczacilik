@@ -1,0 +1,685 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Süspansiyonlar (Devam) & Emülsiyonlar - Detaylı Özet</title>
+<link href="https://fonts.googleapis.com/css2?family=Merriweather:wght@400;700;900&family=Source+Sans+Pro:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #faf9f6;
+    --text: #2c2c2c;
+    --accent: #1a6b8a;
+    --accent-light: #e8f4f8;
+    --border: #d4d0c8;
+    --section-bg: #fff;
+    --highlight: #d4a853;
+    --red: #c0392b;
+    --green: #27ae60;
+    --purple: #6c3483;
+    --purple-light: #f3e8ff;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    font-family: 'Source Sans Pro', sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.7;
+    padding: 2rem 1rem;
+  }
+  .container { max-width: 860px; margin: 0 auto; }
+  h1 {
+    font-family: 'Merriweather', serif;
+    font-size: 2rem;
+    color: var(--accent);
+    text-align: center;
+    margin-bottom: 0.3rem;
+  }
+  .subtitle {
+    text-align: center;
+    color: #888;
+    font-size: 0.95rem;
+    margin-bottom: 2.5rem;
+    padding-bottom: 1.5rem;
+    border-bottom: 2px solid var(--border);
+  }
+  .part-divider {
+    text-align: center;
+    margin: 2.5rem 0 1.5rem;
+    position: relative;
+  }
+  .part-divider span {
+    background: var(--bg);
+    padding: 0 1.2rem;
+    font-family: 'Merriweather', serif;
+    font-size: 1.5rem;
+    color: var(--purple);
+    position: relative;
+    z-index: 1;
+  }
+  .part-divider::before {
+    content: '';
+    position: absolute;
+    left: 0; right: 0; top: 50%;
+    height: 3px;
+    background: linear-gradient(90deg, transparent, var(--purple), transparent);
+  }
+  .section {
+    background: var(--section-bg);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 1.5rem 1.8rem;
+    margin-bottom: 1.5rem;
+  }
+  .section.emulsion {
+    border-left: 4px solid var(--purple);
+  }
+  .section h2 {
+    font-family: 'Merriweather', serif;
+    font-size: 1.3rem;
+    color: var(--accent);
+    margin-bottom: 1rem;
+    padding-bottom: 0.5rem;
+    border-bottom: 2px solid var(--accent-light);
+  }
+  .section.emulsion h2 { color: var(--purple); border-bottom-color: var(--purple-light); }
+  .section h3 {
+    font-size: 1.05rem;
+    color: var(--accent);
+    margin: 1.2rem 0 0.5rem;
+    font-weight: 700;
+  }
+  .section.emulsion h3 { color: var(--purple); }
+  .section h4 {
+    font-size: 0.95rem;
+    color: #555;
+    margin: 0.8rem 0 0.4rem;
+    font-weight: 700;
+  }
+  p { margin-bottom: 0.7rem; }
+  ul { margin: 0.4rem 0 0.8rem 1.4rem; }
+  li { margin-bottom: 0.35rem; }
+  ol { margin: 0.4rem 0 0.8rem 1.4rem; }
+  ol li { margin-bottom: 0.35rem; }
+  .highlight-box {
+    background: var(--accent-light);
+    border-left: 4px solid var(--accent);
+    padding: 0.8rem 1rem;
+    margin: 0.8rem 0;
+    border-radius: 0 6px 6px 0;
+  }
+  .highlight-box.purple {
+    background: var(--purple-light);
+    border-left-color: var(--purple);
+  }
+  .warning-box {
+    background: #fdf2f2;
+    border-left: 4px solid var(--red);
+    padding: 0.8rem 1rem;
+    margin: 0.8rem 0;
+    border-radius: 0 6px 6px 0;
+    font-weight: 600;
+  }
+  .problem-solution {
+    background: #f8f9fa;
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    padding: 0.8rem 1rem;
+    margin: 0.6rem 0;
+  }
+  .problem-solution .problem {
+    color: var(--red);
+    font-weight: 700;
+    margin-bottom: 0.3rem;
+  }
+  .problem-solution .solution {
+    color: var(--green);
+    font-weight: 700;
+    margin-bottom: 0.3rem;
+  }
+  .formula-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 0.8rem 0;
+    font-size: 0.92rem;
+  }
+  .formula-table th {
+    background: var(--accent);
+    color: #fff;
+    padding: 0.5rem 0.8rem;
+    text-align: left;
+  }
+  .section.emulsion .formula-table th { background: var(--purple); }
+  .formula-table td {
+    padding: 0.4rem 0.8rem;
+    border-bottom: 1px solid var(--border);
+  }
+  .formula-table tr:nth-child(even) { background: #f8f8f5; }
+  .tag {
+    display: inline-block;
+    background: var(--accent-light);
+    color: var(--accent);
+    padding: 2px 8px;
+    border-radius: 4px;
+    font-size: 0.82rem;
+    font-weight: 600;
+    margin: 2px;
+  }
+  .tag.purple { background: var(--purple-light); color: var(--purple); }
+  .formula-box {
+    background: #f5f3ee;
+    border: 1px solid var(--border);
+    padding: 0.8rem 1rem;
+    border-radius: 6px;
+    margin: 0.6rem 0;
+    font-family: monospace;
+    text-align: center;
+    font-size: 1.05rem;
+  }
+  .compare-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+    margin: 0.8rem 0;
+  }
+  .compare-card {
+    padding: 1rem;
+    border-radius: 6px;
+    font-size: 0.93rem;
+  }
+  .compare-card.good { background: #eafaf1; border: 1px solid #a9dfbf; }
+  .compare-card.bad { background: #fdf2f2; border: 1px solid #f5b7b1; }
+  .compare-card.info { background: var(--accent-light); border: 1px solid #b3d9e8; }
+  .compare-card.purple-card { background: var(--purple-light); border: 1px solid #d2b4de; }
+  .compare-card strong { display: block; margin-bottom: 0.4rem; font-size: 1rem; }
+  @media (max-width: 600px) {
+    .compare-grid { grid-template-columns: 1fr; }
+    h1 { font-size: 1.5rem; }
+    .section { padding: 1rem 1.2rem; }
+  }
+</style>
+</head>
+<body>
+<div class="container">
+
+<h1>Süspansiyonlar (Devam) & Emülsiyonlar</h1>
+<p class="subtitle">Farmasötik Teknoloji II — Kapsamlı Ders Özeti (Bölüm 2)</p>
+
+<!-- ==================== SÜSPANSIYONLAR DEVAM ==================== -->
+
+<!-- 1. DEĞİŞMELER DETAY -->
+<div class="section">
+  <h2>1. Süspansiyonlarda Görülen Değişmeler (Detay)</h2>
+
+  <div class="problem-solution">
+    <p class="problem">❌ Agregasyon (Topaklanma) ve Kekleşme (Caking)</p>
+    <p>Sistemin defloküle olması ve kristal büyümesine bağlı olarak görülür.</p>
+    <p class="solution">✅ Çözüm:</p>
+    <p>Kontrollü flokülasyon, partikül büyüklüğü dağılımının kontrolü, viskozite arttırılması, zeta potansiyel kontrolü.</p>
+  </div>
+
+  <div class="problem-solution">
+    <p class="problem">❌ Flotasyon</p>
+    <p>Yeterince ıslanmamış hidrofobik partiküller yüzeylerinde hava tutarak süspansiyonun üstünde yüzer.</p>
+    <p class="solution">✅ Çözüm:</p>
+    <p>Temas açısını küçültmek için non-iyonik yüzey etkin madde veya hidrofilik polimer ilavesi.</p>
+  </div>
+
+  <div class="problem-solution">
+    <p class="problem">❌ Deflokülasyon</p>
+    <p>Aşırı elektrolit kullanımı zeta potansiyelini değiştirir. Kristal büyümesi de sebep olabilir.</p>
+    <p class="solution">✅ Çözüm:</p>
+    <p>Yüzey etkin madde, polimer ve elektrolit konsantrasyonlarının kontrolü. İyonik yüklerin gözden geçirilmesi ve kontrollü flokülasyon uygulanması.</p>
+  </div>
+
+  <div class="problem-solution">
+    <p class="problem">❌ Kristal Büyümesi</p>
+    <p>Geniş partikül dağılımlı sistemlerde küçük partiküller (yüksek serbest enerji) daha fazla çözünür, sonra büyük partiküller halinde kristallenir. Polimorfizm, sıcaklık değişiklikleri ve fazla yüzey etkin madde kristal büyümesine neden olur.</p>
+    <p class="solution">✅ Çözüm:</p>
+    <ul>
+      <li>Dar partikül büyüklüğü dağılımı kullanılmalı</li>
+      <li>Fiziksel olarak en dayanıklı kristal şekli seçilmeli</li>
+      <li>Yüksek enerjili öğütmeden kaçınılmalı</li>
+      <li>Islatma ajanları ile serbest yüzey enerjisi düşürülmeli</li>
+      <li>Yüzey etkin madde konsantrasyonu ve HLB değeri kontrol edilmeli</li>
+      <li>Aşırı sıcaklık değişikliklerinden kaçınılmalı</li>
+      <li>Koruyucu kolloidler (jelatin, doğal zamklar, selüloz türevleri) ile partikül etrafında film tabakası oluşturulmalı</li>
+    </ul>
+  </div>
+
+  <div class="problem-solution">
+    <p class="problem">❌ Zayıf Yeniden Dağıtılabilme (Redispersibilite)</p>
+    <p>Deflokülasyon ve geniş partikül dağılımına bağlıdır.</p>
+    <p class="solution">✅ Çözüm:</p>
+    <p>Dar partikül dağılımı, viskozite kontrolü, zeta potansiyel kontrolü, kontrollü flokülasyon.</p>
+  </div>
+</div>
+
+<!-- 2. REOLOJİ -->
+<div class="section">
+  <h2>2. Süspansiyonların Reolojisi</h2>
+
+  <h3>Reolojik Özellikleri Etkileyen Faktörler</h3>
+  <ul>
+    <li>Dispers fazın içeriği (konsantrasyon arttıkça viskozite artar)</li>
+    <li>Partikül çapı, şekli, büyüklüğü ve dağılımı</li>
+    <li>Dispersiyon ortamının reolojik özellikleri</li>
+    <li>Sıcaklık</li>
+  </ul>
+
+  <h3>Önemli Reolojik İlişkiler</h3>
+  <ul>
+    <li>Gerilim altında viskozite azalabilir (<strong>shear thinning</strong>) veya artabilir (<strong>shear thickening</strong>)</li>
+    <li>Dispers faz arttıkça <strong>shear thickening</strong> (koyulaşma) görülür</li>
+    <li>Seyreltik dispersiyonlarda viskozite partikül büyüklüğüne bağlı değildir</li>
+    <li>Derişik dispersiyonlarda hidrodinamik ve Brown hareketleri etkilidir</li>
+    <li>Küresel olmayan partiküllerde shear thickening gözlenir</li>
+    <li>Polidispersite arttıkça viskozite azalır</li>
+    <li>Büyük/küçük partikül oranı arttıkça viskozite azalır</li>
+  </ul>
+
+  <div class="highlight-box">
+    <strong>Çökme hızı ile viskozite arasında ters orantı vardır.</strong> Viskoziteyi arttırmak için süspansiyon ajanları kullanılır.
+  </div>
+
+  <h3>Süspansiyon Ajanlarının Akış Özellikleri</h3>
+  <ul>
+    <li><strong>Psödoplastik akış:</strong> Kitre zamkı, sodyum aljinat, CMC</li>
+    <li><strong>Tiksotropik akış:</strong> Bentonit, Veegum</li>
+    <li><strong>Hem psödoplastik hem tiksotropik:</strong> CMC + Bentonit karışımı → en çok tercih edilen kombinasyon</li>
+  </ul>
+</div>
+
+<!-- 3. BİYOYARARLANIM -->
+<div class="section">
+  <h2>3. Süspansiyonların Biyoyararlanımı</h2>
+  <p>Süspansiyonların biyoyararlanımı, çözeltiler ve katı ilaç şekilleri arasındadır. Partikül büyüklüğü azaldıkça biyoyararlanım genellikle artar, ancak çok fazla küçültme elektrostatik topaklanmaya yol açabilir.</p>
+
+  <div class="highlight-box">
+    <strong>Emilim hızı sıralaması (genel):</strong><br>
+    Çözelti > Süspansiyon > Kapsül > Tablet > Kaplı Tablet
+  </div>
+  <p>Bu sıralama genel olup, maddenin özelliğine göre değişebilir. Süspansiyon ajanları da biyoyararlanımı etkileyebilir.</p>
+</div>
+
+<!-- 4. NANOSÜSPANSİYONLAR -->
+<div class="section">
+  <h2>4. Nanosüspansiyonlar</h2>
+  <ul>
+    <li>Suda az çözünen ilaçların biyoyararlanım sorununu çözmek için geliştirilmiştir</li>
+    <li>Yüksek basınçlı homojenizatörlerle özel tekniklerle hazırlanır</li>
+    <li>Ticari isim: <strong>DissoCubes®</strong></li>
+    <li>Uygulama yolları: oral, topikal, parenteral (ia, ip, iv), pulmoner</li>
+    <li>Sterilizasyon: otoklav (buhar), gama ışını, steril filtrasyon</li>
+  </ul>
+</div>
+
+<!-- 5. İNSÜLİN SÜSPANSİYONLARI -->
+<div class="section">
+  <h2>5. Farmakopelerde İnsülin Süspansiyonları</h2>
+  <table class="formula-table">
+    <tr><th>Preparat</th><th>İçerik</th><th>pH</th></tr>
+    <tr><td>Insulin Zinc Suspension (BP)</td><td>Amorf insülin + İnsülin çinko tuzu</td><td>6,9 – 7,5</td></tr>
+    <tr><td>Insulin Zinc Susp. Crystallize (BP)</td><td>Kristalize insülin + İnsülin çinko tuzu</td><td>6,9 – 7,5</td></tr>
+    <tr><td>Insulin Zinc Suspension (USP)</td><td>Amorf çinko insülin + Kristalize çinko</td><td>–</td></tr>
+    <tr><td>Isophane Insulin Susp. (USP)</td><td>Çinko insülin kristalize + Protamin sülfat</td><td>7,1 – 7,8</td></tr>
+    <tr><td>Protamine Zinc Insulin Susp. (USP)</td><td>İnsülin + Çinko klorür + Protamin sülfat</td><td>7,1 – 7,4</td></tr>
+  </table>
+</div>
+
+<!-- ==================== EMÜLSİYONLAR ==================== -->
+<div class="part-divider"><span>EMÜLSİYONLAR</span></div>
+
+<!-- 6. TANIM -->
+<div class="section emulsion">
+  <h2>6. Emülsiyonlar – Tanım ve Genel Özellikler</h2>
+  <p>Emülsiyonlar, birbiriyle karışmayan iki sıvının (su + yağ) bir <strong>emülgatör</strong> yardımıyla damlacıklar halinde dağıtılmasıyla oluşturulan <strong>homojen görünümlü heterojen</strong> sıvı ilaç şekilleridir. Kaba dispersiyonlardır.</p>
+  <ul>
+    <li><strong>Dış faz (dispersiyon ortamı):</strong> Dağıtıcı faz</li>
+    <li><strong>İç faz (dispers faz):</strong> Dağılan faz, damlacıklar halinde</li>
+    <li>İki veya daha fazla fazdan oluşabilir</li>
+  </ul>
+
+  <h3>Avantajları</h3>
+  <ul>
+    <li>Karışmayan iki sıvının stabil karışımı hazırlanabilir</li>
+    <li>Lipofilik maddelerin (hint yağı, balık yağı, A ve E vitamini) kötü tadı maskelenebilir</li>
+    <li>Sürekli ve kontrollü ilaç salımı sağlanabilir</li>
+    <li>Katı ilaç şekillerine göre emilim daha yüksek</li>
+    <li>Yağlar iv olarak parenteral beslenme amacıyla verilebilir</li>
+    <li>Makromoleküler maddelerin (insülin, kalsitonin, heparin) GİS emilimi arttırılabilir</li>
+    <li>Deriden geçişi arttırmak için kullanılabilir</li>
+    <li>Merhem, krem, losyon gibi haricen kullanılan formülasyonlar hazırlanabilir</li>
+  </ul>
+</div>
+
+<!-- 7. TİPLER -->
+<div class="section emulsion">
+  <h2>7. Emülsiyon Tipleri</h2>
+
+  <div class="compare-grid">
+    <div class="compare-card info">
+      <strong>Y/S (Su içinde yağ)</strong>
+      İç faz: Yağ<br>Dış faz: Su
+    </div>
+    <div class="compare-card purple-card">
+      <strong>S/Y (Yağ içinde su)</strong>
+      İç faz: Su<br>Dış faz: Yağ
+    </div>
+  </div>
+  <p>Ayrıca <strong>S/Y/S</strong> ve <strong>Y/S/Y</strong> çoklu emülsiyonlar ile <strong>mikroemülsiyonlar</strong> da vardır.</p>
+
+  <h3>Damlacık Boyutu ve Görünüm</h3>
+  <table class="formula-table">
+    <tr><th>Damlacık Boyutu</th><th>Görünüm</th></tr>
+    <tr><td>> 1 µm</td><td>Beyaz (süt görünümü)</td></tr>
+    <tr><td>0,1 – 1 µm</td><td>Mavi-beyaz (Tyndall etkisi)</td></tr>
+    <tr><td>0,05 – 0,1 µm</td><td>Yarı saydam</td></tr>
+    <tr><td>< 0,05 µm</td><td>Saydam</td></tr>
+  </table>
+
+  <div class="highlight-box purple">
+    <strong>Boyut sınıflandırması:</strong> Mikroemülsiyon: 10–100 nm | Nanoemülsiyon: 100–400 nm | Makroemülsiyon: >400 nm (>0,1 µm)
+  </div>
+</div>
+
+<!-- 8. UYGULAMA YOLLARI -->
+<div class="section emulsion">
+  <h2>8. Uygulama Yoluna Göre Emülsiyonlar</h2>
+
+  <h3>8.1 Oral Emülsiyonlar</h3>
+  <ul>
+    <li>Emülgatörler toksik olmamalı, genellikle non-iyonik yüzey etkin maddeler tercih edilir</li>
+    <li>Daha çok tadı kötü olan etken maddeler için taşıyıcı olarak kullanılır</li>
+  </ul>
+
+  <h3>8.2 Topikal Emülsiyonlar</h3>
+  <ul>
+    <li>Daha çok kozmetik amaçlı</li>
+    <li>Penetrasyon özellikleri ve viskoziteleri önemli</li>
+  </ul>
+
+  <h3>8.3 Parenteral Emülsiyonlar</h3>
+  <ul>
+    <li>Steril preparatlar; ilaç taşıyıcı veya kalori kaynağı (besleyici)</li>
+    <li>Emülgatörler: lesitin, soya/yumurta fosfolipitleri, poloksamerler (Pluronic F-68)</li>
+    <li>Koruyucu: tokoferoller</li>
+    <li>İzotoniklik için: sorbitol, glukoz veya gliserin sulu faza eklenir</li>
+    <li>Otoklavda sterilize edilir</li>
+  </ul>
+
+  <div class="warning-box">
+    ⚠️ iv emülsiyonlarda yağ damlacığı boyutu <strong>&lt; 0,3 µm</strong> olmalı (emboli riski — Şilomikronlar)
+  </div>
+
+  <ul>
+    <li><strong>S/Y tipi:</strong> im ve sc uygulanır</li>
+    <li><strong>Y/S tipi:</strong> iv uygulanır</li>
+    <li>A ve K vitamini, hormonlar, propofol (Diprivan®), diazepam (Diamuls) parenteral emülsiyon olarak verilir</li>
+    <li>5-fluorourasil emülsiyonu → lenf boğumuna hedefleme</li>
+    <li>Florokarbon emülsiyonları → yapay kan</li>
+  </ul>
+
+  <h4>Intralipid Formülasyonu (%10 – 4600 kcal)</h4>
+  <table class="formula-table">
+    <tr><th>Bileşen</th><th>Miktar</th></tr>
+    <tr><td>Soya yağı</td><td>%10</td></tr>
+    <tr><td>Lesitin</td><td>%1,2</td></tr>
+    <tr><td>Gliserin</td><td>%2,2</td></tr>
+    <tr><td>Distile su</td><td>km 100 mL</td></tr>
+  </table>
+
+  <h4>Ticari Parenteral Lipid Emülsiyonları</h4>
+  <table class="formula-table">
+    <tr><th>Ticari İsim</th><th>Yağ Fazı</th><th>Emülgatör</th></tr>
+    <tr><td>Intralipid® (Fresenius Kabi)</td><td>Soya (%10, 20, 30)</td><td>Yumurta fosfolipidleri (%1,2)</td></tr>
+    <tr><td>Omegaven® (Fresenius Kabi)</td><td>Rafine balık yağı (%10)</td><td>Yumurta fosfatidleri (%1,2)</td></tr>
+    <tr><td>ClinOleic 20%® (Baxter)</td><td>Zeytin + soya yağı (%20)</td><td>Yumurta fosfatidleri (%1,2)</td></tr>
+    <tr><td>Lipofundin MCT/LCT® (Braun)</td><td>Soya + MCT 1:1 (%10, 20)</td><td>Yumurta lesitini (%0,75-1,2)</td></tr>
+  </table>
+  <p style="font-size:0.85rem; color:#888;">MCT: Orta zincirli trigliserit; LCT: Uzun zincirli trigliserit</p>
+</div>
+
+<!-- 9. ANA FAZLAR -->
+<div class="section emulsion">
+  <h2>9. Emülsiyonu Oluşturan Ana Fazlar</h2>
+  <p>Pratikte en stabil emülsiyonlar: faz hacim oranı <strong>%40–60</strong> olanlardır.</p>
+
+  <h3>Su Fazı</h3>
+  <p>Su ve polioller (gliserin, PEG, propilen glikol, butilen glikol)</p>
+
+  <h3>Yağ Fazı</h3>
+  <p>Esterler (bitkisel yağlar, izopropil miristat, gliseril monostearat, lanolin), eterler, yağ asitleri, yağ alkolleri, hidrokarbonlar (vazelin, mineral yağlar), mumlar, silikon, halohidrokarbonlar.</p>
+
+  <h3>Emülgatör</h3>
+  <p>Su ve yağ fazını bir arada tutar. İç fazın oranı arttıkça gereken emülgatör miktarı artar.</p>
+
+  <h3>Emülsiyon Oluşum Teorileri</h3>
+  <ol>
+    <li>Arayüzey geriliminin düşürülmesi ve termodinamik dayanıklılığın arttırılması</li>
+    <li>Arayüzeyde güçlü bir film oluşturulması</li>
+    <li>Elektriksel çifte tabaka oluşturulması ve elektriksel bariyer sağlanması</li>
+  </ol>
+
+  <h3>Yüzey/Yüzeylerarası Gerilim Ölçüm Yöntemleri</h3>
+  <p>Kılcal boruda yükselme, damla ağırlığı/hacmi yöntemi, halka koparma yöntemi (Du Nouy tensiometer), Wilhelmy tablası yöntemi.</p>
+</div>
+
+<!-- 10. EMÜLGATÖRLER -->
+<div class="section emulsion">
+  <h2>10. Emülgatörler</h2>
+  <p>Doğal, yarı sentetik veya sentetik maddelerdir. Kimyasal yapı, iyonik yük veya emülsiyon oluşturma mekanizmasına göre sınıflandırılır.</p>
+
+  <h3>Film Tipine Göre Sınıflandırma</h3>
+  <table class="formula-table">
+    <tr><th>Film Tipi</th><th>Özellik</th><th>Örnekler</th></tr>
+    <tr><td>Monomoleküler film</td><td>Tek tabaka, yüzeylerarası gerilimi belirgin azaltır</td><td>Sentetik ve organik emülgatörler</td></tr>
+    <tr><td>Multimoleküler film</td><td>Hidrate liyofilik kolloidler; yüzey gerilimini düşürmez ama koalesansa karşı kuvvetli film oluşturur, viskoziteyi arttırır</td><td>Doğal emülgatörlerin çoğu</td></tr>
+    <tr><td>Katı partikül film</td><td>İnce öğütülmüş katı partiküller arayüzeyde birikerek film oluşturur</td><td>Bentonit, veegum, kaolin</td></tr>
+  </table>
+
+  <h3>Kimyasal Yapıya Göre Sınıflandırma</h3>
+  <p>Yüzey etkin maddeler, hidrofilik kolloidal emülgatörler (doğal/sentetik/yarı sentetik makromoleküller), iyice toz edilmiş katılar.</p>
+</div>
+
+<!-- 11. YÜZEY ETKİN MADDELER -->
+<div class="section emulsion">
+  <h2>11. Yüzey Etkin Maddeler (Sürfaktanlar)</h2>
+  <p>Hidrofilik baş kısım + 12-18 karbonlu hidrofobik zincirden oluşur. Sentetik sürfaktanların çoğu toksik, hemolitik ve iritandır. Katyonikler en tahriş edici, <strong>non-iyonikler en zararsız</strong> gruptur.</p>
+
+  <h3>11.1 Anyonik Yüzey Etkin Maddeler</h3>
+  <ul>
+    <li>Negatif yüklü; yüksek pH'da aktif, pH >10'da dayanıklı</li>
+    <li>Asit ortamda veya katyonik emülgatörlerle etkinlik kaybeder</li>
+    <li>Suda çözünür, çok iyi <strong>Y/S emülsiyon</strong> oluştururlar, iritandır</li>
+  </ul>
+  <h4>Alt grupları:</h4>
+  <ul>
+    <li><strong>Alkil sülfatlar:</strong> SLS (en sık topikal anyonik), lauril sülfat TEA, Na setil sülfat, Na setostearil sülfat. SLS tek başına zayıf, setostearil alkolle kombine edilir</li>
+    <li><strong>Sülfonatlar:</strong> Na setil sülfonat, dioktil sülfo süksinat</li>
+    <li><strong>Monovalent yağ asidi tuzları (Suda çözünen sabunlar):</strong> Na oleat, K oleat, TEA stearat. In situ sabun köpüğü yöntemiyle formülasyonda oluşturulabilir</li>
+    <li><strong>Di/trivalent yağ asidi tuzları (Suda çözünmeyen sabunlar):</strong> Ca oleat, Zn stearat, Al stearat → genellikle <strong>S/Y emülsiyonu</strong> oluştururlar</li>
+  </ul>
+
+  <h3>11.2 Katyonik Yüzey Etkin Maddeler</h3>
+  <ul>
+    <li>Pozitif yüklü; düşük pH'da aktif, pH 4-6 arasında stabil</li>
+    <li>Alkali ortamda veya anyonik emülgatörlerle etkinlik kaybeder</li>
+    <li>Antimikrobiyal özelliklere sahip, emülsiyon oluşturma zayıf → yardımcı madde ile kullanılır</li>
+    <li><strong>Kuaterner amonyum bileşikleri:</strong> Setrimid (CTAB), benzalkonyum klorür</li>
+    <li><strong>Piridinyum tuzları:</strong> Setil piridinyum bromür</li>
+  </ul>
+
+  <h3>11.3 Amfoterik Yüzey Etkin Maddeler</h3>
+  <ul>
+    <li>Aynı molekülde hem katyonik hem anyonik gruplar</li>
+    <li>Alkali ortamda anyonik, asit ortamda katyonik özellik</li>
+    <li>Örnek: Sodyum N-alkil amino propionat</li>
+  </ul>
+
+  <h3>11.4 Non-iyonik Yüzey Etkin Maddeler</h3>
+  <p>En az toksik ve iritan grup. pH değişimlerine dirençli (iyonize olmaz). Hem S/Y hem Y/S emülsiyonu oluşturabilir.</p>
+
+  <h4>Glikol ve Gliserol Esterleri</h4>
+  <p>Gliseril monostearat (çok lipofilik, zayıf emülsifiyan — kombine kullanılır), gliseril monooleat, propilen glikol monostearat. Dermatolojik formülasyonlarda yaygın.</p>
+
+  <h4>Sorbitan Esterleri (SPAN)</h4>
+  <table class="formula-table">
+    <tr><th>Kısaltma</th><th>Kimyasal Adı</th></tr>
+    <tr><td>Span 20</td><td>Sorbitan monolaurat</td></tr>
+    <tr><td>Span 40</td><td>Sorbitan monopalmitat (S/Y oluşturur)</td></tr>
+    <tr><td>Span 60</td><td>Sorbitan monostearat</td></tr>
+    <tr><td>Span 65</td><td>Sorbitan tristearat</td></tr>
+    <tr><td>Span 80</td><td>Sorbitan monooleat</td></tr>
+    <tr><td>Span 85</td><td>Sorbitan trioleat</td></tr>
+  </table>
+
+  <h4>Polisorbatlar – PEG-sorbitan Esterleri (TWEEN)</h4>
+  <table class="formula-table">
+    <tr><th>Kısaltma</th><th>Kimyasal Adı</th></tr>
+    <tr><td>Tween 20</td><td>PEG-sorbitan monolaurat</td></tr>
+    <tr><td>Tween 40</td><td>PEG-sorbitan monopalmitat</td></tr>
+    <tr><td>Tween 60</td><td>PEG-sorbitan monostearat</td></tr>
+    <tr><td>Tween 65</td><td>PEG-sorbitan tristearat</td></tr>
+    <tr><td>Tween 80</td><td>PEG-sorbitan monooleat (oral + parenteral)</td></tr>
+    <tr><td>Tween 85</td><td>PEG-sorbitan trioleat</td></tr>
+  </table>
+
+  <h4>PEG Yağ Asidi Esterleri (Myrj, Cremophor)</h4>
+  <p>Myrj 45 (polioksietilen monostearat), Cremophor RH 40 (PEG-40 castor oil / Kolliphor RH 40), Cremophor EL (PEG-35 castor oil / Kolliphor EL).</p>
+
+  <h4>Poloksamerler (Pluronic)</h4>
+  <p>POE/POP blok kopolimerleri. Poloxamer 188 (Lutrol F68), Poloxamer 407 (Lutrol F127). Pluronic F68 çeşitli iv formülasyonlarda kullanılır.</p>
+
+  <h4>PEG Eterleri (Brij)</h4>
+  <p>Brij 30 (POE lauril eter), Brij 93 (POE monooleil eter), Brij 98 (POE 10 stearil eter).</p>
+
+  <h4>Yüksek Yağ Alkolleri</h4>
+  <p>Setil alkol, lauril alkol, stearil alkol, setostearil alkol. Zayıf S/Y emülgatörü; iyonik/non-iyonik sürfaktanla kombine edildiğinde dayanıklı Y/S emülsiyon oluşturur. Setostearil alkol = setil alkol (%20-35) + stearil alkol (%50-70) karışımı.</p>
+</div>
+
+<!-- 12. HİDROFİLİK KOLLOİDAL EMÜLGATÖRLER -->
+<div class="section emulsion">
+  <h2>12. Hidrofilik Kolloidal Emülgatörler</h2>
+
+  <h3>Polisakkaritler (Doğal)</h3>
+  <p>Arap zamkı, jelatin, agar, karragen, guar zamkı, kitre zamkı, ksantan zamkı, sodyum aljinat → <strong>multimoleküler film</strong> oluştururlar.</p>
+  <ul>
+    <li><strong>Jelatin A:</strong> Kollajenin asit hidrolizi</li>
+    <li><strong>Jelatin B:</strong> Kollajenin alkali hidrolizi</li>
+  </ul>
+
+  <h3>Sentetik ve Yarı Sentetikler</h3>
+  <p>Selüloz esterleri (MC, Na CMC, HPMC), akrilik asit polimerleri (Karbomerler), kitosan tuzları/türevleri, karboksimetil kitin.</p>
+
+  <h3>Fosfolipidler — Lesitin</h3>
+  <ul>
+    <li>Yumurta sarısı veya soya fasülyesinden elde edilir</li>
+    <li>Suda çözünmez, organik çözücülerde çözünür</li>
+    <li>Parenteral ve oral lipid emülsiyonlarında ana emülgatör</li>
+    <li>Non-iyonik (fosfatidilkolin, fosfatidiletanolamin) + anyonik (fosfatidilserin, fosfatidilgliserin) fosfolipidler içerir</li>
+    <li>Her iki tip emülsiyon hazırlanabilir</li>
+  </ul>
+
+  <h3>Steroidal Emülgatörler</h3>
+  <ul>
+    <li>Lanolin, lanolin alkolü, balmumu, kolesterol</li>
+    <li>Oksidasyona eğilimli → antioksidan gerekebilir</li>
+    <li>Genellikle <strong>S/Y emülsiyonu</strong> hazırlanmasında kullanılır</li>
+    <li>Kolesterol: yağda çözünür, S/Y tipi</li>
+    <li>Türevleri (lanolin etilen oksit) ile Y/S de mümkün</li>
+  </ul>
+
+  <h3>Kazein</h3>
+  <p>Proteinik yapıda, sütün emülsifiyan maddesi. %5 oranında iyi emülgatör. Y/S tipi. Parabenler eklenmeli.</p>
+
+  <h3>Yumurta Sarısı</h3>
+  <p>%11 lesitin, %16 protein, %1,5 kolesterol. İyi Y/S emülgatörü. Taze kullanılmalı (kurutulunca özelliğini kaybeder). Benzoik asit ile korunur. Mayonez yapımı mantığıyla hazırlanır.</p>
+</div>
+
+<!-- 13. TOZ EDİLMİŞ KATILAR -->
+<div class="section emulsion">
+  <h2>13. İyice Toz Edilmiş Katılar (Katı Partikül Emülgatörler)</h2>
+  <ul>
+    <li>Partiküller damlacık boyutundan küçük olmalı; her iki faz tarafından ıslatılmalı</li>
+    <li>Sulu faz ile ıslatılırsa → <strong>Y/S</strong> emülsiyonu; yağlı faz ile ıslatılırsa → <strong>S/Y</strong> emülsiyonu</li>
+    <li>Viskozite değiştirici etkileri de var</li>
+  </ul>
+  <table class="formula-table">
+    <tr><th>Madde</th><th>Oluşturdukları Emülsiyon Tipi</th></tr>
+    <tr><td>Bentonit</td><td>Hem Y/S hem S/Y</td></tr>
+    <tr><td>Veegum, MgO, Mg(OH)₂, Al(OH)₃</td><td>Y/S</td></tr>
+    <tr><td>Attapulgit, kaolin, hektorit, Mg-Al silikat</td><td>–</td></tr>
+  </table>
+</div>
+
+<!-- 14. HLB -->
+<div class="section emulsion">
+  <h2>14. Hidrofil–Lipofil Balans (HLB)</h2>
+  <p>Yüzey etkin maddelerin hidrofil ve lipofil grupları arasındaki dengeyi ifade eder. Değer <strong>0–20</strong> arasında; 20'ye yaklaştıkça hidrofilik özellik artar.</p>
+
+  <h3>Griffin Tablosu — HLB Değerine Göre Kullanım Alanları</h3>
+  <table class="formula-table">
+    <tr><th>HLB Değeri</th><th>Etki / Kullanım</th></tr>
+    <tr><td>1 – 3</td><td>Köpük giderici ajanlar</td></tr>
+    <tr><td>3 – 8</td><td><strong>S/Y emülgatörleri</strong></td></tr>
+    <tr><td>7 – 9</td><td>Islatıcı ajanlar</td></tr>
+    <tr><td>8 – 16</td><td><strong>Y/S emülgatörleri</strong></td></tr>
+    <tr><td>13 – 16</td><td>Deterjanlar</td></tr>
+    <tr><td>16 – 18</td><td>Çözünürlüğü arttırıcı ajanlar</td></tr>
+  </table>
+
+  <h3>Bazı Maddelerin HLB Değerleri</h3>
+  <table class="formula-table">
+    <tr><th>Madde</th><th>HLB</th><th>Madde</th><th>HLB</th></tr>
+    <tr><td>Oleik asit</td><td>1,0</td><td>TEA oleat</td><td>12,0</td></tr>
+    <tr><td>Gliseril monostearat</td><td>3,8</td><td>Kitre zamkı</td><td>13,2</td></tr>
+    <tr><td>Span 80</td><td>4,3</td><td>Tween 60</td><td>14,9</td></tr>
+    <tr><td>Span 60</td><td>4,7</td><td>Tween 80</td><td>15,0</td></tr>
+    <tr><td>Arap zamkı</td><td>8,0</td><td>Tween 20</td><td>16,7</td></tr>
+    <tr><td>Span 20</td><td>8,6</td><td>Pluronic F68</td><td>17,0</td></tr>
+    <tr><td>Jelatin</td><td>9,8</td><td>K oleat</td><td>20,0</td></tr>
+    <tr><td>MC</td><td>10,5</td><td>SLS</td><td>40,0</td></tr>
+  </table>
+
+  <h3>HLB Hesaplama Yöntemleri</h3>
+
+  <h4>1. Griffin Yöntemi</h4>
+  <div class="formula-box">HLB = 20 × (1 – S/A)</div>
+  <p>S: Esterin sabunlaşma indisi &nbsp;|&nbsp; A: Yağ asidinin asit indisi</p>
+  <div class="highlight-box purple">
+    <strong>Örnek:</strong> Tween 80 (S=50, A=200) → HLB = 20 × (1 – 50/200) = 20 × 0,75 = <strong>15</strong>
+  </div>
+
+  <h4>2. Davies ve Rideal Yöntemi</h4>
+  <div class="formula-box">HLB = (ΣHidrofil grup sayısı – ΣLipofil grup sayısı) + 7</div>
+
+  <h4>Grup Sayıları Tablosu</h4>
+  <table class="formula-table">
+    <tr><th>Hidrofilik Grup</th><th>Değer</th><th>Lipofilik Grup</th><th>Değer</th></tr>
+    <tr><td>–SO₄⁻ Na</td><td>38,7</td><td>=CH–</td><td>0,475</td></tr>
+    <tr><td>–COO⁻ K</td><td>21,1</td><td>–CH₂–</td><td>0,475</td></tr>
+    <tr><td>–COO⁻ Na</td><td>19,1</td><td>–CH₃</td><td>0,475</td></tr>
+    <tr><td>–SO₃⁻ Na</td><td>11,0</td><td>–CF₂–</td><td>0,870</td></tr>
+    <tr><td>R₃N</td><td>9,4</td><td>–CF₃</td><td>0,870</td></tr>
+    <tr><td>Ester (sorbitan halkası)</td><td>6,8</td><td></td><td></td></tr>
+    <tr><td>Ester (serbest)</td><td>2,4</td><td></td><td></td></tr>
+    <tr><td>–COOH</td><td>2,1</td><td></td><td></td></tr>
+    <tr><td>–OH (serbest)</td><td>1,9</td><td></td><td></td></tr>
+    <tr><td>–O–</td><td>1,3</td><td></td><td></td></tr>
+    <tr><td>–OH (sorbitan halkası)</td><td>0,5</td><td></td><td></td></tr>
+  </table>
+
+  <div class="highlight-box purple">
+    <strong>Örnek:</strong> SLS (CH₃–(CH₂)₁₀–CH₂–OSO₃⁻Na⁺)<br>
+    Hidrofil: –SO₄⁻Na = 38,7<br>
+    Lipofil: 12 × (–CH₂– veya –CH₃) = 12 × 0,475 = 5,7<br>
+    HLB = 38,7 – 5,7 + 7 = <strong>40</strong>
+  </div>
+</div>
+
+<p style="text-align:center; color:#aaa; font-size:0.82rem; margin-top:2rem;">Farmasötik Teknoloji II — Süspansiyonlar (Devam) & Emülsiyonlar Ders Notu Özeti</p>
+
+</div>
+</body>
+</html>

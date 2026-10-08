@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Toz Preparatlar II - Sınav Soruları &amp; Cevaplar</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Source+Sans+3:wght@400;500;600&display=swap" rel="stylesheet">
+    <style>
+        *,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+        :root{--bg:#f7f5f0;--card-bg:#fff;--text:#2c2c2c;--text-muted:#6b6b6b;--accent:#1a6b4e;--accent-light:#e8f5ee;--border:#e2ddd5;--answer-bg:#fdf8f0;--answer-border:#e8c87a;--tf-true:#1a6b4e;--tf-false:#b5442d}
+        body{font-family:'Source Sans 3',sans-serif;background:var(--bg);color:var(--text);min-height:100vh;line-height:1.55}
+        .hero{width:100%;padding:3rem 1.5rem 2rem;text-align:center;background:linear-gradient(135deg,#1a6b4e 0%,#0d3d2d 100%);color:#fff;position:relative}
+        .hero::after{content:'';position:absolute;inset:0;background:url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.04'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");pointer-events:none}
+        .back-link{display:inline-flex;align-items:center;gap:.4rem;color:rgba(255,255,255,.75);text-decoration:none;font-size:.9rem;margin-bottom:1rem;transition:color .2s}
+        .back-link:hover{color:#fff}
+        .hero h1{font-family:'Playfair Display',serif;font-size:2rem;font-weight:700}
+        .hero p{font-size:1rem;opacity:.85;margin-top:.4rem}
+        .container{max-width:860px;margin:0 auto;padding:2rem 1.5rem 4rem}
+        .controls{display:flex;gap:.75rem;flex-wrap:wrap;margin-bottom:2rem;position:sticky;top:0;z-index:10;background:var(--bg);padding:1rem 0}
+        .btn{padding:.6rem 1.2rem;border:2px solid var(--accent);border-radius:8px;font-weight:600;font-size:.9rem;cursor:pointer;transition:all .2s;font-family:inherit;background:#fff;color:var(--accent)}
+        .btn:hover{background:var(--accent-light)}
+        .btn.active{background:var(--accent);color:#fff}
+        .btn-answer{border-color:#c8951a;color:#a07415}
+        .btn-answer:hover{background:#fdf3dc}
+        .btn-answer.active{background:#c8951a;color:#fff;border-color:#c8951a}
+        .section-title{font-family:'Playfair Display',serif;font-size:1.3rem;font-weight:700;color:var(--accent);margin:2.5rem 0 1rem;padding-bottom:.5rem;border-bottom:2px solid var(--accent-light)}
+        .section-desc{font-size:.9rem;color:var(--text-muted);margin-bottom:1rem;font-style:italic}
+        .q-table{width:100%;border-collapse:collapse;margin-bottom:1.5rem;background:var(--card-bg);border-radius:10px;overflow:hidden;border:1px solid var(--border)}
+        .q-table thead th{background:var(--accent-light);color:var(--accent);font-weight:600;text-align:left;padding:.75rem 1rem;font-size:.85rem;text-transform:uppercase;letter-spacing:.05em}
+        .q-table tbody td{padding:.7rem 1rem;border-top:1px solid var(--border);font-size:.93rem;vertical-align:top}
+        .q-table tbody tr:hover{background:#fafaf7}
+        .num{color:var(--accent);font-weight:700;width:42px;text-align:center;white-space:nowrap}
+        .question-cell{width:62%}
+        .answer-cell{position:relative;min-height:1.4em;cursor:pointer;width:38%}
+        .blank{color:var(--text-muted);font-style:italic;user-select:none}
+        .answer-text{display:none;color:#5a3e00;background:var(--answer-bg);border-left:3px solid var(--answer-border);padding:.35rem .65rem;border-radius:0 4px 4px 0;line-height:1.5;font-size:.9rem}
+        .revealed .blank{display:none}
+        .revealed .answer-text{display:block}
+        .blank-mark{display:inline-block;min-width:120px;border-bottom:1.5px dashed #b5aa98;padding:0 .3rem;margin:0 .15rem;color:var(--text-muted)}
+        .tf-answer{display:flex;flex-direction:column;gap:.35rem}
+        .tf-badge{display:inline-block;padding:.15rem .55rem;border-radius:4px;font-weight:700;font-size:.85rem;letter-spacing:.03em;align-self:flex-start}
+        .tf-badge.true{background:#dff3e7;color:var(--tf-true)}
+        .tf-badge.false{background:#f9e3dc;color:var(--tf-false)}
+        .klasik-card{background:var(--card-bg);border:1px solid var(--border);border-radius:10px;margin-bottom:1rem;overflow:hidden;transition:box-shadow .2s}
+        .klasik-card:hover{box-shadow:0 2px 8px rgba(0,0,0,.04)}
+        .klasik-header{padding:1rem 1.25rem;cursor:pointer;display:flex;gap:.75rem;align-items:flex-start;user-select:none}
+        .klasik-header:hover{background:#fafaf7}
+        .klasik-num{color:var(--accent);font-weight:700;font-size:1rem;min-width:28px}
+        .klasik-q{flex:1;font-size:.95rem;font-weight:500}
+        .klasik-toggle{color:var(--accent);font-size:.85rem;transition:transform .2s;flex-shrink:0;margin-top:.15rem}
+        .revealed .klasik-toggle{transform:rotate(180deg)}
+        .klasik-puan{display:inline-block;background:var(--accent-light);color:var(--accent);font-size:.75rem;font-weight:600;padding:.1rem .45rem;border-radius:4px;margin-left:.4rem;white-space:nowrap}
+        .klasik-answer{display:none;padding:0 1.25rem 1.25rem;border-top:1px solid var(--accent-light);background:var(--answer-bg)}
+        .klasik-answer-inner{padding-top:1rem;color:#3d2f0a;font-size:.92rem;line-height:1.65}
+        .klasik-answer-inner h4{font-family:'Playfair Display',serif;color:var(--accent);font-size:1rem;margin:1rem 0 .4rem}
+        .klasik-answer-inner h4:first-child{margin-top:0}
+        .klasik-answer-inner ul,.klasik-answer-inner ol{margin:.4rem 0 .6rem 1.4rem}
+        .klasik-answer-inner li{margin-bottom:.3rem}
+        .klasik-answer-inner p{margin-bottom:.5rem}
+        .klasik-answer-inner table{width:100%;border-collapse:collapse;margin:.5rem 0;font-size:.88rem;background:#fff}
+        .klasik-answer-inner th,.klasik-answer-inner td{border:1px solid var(--border);padding:.4rem .55rem;text-align:left;vertical-align:top}
+        .klasik-answer-inner th{background:var(--accent-light);color:var(--accent);font-weight:600}
+        .klasik-answer-inner strong{color:#4a3208}
+        .revealed .klasik-answer{display:block}
+        .toc{background:#fff;border:1px solid var(--border);border-radius:10px;padding:1rem 1.25rem;margin-bottom:1.5rem}
+        .toc h3{font-family:'Playfair Display',serif;color:var(--accent);font-size:1rem;margin-bottom:.5rem}
+        .toc ul{list-style:none;display:flex;flex-wrap:wrap;gap:.5rem}
+        .toc a{display:inline-block;padding:.3rem .7rem;background:var(--accent-light);color:var(--accent);text-decoration:none;border-radius:6px;font-size:.85rem;font-weight:500;transition:all .2s}
+        .toc a:hover{background:var(--accent);color:#fff}
+        footer{text-align:center;padding:2rem 1rem;font-size:.82rem;color:var(--text-muted);border-top:1px solid var(--border)}
+        @media(max-width:600px){.hero h1{font-size:1.45rem}.q-table tbody td{padding:.55rem .6rem;font-size:.85rem}.controls{flex-direction:column}.klasik-header{padding:.85rem 1rem}.klasik-q{font-size:.88rem}}
+        @media print{.controls,.toc{display:none}.hero{padding:1.5rem}.answer-text,.klasik-answer{display:block!important;color:#333!important;border:none!important;background:none!important;padding:.3rem 0!important}.blank{display:none!important}.klasik-card{page-break-inside:avoid;border:1px solid #ccc;margin-bottom:.8rem}}
+    </style>
+</head>
+<body>
+<header class="hero">
+    <a href="./" class="back-link">← Ana Sayfa</a>
+    <h1>Toz Preparatlar II</h1>
+    <p>25 soru · 10 Boşluk Doldurma + 10 Doğru/Yanlış + 5 Klasik · Prof. Dr. Julide Akbuğa</p>
+</header>
+<main class="container">
+    <div class="controls">
+        <button class="btn btn-answer" id="toggleAll" onclick="toggleAllAnswers()">Tüm Cevapları Göster</button>
+        <button class="btn" onclick="hideAllAnswers()">Tüm Cevapları Gizle</button>
+        <span style="font-size:.82rem;color:var(--text-muted);align-self:center">veya ilgili satıra/karta tıklayın</span>
+    </div>
+
+    <div class="toc">
+        <h3>Bölümler</h3>
+        <ul>
+            <li><a href="#bolum-a">A — Boşluk Doldurma (10)</a></li>
+            <li><a href="#bolum-b">B — Doğru / Yanlış (10)</a></li>
+            <li><a href="#bolum-c">C — Klasik Sorular (5)</a></li>
+        </ul>
+    </div>
+<section id="bolum-a"><h2 class="section-title">A — Boşluk Doldurma (10 Soru)</h2><p class="section-desc">Aşağıdaki cümlelerdeki boşlukları uygun kavramlarla doldurunuz.</p><table class="q-table"><thead><tr><th>#</th><th>Soru</th><th>Cevap</th></tr></thead><tbody><tr><td class="num">1</td><td class="question-cell">Bölünmüş tozlarda her bir doz ayrı ayrı paketlenir; modern eczanelerde hastaya küçük <span class="blank-mark">_______</span> veya polietilen zarflar içinde verilir.</td><td class="answer-cell" onclick="this.classList.toggle('revealed')"><span class="blank">. . . . . .</span><span class="answer-text"><strong>selofan</strong></span></td></tr><tr><td class="num">2</td><td class="question-cell">Kaşeler <span class="blank-mark">_______</span> dan yapılır ve iki parçadan oluşur.</td><td class="answer-cell" onclick="this.classList.toggle('revealed')"><span class="blank">. . . . . .</span><span class="answer-text"><strong>nişasta</strong></span></td></tr><tr><td class="num">3</td><td class="question-cell">Potent maddelerin homojen karıştırılması için <span class="blank-mark">_______</span> dilüsyon yöntemi kullanılır.</td><td class="answer-cell" onclick="this.classList.toggle('revealed')"><span class="blank">. . . . . .</span><span class="answer-text"><strong>geometrik</strong></span></td></tr><tr><td class="num">4</td><td class="question-cell">Bölünmemiş (bulk) tozlar <span class="blank-mark">_______</span> olmayan ilaçlar için kullanılır ve çay kaşığı veya fincan gibi ölçüm araçlarıyla dozlanır.</td><td class="answer-cell" onclick="this.classList.toggle('revealed')"><span class="blank">. . . . . .</span><span class="answer-text"><strong>potent</strong></span></td></tr><tr><td class="num">5</td><td class="question-cell">Tıbbi tozlar (haricen) deriye uygulanır ancak açık yaralar veya kırıklarda <span class="blank-mark">_______</span>.</td><td class="answer-cell" onclick="this.classList.toggle('revealed')"><span class="blank">. . . . . .</span><span class="answer-text"><strong>kullanılmaz</strong></span></td></tr><tr><td class="num">6</td><td class="question-cell">Cerrahi tozlar vücut boşluklarında kullanılır ve kullanılmadan önce mutlaka <span class="blank-mark">_______</span> edilmelidir.</td><td class="answer-cell" onclick="this.classList.toggle('revealed')"><span class="blank">. . . . . .</span><span class="answer-text"><strong>sterilize</strong></span></td></tr><tr><td class="num">7</td><td class="question-cell">İnsüflasyon tozları buruna, kulağa veya <span class="blank-mark">_______</span> uygulanan çok ince toz preparatlardır.</td><td class="answer-cell" onclick="this.classList.toggle('revealed')"><span class="blank">. . . . . .</span><span class="answer-text"><strong>boğaza</strong></span></td></tr><tr><td class="num">8</td><td class="question-cell">İnhalasyon cihazlarında ilaçlar genellikle <span class="blank-mark">_______</span> gibi bir yardımcı madde ile karıştırılarak sert jelatin kapsül içinde ambalajlanır.</td><td class="answer-cell" onclick="this.classList.toggle('revealed')"><span class="blank">. . . . . .</span><span class="answer-text"><strong>laktoz</strong></span></td></tr><tr><td class="num">9</td><td class="question-cell">Diş tozlarında baz olarak <span class="blank-mark">_______</span> kullanılır ve aşındırma işlemi ince öğütülmüş ponza taşı ile sağlanır.</td><td class="answer-cell" onclick="this.classList.toggle('revealed')"><span class="blank">. . . . . .</span><span class="answer-text"><strong>kalsiyum karbonat</strong></span></td></tr><tr><td class="num">10</td><td class="question-cell">Efervesan tozlarda su ile temas ettiğinde asit ve karbonatın reaksiyonu sonucu <span class="blank-mark">_______</span> gazı açığa çıkar.</td><td class="answer-cell" onclick="this.classList.toggle('revealed')"><span class="blank">. . . . . .</span><span class="answer-text"><strong>karbon dioksit (CO₂)</strong></span></td></tr></tbody></table></section><section id="bolum-b"><h2 class="section-title">B — Doğru / Yanlış (10 Soru)</h2><p class="section-desc">Aşağıdaki ifadelerin doğru (D) veya yanlış (Y) olduğunu belirtiniz.</p><table class="q-table"><thead><tr><th>#</th><th>İfade</th><th>Cevap</th></tr></thead><tbody><tr><td class="num">1</td><td class="question-cell">Efervesan tozlar kağıt ambalajda paketlenerek nemden korunur.</td><td class="answer-cell" onclick="this.classList.toggle('revealed')"><span class="blank">. . . . . .</span><span class="answer-text"><div class="tf-answer"><span class="tf-badge false">YANLIŞ</span><span>Efervesan tozlar plastik laminat içinde paketlenerek nemden korunur, kağıt ambalajda değil.</span></div></span></td></tr><tr><td class="num">2</td><td class="question-cell">Kaşeler özellikle kötü tadı olan ve büyük dozda verilen ilaçlar için kullanılır.</td><td class="answer-cell" onclick="this.classList.toggle('revealed')"><span class="blank">. . . . . .</span><span class="answer-text"><div class="tf-answer"><span class="tf-badge true">DOĞRU</span><span>Kaşeler kötü tadı olan ilaçlar ve büyük dozda verilen ilaçlar için özellikle uygundur.</span></div></span></td></tr><tr><td class="num">3</td><td class="question-cell">Kaşe uygulanmadan önce birkaç saniye suya batırılıp dil üstüne konur ve bol su ile yutulur.</td><td class="answer-cell" onclick="this.classList.toggle('revealed')"><span class="blank">. . . . . .</span><span class="answer-text"><div class="tf-answer"><span class="tf-badge true">DOĞRU</span><span>Kaşe suya batırılıp dil üstüne konur ve bol su ile yutulur; bu sayede kötü tat hissedilmez.</span></div></span></td></tr><tr><td class="num">4</td><td class="question-cell">Bölünmemiş tozlar potent ilaçlar için en uygun dozaj formudur.</td><td class="answer-cell" onclick="this.classList.toggle('revealed')"><span class="blank">. . . . . .</span><span class="answer-text"><div class="tf-answer"><span class="tf-badge false">YANLIŞ</span><span>Bölünmemiş tozlar potent olmayan ilaçlar için kullanılır; potent ilaçlar bölünmüş dozlarda verilmelidir.</span></div></span></td></tr><tr><td class="num">5</td><td class="question-cell">Haricen kullanılan tozlar çok ince toz edildiklerinde etkileri azalır ve irritan özellikleri artar.</td><td class="answer-cell" onclick="this.classList.toggle('revealed')"><span class="blank">. . . . . .</span><span class="answer-text"><div class="tf-answer"><span class="tf-badge false">YANLIŞ</span><span>Tam tersi: çok ince toz edildiklerinde etkileri artar ve irritan özellikleri azalır.</span></div></span></td></tr><tr><td class="num">6</td><td class="question-cell">İnsüflasyon tozları GİT&#x27;de bozulan ilaçlar için iyi bir alternatiftir.</td><td class="answer-cell" onclick="this.classList.toggle('revealed')"><span class="blank">. . . . . .</span><span class="answer-text"><div class="tf-answer"><span class="tf-badge true">DOĞRU</span><span>Akciğerlere inhale edildiğinde hızla absorbe olur; GİT&#x27;de bozulan ilaçlar için iyi bir alternatiftir.</span></div></span></td></tr><tr><td class="num">7</td><td class="question-cell">Eczanede hazırlanan tüm insüflasyonlar 100&#x27;lük elek içinden geçirilmelidir.</td><td class="answer-cell" onclick="this.classList.toggle('revealed')"><span class="blank">. . . . . .</span><span class="answer-text"><div class="tf-answer"><span class="tf-badge true">DOĞRU</span><span>Eczanede hazırlanan tüm insüflasyonların 100&#x27;lük elekten geçirilmesi zorunludur.</span></div></span></td></tr><tr><td class="num">8</td><td class="question-cell">Toz spreyler 50 mikrondan büyük partiküller içermelidir.</td><td class="answer-cell" onclick="this.classList.toggle('revealed')"><span class="blank">. . . . . .</span><span class="answer-text"><div class="tf-answer"><span class="tf-badge false">YANLIŞ</span><span>Toz spreyler 50 mikrondan büyük partiküller içermemelidir; iyi püskürtme için küçük partiküller gerekir.</span></div></span></td></tr><tr><td class="num">9</td><td class="question-cell">Diş tozları diş patlarından daha az aşındırıcıdır.</td><td class="answer-cell" onclick="this.classList.toggle('revealed')"><span class="blank">. . . . . .</span><span class="answer-text"><div class="tf-answer"><span class="tf-badge false">YANLIŞ</span><span>Diş tozları diş patlarından daha aşındırıcıdır ve sadece mekanik temizleme sağlarlar.</span></div></span></td></tr><tr><td class="num">10</td><td class="question-cell">Efervesan tozlarda kullanılan asidik maddeler sitrik asit ve tartarik asittir.</td><td class="answer-cell" onclick="this.classList.toggle('revealed')"><span class="blank">. . . . . .</span><span class="answer-text"><div class="tf-answer"><span class="tf-badge true">DOĞRU</span><span>Efervesan tozlarda sitrik asit ve/veya tartarik asit, sodyum karbonat/bikarbonat ile reaksiyona girerek CO₂ oluşturur.</span></div></span></td></tr></tbody></table></section><section id="bolum-c"><h2 class="section-title">C — Klasik Sorular (5 Soru)</h2><p class="section-desc">Soruya tıklayarak açıklamalı cevabı görebilirsiniz.</p><div class="klasik-card"><div class="klasik-header" onclick="this.parentElement.classList.toggle('revealed')"><span class="klasik-num">1.</span><span class="klasik-q">Toz formlarını bölünmüş ve bölünmemiş (bulk) tozlar olarak sınıflandırınız. Her grubun alt tiplerini yazınız. Bölünmüş tozların ambalajlanmasında dikkat edilmesi gereken noktaları açıklayınız.<span class="klasik-puan">10 puan</span></span><span class="klasik-toggle">▼</span></div><div class="klasik-answer"><div class="klasik-answer-inner">
+        <h4>Bölünmüş tozlar</h4>
+        <ul>
+            <li>Kağıt paketler</li>
+            <li>Kaşeler</li>
+            <li>Kapsüller</li>
+        </ul>
+        <h4>Bölünmemiş (bulk) tozlar</h4>
+        <ul>
+            <li>Toz alma tozları (haricen kullanılan)</li>
+            <li>İnsüflasyonlar</li>
+            <li>Buruna çekilen tozlar (nazal)</li>
+            <li>Diş tozları</li>
+            <li>Efervesan tozlar</li>
+        </ul>
+        <h4>Ambalajlamada dikkat edilecek noktalar</h4>
+        <ul>
+            <li>Uçucu, higroskopik ve nem desorplayıcı maddelerde kağıt ambalaj sorun oluşturabilir</li>
+            <li>Modern eczanelerde selofan veya polietilen zarflar tercih edilir</li>
+            <li>Efervesan tozlar plastik laminat içinde paketlenerek nemden korunur</li>
+            <li>Toz ürünler her zaman nemden korunmalıdır</li>
+        </ul>
+    </div></div></div><div class="klasik-card"><div class="klasik-header" onclick="this.parentElement.classList.toggle('revealed')"><span class="klasik-num">2.</span><span class="klasik-q">Kaşeleri tanımlayınız. Yapısını, kullanım amaçlarını ve uygulama yöntemini açıklayınız. Geometrik dilüsyon nedir ve neden önemlidir?<span class="klasik-puan">15 puan</span></span><span class="klasik-toggle">▼</span></div><div class="klasik-answer"><div class="klasik-answer-inner">
+        <p><strong>Tanım:</strong> Nişastadan yapılmış, iki parçadan oluşan, tek seferde alınmak üzere dozlanmış toz içeren dozaj formudur.</p>
+        <p><strong>Yapı:</strong> Nişasta materyalinden üretilmiş iki ayrılabilir parça (kap + kapak). Toz kapasitelerine göre farklı büyüklüklerde mevcuttur.</p>
+        <h4>Kullanım amaçları</h4>
+        <ul>
+            <li>Özellikle kötü tadı olan ilaçlar için (tat maskeleme)</li>
+            <li>Büyük dozda verilen ilaçlar için</li>
+        </ul>
+        <p><strong>Uygulama yöntemi:</strong> Kaşe birkaç saniye suya batırılır, dil üstüne konulur ve bol su ile yutulur. Nişasta yapısı suda hızla yumuşar ve yutmayı kolaylaştırır.</p>
+        <h4>Geometrik dilüsyon</h4>
+        <p>Potent (düşük dozlu, güçlü etkili) maddelerin formüle homojen olarak karıştırılması için kullanılan bir yöntemdir. Küçük miktardaki etkin madde, eşit miktarda seyreltici ile karıştırılır; ardından aynı hacimde seyreltici eklenerek tekrar karıştırılır. Bu işlem tüm madde eklenene kadar tekrarlanır. Bu sayede potent maddenin formüldeki dağılımı homojen hale gelir ve dozaj doğruluğu sağlanır.</p>
+    </div></div></div><div class="klasik-card"><div class="klasik-header" onclick="this.parentElement.classList.toggle('revealed')"><span class="klasik-num">3.</span><span class="klasik-q">Haricen kullanılan tozları (tıbbi tozlar ve cerrahi tozlar) karşılaştırmalı olarak açıklayınız. Her birinin uygulama yeri, kısıtlamaları ve sterilite gereklilikleri nelerdir?<span class="klasik-puan">15 puan</span></span><span class="klasik-toggle">▼</span></div><div class="klasik-answer"><div class="klasik-answer-inner">
+        <table>
+            <thead><tr><th>Özellik</th><th>Tıbbi Tozlar (Haricen)</th><th>Cerrahi Tozlar</th></tr></thead>
+            <tbody>
+                <tr><td>Uygulama yeri</td><td>Deri yüzeyi</td><td>Vücut boşlukları (yanık yaraları, göbek kordonu)</td></tr>
+                <tr><td>Etki tipi</td><td>Lokal (sistemik absorpsiyon amaçlanmaz)</td><td>Lokal</td></tr>
+                <tr><td>Kısıtlamalar</td><td>Açık yaralar veya kırıklarda kullanılmaz; etikette belirtilmeli</td><td>Sterilizasyon olmadan kullanılmamalı</td></tr>
+                <tr><td>Sterilite</td><td>Patojen içermemelidir</td><td>Kullanılmadan önce mutlaka sterilize edilmelidir</td></tr>
+                <tr><td>Ambalaj</td><td>Cam veya metal kaplar</td><td>Steril ambalaj</td></tr>
+            </tbody>
+        </table>
+        <p><strong>Ortak özellikler:</strong> Her ikisi de lokal etki amaçlar, çok ince toz edildiklerinde etkileri artar ve irritan özellikleri azalır. Mükemmel akışkanlık göstermeleri gerekir.</p>
+    </div></div></div><div class="klasik-card"><div class="klasik-header" onclick="this.parentElement.classList.toggle('revealed')"><span class="klasik-num">4.</span><span class="klasik-q">İnsüflasyon tozlarını tanımlayınız. Uygulama yollarını, inhalasyon cihazının çalışma prensibini, partikül boyutu gerekliliklerini ve toz aerosollerin özelliklerini açıklayınız.<span class="klasik-puan">15 puan</span></span><span class="klasik-toggle">▼</span></div><div class="klasik-answer"><div class="klasik-answer-inner">
+        <p><strong>Tanım:</strong> Buruna, kulağa veya boğaza uygulanan çok ince toz halindeki preparatlardır. Akciğerlere inhale edildiğinde hızla absorbe edilir. GİT'de bozulan ilaçlar için iyi bir alternatiftir.</p>
+        <p><strong>Uygulama yolları:</strong> Nazal (burun), auriküler (kulak), faringeal (boğaz) ve pulmoner (akciğer) yol.</p>
+        <h4>İnhalasyon cihazı çalışma prensibi</h4>
+        <ul>
+            <li>İlaçlar laktoz gibi bir yardımcı madde ile karıştırılır</li>
+            <li>Sert jelatin kapsül içinde ambalajlanır</li>
+            <li>Cihaz çalıştırıldığında kapsül kırılır</li>
+            <li>İnce toz hasta tarafından solunur</li>
+        </ul>
+        <h4>Partikül boyutu gereklilikleri</h4>
+        <ul>
+            <li>Eczanede hazırlanan insüflasyonlar 100'lük elek içinden geçirilmelidir</li>
+            <li>Toz spreyler 50 mikrondan büyük partiküller içermemelidir</li>
+            <li>Partikül boyut aralığı homojen olmalı ve valfin tıkanmasını önleyecek boyutta olmalıdır</li>
+        </ul>
+        <h4>Toz aerosollerin özellikleri</h4>
+        <ul>
+            <li>Basınç uygulanarak hedef bölgeye homojen olarak uygulanır</li>
+            <li>Aerosol kabında sterilizasyon korunabilir</li>
+            <li>Basınçlı paketlerde ambalajlanır</li>
+        </ul>
+    </div></div></div><div class="klasik-card"><div class="klasik-header" onclick="this.parentElement.classList.toggle('revealed')"><span class="klasik-num">5.</span><span class="klasik-q">Diş tozlarının (dentifrices) formül bileşenlerini ve efervesan tozların çalışma prensibini (reaksiyon mekanizması) açıklayınız.<span class="klasik-puan">10 puan</span></span><span class="klasik-toggle">▼</span></div><div class="klasik-answer"><div class="klasik-answer-inner">
+        <h4>Diş tozları (Dentifrices)</h4>
+        <p>Diş yüzeyini temizlemek için diş fırçası yardımıyla uygulanan toz formülasyonlardır.</p>
+        <h4>Formül bileşenleri</h4>
+        <ul>
+            <li><strong>Baz:</strong> Kalsiyum karbonat</li>
+            <li><strong>Deterjan:</strong> Sabun (temizleme etkisi)</li>
+            <li><strong>Aşındırıcı:</strong> İnce öğütülmüş ponza taşı (mekanik temizleme)</li>
+            <li><strong>Uçucu yağlar:</strong> Hem lezzet hem antiseptik etki sağlar</li>
+            <li>Renklendirme ve tatlandırıcı maddeler</li>
+        </ul>
+        <p>Diş tozları diş patlarından daha aşındırıcıdır ve sadece mekanik temizleme sağlar. Metal kutularda ambalajlanır.</p>
+        <h4>Efervesan tozlar — Reaksiyon mekanizması</h4>
+        <ul>
+            <li><strong>Asidik maddeler:</strong> Sitrik asit ve/veya tartarik asit</li>
+            <li><strong>Bazik maddeler:</strong> Sodyum karbonat ve/veya sodyum bikarbonat</li>
+            <li>Su ile temas → asit-karbonat reaksiyonu → CO₂ gazı açığa çıkar</li>
+            <li>CO₂ çıkışı tozun çözünmesini ve dağılmasını hızlandırır</li>
+        </ul>
+    </div></div></div></section></main>
+<footer>Eczacılık Dersleri — Kaynak: Prof. Dr. Julide Akbuğa &copy; 2026</footer>
+<script>
+function toggleAllAnswers(){
+    const btn=document.getElementById('toggleAll');
+    const all=document.querySelectorAll('.answer-cell, .klasik-card');
+    const allRevealed=[...all].every(c=>c.classList.contains('revealed'));
+    all.forEach(c=>{if(allRevealed)c.classList.remove('revealed');else c.classList.add('revealed')});
+    btn.classList.toggle('active',!allRevealed);
+}
+function hideAllAnswers(){
+    document.querySelectorAll('.answer-cell, .klasik-card').forEach(c=>c.classList.remove('revealed'));
+    document.getElementById('toggleAll').classList.remove('active');
+}
+</script>
+</body>
+</html>

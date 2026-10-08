@@ -1,0 +1,944 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Organik Çözücüler - Özet & Test</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=Source+Serif+4:wght@400;600&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #0f1419;
+  --surface: #1a2332;
+  --surface2: #1e2a3a;
+  --accent: #00d4aa;
+  --accent2: #00b894;
+  --warm: #fd79a8;
+  --gold: #fdcb6e;
+  --blue: #74b9ff;
+  --text: #dfe6e9;
+  --muted: #636e72;
+  --correct: #00b894;
+  --wrong: #d63031;
+  --border: rgba(0,212,170,0.15);
+}
+
+* { margin:0; padding:0; box-sizing:border-box; }
+
+body {
+  font-family: 'Source Serif 4', Georgia, serif;
+  background: var(--bg);
+  color: var(--text);
+  line-height: 1.75;
+  font-size: 16px;
+}
+
+.noise {
+  position: fixed;
+  top: 0; left: 0; width: 100%; height: 100%;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.03'/%3E%3C/svg%3E");
+  pointer-events: none;
+  z-index: 9999;
+}
+
+.container {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 2rem 1.5rem;
+}
+
+/* HEADER */
+.hero {
+  text-align: center;
+  padding: 4rem 2rem;
+  position: relative;
+  border-bottom: 1px solid var(--border);
+  margin-bottom: 3rem;
+}
+
+.hero::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 50%;
+  transform: translateX(-50%);
+  width: 120px; height: 3px;
+  background: linear-gradient(90deg, var(--accent), var(--warm));
+  border-radius: 2px;
+}
+
+.hero h1 {
+  font-family: 'Playfair Display', serif;
+  font-size: 3rem;
+  font-weight: 900;
+  background: linear-gradient(135deg, var(--accent), var(--blue));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  margin-bottom: 0.5rem;
+  letter-spacing: -1px;
+}
+
+.hero .subtitle {
+  color: var(--muted);
+  font-size: 1.1rem;
+  font-style: italic;
+}
+
+/* NAV TABS */
+.tabs {
+  display: flex;
+  gap: 0;
+  margin-bottom: 2rem;
+  border-radius: 12px;
+  overflow: hidden;
+  border: 1px solid var(--border);
+}
+
+.tab-btn {
+  flex: 1;
+  padding: 1rem;
+  background: var(--surface);
+  color: var(--muted);
+  border: none;
+  cursor: pointer;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.9rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  transition: all 0.3s;
+}
+
+.tab-btn.active {
+  background: linear-gradient(135deg, rgba(0,212,170,0.15), rgba(116,185,255,0.1));
+  color: var(--accent);
+  box-shadow: inset 0 -3px 0 var(--accent);
+}
+
+.tab-btn:hover:not(.active) {
+  background: var(--surface2);
+  color: var(--text);
+}
+
+.tab-content { display: none; }
+.tab-content.active { display: block; }
+
+/* SUMMARY SECTIONS */
+.section {
+  margin-bottom: 2.5rem;
+  padding: 2rem;
+  background: var(--surface);
+  border-radius: 16px;
+  border: 1px solid var(--border);
+  position: relative;
+  overflow: hidden;
+}
+
+.section::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0;
+  width: 4px; height: 100%;
+  background: linear-gradient(180deg, var(--accent), var(--blue));
+  border-radius: 0 2px 2px 0;
+}
+
+.section h2 {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.6rem;
+  color: var(--accent);
+  margin-bottom: 1rem;
+  padding-left: 1rem;
+}
+
+.section h3 {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.2rem;
+  color: var(--gold);
+  margin: 1.2rem 0 0.5rem 0;
+}
+
+.section p, .section li {
+  color: var(--text);
+  opacity: 0.9;
+}
+
+.section ul {
+  list-style: none;
+  padding-left: 0;
+}
+
+.section ul li {
+  padding: 0.3rem 0 0.3rem 1.5rem;
+  position: relative;
+}
+
+.section ul li::before {
+  content: '▸';
+  position: absolute;
+  left: 0;
+  color: var(--accent);
+  font-weight: bold;
+}
+
+.highlight-box {
+  background: rgba(0,212,170,0.08);
+  border-left: 3px solid var(--accent);
+  padding: 0.8rem 1rem;
+  margin: 0.8rem 0;
+  border-radius: 0 8px 8px 0;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.85rem;
+}
+
+.warn-box {
+  background: rgba(253,121,168,0.08);
+  border-left: 3px solid var(--warm);
+  padding: 0.8rem 1rem;
+  margin: 0.8rem 0;
+  border-radius: 0 8px 8px 0;
+}
+
+.chem {
+  font-family: 'JetBrains Mono', monospace;
+  color: var(--gold);
+  font-size: 0.9em;
+}
+
+table.info-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 1rem 0;
+  font-size: 0.9rem;
+}
+
+table.info-table th {
+  background: rgba(0,212,170,0.12);
+  color: var(--accent);
+  text-align: left;
+  padding: 0.6rem 0.8rem;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.8rem;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+table.info-table td {
+  padding: 0.5rem 0.8rem;
+  border-bottom: 1px solid rgba(255,255,255,0.05);
+}
+
+table.info-table tr:hover td {
+  background: rgba(255,255,255,0.02);
+}
+
+/* QUIZ */
+.quiz-header {
+  text-align: center;
+  margin-bottom: 2rem;
+}
+
+.quiz-header h2 {
+  font-family: 'Playfair Display', serif;
+  font-size: 2rem;
+  color: var(--accent);
+}
+
+.score-bar {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1.5rem;
+  padding: 1rem 2rem;
+  background: var(--surface);
+  border-radius: 12px;
+  border: 1px solid var(--border);
+  margin-bottom: 2rem;
+  font-family: 'JetBrains Mono', monospace;
+}
+
+.score-bar .score-num {
+  font-size: 2rem;
+  font-weight: 700;
+  color: var(--accent);
+}
+
+.score-bar .score-label {
+  color: var(--muted);
+  font-size: 0.8rem;
+  text-transform: uppercase;
+}
+
+.question-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  padding: 1.5rem 2rem;
+  margin-bottom: 1.2rem;
+  transition: all 0.3s;
+}
+
+.question-card.answered-correct {
+  border-color: var(--correct);
+  box-shadow: 0 0 20px rgba(0,184,148,0.1);
+}
+
+.question-card.answered-wrong {
+  border-color: var(--wrong);
+  box-shadow: 0 0 20px rgba(214,48,49,0.1);
+}
+
+.q-number {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.75rem;
+  color: var(--accent);
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  margin-bottom: 0.5rem;
+}
+
+.q-text {
+  font-size: 1.05rem;
+  font-weight: 600;
+  margin-bottom: 1rem;
+  color: var(--text);
+}
+
+.options {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.option-btn {
+  display: flex;
+  align-items: center;
+  gap: 0.8rem;
+  padding: 0.8rem 1rem;
+  background: var(--surface2);
+  border: 1px solid rgba(255,255,255,0.06);
+  border-radius: 10px;
+  cursor: pointer;
+  transition: all 0.2s;
+  color: var(--text);
+  font-family: 'Source Serif 4', serif;
+  font-size: 0.95rem;
+  text-align: left;
+  width: 100%;
+}
+
+.option-btn:hover:not(.selected):not(.disabled) {
+  border-color: var(--accent);
+  background: rgba(0,212,170,0.05);
+}
+
+.option-btn .letter {
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.8rem;
+  font-weight: 700;
+  flex-shrink: 0;
+  background: rgba(255,255,255,0.05);
+  color: var(--muted);
+  transition: all 0.2s;
+}
+
+.option-btn.selected-correct .letter {
+  background: var(--correct);
+  color: #fff;
+}
+
+.option-btn.selected-wrong .letter {
+  background: var(--wrong);
+  color: #fff;
+}
+
+.option-btn.show-correct .letter {
+  background: var(--correct);
+  color: #fff;
+}
+
+.option-btn.disabled {
+  cursor: default;
+  opacity: 0.6;
+}
+
+.option-btn.show-correct {
+  opacity: 1 !important;
+  border-color: var(--correct);
+}
+
+.option-btn.selected-correct {
+  border-color: var(--correct);
+  background: rgba(0,184,148,0.08);
+}
+
+.option-btn.selected-wrong {
+  border-color: var(--wrong);
+  background: rgba(214,48,49,0.08);
+}
+
+.explanation {
+  margin-top: 0.8rem;
+  padding: 0.7rem 1rem;
+  background: rgba(0,212,170,0.06);
+  border-radius: 8px;
+  font-size: 0.85rem;
+  color: var(--accent);
+  display: none;
+}
+
+.explanation.show { display: block; }
+
+/* ANSWER KEY */
+.answer-key {
+  margin-top: 3rem;
+  padding: 2rem;
+  background: var(--surface);
+  border-radius: 16px;
+  border: 1px solid var(--border);
+}
+
+.answer-key h3 {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.5rem;
+  color: var(--gold);
+  margin-bottom: 1rem;
+  text-align: center;
+}
+
+.key-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
+  gap: 0.5rem;
+}
+
+.key-item {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.4rem 0.6rem;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.85rem;
+  background: var(--surface2);
+  border-radius: 6px;
+}
+
+.key-item .kn {
+  color: var(--muted);
+  min-width: 28px;
+}
+
+.key-item .ka {
+  color: var(--accent);
+  font-weight: 700;
+}
+
+/* BUTTONS */
+.btn-reset {
+  display: block;
+  margin: 2rem auto;
+  padding: 1rem 3rem;
+  background: linear-gradient(135deg, var(--accent), var(--accent2));
+  color: var(--bg);
+  border: none;
+  border-radius: 12px;
+  font-family: 'JetBrains Mono', monospace;
+  font-weight: 700;
+  font-size: 0.9rem;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  cursor: pointer;
+  transition: all 0.3s;
+}
+
+.btn-reset:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 25px rgba(0,212,170,0.3);
+}
+
+@media (max-width: 600px) {
+  .hero h1 { font-size: 2rem; }
+  .container { padding: 1rem; }
+  .section { padding: 1.2rem; }
+  .question-card { padding: 1.2rem; }
+  .key-grid { grid-template-columns: repeat(auto-fill, minmax(80px, 1fr)); }
+  .tabs { flex-direction: column; }
+}
+</style>
+</head>
+<body>
+<div class="noise"></div>
+<div class="container">
+
+<div class="hero">
+  <h1>Organik Çözücüler</h1>
+  <div class="subtitle">Detaylı Özet & 40 Soruluk Test — Toksikoloji Ders Notu</div>
+</div>
+
+<div class="tabs">
+  <button class="tab-btn active" onclick="showTab('summary')">📖 Detaylı Özet</button>
+  <button class="tab-btn" onclick="showTab('quiz')">📝 Test (40 Soru)</button>
+  <button class="tab-btn" onclick="showTab('key')">🔑 Cevap Anahtarı</button>
+</div>
+
+<!-- ======================== ÖZET ======================== -->
+<div id="summary" class="tab-content active">
+
+<div class="section">
+  <h2>1. Giriş ve Genel Bilgiler</h2>
+  <p>Organik çözücüler günlük yaşamda ve endüstride yaygın kullanılan sıvı maddelerdir. 1880'li yıllarda yaklaşık 20 çözücü bilinirken günümüzde sayıları binleri geçmiş, bunların 300 kadarı yaygın kullanımdadır. Eskiden beri bilinen başlıca gruplar: benzin (alifatik hidrokarbon karışımı), benzen ve türevleri (aromatik), alkoller, ketonlar ve esterlerdir.</p>
+
+  <h3>Kullanım Alanları</h3>
+  <ul>
+    <li>Kauçuk, plastik, lak, vernik, boya eritme → <strong>Çözücü</strong></li>
+    <li>Kemik, deri, yün, balıktan yağ ekstraksiyonu → <strong>Ekstraksiyon maddesi</strong></li>
+    <li>Endüstride → <strong>Yapıştırıcı ve temizleyici</strong></li>
+    <li>Otomobillerde → <strong>Antifiriz maddesi</strong></li>
+  </ul>
+</div>
+
+<div class="section">
+  <h2>2. Eşik Limit Değerleri (TLV)</h2>
+  <p>Bütün uçucu çözücüler belli sürede belli miktarda solunduğunda zararlıdır. Zararlılık derecesi uçuculuk, buhar basıncı ve kimyasal yapıya bağlıdır.</p>
+  <div class="highlight-box">
+    <strong>TLV:</strong> Günlük 8 saat, haftalık 40 saat maruziyet göz önüne alınarak belirlenir.<br>
+    <strong>TWA:</strong> 8 saatlik zaman ağırlıklı ortalama<br>
+    <strong>STEL:</strong> 15 dakikalık kısa dönem maruziyet limiti<br>
+    <strong>TLV-C:</strong> Kesinlikle aşılmaması gereken tavan sınır<br>
+    <strong>NOEL:</strong> Hiçbir etkinin gözlenmediği konsantrasyon
+  </div>
+</div>
+
+<div class="section">
+  <h2>3. Fizyolojik ve Toksik Etkiler</h2>
+  <p>Organik çözücüler düşük kaynama noktalı, yüksek buhar basınçlı maddelerdir. Başlıca inhalasyon yoluyla maruziyet olur; deri ve oral yol da yaygındır. Lipofilik yapıları nedeniyle SSS'ye ulaşarak depresif etki gösterirler (SSS toksikantları).</p>
+
+  <h3>İki Temel Toksik Etki</h3>
+  <p><strong>1) SSS Aktivitesinin Depresyonu</strong> (C sayısı, halojenasyon, alkol grubu, çifte bağ ile artar):</p>
+  <div class="highlight-box">Alkan &lt; Alken &lt; Alkol &lt; Organik Asit &lt; Ester &lt; Eter &lt; Halojenli bileşikler</div>
+
+  <p><strong>2) Doku ve Membranları Tahriş Etme</strong> (yağ/lipid ekstraksiyonu → hücre tahribi):</p>
+  <div class="highlight-box">Alkan &lt; Alkol &lt; Aldehit/Keton &lt; Organik Asit &lt; Aminler</div>
+
+  <h3>Emilim Sonrası Toksik Etkiler</h3>
+  <ul>
+    <li>Hepatotoksisite, nefrotoksisite, kardiyak aritmiler</li>
+    <li>Oryantasyon bozukluğu, öfori, konfüzyon, bilinç kaybı, paraliz, konvülziyon</li>
+  </ul>
+
+  <h3>Hedef Organlar</h3>
+  <table class="info-table">
+    <tr><th>Çözücü</th><th>Hedef Organ</th></tr>
+    <tr><td>Metanol</td><td>Oküler sinir, retina</td></tr>
+    <tr><td>Klorlu hidrokarbonlar</td><td>Karaciğer</td></tr>
+    <tr><td>Etanol</td><td>Karaciğer, beyin</td></tr>
+    <tr><td>Hekzan</td><td>Sinirler (periferal nöropati)</td></tr>
+    <tr><td>Benzen</td><td>Kemik iliği</td></tr>
+  </table>
+</div>
+
+<div class="section">
+  <h2>4. Çözücü Gruplarına Göre Toksik Etkiler</h2>
+  <table class="info-table">
+    <tr><th>Grup</th><th>Başlıca Etki</th></tr>
+    <tr><td>Doymuş Hidrokarbon</td><td>Nispeten en zararsız</td></tr>
+    <tr><td>Doymamış Hidrokarbon</td><td>Asfeksiyan ve anestezik</td></tr>
+    <tr><td>Siklik Hidrokarbon</td><td>SSS üzerine</td></tr>
+    <tr><td>Aromatik Hidrokarbon</td><td>Kan zehiri</td></tr>
+    <tr><td>Klorlu Hidrokarbon</td><td>En toksik – Karaciğer, kalp, SSS</td></tr>
+    <tr><td>Glikoller</td><td>Karaciğer ve böbrek zehiri</td></tr>
+    <tr><td>Aldehit-Ketonlar</td><td>İrritan ve narkotik</td></tr>
+    <tr><td>Eterler</td><td>SSS narkotik</td></tr>
+    <tr><td>Anilin/Kömür katranı türevleri</td><td>Kan zehiri – en toksik grup</td></tr>
+  </table>
+</div>
+
+<div class="section">
+  <h2>5. Alifatik Hidrokarbonlar</h2>
+  <p>Benzin ve kerozen, doymuş/doymamış alifatik hidrokarbonların karışımlarıdır.</p>
+  <ul>
+    <li><strong>Metan, etan:</strong> Asfeksiyan</li>
+    <li><strong>Propan, butan:</strong> Anestezik</li>
+    <li><strong>Pentandan itibaren:</strong> Narkotik, konvülsan, irritan</li>
+  </ul>
+  <div class="warn-box">
+    <strong>Toksik doz:</strong> Benzin/kerozen akut fatal oral doz = 20-30 ml. İnhalasyon fatal konsantrasyon = 10.000 ppm.
+  </div>
+  <p>Oral alımda SSS ve akciğerler etkilenir; farenks, özofagus, mide, ince barsakta ödem ve ülser oluşur. Ölüm nedeni pulmoner yetersizliktir.</p>
+  <p><strong>Tedavi:</strong> Semptomatik; zeytin/bitkisel yağ ile absorpsiyon engellemesi; oksijen tedavisi; deri kontaminasyonunda su ile yıkama.</p>
+</div>
+
+<div class="section">
+  <h2>6. Halojenli Hidrokarbonlar</h2>
+
+  <h3>6.1 Karbon Tetraklorür (CCl₄)</h3>
+  <ul>
+    <li>En çok kullanılan ve en toksik halojenli HC</li>
+    <li>Yangın söndürücü, insektisit bileşiminde kullanılır</li>
+    <li>Akut toksik doz: inhalasyon 65 ppm, oral 4 ml — TLV: 25 ppm</li>
+    <li>SSS depresyonu, karaciğer yağlanması/tahribi, renal tübüler nekroz, kardiyak aritmi</li>
+    <li>Toksik etkisi biyoaktivasyonla açıklanır: CCl₄ → CCl₃• + Cl• (serbest radikaller)</li>
+  </ul>
+  <div class="highlight-box"><strong>Tanı:</strong> Fujiwara Deneyi (piridin + NaOH → kırmızı/menekşe renk) ve İzosiyanidin oluşumu (anilin + KOH → kötü kokulu fenil izosiyanid)</div>
+  <p><strong>Tedavi:</strong> Oligüri/anüri → mannitol infüzyonu; elektrolit dengesi; kalp bozuklukları → metiyonin ve sistein (10-15 g/gün)</p>
+
+  <h3>6.2 Kloroform (CHCl₃)</h3>
+  <ul>
+    <li>TLV: 50 ppm — Fatal oral doz: 15 ml</li>
+    <li>SSS sendromu, anestezik/narkotik etki; günümüzde anestezide kullanılmaz</li>
+    <li>Kardiyak depresyon, karaciğer nekrozu, böbrekte tübüler dejenerasyon</li>
+    <li>Farelerde hepatosellüler karsinom, sıçanlarda böbrek tümörleri</li>
+    <li>Metabolizma: Kısmen metilen klorür ve CO₂'e dönüşür</li>
+  </ul>
+
+  <h3>6.3 Metil Klorür (CH₃Cl)</h3>
+  <ul>
+    <li>Renksiz, yanıcı gaz — TLV: 100 ppm</li>
+    <li>Beyin, kalp, KC, mide, dalakta toplanır</li>
+    <li>Glutatyon ile konjuge → S-metilsistein konjugatı olarak atılır</li>
+  </ul>
+
+  <h3>6.4 Metil Bromür (CH₃Br)</h3>
+  <ul>
+    <li>Renksiz, kokusuz gaz — TLV: 20 ppm</li>
+    <li>İnsektisit, pestisit, yangın söndürücü</li>
+    <li>Deriden önemli ölçüde absorbe edilir</li>
+  </ul>
+
+  <h3>6.5 Metilen Klorür (CH₂Cl₂)</h3>
+  <ul>
+    <li>TLV: 250 ppm — Kahveden kafein ayırmada kullanılır</li>
+    <li>EPA: potansiyel karsinojen; aerosol kozmetiklerde yasaklanmış</li>
+    <li>Kısmen CO ve CO₂'e metabolize olur → maruziyet ölçüsü: kanda COHb</li>
+  </ul>
+
+  <h3>6.6 Tetrakloroetan</h3>
+  <div class="warn-box"><strong>Klorlu hidrokarbonların en toksik olanıdır!</strong> TLV: 5 ppm. Toksik hepatit ve KC'de akut sarı atrofisi.</div>
+
+  <h3>6.7 Trikloroetilen (Cl₂C=CHCl)</h3>
+  <ul>
+    <li>Doymamış halojenli HC — TLV: 50 ppm</li>
+    <li>Uzun yarılanma süresi → kümülatif etki</li>
+    <li>Biyotransformasyon: TCE (trikloroetanol) → TCAA (trikloroasetik asit)</li>
+    <li>Tanı: İdrarda TCAA, fujiwara reaksiyonu (530 nm)</li>
+  </ul>
+
+  <h3>6.8 Perkloroetilen (Cl₂C=CCl₂)</h3>
+  <ul>
+    <li>TLV: 100 ppm — Kuru temizlemede kullanılır</li>
+    <li>Metabolizması yavaş; başlıca metabolit: trikloroasetik asit</li>
+  </ul>
+</div>
+
+<div class="section">
+  <h2>7. Aromatik Hidrokarbonlar — Benzen (C₆H₆)</h2>
+  <p>Petrol ve kömür katranı yan ürünü. Renksiz, K.N: 80°C. Endüstride çözücü, yapıştırıcı, kimyasal sentezde çıkış maddesi olarak kullanılır.</p>
+
+  <h3>Akut Benzen Zehirlenmesi</h3>
+  <ul>
+    <li>SSS: Önce stimülasyon, sonra depresyon</li>
+    <li>Baş ağrısı, kusma, konvülziyon, narkotik etki, bilinç kaybı, geçici körlük, deri kızarması</li>
+    <li>Kalp üzerine etki → zayıf/düzensiz çalışma; akut anemi</li>
+    <li>20.000 ppm → 5 dakikada ölüm</li>
+  </ul>
+
+  <h3>Kronik Benzen Zehirlenmesi (Benzolizm)</h3>
+  <ul>
+    <li>Kemik iliği → lökositlerde azalma, hiperkromik anemi, trombositopeni</li>
+    <li>İlerlediğinde aplastik veya hiperplastik etki</li>
+    <li>Uzun süreli inhalasyon → lökosit mutasyonu → <strong>lösemi</strong></li>
+    <li>ABD'de TWA: 1 ppm, TLV-C: 5 ppm (5 dakika)</li>
+  </ul>
+
+  <h3>Metabolizma</h3>
+  <p>Ana metabolit: <strong>fenol</strong>. Daha ileri oksidasyon → katekol, hidrokinon, trans-trans mukonik asit. Toksisitesi metabolitlerin hücre makromolekülleriyle kovalent bağlanmasıyla açıklanır. DNA bağlanması → lösemi mekanizması.</p>
+
+  <h3>Zehirlenme Tanısı</h3>
+  <ul>
+    <li>Lökopeni, anemi, peteşi bulguları</li>
+    <li>İdrarda fenol tayini (&gt;20 mg/L → minimal maruziyet)</li>
+    <li>İdrarda anorganik sülfat/organik sülfat oranı (normal %85; 100-200 ppm benzen → &lt;%40)</li>
+    <li>Kanda benzen tayini en kesin yoldur</li>
+  </ul>
+
+  <h3>Tedavi</h3>
+  <p>Akut: Ortamdan uzaklaştırma, mide yıkama, O₂ inhalasyonu. Alkol ve epinefrinden kaçınılır, yağlı diyet verilmez. Kronik: Kemik iliği/plazma transfüzyonu, B-C vitamini, sistein, metiyonin.</p>
+</div>
+
+<div class="section">
+  <h2>8. Alkil Benzenler: Toluen, Ksilen, Etil Benzen</h2>
+
+  <h3>Toluen (C₆H₅CH₃)</h3>
+  <ul>
+    <li>K.N: 111°C — TLV: 200 ppm</li>
+    <li>Sistemik etki: SSS depresyonu</li>
+    <li><strong>Benzenden farklı olarak hematolojik bozukluk yapmaz</strong></li>
+    <li>Metabolizma: Benzoik aside oksidasyon → glisin konjugasyonu → <strong>hippürik asit</strong> olarak atılır</li>
+  </ul>
+
+  <h3>Ksilen</h3>
+  <p>Toluik asite oksidasyon → glisin konjugasyonu → metil hippürik asit olarak atılır.</p>
+
+  <h3>Etil Benzen</h3>
+  <p>%64'ü mandelik asite, %25'i fenilglioksilik asite metabolize olarak idrarla atılır.</p>
+</div>
+
+<div class="section">
+  <h2>9. Alifatik Alkoller</h2>
+  <p>Narkotik etki gösterirler; anestezik etki molekül ağırlığıyla artar. Sekonder alkoller primerlerden daha güçlü narkotik etki gösterir.</p>
+
+  <h3>9.1 Metil Alkol (Metanol — CH₃OH)</h3>
+  <ul>
+    <li>Sinonimler: Odun ruhu, denatüre alkol</li>
+    <li>TWA: 200 ppm, STEL: 250 ppm — MLD: 15 ml/70 kg</li>
+    <li>ADH ile metabolize olur fakat etanole göre 15-20 kat yavaş</li>
+    <li>Metabolitler: <strong>Formaldehit</strong> (60x daha toksik) → <strong>Formik asit</strong> (60x daha toksik)</li>
+  </ul>
+  <div class="warn-box">
+    <strong>Spesifik etki:</strong> Formik asit selektif olarak göz retinasına toksiktir → Görme bulanıklığı, pupil dilatasyonu, ışığa duyarsızlık, <strong>körlük</strong>. Ayrıca metabolik asidoz oluşturur ve kardiyotoksiktir.
+  </div>
+
+  <p><strong>Tedavi (3 amaç):</strong></p>
+  <ul>
+    <li>1) Kan metanol konsantrasyonunu düşürmek</li>
+    <li>2) Metanolün oksidasyonunu önlemek → <strong>Antidot: Etil alkol</strong> (ADH'ye daha yüksek afinite)</li>
+    <li>3) Asidozu ortadan kaldırmak → NaHCO₃ (%3-5, iv)</li>
+    <li>Folik asit: Formik asit oksidasyonunu hızlandırır</li>
+  </ul>
+
+  <h3>9.2 Etil Alkol (Etanol — C₂H₅OH)</h3>
+  <ul>
+    <li>TLV: 1000 ppm — Fatal oral doz: 250-500 g</li>
+    <li>Potent SSS depresanı; korteksten medulaya kadar etkiler</li>
+  </ul>
+  <table class="info-table">
+    <tr><th>Kan Alkol (‰)</th><th>Belirtiler</th></tr>
+    <tr><td>0,1 – 0,5</td><td>Fazla konuşma, refleks artışı</td></tr>
+    <tr><td>0,5 – 1,0</td><td>Karanlığa uyum azalması (motorlu taşıt sınırı: 0,8)</td></tr>
+    <tr><td>1,0 – 1,5</td><td>Öfori, kontrol kaybı — kazaların çoğu bu düzeyde</td></tr>
+    <tr><td>1,5 – 2,0</td><td>Orta sarhoşluk, denge/koordinasyon bozukluğu</td></tr>
+    <tr><td>2,0 – 2,5</td><td>Kuvvetli sarhoşluk, bilinç bulanması</td></tr>
+    <tr><td>2,5 – 3,5</td><td>Hafıza kaybı, bilinç kaybı, felç belirtileri</td></tr>
+    <tr><td>3,5 – 4,0</td><td>Derin koma, solunum felci</td></tr>
+  </table>
+
+  <p><strong>Metabolizma:</strong> Etanol → ADH → Asetaldehit → Asetik asit → Asetil-CoA → TCA siklusu → CO₂ + H₂O. Ayrıca sülfat ve glukuronik asit konjugatları.</p>
+
+  <h3>Fötal Alkol Sendromu (FAS)</h3>
+  <p>Alkol plasentayı geçer. Prenatal/postnatal gelişme yavaşlaması, mikrosefali, yarık damak, kalp anomalileri.</p>
+
+  <h3>Kronik Alkolizm</h3>
+  <p>Kilo kaybı, gastroenterit, KC sirozu, polinevrit, mental bozukluk, hafıza kaybı.</p>
+
+  <h3>Delirium Tremens</h3>
+  <p>Ani alkol kesilmesinde yoksunluk belirtisi: konfüzyon, tremor, halüsinasyon, taşikardi.</p>
+
+  <h3>Disülfiram (Antabus) Tedavisi</h3>
+  <p>Asetaldehit dehidrogenaz inhibitörü → alkol alındığında kanda asetaldehit birikimi → bulantı, yüz kızarması, taşikardi.</p>
+
+  <h3>Biyolojik Materyalde Alkol Tayini</h3>
+  <ul>
+    <li>Kimyasal: Widmark yöntemi (K₂Cr₂O₇ + H₂SO₄)</li>
+    <li>Enzimatik: ADH + NAD → NADH (340 nm'de ölçüm)</li>
+    <li>Gaz kromatografisi (head space tekniği)</li>
+    <li>Solunum havasında: Alveoler hava alkolü = Kan alkolü × 1/2100</li>
+  </ul>
+</div>
+
+<div class="section">
+  <h2>10. Karbon Sülfür (CS₂)</h2>
+  <ul>
+    <li>TWA: 10 ppm — Oral letal doz: 30-60 ml</li>
+    <li>Uzun süreli maruziyette: organik beyin hasarı, periferal sinir bozukluğu, ensefalopati</li>
+    <li>Göz: Görme alanı daralması, görme yeteneği azalması (30 ppm'de başlar)</li>
+    <li>Biyotransformasyon: Glutatyon (GSH) ile reaksiyon → tiyazolidin türevleri ve ditiyokarbamat</li>
+  </ul>
+</div>
+
+<div class="section">
+  <h2>11. n-Hekzan</h2>
+  <ul>
+    <li>Diğer HC'lerden <strong>nörotoksisitesi</strong> ile ayrılır</li>
+    <li>Aşırı maruziyet → periferal nöropati</li>
+    <li>SSS depresanı; kronik dozlarda polinöropati</li>
+    <li>Metabolitleri: 2-Hekzanol → 2-Hekzanon → 2,5-Hekzandion (nörotoksik)</li>
+  </ul>
+</div>
+
+</div>
+
+<!-- ======================== TEST ======================== -->
+<div id="quiz" class="tab-content">
+
+<div class="quiz-header">
+  <h2>Test — 40 Soru</h2>
+  <p style="color:var(--muted);">Her soru için bir şık seçin</p>
+</div>
+
+<div class="score-bar">
+  <div>
+    <div class="score-num" id="scoreNum">0/40</div>
+    <div class="score-label">Doğru Cevap</div>
+  </div>
+  <div>
+    <div class="score-num" id="scorePercent">%0</div>
+    <div class="score-label">Başarı</div>
+  </div>
+</div>
+
+<div id="quizContainer"></div>
+
+<button class="btn-reset" onclick="resetQuiz()">🔄 Testi Sıfırla</button>
+
+</div>
+
+<!-- ======================== CEVAP ANAHTARI ======================== -->
+<div id="key" class="tab-content">
+  <div class="answer-key">
+    <h3>Cevap Anahtarı</h3>
+    <div class="key-grid" id="keyGrid"></div>
+  </div>
+</div>
+
+</div><!-- container -->
+
+<script>
+const questions = [
+  {q:"Organik çözücülerin günümüzde yaygın olarak kullanılan sayısı yaklaşık kaçtır?", o:["100","300","500","1000"], a:1},
+  {q:"TLV (Threshold Limit Values) değeri neye göre belirlenir?", o:["Günlük 4 saat maruziyet","Günlük 8 saat, haftalık 40 saat maruziyet","Yıllık ortalama maruziyet","Anlık maksimum maruziyet"], a:1},
+  {q:"Kısa dönem (15 dakika) maruziyete karşılık gelen limit değer hangisidir?",o:["TWA","TLV-C","STEL","NOEL"],a:2},
+  {q:"SSS depresyonu bakımından en güçlü etki gösteren grup hangisidir?",o:["Alkanlar","Alkoller","Halojenli bileşikler","Esterler"],a:2},
+  {q:"Organik çözücülerin SSS'ye ulaşmasını kolaylaştıran yapısal özellik nedir?",o:["Hidrofilik yapı","Lipofilik yapı","İyonik yapı","Amfoterik yapı"],a:1},
+  {q:"Metanolün hedef organı hangisidir?",o:["Karaciğer","Kemik iliği","Oküler sinir ve retina","Böbrek"],a:2},
+  {q:"Benzenin hedef organı hangisidir?",o:["Sinirler","Böbrek","Karaciğer","Kemik iliği"],a:3},
+  {q:"Klorlu hidrokarbonlar başlıca hangi organları etkiler?",o:["Böbrek ve akciğer","Karaciğer, kalp ve SSS","Kemik iliği ve dalak","Retina ve optik sinir"],a:1},
+  {q:"Benzin veya kerozenin akut fatal oral dozu ne kadardır?",o:["5-10 ml","20-30 ml","50-75 ml","100-150 ml"],a:1},
+  {q:"Alifatik hidrokarbonlardan pentandan itibaren hangi etkiler başlar?",o:["Sadece asfeksiyan","Narkotik, konvülsan, irritan","Sadece anestezik","Hematolojik bozukluk"],a:1},
+  {q:"Halojenli hidrokarbonların en çok kullanılanı ve en toksiklerinden biri hangisidir?",o:["Kloroform","Metil klorür","Karbon tetraklorür","Trikloroetilen"],a:2},
+  {q:"Karbon tetraklorürün (CCl₄) TLV değeri kaç ppm'dir?",o:["5 ppm","25 ppm","50 ppm","100 ppm"],a:1},
+  {q:"CCl₄ zehirlenmesinde karaciğer toksisitesi hangi mekanizma ile açıklanır?",o:["Doğrudan protein denatürasyonu","Biyoaktivasyon (serbest radikal oluşumu)","Enzim inhibisyonu","Osmotik hasar"],a:1},
+  {q:"Fujiwara Deneyi'nde hangi renk oluşumu trikloro bileşiğin varlığını kanıtlar?",o:["Sarı","Mavi","Yeşil","Kırmızı (koyu menekşe)"],a:3},
+  {q:"Kloroformun insanda fatal oral dozu ne kadardır?",o:["5 ml","15 ml","30 ml","50 ml"],a:1},
+  {q:"Klorlu hidrokarbonların en toksik olanı hangisidir?",o:["Karbon tetraklorür","Kloroform","Tetrakloroetan","Metil klorür"],a:2},
+  {q:"Metil klorür (CH₃Cl) başlıca hangi konjugasyon yoluyla atılır?",o:["Glukuronik asit konjugasyonu","Sülfat konjugasyonu","Glutatyon konjugasyonu (S-metilsistein)","Asetil konjugasyonu"],a:2},
+  {q:"Metilen klorür (CH₂Cl₂) hangi amaçla besin endüstrisinde kullanılır?",o:["Tatlandırıcı olarak","Koruyucu olarak","Kahveden kafein ayırmak için","Renklendirici olarak"],a:2},
+  {q:"Metilen klorür maruziyetinin biyolojik izlenmesinde hangisi ölçülür?",o:["İdrarda fenol","Kanda COHb","İdrarda hippürik asit","İdrarda TCAA"],a:1},
+  {q:"Trikloroetilenin başlıca idrar metaboliti hangisidir?",o:["Fenol","Hippürik asit","Trikloroasetik asit (TCAA)","Formik asit"],a:2},
+  {q:"Benzolizm nedir?",o:["Akut benzen zehirlenmesi","Kronik benzen maruziyetine bağlı meslek hastalığı","Benzenin metabolizma ürünü","Benzen alerjisi"],a:1},
+  {q:"Kronik benzen zehirlenmesinin en önemli belirtisi hangisidir?",o:["Karaciğer sirozu","Böbrek yetmezliği","Kemik iliği üzerine etki (lökosit azalması)","Periferal nöropati"],a:2},
+  {q:"Benzenin ana metaboliti hangisidir?",o:["Hippürik asit","Fenol","Formik asit","Mandelik asit"],a:1},
+  {q:"Uzun süreli benzen inhalasyonunun en ciddi sonucu nedir?",o:["Karaciğer sirozu","Lösemi","Periferal nöropati","Böbrek yetmezliği"],a:1},
+  {q:"ABD'de benzen için TWA değeri kaç ppm'e indirilmiştir?",o:["25 ppm","10 ppm","5 ppm","1 ppm"],a:3},
+  {q:"Toluen benzenden farklı olarak hangi etkiyi yapmaz?",o:["SSS depresyonu","Hematolojik bozukluk","Deri irritasyonu","Narkotik etki"],a:1},
+  {q:"Toluenin başlıca idrar metaboliti hangisidir?",o:["Fenol","Hippürik asit","Mandelik asit","Trikloroasetik asit"],a:1},
+  {q:"Etil benzenin insanda başlıca metaboliti hangisidir?",o:["Hippürik asit","Fenol","Mandelik asit","Benzoik asit"],a:2},
+  {q:"Metanol zehirlenmesinde sistemik antidot olarak ne kullanılır?",o:["Atropin","N-asetilsistein","Etil alkol","Nalokson"],a:2},
+  {q:"Metanolün toksik metaboliti olan formik asidin spesifik toksik etkisi nedir?",o:["Karaciğer nekrozu","Kemik iliği depresyonu","Göz retinasına selektif toksisite","Periferal nöropati"],a:2},
+  {q:"Metanol zehirlenmesinde asidoz tedavisi için ne kullanılır?",o:["HCl","NaHCO₃","KCl","CaCl₂"],a:1},
+  {q:"Metanol metabolizmasında formik asidin oksidasyonunu hızlandırmak için hangi koenzim verilir?",o:["B₁₂ vitamini","Tiamin","Folik asit","Riboflavin"],a:2},
+  {q:"Etil alkolün kandaki %3,5-4,0 ‰ düzeyi hangi duruma yol açar?",o:["Öfori","Orta sarhoşluk","Derin koma, solunum felci","Hafif koordinasyon bozukluğu"],a:2},
+  {q:"Disülfiram (Antabus) hangi enzimi inhibe eder?",o:["Alkol dehidrogenaz","Asetaldehit dehidrogenaz","Katalaz","Sitokrom P450"],a:1},
+  {q:"Delirium tremens hangi durumda ortaya çıkar?",o:["Aşırı alkol alımında","Ani alkol kesilmesinde","Metanol zehirlenmesinde","Alkol ile ilaç etkileşiminde"],a:1},
+  {q:"Fötal alkol sendromunda (FAS) görülmeyen belirti hangisidir?",o:["Mikrosefali","Kalp anomalileri","Periferal nöropati","Gelişme geriliği"],a:2},
+  {q:"Solunum havasında alkol tayininde kullanılan oran nedir?",o:["1/1000","1/2100","1/5000","1/10000"],a:1},
+  {q:"Kanda alkol tayininde Widmark yönteminde kullanılan reaktif hangisidir?",o:["Piridin + NaOH","K₂Cr₂O₇ + H₂SO₄","Anilin + KOH","AgNO₃ + HNO₃"],a:1},
+  {q:"Karbon sülfürün (CS₂) TWA değeri kaç ppm'dir?",o:["5 ppm","10 ppm","25 ppm","50 ppm"],a:1},
+  {q:"n-Heksanın diğer hidrokarbonlardan ayrılan en önemli özelliği nedir?",o:["Hepatotoksisite","Nefrotoksisite","Nörotoksisite (periferal nöropati)","Kardiyotoksisite"],a:2}
+];
+
+const letters = ['A','B','C','D'];
+let answered = 0, correct = 0;
+
+function buildQuiz(){
+  const c = document.getElementById('quizContainer');
+  c.innerHTML = '';
+  answered = 0; correct = 0;
+  updateScore();
+
+  questions.forEach((q, i) => {
+    const card = document.createElement('div');
+    card.className = 'question-card';
+    card.id = 'qcard-'+i;
+
+    let optHTML = '';
+    q.o.forEach((opt, j) => {
+      optHTML += `<button class="option-btn" data-q="${i}" data-o="${j}" onclick="selectOption(${i},${j})">
+        <span class="letter">${letters[j]}</span>
+        <span>${opt}</span>
+      </button>`;
+    });
+
+    card.innerHTML = `
+      <div class="q-number">Soru ${i+1}</div>
+      <div class="q-text">${q.q}</div>
+      <div class="options">${optHTML}</div>
+      <div class="explanation" id="exp-${i}"></div>
+    `;
+    c.appendChild(card);
+  });
+}
+
+function selectOption(qi, oi) {
+  const card = document.getElementById('qcard-'+qi);
+  if(card.classList.contains('answered-correct') || card.classList.contains('answered-wrong')) return;
+
+  const btns = card.querySelectorAll('.option-btn');
+  const correctIdx = questions[qi].a;
+  answered++;
+
+  btns.forEach((b,j) => {
+    b.classList.add('disabled');
+    if(j === correctIdx) {
+      b.classList.add('show-correct');
+    }
+    if(j === oi && oi !== correctIdx) {
+      b.classList.add('selected-wrong');
+    }
+    if(j === oi && oi === correctIdx) {
+      b.classList.add('selected-correct');
+    }
+  });
+
+  if(oi === correctIdx) {
+    card.classList.add('answered-correct');
+    correct++;
+  } else {
+    card.classList.add('answered-wrong');
+  }
+  updateScore();
+}
+
+function updateScore(){
+  document.getElementById('scoreNum').textContent = correct + '/' + answered;
+  document.getElementById('scorePercent').textContent = '%' + (answered ? Math.round(correct/answered*100) : 0);
+}
+
+function resetQuiz(){
+  buildQuiz();
+  window.scrollTo({top: document.getElementById('quiz').offsetTop - 100, behavior:'smooth'});
+}
+
+function buildKey(){
+  const g = document.getElementById('keyGrid');
+  g.innerHTML = '';
+  questions.forEach((q,i) => {
+    g.innerHTML += `<div class="key-item"><span class="kn">${i+1}.</span><span class="ka">${letters[q.a]}</span></div>`;
+  });
+}
+
+function showTab(id){
+  document.querySelectorAll('.tab-content').forEach(t => t.classList.remove('active'));
+  document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  event.target.classList.add('active');
+}
+
+buildQuiz();
+buildKey();
+</script>
+</body>
+</html>

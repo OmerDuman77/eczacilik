@@ -1,0 +1,776 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Uyaranlara-Cevap Olarak İlaç Salan Sistemler — Kapsamlı Özet</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Spectral:ital,wght@0,400;0,600;0,800;1,500&family=Inter+Tight:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#0b1413;--panel:#11201e;--panel-2:#172a27;--ink:#e7f0ee;--muted:#8fa6a2;--line:#23423d;
+    --accent:#2bb6a3;--accent-2:#e0a458;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{scroll-behavior:smooth}
+  body{
+    background:radial-gradient(1100px 560px at 84% -10%, rgba(43,182,163,.10), transparent 60%),
+               radial-gradient(900px 520px at -10% 22%, rgba(224,164,88,.07), transparent 55%),var(--bg);
+    color:var(--ink);font-family:'Inter Tight',system-ui,sans-serif;line-height:1.65;-webkit-font-smoothing:antialiased
+  }
+  .wrap{max-width:880px;margin:0 auto;padding:48px 22px 120px}
+
+  .kicker{font-size:.72rem;letter-spacing:.3em;text-transform:uppercase;color:var(--accent);font-weight:600;margin-bottom:14px}
+  h1.title{font-family:'Spectral',serif;font-weight:800;font-size:clamp(2rem,5vw,3.2rem);line-height:1.04;letter-spacing:-.01em;margin-bottom:14px}
+  h1.title em{font-style:italic;color:var(--accent-2)}
+  .lede{color:var(--muted);font-size:1.05rem;max-width:62ch;margin-bottom:30px}
+
+  .toc{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:18px 20px;margin-bottom:42px}
+  .toc .toc-h{font-size:.74rem;letter-spacing:.22em;text-transform:uppercase;color:var(--accent);font-weight:600;margin-bottom:10px}
+  .toc ol{list-style:none;counter-reset:t;display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:6px 22px}
+  .toc li{counter-increment:t;padding:4px 0}
+  .toc li a{color:#cfe0dc;text-decoration:none;font-size:.95rem;display:flex;gap:10px;align-items:baseline;transition:.18s}
+  .toc li a::before{content:counter(t,decimal-leading-zero);color:var(--accent-2);font-family:'Spectral',serif;font-style:italic;font-size:.85rem;min-width:24px}
+  .toc li a:hover{color:var(--accent)}
+
+  section{margin-top:48px}
+  section:first-of-type{margin-top:0}
+  h2.section{font-family:'Spectral',serif;font-weight:700;font-size:clamp(1.5rem,3.4vw,2rem);line-height:1.12;letter-spacing:-.01em;margin-bottom:6px;padding-top:14px;border-top:1px solid var(--line)}
+  h2.section .num{font-style:italic;color:var(--accent);font-weight:600;margin-right:10px;font-size:.85em}
+  h3{font-size:1.08rem;font-weight:600;color:var(--accent-2);margin:22px 0 6px}
+
+  p{margin:12px 0;color:#dfeae7}
+  ul{margin:10px 0 10px 4px;padding-left:22px;color:#dfeae7}
+  ul li{margin:6px 0}
+  ol{margin:10px 0 10px 4px;padding-left:24px;color:#dfeae7}
+  ol li{margin:6px 0}
+  b{color:var(--ink)}
+
+  .lead{font-size:1.04rem;border-left:3px solid var(--accent);padding-left:16px;color:#cfe0dc;margin:14px 0}
+  .pull{background:var(--panel);border:1px solid var(--line);border-left:3px solid var(--accent-2);border-radius:0 12px 12px 0;padding:14px 18px;margin:18px 0;color:#e9d9b9;font-size:.97rem}
+  .pull b{color:#fff5dd}
+
+  .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:14px;margin:14px 0}
+  .card{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:14px 16px}
+  .card h4{font-family:'Spectral',serif;font-weight:600;font-size:1.04rem;margin-bottom:4px;color:var(--accent)}
+  .card p{margin:6px 0 0;font-size:.94rem;color:#dfeae7}
+
+  .formula{background:var(--panel-2);border:1px solid var(--line);border-radius:10px;padding:10px 14px;font-family:'Spectral',serif;color:#e9d9b9;margin:8px 0;display:inline-block}
+
+  .tag{display:inline-block;font-size:.72rem;letter-spacing:.08em;text-transform:uppercase;color:#04201c;background:var(--accent);padding:3px 8px;border-radius:6px;font-weight:600;margin-right:6px;vertical-align:1px}
+  .tag.alt{background:var(--accent-2);color:#2a1a05}
+
+  .top-link{position:fixed;right:22px;bottom:22px;background:var(--panel-2);border:1px solid var(--line);color:var(--muted);padding:10px 14px;border-radius:50px;text-decoration:none;font-size:.82rem;transition:.2s}
+  .top-link:hover{border-color:var(--accent);color:var(--accent)}
+
+  footer{margin-top:70px;padding-top:24px;border-top:1px solid var(--line);text-align:center;color:var(--muted);font-size:.82rem}
+
+  table{width:100%;border-collapse:collapse;margin:14px 0;background:var(--panel);border:1px solid var(--line);border-radius:10px;overflow:hidden;font-size:.9rem}
+  th{text-align:left;padding:10px 12px;background:var(--panel-2);color:var(--accent);font-family:'Spectral',serif;font-weight:600;font-size:.85rem;text-transform:uppercase;letter-spacing:.05em;border-bottom:1px solid var(--line)}
+  td{padding:10px 12px;border-bottom:1px solid var(--line);color:#dfeae7;vertical-align:top}
+  tbody tr:last-child td{border-bottom:none}
+  td:first-child{color:var(--accent-2);font-weight:500}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="kicker">Genel Tekrar · Akıllı İlaç Taşıyıcı Sistemler</div>
+  <h1 class="title">Uyaranlara-Cevap Olarak <em>İlaç Salan Sistemler</em></h1>
+  <p class="lede">pH, redoks, enzim, sıcaklık, manyetik alan, ultrason ve ışık gibi içsel ya da dışsal uyaranlarla tetiklenen akıllı ilaç taşıyıcı sistemlerin kapsamlı bir tekrarı. Aşağıdaki içindekilerden istediğiniz bölüme atlayabilirsiniz.</p>
+
+  <nav class="toc">
+    <div class="toc-h">İçindekiler</div>
+    <ol>
+      <li><a href="#s1">Tanım ve Genel Çerçeve</a></li>
+      <li><a href="#s2">İçsel vs Dışsal Uyaranlar</a></li>
+      <li><a href="#s3">Nanotaşıyıcıların Sağladığı Avantajlar</a></li>
+      <li><a href="#s4">Hedefleme ve Toksisite Azaltma</a></li>
+      <li><a href="#s5">Partikül Tasarımında Önemli Faktörler</a></li>
+      <li><a href="#s6">Patolojik Mikroçevre</a></li>
+      <li><a href="#s7">Salım Mekanizmaları</a></li>
+      <li><a href="#s8">İÇSEL UYARANLAR — pH-Duyarlı DDS</a></li>
+      <li><a href="#s9">Tümörde Düşük pH'ın Nedenleri</a></li>
+      <li><a href="#s10">Hücre İçi pH Değerleri</a></li>
+      <li><a href="#s11">Endozom ve Lizozomda Salım</a></li>
+      <li><a href="#s12">pH-Duyarlı DDS Geliştirme Stratejileri</a></li>
+      <li><a href="#s13">Yük Dönüştürücü DDS</a></li>
+      <li><a href="#s14">Redox-Duyarlı DDS</a></li>
+      <li><a href="#s15">Glutatyon (GSH) Mekanizması</a></li>
+      <li><a href="#s16">Enzim-Duyarlı DDS</a></li>
+      <li><a href="#s17">MMP'ler — Matriks Metalloproteinazlar</a></li>
+      <li><a href="#s18">PTX/MMP2/TATp Örneği</a></li>
+      <li><a href="#s19">DIŞSAL UYARANLAR — Termo-Duyarlı DDS</a></li>
+      <li><a href="#s20">Hipertermi ve Tümör Sıcaklığı</a></li>
+      <li><a href="#s21">Isıtma Stratejileri</a></li>
+      <li><a href="#s22">Hipertermi Etkileri</a></li>
+      <li><a href="#s23">Termo-sensitif Lipozomlar</a></li>
+      <li><a href="#s24">LCST ve PNIPAAm</a></li>
+      <li><a href="#s25">Manyetik Duyarlı DDS</a></li>
+      <li><a href="#s26">SPIONs</a></li>
+      <li><a href="#s27">Ultrasona Duyarlı DDS</a></li>
+      <li><a href="#s28">Mikrokabarcıklar Yapısı</a></li>
+      <li><a href="#s29">Sonoporasyon Mekanizması</a></li>
+      <li><a href="#s30">FDA Onaylı Mikrokabarcıklar</a></li>
+      <li><a href="#s31">Ultrason DDS Zorlukları</a></li>
+      <li><a href="#s32">Işığa Duyarlı DDS</a></li>
+      <li><a href="#s33">NIR Işık Avantajları</a></li>
+      <li><a href="#s34">Foto-mekanizmalar</a></li>
+      <li><a href="#s35">Işığa Duyarlı Taşıyıcılar</a></li>
+      <li><a href="#s36">Sonuç ve Gelecek</a></li>
+      <li><a href="#s37">Klinik Örnek — GlucoWatch</a></li>
+      <li><a href="#s38">Tek Sayfada Genel Tekrar</a></li>
+    </ol>
+  </nav>
+
+  <!-- ================= 1 ================= -->
+  <section id="s1">
+    <h2 class="section"><span class="num">01.</span>Tanım ve Genel Çerçeve</h2>
+    <p class="lead">Uyaranlara cevap olarak ilaç salan sistemler, <b>değişik stimülanların ilaç taşıyıcı sistemin davranışını ve ilaç serbestleşmesini kontrol ettiği</b> sistemlerdir.</p>
+    <p>Geleneksel ilaç taşıyıcı sistemler ilacı zamana bağlı olarak salarken, bu <b>"akıllı" sistemler</b> ilacın <b>yalnızca ihtiyaç duyulan bölgede, doğru zamanda</b> serbestleşmesini sağlar. Bu sayede ilaç hem etkin maddenin yan etkilerini en aza indirir, hem de tedavi etkinliğini artırır.</p>
+    <p>Sistemin temel mantığı şudur: ilaç taşıyıcı, sağlıklı dokulardan geçerken stabil kalır; ancak <b>patolojik bir bölgenin (tümör, enfarktüs, inflamasyon) karakteristik fiziksel veya kimyasal özelliği ile karşılaştığında</b> ya da <b>vücut dışından uygulanan bir uyaran (manyetik alan, ışık, ultrason) ile aktive edildiğinde</b> yapısı bozulur ve ilacı serbest bırakır.</p>
+  </section>
+
+  <!-- ================= 2 ================= -->
+  <section id="s2">
+    <h2 class="section"><span class="num">02.</span>İçsel ve Dışsal Uyaranlar</h2>
+    <p>Bu sistemler iki ana uyaran kategorisinden yararlanır:</p>
+    <div class="grid">
+      <div class="card"><h4>İçsel Uyaranlar <span class="tag">Endojen</span></h4><p>Patolojik bölgelerin <b>kendi karakteristik özellikleri</b>:</p>
+        <ul style="margin-top:8px">
+          <li><b>Lokal pH</b> değişiklikleri</li>
+          <li><b>Sıcaklık</b> değişiklikleri</li>
+          <li><b>Redoks durumu</b> (GSH/GSSG)</li>
+          <li>Belirli proteinlerin <b>aşırı ekspresyonu</b> (enzimler, reseptörler)</li>
+          <li><b>Hipoksi</b> (düşük oksijen)</li>
+        </ul>
+      </div>
+      <div class="card"><h4>Dışsal Uyaranlar <span class="tag alt">Eksojen</span></h4><p>Vücudun <b>dışından uygulanan</b> uyaranlar:</p>
+        <ul style="margin-top:8px">
+          <li><b>Ultrason</b></li>
+          <li><b>Sıcaklık</b> (lokal hipertermi)</li>
+          <li><b>Manyetik alanlar</b></li>
+          <li><b>Işık</b> (özellikle NIR)</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= 3 ================= -->
+  <section id="s3">
+    <h2 class="section"><span class="num">03.</span>Nanopartiküler Taşıyıcıların Sağladığı Avantajlar</h2>
+    <p class="lead">İlaç yüklü nanopartiküler farmasötik taşıyıcıların kullanımı, etkin maddelerin pek çok karakteristik sınırlamasının üstesinden gelebilir.</p>
+    <p>Çözülen sınırlamalar:</p>
+    <ul>
+      <li><b>Düşük stabilite</b></li>
+      <li><b>Hızlı inaktivasyon veya in vivo bozunma</b></li>
+      <li><b>Spesifik olmayan toksisite</b></li>
+      <li><b>Zayıf çözünürlük</b></li>
+      <li><b>Elverişsiz farmakokinetik</b></li>
+      <li><b>Zayıf biyodağılım</b></li>
+    </ul>
+
+    <h3>Nanotaşıyıcıların Tasarım Yetenekleri</h3>
+    <ul>
+      <li>Hem <b>hidrofilik hem de hidrofobik ilaçları</b> taşıyabilir.</li>
+      <li>İlacın <b>in vivo stabilitesini ve yarı ömrünü (t½)</b> artırabilir.</li>
+      <li><b>Kontrol edilebilir ilaç salımı</b> sağlayabilir.</li>
+      <li>İlaç <b>farmakokinetiğini özel olarak tasarlanmış şekilde değiştirebilir</b>.</li>
+    </ul>
+  </section>
+
+  <!-- ================= 4 ================= -->
+  <section id="s4">
+    <h2 class="section"><span class="num">04.</span>Hedefleme ve Toksisite Azaltma</h2>
+    <p>Nanotaşıyıcı sistemler iki temel klinik kazanım sağlar:</p>
+    <ul>
+      <li>İlacın <b>istenmeyen yan etkilerini en aza indirir</b>.</li>
+      <li>İlaçların <b>ilgili patolojik organlara ve dokulara, hatta tek tek hücrelere ve hücre içi organellere hedeflenmesine</b> izin verir.</li>
+    </ul>
+
+    <div class="pull"><b>Akıllı tasarım:</b> Gerekirse, nanopartiküler DDS, patolojik dokuların <b>belirli içsel uyaran özelliklerine</b> veya <b>vücudun dışından uygulanan dış uyaranlara</b> yanıt olarak belirli parametreleri/fonksiyonları (örn. ilaç salınımını veya hücre içi alımını artırmak) <b>seçici olarak değiştirmek için</b> özel olarak tasarlanabilir.</div>
+  </section>
+
+  <!-- ================= 5 ================= -->
+  <section id="s5">
+    <h2 class="section"><span class="num">05.</span>Partiküler Sistem Tasarımında Önemli Faktörler</h2>
+    <p>Etkili bir akıllı DDS tasarlarken göz önünde bulundurulması gereken kritik faktörler:</p>
+    <ul>
+      <li><b>Dolaşımda uzun süre kalma</b> — RES (retiküloendotelyal sistem) tarafından hızlı temizlenmemeli.</li>
+      <li><b>İkincil etkilerin azaltılması</b>.</li>
+      <li>İlgili organda <b>birikme</b> — pasif veya aktif hedefleme.</li>
+      <li><b>Kontrollü degradasyon</b>.</li>
+      <li>İlaç taşınmasında partiküllerin <b>fiziksel ve kimyasal özellikleri</b>.</li>
+      <li><b>Yüzey kimyası</b> — protein adsorpsiyonu, fagositoz davranışını belirler.</li>
+      <li><b>Boyut</b> partiküllerin biyodağılımında önemlidir. İdeal aralık: <b>10 nm – 15 µm küresel partiküller</b>.</li>
+      <li><b>Matriks (polimer vb.)</b> ilaç salınımını kontrol eder.</li>
+    </ul>
+  </section>
+
+  <!-- ================= 6 ================= -->
+  <section id="s6">
+    <h2 class="section"><span class="num">06.</span>Patolojik Mikroçevre</h2>
+    <p class="lead">Tümörler de dahil olmak üzere patolojik alanların <b>mikro çevrelerindeki yerel değişikliklerin daha iyi anlaşılması</b>, etkilenen dokuların belirli <b>"anormal" koşullarına spesifik olarak tepki verebilen DDS'yi</b> oluşturmak için yeni materyallerin ve mühendislik ilkelerinin geliştirilmesine olanak sağlamıştır.</p>
+    <p>Patolojik alanlar (<b>tümörler, enfarktüsler, ateroskleroz lezyonları, enfeksiyon bölgeleri, transplant red alanları</b>) için karakteristik olan iç uyaranlar; bu alanları normal dokulardan farklı kılan;</p>
+    <ul>
+      <li><b>pH</b> değişiklikleri (genelde düşük)</li>
+      <li><b>Sıcaklık</b> değişiklikleri (genelde yüksek)</li>
+      <li><b>Redoks koşulları</b>nda farklı yoğunluktaki yerel değişiklikler</li>
+      <li>Belirli <b>biyolojik/enzimatik olarak aktif moleküllerin ekspresyonu</b></li>
+    </ul>
+
+    <div class="pull"><b>Tasarım esnekliği:</b> Birçok lipid ve polimer, pH veya sıcaklıktaki <b>önemsiz değişikliklere bile</b> yanıt olarak fiziksel-kimyasal özelliklerinde belirli değişikliklere uğrayabilir; bu sayede akıllı DDS tasarımı mümkün hale gelir.</div>
+  </section>
+
+  <!-- ================= 7 ================= -->
+  <section id="s7">
+    <h2 class="section"><span class="num">07.</span>Akıllı DDS Salım Mekanizmaları</h2>
+    <p>İçsel veya dışsal uyaranlara maruz kalındığında, uyaranlara duyarlı DDS şu fonksiyonları yerine getirebilir:</p>
+    <ul>
+      <li><b>İlaç salınımı</b> tetikleme.</li>
+      <li><b>Hücre içi alım veya penetrasyonun etkinliği</b>ni artırma.</li>
+    </ul>
+
+    <h3>İki Kontrol Mekanizması</h3>
+    <p>İlaç salımı temelde iki mekanizmayla kontrol edilebilir:</p>
+    <ol>
+      <li><b>Taşıyıcıdaki yapısal değişiklikler</b> — taşıyıcının bozunması veya geçirgenliğinin artması gibi.</li>
+      <li><b>Kimyasal bağların bölünmesi</b> — ilacı taşıyıcıya bağlayan kovalent bağların kırılması.</li>
+    </ol>
+
+    <div class="pull"><b>Klinik kazanım:</b> Etkilenen çeşitli alanların <b>spesifik biyokimyası</b>, bu koşullara yanıt veren uyaranlara duyarlı DDS'nin tasarlanmasına yardımcı olur; bu, etkililiği artıran ve <b>hedef dışı etkileri en aza indiren hassas zamansal ve mekansal ilaç taşınmasını</b> sağlar.</div>
+  </section>
+
+  <!-- ================= 8 ================= -->
+  <section id="s8">
+    <h2 class="section"><span class="num">08.</span>İÇSEL UYARANLAR — pH-Duyarlı DDS</h2>
+    <p class="lead"><b>Düşük pH</b>, tümörlerin ve <b>iltihaplı ve hipoksik alanların</b> iyi bilinen bir özelliğidir. Bu doğal farklılık, pH-duyarlı taşıyıcılar için ideal bir tetikleyici sağlar.</p>
+    <p>Normal kan pH'sı yaklaşık <b>7.3–7.4</b> civarındayken; patolojik bölgelerde bu değer belirgin biçimde düşer. pH-duyarlı bir DDS:</p>
+    <ul>
+      <li>Yüklü ilacı <b>kanda (pH 7.3–7.4) korumalı</b>.</li>
+      <li>İlacı <b>tümörlerin interstisyel boşluğunda</b> (pH 6.8–7.2) veya hücre içi bölmelerde serbest bırakmalıdır.</li>
+    </ul>
+  </section>
+
+  <!-- ================= 9 ================= -->
+  <section id="s9">
+    <h2 class="section"><span class="num">09.</span>Tümörde Düşük pH'ın Nedenleri</h2>
+    <p>Tümör mikroçevresinde gözlenen düşük pH'a birkaç metabolik anormallik katkıda bulunur:</p>
+    <ul>
+      <li>Tümör hücreleri, <b>aerobik koşullar altında bile</b> glikoz ve diğer substratları <b>laktik aside (pKa 3.7)</b> dönüştürür — bu olay <b>Warburg etkisi</b> olarak bilinir. <b>Laktik asit tümörün ana asit kaynağıdır</b>.</li>
+      <li>Azalan pH aynı zamanda <b>yüksek CO₂ seviyeleri</b> ile de ilişkilidir.</li>
+      <li><b>Tümör perfüzyonundaki eksiklikler</b> ve hipoksi.</li>
+      <li><b>Kontrolsüz hücre büyümesi ve proliferasyonu</b> (tümörigenez) ile ilişkili metabolik anormallikler.</li>
+    </ul>
+    <p>Bu özellikler aynı zamanda obezite ve kanserde mikroçevre değişikliklerinin temel göstergeleridir.</p>
+  </section>
+
+  <!-- ================= 10 ================= -->
+  <section id="s10">
+    <h2 class="section"><span class="num">10.</span>Hücre İçi pH Değerleri — Hedefli Salım</h2>
+    <p>İlaç taşıyıcı sistemler, hücrenin farklı bölgelerinde karşılaştıkları pH gradyanını kullanabilir. Kandan endozomlara doğru pH giderek düşer:</p>
+    <table>
+      <thead><tr><th>Bölge</th><th>pH Aralığı</th></tr></thead>
+      <tbody>
+        <tr><td>Kan (sistemik dolaşım)</td><td>7.3 – 7.4</td></tr>
+        <tr><td>Tümör interstisyel boşluğu</td><td>6.8 – 7.2</td></tr>
+        <tr><td>Sitoplazma</td><td>7.0'ın biraz üzeri</td></tr>
+        <tr><td>Endozomlar</td><td>5 – 6</td></tr>
+        <tr><td>Lizozomlar</td><td>4.5 – 5.5</td></tr>
+      </tbody>
+    </table>
+    <p>Bu pH gradyanı, <b>özellikle yoğun ilaç salınımına izin verir</b>. İlaç salımı, tümör dokusunun <b>hafif asidik hücre dışı sıvılarında</b> ve <b>artırılmış geçirgenlik ve tutma (EPR) etkisi</b> yoluyla tümör birikiminde de meydana gelebilir.</p>
+  </section>
+
+  <!-- ================= 11 ================= -->
+  <section id="s11">
+    <h2 class="section"><span class="num">11.</span>Endozom ve Lizozomda Salım</h2>
+    <p class="lead">Hücre dışı sıvılardan bile <b>daha düşük bir pH değerine sahip olan endozomlar veya lizozomlarda</b>, pH ile tetiklenen ilaç salımı <b>yüksek oranda gerçekleşir</b>.</p>
+    <p>Bu süreç, <b>hidroliz tarafından desteklendiğinde</b> (örneğin <b>katepsin B gibi lizozomal enzimlerle</b>) çok daha etkin hale gelir. Yani sistem hem asidik pH hem de proteolitik aktiviteden eş zamanlı olarak yararlanabilir — bu çift uyaranlı (dual-stimuli) yaklaşımın klasik bir örneğidir.</p>
+    <p>Klinik açıdan bu, endositoz yoluyla hücre içine giren ilacın <b>lizozomal tuzakta inaktive olmak yerine</b>, oradaki düşük pH ve enzimlerle <b>aktif şekilde serbest kalmasını</b> sağlar.</p>
+  </section>
+
+  <!-- ================= 12 ================= -->
+  <section id="s12">
+    <h2 class="section"><span class="num">12.</span>pH-Duyarlı DDS Geliştirme Stratejileri</h2>
+    <p>pH'ya duyarlı bir DDS geliştirmek için kullanılabilecek başlıca stratejiler:</p>
+    <ul>
+      <li><b>Protonize olabilen maddeler</b> — amin (–NH₂), imidazol, karboksil (–COOH) gibi iyonize olabilen gruplar içeren yapılar; pH değişikliğinde yüklerini değiştirir.</li>
+      <li><b>pH-hassas polimerlerdeki değişiklikler</b> — pH değişimiyle hidrofilik/hidrofobik dengesi değişen ve çözünürlüğü dönüşen polimerler.</li>
+      <li><b>Aside hassas kimyasal yapılar</b> — düşük pH'ta hidrolize uğrayan bağlar (hidrazon, ortoester, asetal, sis-akonitil, vb.).</li>
+      <li><b>Yük dönüştürücü / yük tersine çeviren DDS</b> — özel bir yaklaşım; ayrı bölümde incelenecek.</li>
+    </ul>
+  </section>
+
+  <!-- ================= 13 ================= -->
+  <section id="s13">
+    <h2 class="section"><span class="num">13.</span>Yük Dönüştürücü / Tersine Çeviren DDS</h2>
+    <p class="lead">pH aracılı ilaç taşınmaya yönelik ilginç bir yaklaşım, <b>nötr pH'ta negatif olarak yüklenen ve düşük pH'a yanıt olarak yüzey yüklerini pozitif olana dönüştüren</b> "yük dönüştürücü" veya "yük tersine çeviren" DDS kullanımıdır.</p>
+    <p>Bu yaklaşımın klinik mantığı şudur:</p>
+    <ul>
+      <li><b>Nötr pH</b>'ta (kan, pH 7.4): partiküller <b>negatif yüklü</b> kalır → dolaşımda stabil, hücrelere yapışmaz, RES temizliği azalır.</li>
+      <li><b>Tümör mikroçevresinde</b> (asidik pH): yüzey yükü <b>pozitife döner</b> → hücre membranındaki negatif yüklü fosfolipidlere yapışır → <b>hücre içi alım artar</b>.</li>
+    </ul>
+    <p>Böylece sistem hem dolaşım stabilitesini hem de hedef bölgede yüksek hücresel alımı eş zamanlı sağlar.</p>
+  </section>
+
+  <!-- ================= 14 ================= -->
+  <section id="s14">
+    <h2 class="section"><span class="num">14.</span>Redoks Potansiyele Duyarlı DDS</h2>
+    <p class="lead">Redoks-duyarlı sistemler, hücre içi ve hücre dışı ortam arasındaki <b>indirgenme-yükseltgenme dengesindeki büyük farkı</b> kullanır.</p>
+    <p><b>Glutatyon (GSH)</b>, hücre <b>sitoplazmasında üretilen</b> ve hücrelerde <b>tiyol-disülfid değişim reaksiyonunu</b> kolaylaştıran ana indirgeyici ajan olarak görev yapan önemli bir <b>tripeptittir</b> (glutamat-sistein-glisin).</p>
+
+    <h3>Hücre İçi vs Hücre Dışı GSH</h3>
+    <p>GSH konsantrasyonu hücre içinde hücre dışına göre <b>yaklaşık 100–1000 kat daha yüksektir</b>. Tümör hücrelerinde bu fark daha da belirgindir; tümörler oksidatif strese bağlı olarak yüksek GSH üretir. Bu büyük gradyan, disülfid bağı (–S–S–) içeren taşıyıcıların hücre içinde seçici olarak parçalanmasını mümkün kılar.</p>
+  </section>
+
+  <!-- ================= 15 ================= -->
+  <section id="s15">
+    <h2 class="section"><span class="num">15.</span>Glutatyon (GSH) Mekanizması</h2>
+    <p>Redoks duyarlı DDS'lerde <b>disülfid bağlarının azalması</b> (indirgenmesi), iki kritik sonuç doğurur:</p>
+    <ul>
+      <li><b>Nanotaşıyıcının hızlı bir şekilde bozulması</b>.</li>
+      <li>Her şeyden önce <b>kanserde terapötiklerin sitotoksik aktivitesinde bir artış</b>.</li>
+    </ul>
+
+    <h3>Temel Tiyol-Disülfid Değişim Reaksiyonu</h3>
+    <div class="formula">RS–SR + 2 R'SH → 2 RS⁻ + R'S–SR'</div>
+    <p>Burada <b>R–S–S–R</b> taşıyıcıdaki disülfid bağıdır; <b>R'SH</b> glutatyon gibi tiyollü indirgeyici ajandır. Hücre içine giren taşıyıcı, sitoplazmadaki yüksek GSH konsantrasyonu ile karşılaştığında disülfid bağı yıkılır, taşıyıcı çözülür ve yüklü ilaç serbest kalır.</p>
+    <div class="pull"><b>Klinik avantaj:</b> Sistem kanda (düşük GSH ortamı) stabil kalır, hücre içinde (yüksek GSH ortamı) hızla bozulur. Bu durum özellikle <b>kanser kemoterapötiklerinin tümör hücrelerine seçici taşınmasında</b> kullanılır.</div>
+  </section>
+
+  <!-- ================= 16 ================= -->
+  <section id="s16">
+    <h2 class="section"><span class="num">16.</span>Enzim-Duyarlı DDS</h2>
+    <p class="lead">Karsinogenez sırasında meydana gelen <b>moleküler olayları ve kanser progresyonuna katılan sinyal yolaklarını</b> anlamak önemlidir. <b>Tümör hücreleri ve tümör mikroçevresi arasındaki etkileşimler</b> bu süreçte çok önemli bir rol oynar.</p>
+    <p>Hızlandırılmış büyüme ve çoğalma için, kanser hücreleri <b>belirli molekülleri aşırı eksprese eder</b> — bunlar arasında <b>enzimatik aktiviteye sahip proteinler</b> de vardır. Bu enzimler, <b>kanser belirteçleri veya lokal uyaranlar olarak kabul edilebilir</b> ve tümör mikro-ortamını normalden farklı hale getirir.</p>
+
+    <div class="pull"><b>Tasarım fırsatı:</b> Birçok kanser için tipik olan <b>lokal olarak aşırı eksprese edilen enzimlerin katyonuna duyarlı DDS</b>, tümörlere ilaç dağıtımı için <b>umut verici bir stratejiyi</b> temsil eder.</div>
+  </section>
+
+  <!-- ================= 17 ================= -->
+  <section id="s17">
+    <h2 class="section"><span class="num">17.</span>MMP'ler — Matriks Metalloproteinazlar</h2>
+    <p><b>Matriks metalloproteinazlar (MMP'ler)</b>, kanserin progresyonu sırasında <b>mikroçevrede meydana gelen değişikliklerin ana aracılarıdır</b>. Bu çinko bağımlı endopeptidazlar; ekstraselüler matriksi parçalayarak tümör invazyonu, anjiyogenez ve metastaza katkıda bulunur.</p>
+
+    <h3>Klinik ve Tasarımsal Anlamı</h3>
+    <p>Belirli lokal enzim ekspresyonu ve bileşimindeki değişiklikler (örneğin MMP'ler):</p>
+    <ul>
+      <li>Yalnızca <b>kanser teşhisi ve prognozu için biyobelirteçler</b> olarak kabul edilmekle kalmaz,</li>
+      <li>Aynı zamanda <b>tümör bölgesinde enzimle tetiklenen mekanizmalarla ilaç yüklerini serbest bırakabilen DDS tasarlama fırsatı</b> da sağlar.</li>
+    </ul>
+    <p>Bu sayede taşıyıcı sağlıklı dokularda bütün kalır, tümör bölgesinde aşırı eksprese olan MMP'ler tarafından spesifik olarak parçalanır.</p>
+  </section>
+
+  <!-- ================= 18 ================= -->
+  <section id="s18">
+    <h2 class="section"><span class="num">18.</span>Örnek — PTX / MMP2 / TATp Misel Sistemi</h2>
+    <p class="lead">Enzim-duyarlı DDS tasarımının somut bir örneği: <b>paklitaksel ön ilacından oluşan kendi kendine birleşen, MMP2'ye duyarlı, TATp ile modifiye edilmiş misel nanopreparasyon</b>.</p>
+
+    <h3>Sistem Bileşenleri</h3>
+    <p>Sistem üç farklı polimerin bir araya gelmesinden oluşur:</p>
+    <ul>
+      <li><b>PEG – MMP2 parçalanabilir peptit – PTX</b><br>Paklitakselin PEG'e MMP2 tarafından kesilebilen bir peptit ile bağlandığı ana taşıyıcı bileşen.</li>
+      <li><b>TATp – PEG – fosfoetanolamin (PE)</b><br>TATp (TAT peptit), <b>hücreye nüfuz eden bir güçlendiricidir</b>; nanopartikülün hücre içine geçişini kolaylaştırır.</li>
+      <li><b>PEG – PE</b><br>Bir nanotaşıyıcı yapı taşı; misel çekirdeğinin stabilizasyonunu sağlar.</li>
+    </ul>
+    <p>Bu yapı, yüksek PTX yüklemeli sulu bir ortamda formüle edilmiştir. Tümör bölgesinde MMP2 enzimi tarafından parçalanır, açığa çıkan TATp hücre içine alımı artırır ve PTX terapötik etkisini gösterir.</p>
+  </section>
+
+  <!-- ================= 19 ================= -->
+  <section id="s19">
+    <h2 class="section"><span class="num">19.</span>DIŞSAL UYARANLAR — Termo-Duyarlı DDS</h2>
+    <p class="lead">Termo-duyarlı sistemler, sıcaklığa bağlı yapısal değişikliklerle ilaç salımını tetikler. <b>Lokal hipertermi, kanser ve inflamasyonun karakteristiğidir</b>; normal ve patolojik dokular arasındaki <b>sıcaklık farkı</b>, sıcaklığa duyarlı DDS tasarımı için potansiyel bir tetikleyicidir.</p>
+    <p>Bunun ötesinde, <b>doku sıcaklığını kontrol etmek için harici ısı kaynakları da lokal olarak kullanılabilir</b>; bu durumda sistem hem içsel hem dışsal uyaranla aktive edilebilir.</p>
+  </section>
+
+  <!-- ================= 20 ================= -->
+  <section id="s20">
+    <h2 class="section"><span class="num">20.</span>Hipertermi ve Tümör Sıcaklığı</h2>
+    <p>Tümör sıcaklığı iki farklı senaryoda anlamlı hale gelir:</p>
+    <div class="grid">
+      <div class="card"><h4>Doğal (Metabolik) Yüksek Sıcaklık</h4><p>Tümörün <b>yüksek metabolik aktivitesi</b> nedeniyle çevre dokudan daha sıcak (genellikle <b>≥ 37 °C</b>) olabilir.</p></div>
+      <div class="card"><h4>Tıbbi Hipertermi <span class="tag alt">42–44°C</span></h4><p>Kanser tedavisinde kullanılan hipertermi yöntemi, tümör bölgesinin <b>özel cihazlarla 42–44 °C'ye kadar ısıtılması</b> anlamına gelir. Bu yüksek ısı, <b>kanser hücrelerini öldürür</b> veya <b>radyoterapi/kemoterapiye daha hassas hale getirir</b>.</p></div>
+    </div>
+  </section>
+
+  <!-- ================= 21 ================= -->
+  <section id="s21">
+    <h2 class="section"><span class="num">21.</span>Dokunun Harici Isıtılması — Stratejiler</h2>
+    <p>Klinikte dokunun harici olarak ısıtılması için farklı stratejiler uygulanabilir:</p>
+    <ul>
+      <li><b>Mikrodalga ışıması</b> ile dielektrik ısıtma.</li>
+      <li>Elektrot uygulanan <b>yüksek frekanslı akımlarla</b> ısıtma.</li>
+      <li><b>Fiberoptik ile optik lazer ısıtma</b>.</li>
+      <li><b>Ultrason uygulaması</b>.</li>
+      <li><b>İnterstisyel lazer fotokoagülasyon</b>.</li>
+    </ul>
+    <p>Bu yöntemler, sıcaklığa duyarlı taşıyıcılarla birlikte kullanıldığında ilacın hedef bölgede konsantre olarak serbest kalmasını sağlar.</p>
+  </section>
+
+  <!-- ================= 22 ================= -->
+  <section id="s22">
+    <h2 class="section"><span class="num">22.</span>Hiperterminin Hücresel ve Vasküler Etkileri</h2>
+    <p>Patoloji (tümör) bölgesi ısıtıldığında, sistem birkaç biyolojik etki üzerinden çalışır:</p>
+    <h3>Vasküler Etkiler</h3>
+    <ul>
+      <li><b>Endotelyal gözenek boyutu artar</b>.</li>
+      <li><b>Kan akışı artar</b>.</li>
+      <li>Bu iki etki birlikte <b>DDS'nin ekstravazasyonunun artmasına</b> (damar dışına çıkmasına) neden olur — yani daha çok nanopartikül tümöre ulaşır.</li>
+    </ul>
+
+    <h3>Hücresel Etkiler</h3>
+    <p>Hipertermi şu hücresel değişikliklerden de sorumludur:</p>
+    <ul>
+      <li><b>DNA sentezinin azalması</b>.</li>
+      <li><b>Isı şoku proteinlerinin (HSP) indüklenmesi</b>.</li>
+      <li><b>Protein sentezinin değişmesi</b>.</li>
+      <li><b>Mikrotübül düzenleme merkezlerinin bozulması</b>.</li>
+      <li>Reseptörlerin ekspresyonundaki ve <b>büyüme faktörlerinin bağlanmasındaki değişiklikler</b>.</li>
+      <li>Nihayetinde <b>hücresel morfolojide değişiklikler</b>.</li>
+    </ul>
+  </section>
+
+  <!-- ================= 23 ================= -->
+  <section id="s23">
+    <h2 class="section"><span class="num">23.</span>Termo-sensitif Lipozomlar</h2>
+    <p class="lead">Sıcaklığa duyarlı yanıt elde etmek için lipozomlar, <b>spesifik jel-sıvı faz geçiş sıcaklığına</b> sahip lipitlerle hazırlanabilir.</p>
+    <p>Optimal koşullar:</p>
+    <ul>
+      <li><b>30–60 dakikalık</b> bir süre içinde,</li>
+      <li><b>40–42 °C</b> sıcaklıklarda,</li>
+      <li>Maksimum <b>lipozom membran stabilizasyonu ve ilaç salınımı</b> sağlanır.</li>
+    </ul>
+    <p>Bu sıcaklık aralığı, klinik hipertermi protokollerinde uygulanabilen güvenli aralık ile örtüşür; vücut sıcaklığında lipozom kapalı kalır, hipertermi ile tetiklendiğinde içeriğini serbest bırakır.</p>
+  </section>
+
+  <!-- ================= 24 ================= -->
+  <section id="s24">
+    <h2 class="section"><span class="num">24.</span>LCST ve PNIPAAm</h2>
+    <p>Isıya duyarlı polimerik malzemelerden, <b>çözünür veya çözünmez hale geldikleri kritik sıcaklıktan</b> yararlanılarak DDS formüle edilebilir.</p>
+
+    <div class="pull"><b>LCST (Lower Critical Solution Temperature):</b> Düşük kritik çözelti sıcaklığı. Polimer bu sıcaklığın <b>altında suda çözünür</b>, üstünde ise <b>çöker (faz ayrımı)</b>. Bu davranış polimer konsantrasyonuyla da ilişkilidir.</div>
+
+    <h3>PNIPAAm — En Popüler Termosensitif Polimer</h3>
+    <p><b>Poli(N-izopropilakrilamid) (PNIPAAm)</b> türevleri, DDS'de kullanılan <b>en yaygın termosensitif polimerlerdir</b>. Davranışları:</p>
+    <ul>
+      <li><b>LCST'nin altında</b>: <b>Hidrofilik bir yapı</b> — suda çözünür.</li>
+      <li><b>LCST'nin üzerinde</b>: <b>Kompakt hidrofobik bir yapı</b> — çöker, taşıyıcı yapı değişir, ilaç salınır.</li>
+    </ul>
+    <p>PNIPAAm'ın LCST'si yaklaşık 32 °C civarındadır ve modifikasyonlarla bu değer vücut sıcaklığı yakınına ayarlanabilir.</p>
+
+    <h3>Örnek — 5-FU Termo-duyarlı Miseller</h3>
+    <p><b>5-florourasil (5-FU)</b> verilmesi için önerilen termo-duyarlı polielektrolit kompleks miseller, <b>biyouyumlu iki graft kopolimerinden</b> oluşur:</p>
+    <ul>
+      <li><b>Kitosan-poli(N-izopropilakrilamid)</b></li>
+      <li><b>Karboksimetil selüloz-poli(N-izopropilakrilamid) (CMC-g-PNIPAM)</b></li>
+    </ul>
+  </section>
+
+  <!-- ================= 25 ================= -->
+  <section id="s25">
+    <h2 class="section"><span class="num">25.</span>Manyetik Duyarlı DDS</h2>
+    <p class="lead">Manyetik olarak duyarlı nanopreparatlar, biyomedikal uygulamalarda <b>çok yönlü bir araçtır</b> ve aşağıdaki alanlarda yaygın olarak kullanılır:</p>
+    <ul>
+      <li><b>Manyetik rezonans görüntüleme (MR) kontrastının arttırılması</b>.</li>
+      <li><b>Manyetik alan destekli radyonüklid tedavisi</b>.</li>
+      <li><b>Hipertermi</b> (manyetik partiküller manyetik alanla titreşerek lokal ısı üretir).</li>
+      <li><b>Terapötik ajanların dokuya özel salınımı</b>.</li>
+    </ul>
+
+    <h3>Kullanılan Manyetik Ajan: Demir Oksit</h3>
+    <p>En popüler ajan olan <b>demir oksit</b>, ya:</p>
+    <ul>
+      <li><b>Maghemit (γ-Fe₂O₃)</b>, veya</li>
+      <li><b>Manyetit (Fe₃O₄)</b></li>
+    </ul>
+    <p>olarak kullanılır.</p>
+
+    <h3>Hazırlama</h3>
+    <p>Stabilize edici maddeler (<b>dekstran, PEG, PEI, polivinil alkol gibi biyouyumlu polimerler</b>) içeren bir çözelti içinde manyetitin çökeltilmesi veya sentezlerinden sonra <b>manyetik parçacık yüzeyinde polimerlerin adsorpsiyonu</b> ile gerekli malzemelere dönüştürülür.</p>
+  </section>
+
+  <!-- ================= 26 ================= -->
+  <section id="s26">
+    <h2 class="section"><span class="num">26.</span>SPIONs — Süperparamanyetik Demir Oksit Nanopartiküller</h2>
+    <p class="lead">Bu tür malzemelerin vücutta farklı amaçlar için <b>lokalizasyonu, harici bir manyetik alan tarafından kontrol edilir</b>.</p>
+
+    <h3>SPION Yapısı</h3>
+    <p><b>SPION'lar (Süperparamanyetik Demir Oksit Nanopartiküller)</b>:</p>
+    <ul>
+      <li><b>Çekirdekte demir oksitlere</b> sahiptir.</li>
+      <li><b>Biyouyumlu polimerlerle kaplanmıştır</b>.</li>
+      <li>İlaçlar, proteinler veya genleri taşıyabilir.</li>
+    </ul>
+
+    <div class="pull"><b>Süperparamanyetizma nedir?</b> Süperparamanyetik partiküller, manyetik alan varlığında güçlü manyetik özellik gösterir; alan kaldırıldığında manyetizasyonlarını kaybederler. Bu davranış, vücut içinde aglomerasyonu önler ve partikülleri kontrollü şekilde hedeflemeye uygun hale getirir.</div>
+  </section>
+
+  <!-- ================= 27 ================= -->
+  <section id="s27">
+    <h2 class="section"><span class="num">27.</span>Ultrasona Duyarlı DDS</h2>
+    <p class="lead">Ultrason, <b>köklü bir klinik görüntüleme yöntemidir</b>. Görüntüleme çözünürlüğünü artırmak için <b>ultrason kontrast ajanları olarak kullanılan mikro kabarcıklar</b> ile çalışılır.</p>
+    <p>Ek olarak, <b>ultrason DDS'nin lokalize yıkımı ile tetiklenen ilaç taşınması ve salımı için güvenle kullanılabilir</b>.</p>
+
+    <h3>Salımı Etkileyen Faktörler</h3>
+    <p>İlaç salıverme şunlara bağlıdır:</p>
+    <ul>
+      <li>Ultrason uygulamasının <b>zamanı</b>.</li>
+      <li><b>Frekansı</b>.</li>
+      <li><b>Güç yoğunluğu</b>.</li>
+      <li>Ultrasonun tipi — <b>pulse veya sürekli dalga ultrasonu</b>.</li>
+      <li>Ayrıca <b>ilaç lipofilisitesi</b>.</li>
+    </ul>
+
+    <p>Örneğin, ultrasonla tetiklenen ilaç salımı <b>Pluronic bazlı polimerik misellerle</b> çalışılmıştır. Klasik örnek: <b>DOX (doksorubisin) yüklü, folatla modifiye edilmiş Pluronic P105 miselleri</b>.</p>
+  </section>
+
+  <!-- ================= 28 ================= -->
+  <section id="s28">
+    <h2 class="section"><span class="num">28.</span>Mikrokabarcıklar — Yapı ve Özellikler</h2>
+    <p class="lead">Mikro kabarcıklar, <b>mikrometre boyutunda (genellikle 1–10 mikrometre)</b> yapılardır; genellikle bir <b>gaz çekirdeğini çevreleyen lipit, protein veya polimer bir kabuktan</b> oluşur.</p>
+
+    <h3>Kabuk ve Çekirdek Kompozisyonu</h3>
+    <ul>
+      <li><b>Kabuk malzemeleri</b>: albümin, galaktoz, lipidler veya polimerler.</li>
+      <li><b>Kabuk malzemeleri</b> mikro kabarcıkların <b>mekanik elastikiyetini ve akustik tepkisini</b> belirler.</li>
+      <li><b>Gaz çekirdeği</b> ise <b>akustik yanıtı</b> belirler.</li>
+      <li>Gaz çekirdeği tipik olarak <b>suda daha az çözünür</b> — bu, mikro kabarcığın dolaşımda dayanmasını sağlar.</li>
+    </ul>
+  </section>
+
+  <!-- ================= 29 ================= -->
+  <section id="s29">
+    <h2 class="section"><span class="num">29.</span>Sonoporasyon — Ultrason Aracılı İlaç Dağıtımı</h2>
+    <p>Mikrokabarcıkların ultrason ile birleşimi üç farklı amaçla kullanılabilir:</p>
+    <ul>
+      <li><b>Ultrason kontrast maddesi</b> olarak.</li>
+      <li>Mikrokabarcık + ilaç kombinasyonu.</li>
+      <li><b>Ultrason aracılı ilaç dağıtımı (sonoporasyon)</b>.</li>
+    </ul>
+
+    <h3>Sonoporasyon Adımları</h3>
+    <ol>
+      <li>İlaç yüklü mikro kabarcıklar <b>vücuda verilir</b>.</li>
+      <li>Hedeflenen bölgede (örneğin tümör) <b>ultrason dalgaları uygulanır</b>.</li>
+      <li>Ultrason, kabarcıkların <b>parçalanmasına veya titreşmesine (kavitasyon)</b> neden olur.</li>
+      <li>İlaç <b>tam o bölgeye salınır</b>.</li>
+    </ol>
+
+    <h3>İki Kavitasyon Modu</h3>
+    <p>Uygulanan akustik basınca bağlı olarak mikro kabarcıklar:</p>
+    <ul>
+      <li><b>Kararlı kavitasyon</b>: kabarcıklar <b>kararlı bir şekilde salınır</b> (titreşir ama parçalanmaz).</li>
+      <li><b>İnertial (geçici) kavitasyon</b>: kabarcıklar <b>şiddetli bir şekilde büyür/çöker</b>.</li>
+    </ul>
+
+    <div class="pull"><b>Mekanik etki:</b> Dinamik mikro kabarcık hareketi, sıvı hareketi ile birlikte çevre dokulara <b>mekanik kuvvetler uygulayabilir</b>. Bu, dokulara ilaç verilmesine yardımcı olabilecek <b>geri dönüşümlü hücre zarı geçirgenliği</b> üretir.</div>
+  </section>
+
+  <!-- ================= 30 ================= -->
+  <section id="s30">
+    <h2 class="section"><span class="num">30.</span>FDA Onaylı Mikrokabarcıklar</h2>
+    <p>Klinik kullanımda ve ticari olarak mevcut <b>FDA onaylı mikrokabarcıklar</b>:</p>
+    <ul>
+      <li><b>Optison®</b></li>
+      <li><b>Definity®</b></li>
+      <li><b>Lumason®</b></li>
+    </ul>
+
+    <h3>Genel Özellikler</h3>
+    <ul>
+      <li>Mikro kabarcıkların boyutu genellikle <b>1–4 mikrometre çapında</b>'dır; bu da onların <b>kolayca kan dolaşımına geçmelerini</b> sağlar.</li>
+      <li>Her mikro-kabarcık, <b>kapsüllenmiş bir gaz çekirdeğinden</b> oluşur.</li>
+      <li>Gazın sızmasını önlemek için <b>perflorokarbon veya nitrojen gibi ağır gazlar</b> kullanılır; bunların <b>dolaşım ömrü yeterince uzundur</b>.</li>
+    </ul>
+
+    <h3>Optison Spesifikasyonları</h3>
+    <table>
+      <thead><tr><th>Parametre</th><th>Değer</th></tr></thead>
+      <tbody>
+        <tr><td>Kabuk Malzemesi</td><td>Denatüre albümin</td></tr>
+        <tr><td>Gaz</td><td>Perflorpropan</td></tr>
+        <tr><td>Ortalama Çap</td><td>2.0 – 4.5 μm</td></tr>
+        <tr><td>Konsantrasyon</td><td>5.0 – 8.0 × 10⁸ /mL</td></tr>
+      </tbody>
+    </table>
+
+    <p>İlaç taşınmaya yönelik bir yaklaşım, <b>terapötik ajanların ticari mikro kabarcıkların ilaçla birlikte enjekte edilmesidir</b>.</p>
+  </section>
+
+  <!-- ================= 31 ================= -->
+  <section id="s31">
+    <h2 class="section"><span class="num">31.</span>Ultrason DDS'nin Zorlukları</h2>
+    <p>Klinik uygulamaya geçişte çözülmesi gereken birçok sorun ve zorluk vardır:</p>
+    <ol>
+      <li><b>Nanotaşıyıcıların temel hazırlama teknolojisi</b> daha da optimize edilmelidir.</li>
+      <li><b>Üretim yöntemlerinin iyileştirilmesi</b> gerekir.</li>
+      <li>Kabarcık ile birleştirilmiş ligandları bulmak için <b>tümöre özgü belirteçler aktif olarak tanımlanmalıdır</b>; <b>antikorlar hedefleme için uygundur</b>. Belirli bir hedefleme molekülü (<b>genellikle bir antikor veya peptit</b>) geliştirilmelidir.</li>
+      <li><b>Ultrason</b>, nispeten daha yüksek konsantrasyondaki nanotaşıyıcıların nüfuz edebilirliğini artırabilir; ancak <b>daha yüksek güç, çevredeki normal hücre ve dokuların zarar görmesine neden olabilir</b> — güç dengesinin dikkatlice ayarlanması gereklidir.</li>
+    </ol>
+  </section>
+
+  <!-- ================= 32 ================= -->
+  <section id="s32">
+    <h2 class="section"><span class="num">32.</span>Işığa Duyarlı DDS</h2>
+    <p class="lead"><b>Fotoaktivasyon</b>, DDS'den ilaç salınımını tetiklemek için kullanılabilecek bir başka seçenektir.</p>
+    <p>Işığın bir tetikleyici olarak avantajları:</p>
+    <ul>
+      <li>Çok <b>geniş bir ayarlanabilir parametre yelpazesi</b> sağlar: <b>dalga boyu, süre ve yoğunluk</b>.</li>
+      <li>Işık kaynağı, ilaç salınımını düzenlemek için hem <b>mekansal hem de geçici olarak kontrol edilebilir</b>.</li>
+      <li>Kesin uzaysal kontrol — yalnızca ışınlanan bölgede ilaç serbest kalır.</li>
+    </ul>
+  </section>
+
+  <!-- ================= 33 ================= -->
+  <section id="s33">
+    <h2 class="section"><span class="num">33.</span>NIR (Yakın Kızılötesi) Işık Avantajları</h2>
+    <p class="lead">Biyomedikal uygulamalar için <b>700–1000 nm aralığındaki dalga boyları — yakın kızılötesi ışık (NIR)</b> — UV veya görünür ışıktan daha uygun olduğu bildirilmektedir.</p>
+    <p>NIR'in tercih sebepleri:</p>
+    <ul>
+      <li><b>Dokulara yüksek uzaysal hassasiyetle derinlemesine nüfuz eder</b> — UV ve görünür ışık deride hızla absorbe edilirken NIR daha derin penetrasyon sağlar.</li>
+      <li><b>Normal hücrelere daha az zarar verme</b> riski gösterir.</li>
+      <li>Hemoglobin ve su absorpsiyonunun minimum olduğu "biyolojik pencere" içindedir.</li>
+    </ul>
+  </section>
+
+  <!-- ================= 34 ================= -->
+  <section id="s34">
+    <h2 class="section"><span class="num">34.</span>Foto-mekanizmalar</h2>
+    <p>Işığa duyarlı gruplar veya <b>kromoforlar</b> genellikle:</p>
+    <ul>
+      <li>DDS'nin <b>içinde kapsüllenir</b>, veya</li>
+      <li>DDS'nin <b>yüzeyine konjuge edilir</b>.</li>
+    </ul>
+
+    <h3>Işıkla Tetiklenen Salım Mekanizmaları</h3>
+    <p>DDS'den yüklerin ışıkla tetiklenen salınımını indükleyen mekanizmalar:</p>
+    <ul>
+      <li><b>Foto-izomerizasyon</b> — molekülün ışıkla geometrik yapısının değişmesi (örn. cis-trans).</li>
+      <li><b>Foto-çapraz-bağlama</b> — ışık altında yeni kovalent bağlar oluşması.</li>
+      <li><b>Işığa duyarlılaştırmanın neden olduğu oksidasyon</b>.</li>
+      <li><b>Işıkla tetiklenen tersinir veya tersinmez polarite geçişi</b>.</li>
+      <li><b>Foto-decross-bağlama</b> — mevcut çapraz bağların kırılması.</li>
+      <li><b>Foto-bozunma</b> — taşıyıcının ışıkla parçalanması.</li>
+    </ul>
+  </section>
+
+  <!-- ================= 35 ================= -->
+  <section id="s35">
+    <h2 class="section"><span class="num">35.</span>Işığa Duyarlı Taşıyıcılar ve Kromoforlar</h2>
+    <h3>Tersine Çevrilebilir Kromoforlar</h3>
+    <p><b>Azobenzen ve spiropiran</b>, ışığa duyarlı DDS'de <b>tersine çevrilebilir ışığa duyarlı gruplar</b> olarak kullanılmıştır. Bu moleküller belirli dalga boyuyla bir izomere, başka bir dalga boyuyla diğer izomere döner.</p>
+
+    <h3>Fotopolimerizasyon</h3>
+    <p>Fotopolimerizasyon veya foto çapraz bağlama, <b>ışınlanabilen polimerize edilebilir çift bağı</b> içerir; bu, UV/görünür ışıkla aktif hale getirilen sentez tepkimesidir.</p>
+
+    <h3>En Yaygın Nanotaşıyıcılar</h3>
+    <p>Işığa duyarlı araçların geliştirilmesi için en yaygın kullanılan iki nanotaşıyıcı:</p>
+    <ul>
+      <li><b>Polimerik miseller</b></li>
+      <li><b>Lipozomlar</b></li>
+    </ul>
+    <p>Bununla birlikte diğer nanotaşıyıcılar da kullanılmıştır:</p>
+    <ul>
+      <li><b>Dendrimerler</b></li>
+      <li><b>Silika nanopartiküller</b></li>
+      <li><b>Altın nanoparçacıklar</b></li>
+      <li><b>Nanojeller</b></li>
+    </ul>
+
+    <h3>Örnek Sistem</h3>
+    <p><b>Dioleoilfosfatidiletanolamin ve 2-(heksadesiloksi)-sinnamik asitten</b> oluşan lipozomlar kullanılmıştır. Bu sistemde <b>sinnamik asit kalıntısının foto-dimerizasyonu</b> lipozomal membranı kararsızlaştırdı ve <b>yüklenen ilacın serbest bırakılmasını</b> sağladı.</p>
+  </section>
+
+  <!-- ================= 36 ================= -->
+  <section id="s36">
+    <h2 class="section"><span class="num">36.</span>Sonuç ve Gelecekten Beklentiler</h2>
+    <p class="lead">Uyaranlara duyarlı DDS, geleneksel DDS'ye kıyasla ilaçların <b>zamansal ve mekansal salınımı üzerinde daha iyi bir kontrol</b> gösterir.</p>
+    <p>Bununla birlikte;</p>
+    <ul>
+      <li><b>Hedef dışı etkileri tahmin etmek/en aza indirmek</b> için tasarlanan DDS'nin uyaran duyarlılığının dikkatli bir şekilde anlaşılması gerekir.</li>
+      <li><b>Hedefleme parçalarını uyaran duyarlılığı ile birleştirmek</b>, bu tür sistemlerin dağıtımı ve lokalizasyonu üzerindeki kontrolü daha da iyileştirebilir ve yan etkileri en aza indirebilir.</li>
+    </ul>
+
+    <div class="pull"><b>Gelecekteki zorluk:</b> <b>Çok düşük konsantrasyon aralıklarında bulunan biyobelirteçlere yanıt veren DDS</b> geliştirmek ve <b>belirli sinyal amplifikasyon özelliklerine sahip DDS</b> mühendisliği yapmak olacaktır. Yani, biyolojik sinyalin çok zayıf olduğu durumlarda bile sistem güvenilir şekilde tetiklenebilmelidir.</div>
+  </section>
+
+  <!-- ================= 37 ================= -->
+  <section id="s37">
+    <h2 class="section"><span class="num">37.</span>Klinik Örnek — GlucoWatch G2 Biographer</h2>
+    <p class="lead"><b>GlucoWatch® G2 Biographer</b>, yetişkinlerde (18 yaş ve üstü) ve <b>diyabetli çocuklarda/ergenlerde (7–17 yaş)</b> glikoz seviyelerindeki <b>eğilimleri tespit etmek ve kalıpları takip etmek</b> için belirtilen bir glikoz izleme cihazıdır.</p>
+    <p>Cihaz, evde ve sağlık tesislerinde hastalar tarafından kullanılmak üzere tasarlanmıştır. <b>Yalnızca reçeteli kullanım içindir</b>.</p>
+
+    <h3>Cihaz Özellikleri</h3>
+    <ul>
+      <li><b>Sık, otomatik, invazif olmayan glikoz ölçümleri</b> sağlar.</li>
+      <li>Glikoz numunesi <b>doğrudan sağlam deriden</b> elde edilir.</li>
+      <li>Cihaz <b>kol saati gibi giyilir</b> ve <b>AutoSensor</b> ile birlikte kullanılır — bu, cihazın arkasına takılan ve cilde temas eden <b>tek kullanımlık bileşendir</b>.</li>
+      <li>Her AutoSensor, <b>13 saatlik bir ölçüm süresi boyunca</b> kullanıcıya <b>saatte altı adede kadar glikoz ölçümü</b> sağlar.</li>
+      <li>Aşınma başına <b>78'e kadar okuma</b> alınabilir.</li>
+      <li>Sık okumalar, kullanıcıya glikoz profillerinde <b>trendler ve kalıplar</b> sağlar.</li>
+    </ul>
+
+    <p>Bu cihaz, transdermal yolla biyolojik bir parametrenin (glikoz) <b>geri bildirim regüle edilmiş izleme</b> yaklaşımına klinik bir örnektir; ileride bu tip cihazların doğrudan ilaç salımına bağlanması (kapalı devre yapay pankreas) bekleniyor.</p>
+  </section>
+
+  <!-- ================= 38 ================= -->
+  <section id="s38">
+    <h2 class="section"><span class="num">38.</span>Tek Sayfada Genel Tekrar — Çekirdek Notlar</h2>
+    <div class="grid">
+      <div class="card"><h4>Akıllı DDS tanım</h4><p>Stimülanların ilaç taşıyıcı sistemin <b>davranışını ve salımını kontrol ettiği</b> sistemler. Zaman + mekan kontrolü.</p></div>
+      <div class="card"><h4>İçsel uyaranlar</h4><p>pH, sıcaklık, redoks, enzim ekspresyonu, hipoksi — patolojik bölgenin kendi özellikleri.</p></div>
+      <div class="card"><h4>Dışsal uyaranlar</h4><p>Ultrason, sıcaklık, manyetik alan, ışık — vücut dışından uygulanır.</p></div>
+      <div class="card"><h4>Patolojik bölgeler</h4><p>Tümör, enfarktüs, ateroskleroz, enfeksiyon, transplant reddi — hepsinde mikroçevre değişir.</p></div>
+      <div class="card"><h4>Nano sınırlamaları çözer</h4><p>Düşük stabilite, hızlı bozunma, toksisite, zayıf çözünürlük, kötü PK ve biyodağılım.</p></div>
+      <div class="card"><h4>Tasarım faktörleri</h4><p>Dolaşımda kalış, hedef organda birikme, kontrollü degradasyon, yüzey kimyası (protein/fagositoz), boyut <b>10 nm – 15 µm</b>.</p></div>
+      <div class="card"><h4>İki salım mekanizması</h4><p>1. Taşıyıcı yapısal değişiklik (bozunma, geçirgenlik↑). 2. Kimyasal bağ kırılması.</p></div>
+      <div class="card"><h4>pH-duyarlı temel</h4><p>Düşük pH = tümör + iltihap + hipoksi. Kan pH 7.3-7.4'te koru, hedefte serbest bırak.</p></div>
+      <div class="card"><h4>Düşük pH nedeni</h4><p>Warburg etkisi — <b>laktik asit (pKa 3.7)</b> tümörün ana asit kaynağı + CO₂↑ + perfüzyon eksiği.</p></div>
+      <div class="card"><h4>pH değerleri</h4><p>Kan 7.3-7.4 / Tümör interstisyel 6.8-7.2 / Sitoplazma 7.0+ / <b>Endozom 5-6</b> / <b>Lizozom 4.5-5.5</b>.</p></div>
+      <div class="card"><h4>Endozom + katepsin B</h4><p>Düşük pH + hidroliz birlikte ilaç salımını yoğunlaştırır (çift uyaran).</p></div>
+      <div class="card"><h4>EPR etkisi</h4><p>Enhanced Permeability and Retention — tümör damar kaçağı + lenf drenajı↓ → nanopartikül birikir.</p></div>
+      <div class="card"><h4>pH stratejileri</h4><p>Protonize gruplar (amin, imid, –COOH) / pH-hassas polimer / aside hassas bağlar / yük dönüştürücü.</p></div>
+      <div class="card"><h4>Yük dönüştürücü</h4><p>Kan pH'sında <b>negatif</b> (stabil), tümör pH'sında <b>pozitif</b> (membran tutunması + hücre alımı↑).</p></div>
+      <div class="card"><h4>Redoks-GSH</h4><p><b>Glutatyon</b> = tripeptit. Hücre içi GSH, dışına göre <b>100-1000× yüksek</b>. <b>Disülfid bağı</b> hücre içinde kırılır.</p></div>
+      <div class="card"><h4>Tiyol-disülfid</h4><p>RS–SR + 2 R'SH → 2 RS⁻ + R'S–SR'. Sitotoksisite kanserde artar.</p></div>
+      <div class="card"><h4>Enzim-duyarlı</h4><p>Tümör hücreleri belirli enzimleri <b>aşırı eksprese</b> eder → kanser belirteci + tetikleyici.</p></div>
+      <div class="card"><h4>MMP'ler</h4><p>Matriks metalloproteinazlar — kanser progresyonunun <b>ana aracıları</b>. Hem biyobelirteç hem DDS tetikleyici.</p></div>
+      <div class="card"><h4>PTX/MMP2/TATp</h4><p>PEG-MMP2 peptit-PTX + TATp-PEG-PE + PEG-PE. MMP2 keser, TATp hücre alımı sağlar, PTX etki eder.</p></div>
+      <div class="card"><h4>Termo-duyarlı</h4><p>Lokal hipertermi = kanser + inflamasyon karakteristiği. Tümör doğal olarak ≥37°C.</p></div>
+      <div class="card"><h4>Tıbbi hipertermi</h4><p><b>42-44°C</b>'ye ısıtma. Kanser hücresini öldürür veya RT/KT'ye duyarlı yapar.</p></div>
+      <div class="card"><h4>Isıtma yöntemleri</h4><p>Mikrodalga, yüksek frekanslı akım, lazer (fiberoptik), ultrason, interstisyel lazer fotokoagülasyon.</p></div>
+      <div class="card"><h4>Hipertermi etkileri</h4><p>Endotel gözeneği↑ + kan akışı↑ → ekstravazasyon↑. DNA sentezi↓, HSP↑, mikrotübül bozulur.</p></div>
+      <div class="card"><h4>Termo-lipozom</h4><p>Jel-sıvı faz geçişi → <b>40-42°C'de 30-60 dk</b> maksimum salım.</p></div>
+      <div class="card"><h4>LCST</h4><p>Lower Critical Solution Temperature. Polimer altında çözünür, üstünde çöker.</p></div>
+      <div class="card"><h4>PNIPAAm</h4><p>Poli(N-izopropilakrilamid). En yaygın termosensitif. <b>LCST altı: hidrofilik / üstü: hidrofobik kompakt</b>. LCST ~32°C.</p></div>
+      <div class="card"><h4>5-FU termo</h4><p>Kitosan-PNIPAM + CMC-g-PNIPAM graft kopolimer miselleri.</p></div>
+      <div class="card"><h4>Manyetik DDS</h4><p>MR kontrast + radyonüklid + hipertermi + dokuya özel salım.</p></div>
+      <div class="card"><h4>Demir oksit</h4><p>Maghemit (γ-Fe₂O₃) veya Manyetit (Fe₃O₄). Dekstran, PEG, PEI, PVA ile kaplanır.</p></div>
+      <div class="card"><h4>SPIONs</h4><p>Süperparamanyetik demir oksit nano. Çekirdek demir oksit + biyouyumlu polimer kaplama. İlaç, protein, gen taşır.</p></div>
+      <div class="card"><h4>Ultrason</h4><p>Klinik görüntüleme yöntemi. Mikrokabarcıklarla kontrast + sonoporasyon. Pluronic P105-DOX-folat klasik örnek.</p></div>
+      <div class="card"><h4>Salım faktörleri</h4><p>US zamanı, frekansı, güç yoğunluğu, tipi (pulse/sürekli), ilaç lipofilisitesi.</p></div>
+      <div class="card"><h4>Mikrokabarcık</h4><p><b>1-10 μm</b>. Lipid/protein/polimer kabuk + gaz çekirdek. Kabuk = mekanik+akustik elastikiyet; gaz = akustik yanıt.</p></div>
+      <div class="card"><h4>Sonoporasyon</h4><p>Kararlı kavitasyon (titreşim) vs inertial (büyür/çöker). Hücre membranını geri dönüşümlü olarak geçirgen yapar.</p></div>
+      <div class="card"><h4>FDA onaylı</h4><p><b>Optison, Definity, Lumason</b>. 1-4 μm çap. Perflorokarbon/nitrojen gaz çekirdek.</p></div>
+      <div class="card"><h4>Optison</h4><p>Denatüre albümin kabuk + perflorpropan gaz + 2.0-4.5 μm çap + 5-8×10⁸/mL konsantrasyon.</p></div>
+      <div class="card"><h4>US zorlukları</h4><p>Üretim optimizasyonu, tümör spesifik antikor/peptit, güç-hasar dengesi.</p></div>
+      <div class="card"><h4>Işığa duyarlı</h4><p>Dalga boyu + süre + yoğunluk ayarlanabilir. Mekansal + geçici kontrol.</p></div>
+      <div class="card"><h4>NIR</h4><p><b>700-1000 nm</b>. UV/görünürden iyi: derin doku penetrasyonu + az hasar. Biyolojik pencere.</p></div>
+      <div class="card"><h4>Foto-mekanizmalar</h4><p>İzomerizasyon, çapraz bağlama, oksidasyon, polarite geçişi, decross-bağlama, bozunma.</p></div>
+      <div class="card"><h4>Kromoforlar</h4><p><b>Azobenzen, spiropiran</b> — tersine çevrilebilir. Polimerik misel + lipozom en yaygın taşıyıcılar.</p></div>
+      <div class="card"><h4>Diğer foto-taşıyıcı</h4><p>Dendrimer, silika NP, altın NP, nanojel.</p></div>
+      <div class="card"><h4>Sinnamik asit örnek</h4><p>DOPE + heksadesiloksi-sinnamik asit lipozomu — foto-dimerizasyon membranı bozar.</p></div>
+      <div class="card"><h4>Gelecek</h4><p>Düşük konsantrasyonlu biyobelirteçlere yanıt + sinyal amplifikasyonu özelliği.</p></div>
+      <div class="card"><h4>GlucoWatch G2</h4><p>İnvazif olmayan glikoz izleme. <b>Saatte 6 ölçüm, 13 saat, 78 okuma</b>. AutoSensor tek kullanımlık.</p></div>
+    </div>
+  </section>
+
+  <footer>
+    Çalışma materyali eğitim amaçlıdır. Sınav/klinik kullanım öncesi ders notlarıyla karşılaştırınız.
+  </footer>
+</div>
+
+<a href="#" class="top-link">↑ Başa dön</a>
+</body>
+</html>

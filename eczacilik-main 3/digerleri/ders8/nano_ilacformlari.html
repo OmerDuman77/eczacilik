@@ -1,0 +1,524 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Nanoteknoloji Ürünü İlaçlar & Yeni İlaç Taşıyıcı Formlar — Çalışma Sayfası</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Spectral:ital,wght@0,400;0,600;0,800;1,500&family=Inter+Tight:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#0b1413;--panel:#11201e;--panel-2:#172a27;--ink:#e7f0ee;--muted:#8fa6a2;--line:#23423d;
+    --accent:#2bb6a3;--accent-2:#e0a458;
+    --correct-bg:rgba(43,182,131,.16);--correct-line:#37c98a;
+    --wrong-bg:rgba(214,69,69,.16);--wrong-line:#e25555;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{scroll-behavior:smooth}
+  body{background:radial-gradient(1100px 560px at 84% -10%, rgba(43,182,163,.10), transparent 60%),radial-gradient(900px 520px at -10% 22%, rgba(224,164,88,.07), transparent 55%),var(--bg);color:var(--ink);font-family:'Inter Tight',system-ui,sans-serif;line-height:1.6;-webkit-font-smoothing:antialiased}
+  .wrap{max-width:900px;margin:0 auto;padding:40px 22px 120px}
+  .kicker{font-size:.72rem;letter-spacing:.3em;text-transform:uppercase;color:var(--accent);font-weight:600;margin-bottom:12px}
+  h1.title{font-family:'Spectral',serif;font-weight:800;font-size:clamp(1.7rem,4.2vw,2.6rem);line-height:1.06;letter-spacing:-.01em;margin-bottom:8px}
+  h1.title em{font-style:italic;color:var(--accent-2)}
+  .sub{color:var(--muted);font-size:.96rem;margin-bottom:22px}
+  .topnav{position:sticky;top:0;z-index:30;display:flex;gap:10px;padding:14px 0 12px;background:linear-gradient(180deg,var(--bg) 80%,rgba(11,20,19,0));flex-wrap:wrap}
+  .topbtn{flex:1 1 220px;cursor:pointer;border:1px solid var(--line);background:var(--panel-2);color:var(--muted);border-radius:14px;padding:14px 16px;font-family:'Spectral',serif;font-size:1.02rem;font-weight:600;transition:.2s;text-align:center}
+  .topbtn:hover{border-color:#345f57;color:var(--ink)}
+  .topbtn.active{background:var(--accent-2);border-color:var(--accent-2);color:#2a1a05}
+  .tabs{position:sticky;top:62px;z-index:20;display:flex;flex-wrap:wrap;gap:8px;padding:10px 0 12px;background:linear-gradient(180deg,var(--bg) 78%,rgba(11,20,19,0));margin-bottom:6px}
+  .tab{flex:1 1 130px;min-width:120px;cursor:pointer;border:1px solid var(--line);background:var(--panel);color:var(--muted);border-radius:11px;padding:10px 12px;font-family:inherit;font-size:.86rem;font-weight:600;transition:.2s;text-align:center;line-height:1.2}
+  .tab small{display:block;font-weight:400;font-size:.72rem;opacity:.7;margin-top:2px}
+  .tab:hover{border-color:#345f57;color:var(--ink)}
+  .tab.active{background:var(--accent);border-color:var(--accent);color:#04201c}
+  .topic-wrap{display:none}.topic-wrap.active{display:block}
+  .panel{display:none;animation:fade .35s ease}.panel.active{display:block}
+  @keyframes fade{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
+  .summary h2{font-family:'Spectral',serif;font-weight:600;font-size:1.45rem;margin:32px 0 6px;color:var(--ink)}
+  .summary h2:first-child{margin-top:6px}
+  .summary h2 .n{color:var(--accent);font-style:italic;margin-right:8px}
+  .summary h3{font-size:1.04rem;font-weight:600;color:var(--accent-2);margin:18px 0 4px}
+  .summary p{margin:10px 0;color:#d5e2df}
+  .summary ul{margin:8px 0 8px 4px;padding-left:20px;color:#d5e2df}
+  .summary li{margin:5px 0}
+  .summary b{color:var(--ink)}
+  .summary .lead{font-size:1.04rem;border-left:3px solid var(--accent);padding-left:16px;color:#cfe0dc}
+  .summary hr{border:none;border-top:1px solid var(--line);margin:28px 0}
+  .intro-note{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:14px 16px;color:var(--muted);font-size:.9rem;margin-bottom:16px}
+  .intro-note b{color:var(--accent)}
+  .q{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:18px 18px 14px;margin-top:14px}
+  .q-top{display:flex;gap:11px;align-items:flex-start;margin-bottom:13px}
+  .q-no{flex:none;width:28px;height:28px;border-radius:8px;background:var(--panel-2);color:var(--accent);font-weight:700;font-size:.8rem;display:grid;place-items:center;font-family:'Spectral',serif}
+  .q-text{font-size:1rem;font-weight:500;padding-top:2px}
+  .q-text .blank{color:var(--accent-2);font-weight:700;letter-spacing:1px}
+  .opts{display:flex;flex-direction:column;gap:8px}
+  .opt{text-align:left;width:100%;cursor:pointer;background:var(--panel-2);border:1px solid var(--line);color:var(--ink);border-radius:10px;padding:11px 13px;font-family:inherit;font-size:.94rem;display:flex;gap:11px;align-items:flex-start;transition:.16s}
+  .opt:hover:not(:disabled){background:#1d322e;border-color:#39625a}
+  .opt:disabled{cursor:default}
+  .opt .mark{flex:none;width:21px;height:21px;border-radius:50%;border:1.5px solid var(--muted);color:var(--muted);font-size:.72rem;font-weight:700;display:grid;place-items:center;margin-top:1px;font-family:'Spectral',serif}
+  .opt.correct{background:var(--correct-bg);border-color:var(--correct-line);color:#d6ffe9}
+  .opt.correct .mark{border-color:var(--correct-line);background:var(--correct-line);color:#06231a}
+  .opt.correct .mark::after{content:"✓"}
+  .opt.wrong{background:var(--wrong-bg);border-color:var(--wrong-line);color:#ffe0e0}
+  .opt.wrong .mark{border-color:var(--wrong-line);background:var(--wrong-line);color:#2a0a0a}
+  .opt.wrong .mark::after{content:"✕"}
+  .opt.correct .mark span,.opt.wrong .mark span{display:none}
+  .scorebar{display:flex;gap:12px;flex-wrap:wrap;margin-bottom:8px}
+  .sc{flex:1 1 130px;background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:12px 14px}
+  .sc .l{font-size:.7rem;letter-spacing:.1em;text-transform:uppercase;color:var(--muted)}
+  .sc .v{font-family:'Spectral',serif;font-size:1.35rem;font-weight:600;margin-top:2px}
+  .reveal{background:var(--panel);border:1px solid var(--line);border-radius:14px;margin-top:12px;overflow:hidden;transition:border-color .2s}
+  .reveal:hover{border-color:#345f57}
+  .reveal-head{display:flex;gap:12px;align-items:center;padding:14px 16px;cursor:pointer}
+  .reveal-no{flex:none;width:28px;height:28px;border-radius:8px;background:var(--panel-2);color:var(--accent);font-weight:700;font-size:.8rem;display:grid;place-items:center;font-family:'Spectral',serif}
+  .reveal-term{flex:1;font-weight:600;font-size:1rem}
+  .dots{flex:none;font-family:'Spectral',serif;font-weight:800;color:var(--accent-2);font-size:1.4rem;letter-spacing:2px;line-height:1;transition:.25s;padding:0 4px}
+  .reveal.open .dots{color:var(--accent);transform:rotate(90deg)}
+  .reveal-body{max-height:0;opacity:0;padding:0 16px;transition:max-height .3s ease,opacity .25s ease,padding .3s ease;color:#d5e2df;font-size:.95rem;border-top:1px solid transparent}
+  .reveal.open .reveal-body{max-height:800px;opacity:1;padding:13px 16px 16px;border-top:1px solid var(--line)}
+  .reveal-body b{color:var(--accent-2)}
+  footer{margin-top:60px;text-align:center;color:var(--muted);font-size:.82rem}
+  .tools{display:flex;gap:10px;justify-content:center;flex-wrap:wrap;margin-top:14px}
+  .toolbtn{background:transparent;border:1px solid var(--line);color:var(--muted);padding:9px 16px;border-radius:10px;font-family:inherit;cursor:pointer;font-size:.84rem;transition:.2s}
+  .toolbtn:hover{border-color:var(--accent);color:var(--accent)}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="kicker">Prof. Dr. F. Jülide Akbuğa · Ders Notları</div>
+  <h1 class="title">Nanoteknoloji Ürünü İlaçlar &amp; <em>Yeni İlaç Taşıyıcı Formlar</em></h1>
+  <div class="sub">İki ayrı konu, tek sayfada. Önce üstten konuyu seçin; her konunun altında detaylı özet, boşluk doldurma (test), terim–anlam ve klasik soru bölümleri vardır.</div>
+
+  <nav class="topnav">
+    <button class="topbtn active" data-topic="nt">① Nanoteknoloji Ürünü İlaçlar</button>
+    <button class="topbtn" data-topic="if">② Yeni İlaç Taşıyıcı Formlar</button>
+  </nav>
+
+  <!-- =================================== NANOTEKNOLOJİ =================================== -->
+  <div class="topic-wrap active" id="nt">
+    <nav class="tabs" data-scope="nt">
+      <button class="tab active" data-sub="nt-ozet">Detaylı Özet</button>
+      <button class="tab" data-sub="nt-bosluk">Boşluk<small>30 · yeşil/kırmızı</small></button>
+      <button class="tab" data-sub="nt-terim">Terim–Anlam<small>40 · tıkla, aç</small></button>
+      <button class="tab" data-sub="nt-klasik">Klasik<small>15 · tıkla, aç</small></button>
+    </nav>
+
+    <section class="panel summary active" id="nt-ozet">
+      <p class="lead">Nanoteknoloji, istenen <b>moleküler boyut aralığında</b> malzemeleri tekrarlanabilir biçimde geliştirme ve kontrol etme kapasitesine sahip, ilerici bir tıp alanıdır. İlaç alanında temel amaç; etkin maddenin istenen dozunun, istenmeyen yan etkileri sınırlanarak <b>istenen etki yerine</b> (örneğin tümörler ve sağlıksız dokular) taşınmasına aracı olmaktır.</p>
+
+      <h2><span class="n">1.</span>Neden Nanoteknoloji? Geleneksel Formların Dezavantajları</h2>
+      <p>Geleneksel ilaç dozaj formları (tablet, kapsül, oral çözelti, parenteral, süspansiyon, emülsiyon vb.) şu dezavantajlara sahiptir: <b>yüksek doz ve düşük biyoyararlanım</b>, plazma geçiş seviyelerinde <b>ilk geçiş (first-pass) etkisi</b>, intolerans, instabilite, kişiler arası varyasyonlar ve istenen <b>terapötik etkinin oluşmaması</b>. Yeni ilaç taşıyıcı sistemleri bu farklı talepleri ve ihtiyaçları karşılayabilir; böylece farmakokinetik, immünojenisite, farmakodinamik, toksisite ve ilaç etkisi konularında yeni yaklaşımlar geliştirilmiştir.</p>
+
+      <h2><span class="n">2.</span>Nanopartiküller (NP) ve Avantajları</h2>
+      <p>Nanopartiküller (NP'ler), nano boyutta, etkili formülasyonda <b>kolloidal ilaç taşıyıcı sistemlerdir</b>. Temel avantajları: çözünürlüğü ve <b>kalış süresini / yarılanma ömrünü</b> artırarak ve hedefleme yaparak etki bölgesinde ilaç <b>biyoyararlanımını</b> artırmaktır. İlacın etki bölgesine güvenli taşınmasını sağlar ve hedef olmayan doku/hücrelerde yan etkileri azaltır. NP'ler, hücreler tarafından daha büyük mikromoleküllerden <b>daha iyi</b> alınır. Uygulamada etkin madde ya molekülün <b>matrisinde</b> ya da <b>yüzeyinde</b> taşınır.</p>
+
+      <h2><span class="n">3.</span>İlaç Taşıyıcı Sistemlerdeki Gelişmeler</h2>
+      <p>İlaç taşıyıcı; ilaç taşınma prosedürünün parçası olarak kullanılan, uygulamanın <b>seçiciliğini, etkililiğini ve stabilitesini</b> artıran herhangi bir substrattır. Prensip olarak ilacın <b>salım modelini</b> kontrol eder: ilacın öngörülen sürede belli bir şekilde salınması (normal dağılım) veya hedefte değişiklik/uyarana karşı <b>aktif salım</b> sağlanır. Tetikleyici uyaranlar örneğin <b>pH değişimleri, sıcaklık ve ışık</b> olabilir. Ayrıca taşıyıcı sistemler, ilacın <b>farmakokinetik özelliklerini değiştirmek</b> ve suda az çözünen ilaçların biyoyararlanımı ile membran geçirgenliğini artırmak için kullanılır. Nano-ilaç-taşıyıcı sistemler özellikle <b>tümör, diyabet ve nörodejeneratif</b> bozukluklar başta olmak üzere birçok hastalığın tanı ve tedavisindeki güçlüklere odaklanır.</p>
+
+      <h2><span class="n">4.</span>NP Türleri ve Yapı Malzemeleri</h2>
+      <p>Değişik boyut, şekil, düzenleme ve işlevselliklere sahip çok sayıda NP türü vardır. İstenen özellikte üretim için NP'ler; <b>doğal</b> (lipitler, laktik asit, dekstran, kitosan, fosfolipidler) veya daha fazla "harmanlanmış niteliklere" sahip farklı <b>polimer, silika, metal ve karbon</b> türleri kullanılarak üretilir. Temel olarak iki tür NP vardır: <b>doğal NP'ler</b> (albümin, jelatin, kitosan) ve <b>inorganik NP'ler</b> (metal NP'ler, silika, polimerik NP'ler). NP'lerin kanda kalma süresi, dış yüzeyi <b>kan hücre zarı ile kaplayarak</b> veya <b>PEG</b> ile artırılabilir. Ligandlarla yeni tasarlanan NP'ler; tümörü hedefleyen uyaran-duyarlı ajanlar, damarları daha geçirgen yaparak nüfuzu teşvik etme veya cilt malignitelerinde RNA ekleme gibi farklı yaklaşımlarla geliştirilir.</p>
+
+      <h2><span class="n">5.</span>Hedefleme ve EPR Etkisi</h2>
+      <p>Hedefleme, ilacın yalnızca <b>patolojik bölgede</b> etki göstermesi için hedef dokuda seçici ve kantitatif olarak bulunmasıdır; bu teknik ilaç uygulama şeklinden bağımsızdır. İki mekanizma vardır:</p>
+      <ul>
+        <li><b>Pasif hedefleme</b>: sızdıran vaskülatür ve doğrudan uygulama/implantasyonla seçici taşınma; EPR etkisiyle kendiliğinden ilaç birikimi.</li>
+        <li><b>Aktif hedefleme</b>: reseptör ve <b>antikor aracılı</b> hedefleme.</li>
+      </ul>
+      <p>İlaç hedeflemenin tipleri ayrıca: ilacın etki bölgesine doğrudan uygulanması; <b>fiziksel hedefleme</b> (anormal pH ve/veya sıcaklığa dayanarak); <b>manyetik hedefleme</b> (harici manyetik alan etkisiyle); ve belirli <b>vektör molekülleriyle</b> (yüksek afiniteli ligandlar) hedefleme. <b>EPR (gelişmiş geçirgenlik ve tutma) etkisi</b>; küçük boyutlu nanopartiküllerin ve makromoleküler ilaçların tümörde normal dokulara göre daha fazla birikebilme özelliğidir. Bu, neo-vaskülatürün daha büyük gözenek boyutuna ve tümörlerin <b>zayıf lenfatik klerensine</b> bağlıdır ve partikül boyutundan güçlü etkilenir. EPR, geleneksel antikanser ilaçlarına alternatif olarak kabul edilir; uygun biyo-dağılımlı nano taşıyıcılar katı tümörlerde yüksek seviyede birikir.</p>
+
+      <h2><span class="n">6.</span>Hücre Bazlı Taşıyıcılar ve Hücre Ghostları</h2>
+      <p>Hücre bazlı ilaç taşıyıcı sistemleri; <b>sürekli taşıma</b>, hedef dokuya seçici taşıma, biyouyumluluk ve <b>in vivo ilaç stabilitesini</b> iyileştirme gibi avantajlarıyla dikkat çeker. Bu sistemler eritrositler, lökositler, virüsler, tasarlanmış kök hücreler ve bakterilerden oluşur. <b>Hücre ghostları (hayaletleri)</b>: kırmızı kan hücresi hayaletleri, sitokinlerin iltihaplanma bölgelerine hedeflenmiş verilmesi için etkili taşıyıcılardır; <b>bakteriyel ghostlar (BG)</b> birçok tümör hücresi için potansiyel ilaç taşıyıcı sistem kabul edilir. Vektör aracılığıyla hedeflemede farmasötik taşıyıcılar mikrokapsüller, mikropartiküller, hücreler, cell ghosts, lipozomlar ve miselleri içerir.</p>
+
+      <hr>
+      <h2><span class="n">7.</span>Nanotaşıyıcı Tipleri</h2>
+      <p>Çeşitli ilaç taşıyıcıları arasında mikropartiküller, <b>miseller, dendrimerler, karbon nanotüpler (CNT), hücreler, lipozomlar ve lipoproteinler</b> terapötik ve tanısal müdahaleler için araştırılmıştır. Bu sistemler aşınma, uyaranlara duyarlı salım (pH/sıcaklığa duyarlı bağlantılar) ve dokuya/hücreye özgü hedefleme (antikorlarla konjügasyon) ile seçici olarak düzenlenebilir.</p>
+      <ul>
+        <li><b>Polimerik NP'ler</b>: kansere hedefleme ve tedavi, <b>gen taşıma</b>, gelişmiş oral biyoyararlanım ve <b>kan-beyin bariyeri (BBB) geçişi</b> için potansiyel taşıyıcılardır.</li>
+        <li><b>Katı lipit nanoparçacık (SLN)</b>: tıbbi uygulamaları ilacın lipit çekirdeğindeki çözünürlüğüyle ilgilidir; lipit ağının polimerik durumu/yapısı ve çapraz bağ oluşumu önemlidir. Avantajları: lipitten ilaç salımını daha iyi kontrol, artan formülasyon stabilitesi ve ilaç yükleme kapasitesi; basit yöntemlerle hazırlanabilir.</li>
+        <li><b>Kübozomlar (cubosomes)</b>: amfifilik lipitlerin hidrofobik etkiyle kendi kendine bir araya gelmesiyle oluşan termodinamik olarak stabil yapılar (lameller, altıgen ve <b>kübik</b> oluşumlar).</li>
+        <li><b>Transferozom</b>: kontrollü ve potansiyel hedeflenmiş ilaç verme için tasarlanan yapay vezikül; cilt tahrişine yol açmadan ilaç verir, potansiyel olarak cilt kanseri tedavisinde kullanılır.</li>
+        <li><b>Dendrimerler</b>: ağaç dallanması gibi yapıya sahip, yüksek kontrollü nanotaşıyıcılar.</li>
+        <li><b>Grafen</b>: iki boyutlu (2D), bal peteği kristal kafesli, tek tabaka karbondur. Farklı tipleri: <b>fulleren</b>, tek boyutlu (1D) <b>karbon nanotüpler</b> ve üç boyutlu (3D) <b>grafit</b>. Yüksek yükleme verimliliği, hedefleme, görüntüleme, uyarana duyarlı salım için işlevselleştirilebilir; mono-atomik düzlemsel yapı, geniş yüzey alanı, kimyasal/mekanik stabilite, üstün elektriksel iletkenlik ve iyi biyouyumluluk sağlar. En büyük zorluk <b>toksisite riskidir</b>.</li>
+        <li><b>Karbon nanotüpler (CNT)</b>: 1991'de <b>Sumio Iijima</b> tarafından tanımlanmıştır ("grafit karbonun sarmal mikrotübülleri", katottan karbon-ark deşarjı ile hazırlandı). CNT'ler, grafen levhaların moleküler ölçekli tüpü olarak düşünülebilir (genişlik birkaç nm, uzunluk cm'ye kadar); elektronik, manyetik ve mekanik özellikleri vardır.</li>
+      </ul>
+      <p><b>Nanopartikül ile nanoküme (cluster) farkı</b>: nanopartiküller boyutu <b>1–100 nm</b> arasında olan parçacıklardır ve geniş bir yüzey alanı/hacim oranına sahiptir; nanokümeler ise bir nanopartikül <b>topluluğudur (koleksiyonudur)</b>.</p>
+
+      <h2><span class="n">8.</span>Sistemik Uygulamanın Problemleri ve Zorluklar</h2>
+      <p>Sistemik ilaç uygulamasının ana problemleri: ilaçların vücutta <b>biyo-dağılımı</b>, patolojik bölgeye özgü <b>ilaç afinite eksikliği</b>, etkili/yüksek konsantrasyona ulaşmak için <b>büyük toplam doz gerekliliği</b> ve yüksek dozlar nedeniyle <b>spesifik olmayan toksisite</b> ile diğer olumsuz yan etkilerdir. Optimal DDS geliştirmede ilaç taşıma kapasitesi, sistemden sızma, stabilite ve raf ömrü, biyouyumluluk, biyolojik dağılım ve tekrarlanabilirlik dikkate alınır. Grafen gibi yeni nanomalzemelerde başlıca zorluk <b>toksisite riskidir</b>.</p>
+    </section>
+
+    <section class="panel" id="nt-bosluk">
+      <div class="scorebar">
+        <div class="sc"><div class="l">Yanıtlanan</div><div class="v"><span id="nt-ans">0</span> / 30</div></div>
+        <div class="sc"><div class="l">Doğru</div><div class="v" id="nt-correct" style="color:var(--correct-line)">0</div></div>
+        <div class="sc"><div class="l">Başarı</div><div class="v" id="nt-pct">—</div></div>
+      </div>
+      <div class="intro-note">Boşluğu tamamlayan şıkka tıklayın: doğruysa <b>yeşil</b>, yanlışsa <b>kırmızı</b> yanar, doğru cevap yeşille işaretlenir.</div>
+      <div id="nt-fill"></div>
+    </section>
+    <section class="panel" id="nt-terim"><div class="intro-note">Terime tıklayın; <b>···</b> ile anlamı açılır.</div><div id="nt-terms"></div></section>
+    <section class="panel" id="nt-klasik"><div class="intro-note">Soruyu düşünün, ardından <b>···</b> ile model cevabı açın.</div><div id="nt-classic"></div></section>
+  </div>
+
+  <!-- =================================== İLAÇ FORMLARI =================================== -->
+  <div class="topic-wrap" id="if">
+    <nav class="tabs" data-scope="if">
+      <button class="tab active" data-sub="if-ozet">Detaylı Özet</button>
+      <button class="tab" data-sub="if-bosluk">Boşluk<small>30 · yeşil/kırmızı</small></button>
+      <button class="tab" data-sub="if-terim">Terim–Anlam<small>40 · tıkla, aç</small></button>
+      <button class="tab" data-sub="if-klasik">Klasik<small>15 · tıkla, aç</small></button>
+    </nav>
+
+    <section class="panel summary active" id="if-ozet">
+      <p class="lead">Geleneksel farmasötik dozaj formları, hedef bölgeye ilaç verme oranını kontrol edemez; bu da hedef dışı dağılım, yüksek terapötik dozlar ve ciddi yan etkilere yol açar. Bu nedenle <b>yeni ilaç taşıyıcı sistemlerine (NDDS)</b> ihtiyaç vardır: bu sistemler ilaç konsantrasyonunu daha uzun bir süre <b>terapötik aralıkta</b> tutabilir.</p>
+
+      <h2><span class="n">1.</span>Giriş ve Farmasötik İlaç Sistemi</h2>
+      <p>Genel olarak bir farmasötik ilaç sistemi üç bileşenden oluşur: <b>(1)</b> ilacı vücuda taşıyan uygun bir <b>dozaj formu</b> (farmasötik formülasyon); <b>(2)</b> ilacın dozaj formundan hedef organa/hücrelere uygulanmasından sonraki <b>salım mekanizması</b>; ve <b>(3)</b> dozaj formunu üretmek için kullanılan optimum <b>tıbbi cihaz/farmasötik teknik</b>. NDDS'nin amaçları: ilaç bozunmasını/kaybını en aza indirmek, zararlı yan etkileri önlemek, <b>biyoyararlanımı iyileştirmek</b> ve ilacın gerekli biyo-bölgede birikmesini kolaylaştırmaktır.</p>
+
+      <h2><span class="n">2.</span>Bu Sistemler Nasıl Tasarlanır?</h2>
+      <p>Bir NDDS şu yollarla elde edilebilir:</p>
+      <ul>
+        <li><b>1 –</b> Gelişmiş hedefleme için hücre seçiciliğini geliştiren <b>SMART (akıllı) nanotaşıyıcı</b> tabanlı sistemlerin formülasyonu,</li>
+        <li><b>2 –</b> Etki süresinin üstün kontrolü (SMART <b>uzatılmış salımlı</b> taşıyıcı sistemler),</li>
+        <li><b>3 –</b> Yeni üretim teknikleri, örneğin <b>mikroakışkanlar (MF)</b> ile lipozomlar, mikro/nano sistemler.</li>
+      </ul>
+      <h3>Terapötik faydaları</h3>
+      <ul>
+        <li>İlaç etkisinin artması, <b>bölgeye spesifik taşınma</b>, azalan toksisite/yan etkiler,</li>
+        <li>Artan rahatlık, önceden tedavi edilemeyen hastalıklara uygulanabilir tedaviler,</li>
+        <li>Profilaktik uygulama potansiyeli ve <b>daha iyi hasta uyumu</b>.</li>
+      </ul>
+      <p>İlaç taşıyıcı sistemlerin tek tip tanımı yoktur; iki temel parametreye dayandığı varsayılır: <b>uygulama yolu</b> ve <b>dozaj formu</b>.</p>
+
+      <hr>
+      <h2><span class="n">3.</span>Nanopartikül Tabanlı ve Vezikül Sistemleri</h2>
+      <ul>
+        <li><b>Polimerik nanopartiküller</b>: PLA, PLGA, PCL gibi <b>biyobozunur</b> polimerlerden; kontrollü ve uzun süreli salım sağlar; kanser, antibiyotik ve antiinflamatuvarlarda yaygındır.</li>
+        <li><b>Lipid nanopartikülleri (LNP)</b>: <b>mRNA aşılarında</b> kullanılan sistem (Pfizer/BioNTech, Moderna); nükleik asit taşımada en güncel platform; hücresel alımı kolaylaştırır.</li>
+        <li><b>Katı lipid nanopartikül (SLN)</b>: hem hidrofilik hem lipofilik ilaç taşıyabilir; cilt ürünleri ve oral ilaçlar için idealdir.</li>
+        <li><b>Eksozom ve hücre dışı vezikül (EV)</b>: hücrelerin doğal taşıyıcı vezikülleri (<b>30–150 nm</b>); çok yüksek biyouyumluluk ve hedefleme; gen tedavisi, siRNA, miRNA taşımada büyük potansiyel. Düşük immünojenite, hassas hedefleme ve <b>kan-beyin bariyerini aşma</b> özellikleriyle nöroloji (Alzheimer, Parkinson), kanser ve dermatolojide kullanılır.</li>
+        <li><b>Nanomisel (polimerik misel)</b>: hidrofobik ilaçlar için çözünürlüğü artırır; kontrollü salım + <b>EPR ile pasif tümör hedefleme</b>.</li>
+        <li><b>Dendrimerler</b>: ağaç dallanması gibi yapı → yüzlerce ilaç/ligand bağlanabilir; gen terapisi ve kanser için araştırılır.</li>
+      </ul>
+
+      <h2><span class="n">4.</span>İleri Platformlar: Hidrojel, Nanotüp, MOF, Robot, CRISPR</h2>
+      <ul>
+        <li><b>Hidrojeller</b>: vücutta su tutan <b>3D çapraz bağlı polimer ağı</b>; lokal kontrollü salım (yara örtüsü, enjeksiyon jeli). pH/sıcaklık/enzime duyarlı "akıllı" salım için tasarlanabilir; %50'ye varan yükleme; makromolekül/protein/peptit barındırabilir; enzimatik bozunmadan korur. Uygulama: enjekte edilebilir/in situ jel (örn. kanser için OncoGel), oral (aljinat ile mide asidinden koruma), topikal/transdermal, oküler.</li>
+        <li><b>Nanotüp ve nanowire</b>: karbon nanotüpler veya silika nanotüpler; yüksek ilaç yükleme; tümöre nüfuz derinliğini artırır.</li>
+        <li><b>MOF (Metal-Organik Çerçeve)</b>: metal iyonları/kümelerinin organik bağlayıcılarla (linker) koordinasyonuyla oluşan <b>gözenekli, kristal hibrit</b> malzemeler. Çok yüksek yüzey alanı/porozite → üstün ilaç yükleme (küçük molekül, protein, nükleik asit); ayarlanabilir yapı kontrollü/sürekli salım sağlar; pH (asidik tümör), manyetik alan, sıcaklık veya ışığa duyarlı tasarlanabilir. Yaygın metaller: <b>zirkonyum (Zr), demir (Fe), çinko (Zn)</b> (MIL ve UiO serileri).</li>
+        <li><b>Biyouyumlu mikro/nano robotlar</b>: manyetik veya ultrasonla yönlendirilen, vücutta hareket ederek ilaç taşıma/teşhis/mikrocerrahi potansiyeli olan, tümör hedeflemede deneysel makineler.</li>
+        <li><b>CRISPR ve gen taşıyıcı sistemler</b>: Cas9 mRNA veya RNP kompleksleri için lipid nanopartikülleri, polimerik nanopartiküller ve vezikül temelli taşıyıcılar; gen düzenleme tedavisinde devrim niteliğindedir.</li>
+      </ul>
+
+      <h2><span class="n">5.</span>Teranostikler ve Kişiselleştirilmiş Tıp</h2>
+      <p>Teranostikler, tek bir nanoyapılı komplekste <b>terapötik ve tanısal (diagnostik)</b> işlevleri birleştiren çok işlevli nanomateryallerdir — "teşhis + terapötik". Hedeflenen, güvenli ve etkili bir farmakoterapi olarak ortaya çıkar ve geleneksel tıptan <b>kişiselleştirilmiş tıbba</b> geçiş sağlar. Her bireyin benzersizliğine dayalı tedavi planıyla "doğru hastaya doğru zamanda doğru ilaç" hedeflenir. <b>Genetik</b> önemli rol oynar; <b>farmakogenetik, proteomik ve biyobelirteç profili</b> teranostiklerin omurgasını oluşturur.</p>
+
+      <h2><span class="n">6.</span>Uyarana Duyarlı Sistemler</h2>
+      <p>Daha yeni bir hedefleme stratejisidir ve klinik sınırlamalar nedeniyle hâlâ araştırılmaktadır. Ana fikir: SMART nanosistemlerinin, harici/dahili bir <b>stimulana maruz kaldıktan sonra</b> kapsüllenmiş ilaç içeriğini salmaya başlamasıdır. Stimülanlar <b>pH, sıcaklık, ışık, ultrason veya manyetik/elektrik alan</b> olabilir; nanosistem bileşenlerinden biri bu tetikleyicilere duyarlı olmalıdır. Yararları: nanosistem internalizasyonunun ve hedef hücrelere bağlanmasının artması, ilaç salımının kontrolü, yan etkilerin azalması, tümör kütlesi boyunca etkili dağılım ve bazı çözünmeyen sınıf II/IV kemoterapötiklerin biyoyararlanımının iyileşmesi.</p>
+
+      <hr>
+      <h2><span class="n">7.</span>Mikropartiküler Sistemler ve "Niçin Boyut Önemli?"</h2>
+      <p>Partiküllü ilaç taşıyıcı sistemler (DDS'ler) lokal ve sistemik etkiler için avantajlıdır; uzun süreli etki sağlar, sistemik toksisiteyi azaltabilir ve hasta uyumunu artırır. Mikropartiküller embolik/yapısal materyal, radyoterapötik ajan taşıyıcı olarak; ayrıca besin, kozmetik, tarım ve çevrede kullanılır. Terapötik sistemler boyutlarına göre: <b>mikron (1–1000 µm)</b>, <b>submikron (100–1000 nm)</b> ve <b>nanometre (1–100 nm)</b>.</p>
+      <p>Partikül büyüklüğü uygulama yolunu belirler. En önemli sınırlama, büyük partiküllerin doğrudan dolaşıma (i.v.) verilememesidir; çünkü dolaşımda <b>emboliye</b> neden olabilir. Bu yüzden i.v. verilen partiküllerin çoğu <b>nano ölçekli</b> olmalıdır. Mikropartiküller; oral alınan, mukozada biriken (örn. solunan), depo formülasyon olan veya dokuya enjekte edilen (s.c., i.m.) eğilimdedir ve lokal (lokal anestezi, bronkodilasyon) veya sistemik (büyüme hormonu, antipsikotik) etki sağlar.</p>
+      <p>Boyut, biyolojik bariyerlerden (cilt, epitel, mukus, <b>kan-beyin bariyeri</b>) geçişi büyük ölçüde etkiler; mikro ölçekli taşıyıcılar bu bariyerleri geçemez ve dokuda kalma eğilimi yüksektir. Mikropartiküllerin hücrelere nüfuzu nanopartiküllerden düşüktür; istisna, ~10 µm'ye kadar partikülleri alabilen <b>fagositik hücrelerdir</b> (nötrofil, dendritik hücre) — bu özellik aşılarda pasif hedeflemede kullanılır. Ayrıca <b>yüzey alanı/hacim oranı çapla ters orantılıdır</b>: küçük partiküller ilacı daha hızlı salar; su küçük partiküllere daha hızlı nüfuz ederek salımı ve (bozunabilir partiküllerde hidrolitik) bozunmayı hızlandırır. Boyut dışında <b>şekil</b> de hücresel alımı, salım davranışını ve hedeflemeyi önemli ölçüde etkiler.</p>
+
+      <h2><span class="n">8.</span>Üretimde Kullanılan Taşıyıcılar (Polimerler)</h2>
+      <p>Mikropartikül üretiminde kullanılan malzemenin kompozisyonu, salım mekanizmasını ve süresini belirler. Mikropartiküller polimer veya polimerik olmayan malzemelerle, çoğunlukla <b>bozunabilir polimerlerle</b> hazırlanır; iki gruba ayrılır:</p>
+      <h3>Doğal polimerler</h3>
+      <ul>
+        <li>Biyouyumlu, doğada bol, ucuz, toksik olmayan ve biyolojik olarak parçalanabilirdir; genellikle sentez gerektirmez ve kolayca modifiye edilebilir (serbest karboksil, hidroksil, amino grupları).</li>
+        <li><b>Kitozan</b>: lineer polisakkarit; kitinin <b>deasetilasyonuyla</b> hazırlanır (crustacean iskeletinin temel maddesi); yara örtücü olarak <b>FDA onaylıdır</b>.</li>
+        <li><b>Aljinatlar</b>: M (β-D-mannuronik asit) ve G (α-L-guluronik asit) kalıntılı, <b>kahverengi deniz yosunu</b> ve bakteriden elde edilen anyonik polisakkarit; M/G oranı değiştirilerek mekanik sertlik, gözenek boyutu ve bozunma hızı ayarlanır.</li>
+        <li><b>Dekstran</b>: bakterilerce glikoz/sükrozdan sentezlenen <b>dallı homopolisakkarit</b>; biyouyumlu/bozunur, farklı molekül ağırlıklarında.</li>
+        <li><b>Jelatin</b>: <b>kollajenin denatüre formu</b>; mükemmel biyouyumlu/bozunur; sürekli salım için çalışılmıştır (mikropelletler ilk 1960'larda).</li>
+      </ul>
+      <h3>Sentetik polimerler</h3>
+      <ul>
+        <li>Kontrollü hazırlanabilir; iyi tanımlı bileşim, düşük polidispersite ve önceden belirlenen molekül ağırlığı; uygun monomerle hidrofobiklik/yük gibi özellikler tasarlanabilir.</li>
+        <li><b>Poli(α-hidroksi asit)</b> ailesi: laktik ve glikolik asitlerden. <b>PLGA</b> (laktik-ko-glikolik asit kopolimeri) — salım, matrisin difüzyonu ve homojen <b>bulk erozyonu</b> ile.</li>
+        <li><b>PCL (poli-ε-kaprolakton)</b>: ε-kaprolaktonun halka açma polimerizasyonuyla; hidrofobik ve yüksek kristal yapı nedeniyle <b>yavaş bozunur</b> (yüzey + hacim erozyonu).</li>
+        <li><b>POE (poli-orto ester)</b>: difüzyonu engelleyip yalnızca yüzey hidrolizinden sonra salar; hidrofilik ve hidrofobik etkin madde taşıyabilir.</li>
+        <li><b>Polianhidritler</b>: suya duyarlı bağlı hidrofobik polimerler; su ile reaksiyona girip karboksilik asit oluşturur; bozunma <b>yüzey erozyonuyla</b> olur ve salım kinetiği <b>sıfıra yakın</b> olabilir. Ayrıca PVA, PHBV ve PHEMA da kullanılır.</li>
+        <li><b>Akıllı polimerler</b>: çevrenin fiziksel/kimyasal/biyolojik değişimiyle hacim, konformasyon, faz veya bütünlüğü değiştirecek şekilde tasarlanır; salım uyaranlarla hızlandırılır/yavaşlatılır. En yaygın denenenler <b>pH- ve ısıya duyarlı</b> polimerlerdir.</li>
+      </ul>
+
+      <h2><span class="n">9.</span>Hazırlama Yöntemleri ve Karakterizasyon</h2>
+      <p>Mikropartikül hazırlama metotları: tek ve çift emülsiyon; <b>çözücü buharlaştırma/ekstraksiyon</b>; <b>koaservasyon</b>; <b>sprey kurutma</b>; iyonik jelleşme; süspansiyon çapraz bağlama.</p>
+      <ul>
+        <li><b>Emülsifikasyon-çözücü buharlaştırma</b>: ilaç kapsülleme için en yaygın; iki kademeli — polimer çözeltisinin uçucu organik çözücüde emülsifikasyonu, ardından çözücü buharlaşması/ekstraksiyonuyla sertleşme ve çökme. Y/S yöntemi hidrofobik kapsülleme için; hidrofilik ilaçlarda S/Y/S çift emülsiyon kullanılır.</li>
+        <li><b>Koaservasyon (faz ayrımı)</b>: polimerin çözünürlüğündeki değişimle faz ayrılması ve mikropartikül oluşumu; polimer damlacıkları ilaç damlacıklarının yüzeyine adsorbe olup kaplama oluşturur. Yüksek yükleme verimliliği; düşük sıcaklıkta çalışılabildiğinden <b>ısıya hassas maddeler</b> ve proteinler için uygundur.</li>
+        <li><b>Püskürtmeyle (sprey) kurutma</b>: ilaç/yardımcılar çözücüde dağıtılıp ince delikten sıcak odaya püskürtülür; çözücü buharlaşır. Dış faz olmadığından ilaç kaçışı az, <b>yükleme yüksek</b>; partiküller genellikle 1–100 µm.</li>
+      </ul>
+      <p><b>Karakterizasyon</b>: morfoloji, boyut ve polidispersite, yüzey yükü, ilaç yükleme [İlaç Kapsülleme (%) = kapsüllenmiş ilaç kütlesi / mikropartikül kütlesi × 100] ve salım kinetiği (ELISA, HPLC, UV spektrofotometri, LC-MS). <b>Submikron parçacıklar</b>: lipozomlar (sulu çekirdek + çift katmanlı zar/lamel) ve miseller (sulu çekirdek + tek lipid tabakası); nanopartiküller genellikle ~100 nm'den küçüktür.</p>
+    </section>
+
+    <section class="panel" id="if-bosluk">
+      <div class="scorebar">
+        <div class="sc"><div class="l">Yanıtlanan</div><div class="v"><span id="if-ans">0</span> / 30</div></div>
+        <div class="sc"><div class="l">Doğru</div><div class="v" id="if-correct" style="color:var(--correct-line)">0</div></div>
+        <div class="sc"><div class="l">Başarı</div><div class="v" id="if-pct">—</div></div>
+      </div>
+      <div class="intro-note">Boşluğu tamamlayan şıkka tıklayın: doğruysa <b>yeşil</b>, yanlışsa <b>kırmızı</b> yanar, doğru cevap yeşille işaretlenir.</div>
+      <div id="if-fill"></div>
+    </section>
+    <section class="panel" id="if-terim"><div class="intro-note">Terime tıklayın; <b>···</b> ile anlamı açılır.</div><div id="if-terms"></div></section>
+    <section class="panel" id="if-klasik"><div class="intro-note">Soruyu düşünün, ardından <b>···</b> ile model cevabı açın.</div><div id="if-classic"></div></section>
+  </div>
+
+  <footer>
+    <div>Çalışma materyali eğitim amaçlıdır. Sınav/klinik kullanım öncesi ders notlarıyla karşılaştırın.</div>
+    <div class="tools">
+      <button class="toolbtn" id="expandAll">Açık sekmedeki tümünü aç</button>
+      <button class="toolbtn" id="collapseAll">Tümünü kapat</button>
+      <button class="toolbtn" onclick="location.reload()">↺ Sıfırla</button>
+    </div>
+  </footer>
+</div>
+
+<script>
+/* ===== NANOTEKNOLOJİ ===== */
+const NT_FILL=[
+  {q:"Nanoteknoloji, istenen ___ boyut aralığında malzemeleri kontrol etme kapasitesine sahip ilerici tıp alanıdır.",o:["mikron","moleküler","santimetre","makro"],a:1},
+  {q:"İlaç alanında nanoteknolojinin temel amacı, ilacı istenen ___ yerine, yan etkileri sınırlayarak taşımaktır.",o:["depolama","etki","atılım","sentez"],a:1},
+  {q:"Nanopartiküller nano boyutta, kolloidal ___ taşıyıcı sistemlerdir.",o:["gaz","ilaç","enzim","besin"],a:1},
+  {q:"NP'lerin temel avantajı, çözünürlüğü ve yarılanma ömrünü artırarak etki bölgesinde ___ artırmaktır.",o:["toksisiteyi","biyoyararlanımı","viskoziteyi","pH'yı"],a:1},
+  {q:"İlaç taşıyıcılar prensip olarak ilacın ___ modelini kontrol etmek için kullanılır.",o:["renk","salım","tat","sertlik"],a:1},
+  {q:"NP'ler, hücreler tarafından büyük mikromoleküllerden daha ___ alınır.",o:["yavaş","iyi","zor","az"],a:1},
+  {q:"İki temel NP türü doğal NP'ler ve ___ NP'lerdir.",o:["organik","inorganik","sıvı","gaz"],a:1},
+  {q:"Hedefleme, ilacın yalnızca ___ bölgede seçici olarak bulunmasıdır.",o:["sağlıklı","patolojik","periferik","santral"],a:1},
+  {q:"Hedefleme iki mekanizmayla çalışır: pasif ve ___.",o:["statik","aktif","pasifize","nötr"],a:1},
+  {q:"Aktif hedefleme, ___ ve antikor aracılı hedeflemeyi içerir.",o:["reseptör","emboli","difüzyon","ozmoz"],a:0},
+  {q:"EPR etkisi, küçük NP'lerin tümörde normal dokuya göre daha fazla ___ özelliğidir.",o:["dağılma","birikme","çözünme","atılma"],a:1},
+  {q:"EPR etkisi, tümörlerin zayıf ___ klerensine bağlıdır.",o:["renal","lenfatik","hepatik","pulmoner"],a:1},
+  {q:"Manyetik hedefleme, ilacın harici bir ___ alanın etkisiyle yönlendirilmesidir.",o:["elektrik","manyetik","ışık","ısı"],a:1},
+  {q:"Vektör aracılı hedefleme, ilgi alanına yüksek afiniteli ___ kullanır.",o:["enzim","ligand","iyon","gaz"],a:1},
+  {q:"Kırmızı kan hücresi ___, sitokinleri iltihap bölgelerine hedefleyen taşıyıcılardır.",o:["hayaletleri (ghost)","çekirdekleri","zarları","mitokondrileri"],a:0},
+  {q:"SLN'lerin tıbbi uygulamaları, ilacın ___ çekirdeğindeki çözünürlüğü ile ilgilidir.",o:["protein","lipit","su","polimer"],a:1},
+  {q:"SLN'ler lipitten ilaç salımını daha iyi ___ ve formülasyon stabilitesini artırır.",o:["engeller","kontrol eder","hızlandırır","durdurur"],a:1},
+  {q:"Dendrimerler ___ dallanması gibi yapıya sahip nanotaşıyıcılardır.",o:["ağaç","damar","sinir","kas"],a:0},
+  {q:"Nanopartiküllerin boyutu ___ nm arasındadır.",o:["1-100","100-500","500-1000","1000-5000"],a:0},
+  {q:"Nanokümeler (cluster), bir nanopartikül ___ dur.",o:["parçası","topluluğu (koleksiyonu)","kopyası","çekirdeği"],a:1},
+  {q:"Polimerik NP'ler gen taşıma ve ___ bariyeri geçişi için potansiyel taşıyıcıdır.",o:["plasenta","kan-beyin (BBB)","cilt","mukoza"],a:1},
+  {q:"Grafen, iki boyutlu, ___ peteği kristal kafesli karbondur.",o:["arı","bal","balık","yılan"],a:1},
+  {q:"Grafenin farklı tipleri arasında fulleren, karbon nanotüpler ve ___ vardır.",o:["silika","grafit","altın","demir"],a:1},
+  {q:"Grafen nanomalzemelerle karşılaşılan en büyük zorluk ___ riskidir.",o:["maliyet","toksisite","çözünme","renklenme"],a:1},
+  {q:"Karbon nanotüpler (CNT) 1991'de ___ tarafından tanımlanmıştır.",o:["Sumio Iijima","Paul Ehrlich","Robert Langer","Archibald Garrod"],a:0},
+  {q:"CNT'ler, ___ levhaların moleküler ölçekli tüpü olarak düşünülebilir.",o:["silika","grafen","altın","polimer"],a:1},
+  {q:"NP'lerin kanda kalma süresi, yüzeyini ___ ile kaplayarak artırılabilir.",o:["su","PEG","talk","aljinat"],a:1},
+  {q:"Transferozom, kontrollü/hedeflenmiş ilaç verme için tasarlanmış yapay bir ___ dur.",o:["polimer","vezikül","kristal","jel"],a:1},
+  {q:"Amfifilik lipitlerin kendi kendine bir araya gelmesiyle lameller, altıgen ve ___ yapılar (kübozom) oluşur.",o:["doğrusal","kübik","silindirik","düz"],a:1},
+  {q:"Sistemik uygulamanın bir problemi, yüksek doz nedeniyle spesifik olmayan ___ dir.",o:["çözünürlük","toksisite","emilim","stabilite"],a:1}
+];
+const NT_TERMS=[
+  ["Nanoteknoloji","Moleküler boyut aralığında malzemeleri tekrarlanabilir geliştirme/kontrol kapasitesine sahip tıp alanı."],
+  ["Nanopartikül (NP)","1-100 nm boyutlu, kolloidal ilaç taşıyıcı sistem."],
+  ["Nanoküme (cluster)","Nanopartikül topluluğu/koleksiyonu."],
+  ["İlaç taşıyıcı","İlaç uygulamasının seçiciliğini, etkililiğini ve stabilitesini artıran substrat."],
+  ["Biyoyararlanım","İlacın etki bölgesinde kullanılabilir konsantrasyonu; NP'ler bunu artırır."],
+  ["Hedefleme","İlacın yalnızca patolojik bölgede seçici ve kantitatif olarak bulunması."],
+  ["Pasif hedefleme","Sızdıran vaskülatür/EPR ile seçici taşınma veya doğrudan uygulama/implantasyon."],
+  ["Aktif hedefleme","Reseptör ve antikor aracılı hedefleme."],
+  ["Fiziksel hedefleme","Patolojik bölgenin anormal pH ve/veya sıcaklığına dayalı hedefleme."],
+  ["Manyetik hedefleme","Harici manyetik alanın etkisiyle ilacın yönlendirilmesi."],
+  ["Vektör aracılı hedefleme","İlgi alanına yüksek afiniteli ligand molekülleriyle hedefleme."],
+  ["EPR etkisi","Küçük NP'lerin tümörde, artan geçirgenlik ve zayıf lenfatik klerens nedeniyle birikmesi."],
+  ["Hücre bazlı taşıyıcı","Eritrosit, lökosit, virüs, kök hücre, bakteri gibi hücrelerin taşıyıcı olması."],
+  ["Hücre ghostu (hayalet)","Boşaltılmış kırmızı kan hücresi; sitokinleri iltihap bölgesine hedefli taşır."],
+  ["Bakteriyel ghost (BG)","Tümör hücreleri için potansiyel ilaç taşıyıcı sistem."],
+  ["Doğal NP","Albümin, jelatin, kitosan gibi doğal kaynaklı nanopartiküller."],
+  ["İnorganik NP","Metal, silika ve polimerik nanopartiküller."],
+  ["Polimerik NP","Kansere hedefleme, gen taşıma, oral biyoyararlanım ve BBB geçişi için potansiyel taşıyıcı."],
+  ["SLN (katı lipit nanoparçacık)","Lipit çekirdekli, salımı iyi kontrol eden, stabil ve basit hazırlanan NP."],
+  ["Lipozom","Sulu çekirdek ve çift katmanlı zarlı (lamel) submikron küre."],
+  ["Misel","Sulu çekirdeği tek lipid tabakasıyla çevrili taşıyıcı."],
+  ["Dendrimer","Ağaç dallanması gibi yapıya sahip, kontrollü, çok sayıda ilaç/ligand bağlanabilen nanotaşıyıcı."],
+  ["Transferozom","Kontrollü/hedeflenmiş, cilt tahrişine yol açmadan ilaç veren yapay vezikül."],
+  ["Kübozom (cubosome)","Amfifilik lipitlerin kendiliğinden oluşturduğu termodinamik stabil kübik yapı."],
+  ["Grafen","İki boyutlu (2D), bal peteği kristal kafesli, tek tabaka karbon."],
+  ["Fulleren","Grafenin küresel karbon allotrop tipi."],
+  ["Karbon nanotüp (CNT)","Grafen levhanın moleküler ölçekli tüpü; 1991'de Iijima tanımladı."],
+  ["Grafit","Üç boyutlu (3D) karbon allotropu."],
+  ["PEG kaplama","NP'lerin kanda kalma süresini artıran yüzey modifikasyonu."],
+  ["Kan-beyin bariyeri (BBB)","Beyne ilaç geçişini sınırlayan bariyer; polimerik NP'ler geçişe potansiyel sağlar."],
+  ["Amfifilik madde","Hem hidrofilik hem hidrofobik kısmı olan, kendiliğinden organize olan madde."],
+  ["Yüzey alanı/hacim oranı","NP'lerde yüksek olan; reaktivite ve yüklemeyi belirleyen oran."],
+  ["Spesifik olmayan toksisite","Yüksek ilaç dozuna bağlı, hedef dışı olumsuz etki."],
+  ["İlaç afinite eksikliği","Sistemik uygulamada ilacın patolojik bölgeye özgül olmaması sorunu."],
+  ["Uyarana duyarlı salım","pH/sıcaklık/ışık gibi tetikleyicilere yanıt veren salım."],
+  ["Kolloidal sistem","Nanopartiküllerin bulunduğu dağıtık faz sistemi."],
+  ["Matris/yüzey taşıma","Etkin maddenin molekülün matrisinde veya yüzeyinde taşınması."],
+  ["Nano-ilaç hedef hastalıkları","Nano sistemlerin odaklandığı tümör, diyabet ve nörodejeneratif bozukluklar."],
+  ["Biyouyumluluk","Taşıyıcının vücutla uyumlu olması ve immün tepki oluşturmaması."],
+  ["Karbon nanoyapılar","Fulleren, CNT ve grafit gibi karbon temelli nanomalzemeler."]
+];
+const NT_CLASSIC=[
+  ["Nanoteknoloji ilaç alanında nedir ve temel amacı nedir?","Moleküler boyutta malzemeleri kontrol eden tıp alanıdır. Temel amaç: etkin maddenin istenen dozunu, yan etkilerini sınırlayarak istenen etki yerine (tümör, sağlıksız doku) taşımaktır."],
+  ["Geleneksel ilaç dozaj formlarının dezavantajlarını sayınız.","Yüksek doz ve düşük biyoyararlanım, ilk geçiş etkisi, intolerans, instabilite, kişiler arası varyasyonlar ve istenen terapötik etkinin oluşmaması."],
+  ["Nanopartiküllerin (NP) avantajları nelerdir?","Çözünürlüğü ve yarılanma ömrünü artırır, hedefleme ile etki bölgesinde biyoyararlanımı yükseltir, güvenli taşıma sağlar ve hedef dışı doku/hücrelerde yan etkiyi azaltır; hücrelerce iyi alınırlar."],
+  ["İlaç taşıyıcıların görevlerini açıklayınız.","Uygulamanın seçiciliğini, etkililiğini ve stabilitesini artırır; salım modelini kontrol eder (normal dağılım veya uyarana karşı aktif salım); farmakokinetiği değiştirir ve az çözünen ilaçların biyoyararlanım/membran geçirgenliğini artırır."],
+  ["NP üretiminde kullanılan malzeme tiplerini açıklayınız.","Doğal malzemeler (lipit, laktik asit, dekstran, kitosan, fosfolipid; albümin, jelatin) ve inorganik/sentetik malzemeler (metal, silika, polimer, karbon). Yüzey PEG veya hücre zarıyla kaplanarak kanda kalma süresi artırılır."],
+  ["Hedefleme nedir; pasif ve aktif hedeflemeyi karşılaştırınız.","Hedefleme, ilacın yalnızca patolojik bölgede seçici bulunmasıdır. Pasif: sızdıran vaskülatür/EPR ile birikim veya doğrudan uygulama. Aktif: reseptör ve antikor aracılı hedefleme."],
+  ["EPR etkisini açıklayınız.","Küçük NP ve makromoleküler ilaçların tümörde normal dokuya göre daha fazla birikmesidir; neo-vaskülatürün büyük gözenekleri ve tümörün zayıf lenfatik klerensine bağlıdır, partikül boyutundan etkilenir; antikanser taşımada kullanılır."],
+  ["İlaç hedeflemenin tiplerini sayınız.","Etki bölgesine doğrudan uygulama; pasif hedefleme (vaskülatür sızması/EPR); fiziksel hedefleme (anormal pH/sıcaklık); manyetik hedefleme (harici manyetik alan); ve vektör molekülleriyle (ligand) hedefleme."],
+  ["Hücre bazlı taşıyıcılar ve hücre ghostlarını açıklayınız.","Eritrosit, lökosit, virüs, kök hücre ve bakterilerden oluşur; sürekli/seçici taşıma, biyouyumluluk ve in vivo stabilite sağlar. Kırmızı kan hücresi ghostları sitokinleri iltihap bölgesine taşır; bakteriyel ghostlar tümör hücreleri için potansiyel taşıyıcıdır."],
+  ["Sistemik ilaç uygulamasının ana problemlerini sayınız.","İlaçların vücutta biyo-dağılımı, patolojik bölgeye özgü afinite eksikliği, yüksek konsantrasyon için büyük doz gerekliliği ve yüksek doza bağlı spesifik olmayan toksisite/yan etkiler."],
+  ["SLN'lerin avantajlarını açıklayınız.","Lipitten ilaç salımını daha iyi kontrol eder, formülasyon stabilitesi ve ilaç yükleme kapasitesini artırır, basit yöntemlerle hazırlanır; etkinlik lipit çekirdeğindeki çözünürlükle ilişkilidir."],
+  ["Dendrimer ve transferozomları açıklayınız.","Dendrimer: ağaç dallanması gibi yapıya sahip, yüksek kontrollü, çok sayıda ilaç/ligand bağlanabilen nanotaşıyıcı. Transferozom: kontrollü/hedeflenmiş ilaç verme için tasarlanmış yapay vezikül; cilt tahrişsiz, cilt kanseri tedavisinde potansiyel."],
+  ["Grafen ve karbon nanotüplerin özelliklerini açıklayınız.","Grafen: 2D bal peteği kristal kafesli tek tabaka karbon; geniş yüzey alanı, kimyasal/mekanik stabilite, üstün iletkenlik, iyi biyouyumluluk; en büyük zorluk toksisite. CNT: grafen levhanın moleküler ölçekli tüpü (1991, Iijima); elektronik/manyetik/mekanik özellikli, yüksek yükleme."],
+  ["Nanopartikül ile nanoküme arasındaki farkı açıklayınız.","Nanopartiküller 1-100 nm boyutlu, yüksek yüzey alanı/hacim oranlı parçacıklardır; nanokümeler ise nanopartiküllerin oluşturduğu bir topluluk/koleksiyondur."],
+  ["Polimerik NP'lerin kullanım alanlarını sayınız.","Kansere hedefleme ve tedavi, gen taşıma, gelişmiş oral biyoyararlanım ve kan-beyin bariyeri (BBB) geçişi."]
+];
+
+/* ===== İLAÇ FORMLARI ===== */
+const IF_FILL=[
+  {q:"Geleneksel dozaj formları, hedef bölgeye ilaç verme ___ kontrol edemez.",o:["rengini","oranını (hızını)","tadını","sertliğini"],a:1},
+  {q:"Yeni sistemler, ilaç konsantrasyonunu daha uzun süre ___ aralıkta tutabilir.",o:["toksik","terapötik","subterapötik","letal"],a:1},
+  {q:"Farmasötik ilaç sistemi; dozaj formu, salım mekanizması ve ___ cihaz/teknik içerir.",o:["elektronik","tıbbi","mekanik","optik"],a:1},
+  {q:"NDDS'nin bir amacı, ilaç bozunmasını/kaybını en aza indirmek ve ___ iyileştirmektir.",o:["maliyeti","biyoyararlanımı","toksisiteyi","viskoziteyi"],a:1},
+  {q:"SMART (akıllı) nanotaşıyıcılar, gelişmiş hedefleme için hücre ___ geliştirir.",o:["boyutunu","seçiciliğini","sayısını","rengini"],a:1},
+  {q:"Polimerik NP'ler PLA, PLGA, ___ gibi biyobozunur polimerlerden oluşur.",o:["PVC","PCL","PET","PS"],a:1},
+  {q:"mRNA aşılarında kullanılan sistem ___ nanopartikülleridir (LNP).",o:["metal","lipid","silika","karbon"],a:1},
+  {q:"SLN, hem hidrofilik hem ___ ilaçları taşıyabilir.",o:["lipofilik","iyonik","gaz","metalik"],a:0},
+  {q:"Eksozomlar, hücrelerin doğal ___ vezikülleridir.",o:["atık","taşıyıcı","yapısal","koruyucu"],a:1},
+  {q:"Eksozomlar ___ boyutundadır.",o:["1-5 nm","30-150 nm","1-10 µm","100-500 µm"],a:1},
+  {q:"Nanomiseller, hidrofobik ilaçlar için ___ artırır.",o:["toksisiteyi","çözünürlüğü","viskoziteyi","yoğunluğu"],a:1},
+  {q:"Hidrojeller, vücutta su tutan ___ ağ yapısıdır.",o:["tek boyutlu","3D (üç boyutlu)","iki boyutlu","lineer"],a:1},
+  {q:"MOF'lar, çok yüksek ___ sayesinde çok miktarda ilaç yükleyebilir.",o:["yoğunluk","porozite (gözeneklilik)","sertlik","viskozite"],a:1},
+  {q:"MOF'larda öne çıkan metal iyonları zirkonyum, demir ve ___ dur.",o:["altın","çinko","gümüş","bakır"],a:1},
+  {q:"Uyaran duyarlı sistemler, bir ___ maruz kalınca ilacı salmaya başlar.",o:["besine","stimulana (uyarana)","antikora","enzime"],a:1},
+  {q:"Teranostik, terapötik ve ___ işlevleri tek yapıda birleştirir.",o:["mekanik","tanısal (diagnostik)","yapısal","kozmetik"],a:1},
+  {q:"Teranostikler, geleneksel tıptan ___ tıbba geçiş sağlar.",o:["alternatif","kişiselleştirilmiş","geleneksel","deneysel"],a:1},
+  {q:"Mikropartiküller boyutuna göre mikron, submikron ve ___ olarak gruplanır.",o:["santimetre","nanometre","metre","milimetre"],a:1},
+  {q:"Nanopartiküller genellikle ___ nm'den küçük partiküllerdir.",o:["1000","100","500","50"],a:1},
+  {q:"Büyük partiküller doğrudan damar içine verilemez çünkü dolaşımda ___ neden olabilir.",o:["hemolize","emboliye","alkaloza","trombositozа"],a:1},
+  {q:"İntravenöz verilen partiküllerin çoğu ___ ölçekli olmalıdır.",o:["mikro","nano","makro","milimetrik"],a:1},
+  {q:"Partikülün yüzey alanı/hacim oranı, çapı ile ___ orantılıdır.",o:["doğru","ters","logaritmik","eşit"],a:1},
+  {q:"Kitozan, kitinin ___ ile hazırlanan lineer bir polisakkarittir.",o:["hidrolizi","deasetilasyonu","oksidasyonu","fosforilasyonu"],a:1},
+  {q:"Aljinat, ___ deniz yosunundan elde edilen anyonik polisakkarittir.",o:["yeşil","kahverengi","kırmızı","mavi"],a:1},
+  {q:"Dekstran, dallı bir ___ dır.",o:["homopolisakkarit","protein","lipit","nükleik asit"],a:0},
+  {q:"Jelatin, ___ denatüre formudur.",o:["keratinin","kollajenin","elastinin","albüminin"],a:1},
+  {q:"PLGA, laktik asit ve ___ asidin kopolimeridir.",o:["asetik","glikolik","sitrik","stearik"],a:1},
+  {q:"Polianhidritlerin bozunması ___ erozyonuyla olur ve salım sıfıra yakın olabilir.",o:["hacim","yüzey","iç","merkez"],a:1},
+  {q:"En yaygın mikropartikül hazırlama yöntemlerinden biri emülsifikasyon-çözücü ___ tekniğidir.",o:["yoğunlaştırma","buharlaştırma","dondurma","kristalize"],a:1},
+  {q:"Sprey kurutmada dış faz olmadığından ilaç kaçışı az ve ilaç ___ yüksek olabilir.",o:["kaybı","yüklemesi","bozunması","atılımı"],a:1}
+];
+const IF_TERMS=[
+  ["NDDS (Yeni İlaç Taşıyıcı Sistemi)","İlaç konsantrasyonunu uzun süre terapötik aralıkta tutan, yan etkiyi azaltan, biyoyararlanımı artıran sistemler."],
+  ["Farmasötik ilaç sistemi","Dozaj formu + salım mekanizması + üretim cihazı/tekniğinden oluşan bütün."],
+  ["SMART nanotaşıyıcı","Hücre seçiciliğini ve hedeflemeyi geliştiren akıllı taşıyıcı."],
+  ["Polimerik nanopartikül","PLA, PLGA, PCL gibi biyobozunur polimerlerden; kontrollü/uzun süreli salım."],
+  ["Lipid nanopartikül (LNP)","mRNA aşılarında kullanılan, nükleik asit taşıma platformu; hücresel alımı kolaylaştırır."],
+  ["SLN (katı lipid nanopartikül)","Hem hidrofilik hem lipofilik ilaç taşıyan; cilt ve oral için ideal NP."],
+  ["Eksozom","30-150 nm, hücrelerin doğal taşıyıcı vezikülü; yüksek biyouyumluluk, BBB geçişi."],
+  ["Extracellular vesicle (EV)","Hücre dışı vezikül; gen, siRNA, miRNA taşımada potansiyel."],
+  ["Stimuli-responsive sistem","Uyaran (pH/ısı/ışık/ultrason/manyetik) geldiğinde ilaç salan sistem."],
+  ["Nanomisel (polimerik misel)","Hidrofobik ilaç çözünürlüğünü artıran, EPR ile pasif hedefleyen taşıyıcı."],
+  ["Dendrimer","Ağaç dallanması yapılı, yüzlerce ilaç/ligand bağlanabilen, kontrollü nanotaşıyıcı."],
+  ["Hidrojel","Su tutan 3D çapraz bağlı polimer ağı; kontrollü/lokal salım sağlar."],
+  ["Akıllı hidrojel","pH/sıcaklık/enzime duyarlı salım yapan hidrojel."],
+  ["Nanotüp / nanowire","Karbon veya silika tüpler; yüksek ilaç yükleme, tümöre nüfuz derinliği."],
+  ["MOF (metal-organik çerçeve)","Metal iyonu + organik linker; gözenekli kristal hibrit, yüksek porozite, ayarlanabilir salım."],
+  ["Biyouyumlu mikro/nano robot","Manyetik/ultrasonla yönlendirilen, deneysel ilaç taşıyıcı makine."],
+  ["CRISPR gen taşıyıcı","Cas9 mRNA/RNP için LNP, polimerik NP veya vezikül temelli taşıyıcılar."],
+  ["Teranostik","Terapötik + tanısal işlevi tek nanoyapıda birleştiren yaklaşım."],
+  ["Kişiselleştirilmiş tıp","Bireyin genetiğine göre doğru hastaya doğru zamanda doğru ilaç."],
+  ["Farmakogenetik","Teranostiklerin omurgasını oluşturan, genetik temelli ilaç yanıtı bilimi."],
+  ["Mikropartikül","Embolik/yapısal materyal, radyoterapötik taşıyıcı olarak da kullanılan partikül."],
+  ["Mikron boyut","1-1000 µm aralığı."],
+  ["Submikron boyut","100-1000 nm aralığı."],
+  ["Nanometre boyut","1-100 nm aralığı."],
+  ["Emboli riski","Büyük partiküllerin damar içine verilince oluşturduğu tıkanma riski."],
+  ["Bariyer etkisi","Cilt, epitel, mukus ve kan-beyin bariyerinin partikül geçişini sınırlaması."],
+  ["Fagositik hücre alımı","Nötrofil/dendritik hücrelerin ~10 µm partikülleri alması (aşılarda pasif hedefleme)."],
+  ["Yüzey alanı/hacim oranı","Çapla ters orantılı; küçük partikül daha hızlı salım yapar."],
+  ["Partikül şekli","Hücresel alım, salım davranışı ve hedeflemeyi etkileyen kritik parametre."],
+  ["Kitozan","Kitinin deasetilasyonuyla elde edilen, FDA onaylı yara örtücü lineer polisakkarit."],
+  ["Aljinat","Kahverengi yosun/bakteriden; M ve G kalıntılı anyonik polisakkarit (M/G oranı özellikleri ayarlar)."],
+  ["Dekstran","Bakterilerce glikoz/sükrozdan sentezlenen dallı homopolisakkarit; biyouyumlu/bozunur."],
+  ["Jelatin","Kollajenin denatüre formu; biyouyumlu, sürekli salım için kullanılır."],
+  ["PLGA","Laktik + glikolik asit kopolimeri; difüzyon ve homojen bulk erozyonuyla salar."],
+  ["PCL (poli-ε-kaprolakton)","Hidrofobik, yüksek kristal yapılı, yavaş bozunan alifatik poliester."],
+  ["POE (poli-orto ester)","Yüzey hidrolizinden sonra salan, difüzyonu engelleyen polimer."],
+  ["Polianhidrit","Suya duyarlı, yüzey erozyonuyla bozunan, sıfıra yakın salımlı hidrofobik polimer."],
+  ["Akıllı polimer","Çevresel değişimle hacim/konformasyon/faz değiştiren polimer (pH/ısıya duyarlı)."],
+  ["Koaservasyon","Polimer çözünürlüğü değişimiyle faz ayrımı ve mikropartikül oluşumu; yüksek yükleme, ısıya hassas maddeler için."],
+  ["Emülsiyon-çözücü buharlaştırma","Uçucu çözücüde emülsiyon sonrası çözücü uçurularak mikropartikül sertleşmesi; en yaygın yöntem."]
+];
+const IF_CLASSIC=[
+  ["Yeni ilaç taşıyıcı sistemlere (NDDS) neden ihtiyaç vardır?","Geleneksel formlar hedef bölgeye ilaç verme oranını kontrol edemez; hedef dışı dağılım, yüksek dozlar ve ciddi yan etkilere yol açar. NDDS ilaç konsantrasyonunu uzun süre terapötik aralıkta tutar, bozunmayı/yan etkiyi azaltır, biyoyararlanımı artırır."],
+  ["Farmasötik ilaç sistemini oluşturan üç bileşeni açıklayınız.","(1) İlacı vücuda taşıyan dozaj formu; (2) uygulamadan sonra hedefe ilaç salım mekanizması; (3) dozaj formunu üretmek için optimum tıbbi cihaz/farmasötik teknik."],
+  ["NDDS nasıl tasarlanır (üç yaklaşım)?","(1) Gelişmiş hedefleme için SMART nanotaşıyıcı tabanlı sistemler; (2) etki süresinin üstün kontrolü (SMART uzatılmış salımlı sistemler); (3) yeni üretim teknikleri (mikroakışkanlar ile lipozom, mikro/nano sistemler)."],
+  ["Yeni sistemlerin terapötik faydalarını sayınız.","İlaç etkisinin artması, bölgeye spesifik taşınma, azalan toksisite/yan etki, artan rahatlık, önceden tedavi edilemeyen hastalıklara tedavi, profilaktik potansiyel ve daha iyi hasta uyumu."],
+  ["Nanopartikül tabanlı sistemleri (polimerik, LNP, SLN) açıklayınız.","Polimerik NP: PLA/PLGA/PCL'den, kontrollü/uzun salım (kanser, antibiyotik). LNP: mRNA aşılarında, nükleik asit taşıma, hücresel alımı kolaylaştırır. SLN: hem hidrofilik hem lipofilik ilaç, cilt/oral için ideal."],
+  ["Eksozomları ve avantajlarını açıklayınız.","30-150 nm doğal taşıyıcı veziküllerdir. Düşük immünojenite (biyouyumluluk), yüzey proteinleriyle hassas hedefleme ve kan-beyin bariyerini aşma özellikleri vardır; kanser, nöroloji (Alzheimer/Parkinson) ve dermatolojide kullanılır."],
+  ["MOF'ları (metal-organik çerçeveler) açıklayınız.","Metal iyonları/kümelerinin organik linkerlerle koordinasyonuyla oluşan gözenekli kristal hibrit malzemeler. Yüksek yüzey alanı/porozite ile üstün ilaç yükleme; ayarlanabilir yapı kontrollü salım; pH/manyetik/sıcaklık/ışığa duyarlı tasarlanabilir. Yaygın metaller Zr, Fe, Zn (MIL, UiO serileri)."],
+  ["Hidrojellerin özelliklerini ve uygulama alanlarını açıklayınız.","Su tutan 3D çapraz bağlı polimer ağlarıdır; yüksek su içeriği, biyouyumluluk, ayarlanabilir yapı. pH/sıcaklık/enzime duyarlı akıllı salım, %50'ye varan yükleme, ilacı enzimatik bozunmadan koruma sağlar. Uygulama: enjekte edilebilir/in situ jel (OncoGel), oral (aljinat), topikal/transdermal, oküler."],
+  ["Uyarana duyarlı sistemlerin yararlarını sayınız.","Nanosistem internalizasyonunun ve hedef hücreye bağlanmanın artması, ilaç salımının kontrolü, yan etkilerin azalması, tümör kütlesi boyunca etkili dağılım ve bazı çözünmeyen sınıf II/IV kemoterapötiklerin biyoyararlanımının iyileşmesi."],
+  ["Teranostik nedir; kişiselleştirilmiş tıpla ilişkisini açıklayınız.","Terapötik ve tanısal işlevleri tek nanoyapıda birleştiren çok işlevli yaklaşımdır. Geleneksel tıptan kişiselleştirilmiş tıbba geçiş sağlar; doğru hastaya doğru zamanda doğru ilaç hedeflenir. Farmakogenetik, proteomik ve biyobelirteç profili omurgasını oluşturur."],
+  ["Mikropartiküler sistemlerde 'niçin boyut önemli'? Açıklayınız.","Boyut uygulama yolunu ve bariyer geçişini belirler: büyük partiküller i.v. verilemez (emboli), bu yüzden i.v. için nano ölçek gerekir. Mikropartiküller bariyerleri geçemez, dokuda kalır; hücreye nüfuzu düşüktür (istisna ~10 µm'ye kadar fagositik hücreler). Yüzey/hacim oranı çapla ters orantılı olduğundan küçük partikül daha hızlı salım yapar. Şekil de alım/salım/hedeflemeyi etkiler."],
+  ["Mikropartikül üretiminde kullanılan doğal polimerleri açıklayınız.","Biyouyumlu, ucuz, toksik olmayan, bozunabilir ve kolay modifiye edilebilir polimerler: kitozan (kitin deasetilasyonu, FDA onaylı yara örtücü), aljinat (kahverengi yosun, M/G oranı ayarlanır), dekstran (dallı homopolisakkarit) ve jelatin (kollajenin denatüre formu)."],
+  ["Mikropartikül üretiminde kullanılan sentetik polimerleri açıklayınız.","Kontrollü, iyi tanımlı bileşimde hazırlanır. Poli(α-hidroksi asit): PLGA (difüzyon + bulk erozyon). PCL: hidrofobik/kristal, yavaş bozunur. POE: yüzey hidrolizinden sonra salar. Polianhidrit: yüzey erozyonu, sıfıra yakın salım. Ayrıca PVA, PHBV, PHEMA ve akıllı (pH/ısıya duyarlı) polimerler."],
+  ["Mikropartikül hazırlama yöntemlerini sayınız ve birini açıklayınız.","Tek/çift emülsiyon, çözücü buharlaştırma/ekstraksiyon, koaservasyon, sprey kurutma, iyonik jelleşme, süspansiyon çapraz bağlama. Örnek — emülsifikasyon-çözücü buharlaştırma: polimerin uçucu çözücüde emülsifikasyonu, ardından çözücünün buharlaşması/ekstraksiyonuyla partiküllerin sertleşip çökmesi."],
+  ["Mikropartikül karakterizasyonunda hangi parametreler ölçülür?","Morfoloji, boyut ve polidispersite, yüzey yükü, ilaç yükleme [İlaç Kapsülleme (%) = kapsüllenmiş ilaç kütlesi / mikropartikül kütlesi × 100] ve salım kinetiği (ELISA, HPLC, UV spektrofotometri, LC-MS)."]
+];
+
+/* ===== RENDER ===== */
+function renderFill(boxId, arr, prefix){
+  const box=document.getElementById(boxId);
+  arr.forEach((it,i)=>{
+    const card=document.createElement('div');card.className='q';
+    const qHtml=it.q.replace('___','<span class="blank">______</span>');
+    const opts=it.o.map((t,oi)=>`<button class="opt" data-c="${oi===it.a}"><span class="mark"><span>${String.fromCharCode(65+oi)}</span></span><span>${t}</span></button>`).join('');
+    card.innerHTML=`<div class="q-top"><div class="q-no">${i+1}</div><div class="q-text">${qHtml}</div></div><div class="opts">${opts}</div>`;
+    box.appendChild(card);
+  });
+  let ans=0,cor=0;
+  box.addEventListener('click',e=>{
+    const b=e.target.closest('.opt');if(!b)return;
+    const card=b.closest('.q');if(card.dataset.done)return;card.dataset.done="1";
+    const right=b.dataset.c==='true';
+    card.querySelectorAll('.opt').forEach(o=>{o.disabled=true;if(o.dataset.c==='true')o.classList.add('correct');});
+    if(!right)b.classList.add('wrong');
+    ans++;if(right)cor++;
+    document.getElementById(prefix+'-ans').textContent=ans;
+    document.getElementById(prefix+'-correct').textContent=cor;
+    document.getElementById(prefix+'-pct').textContent=Math.round(cor/ans*100)+'%';
+  });
+}
+function renderReveal(boxId, list){
+  const box=document.getElementById(boxId);
+  list.forEach((item,i)=>{
+    const [head,body]=item;
+    const el=document.createElement('div');el.className='reveal';
+    el.innerHTML=`<div class="reveal-head"><div class="reveal-no">${i+1}</div><div class="reveal-term">${head}</div><div class="dots">···</div></div><div class="reveal-body">${body}</div>`;
+    el.querySelector('.reveal-head').addEventListener('click',()=>el.classList.toggle('open'));
+    box.appendChild(el);
+  });
+}
+renderFill('nt-fill',NT_FILL,'nt');renderReveal('nt-terms',NT_TERMS);renderReveal('nt-classic',NT_CLASSIC);
+renderFill('if-fill',IF_FILL,'if');renderReveal('if-terms',IF_TERMS);renderReveal('if-classic',IF_CLASSIC);
+
+/* ===== NAV ===== */
+document.querySelectorAll('.topbtn').forEach(b=>{
+  b.addEventListener('click',()=>{
+    document.querySelectorAll('.topbtn').forEach(x=>x.classList.remove('active'));
+    document.querySelectorAll('.topic-wrap').forEach(x=>x.classList.remove('active'));
+    b.classList.add('active');document.getElementById(b.dataset.topic).classList.add('active');
+    window.scrollTo({top:0,behavior:'smooth'});
+  });
+});
+document.querySelectorAll('.tabs').forEach(nav=>{
+  nav.addEventListener('click',e=>{
+    const t=e.target.closest('.tab');if(!t)return;
+    const wrap=nav.closest('.topic-wrap');
+    nav.querySelectorAll('.tab').forEach(x=>x.classList.remove('active'));
+    wrap.querySelectorAll('.panel').forEach(x=>x.classList.remove('active'));
+    t.classList.add('active');document.getElementById(t.dataset.sub).classList.add('active');
+    window.scrollTo({top:0,behavior:'smooth'});
+  });
+});
+document.getElementById('expandAll').addEventListener('click',()=>{document.querySelectorAll('.topic-wrap.active .panel.active .reveal').forEach(r=>r.classList.add('open'));});
+document.getElementById('collapseAll').addEventListener('click',()=>{document.querySelectorAll('.reveal').forEach(r=>r.classList.remove('open'));});
+</script>
+</body>
+</html>

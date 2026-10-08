@@ -1,0 +1,466 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Transdermal İlaç Taşıyıcı Sistemler — Çalışma Sayfası</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Spectral:ital,wght@0,400;0,600;0,800;1,500&family=Inter+Tight:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#0b1413;--panel:#11201e;--panel-2:#172a27;--ink:#e7f0ee;--muted:#8fa6a2;--line:#23423d;
+    --accent:#2bb6a3;--accent-2:#e0a458;
+    --correct-bg:rgba(43,182,131,.16);--correct-line:#37c98a;
+    --wrong-bg:rgba(214,69,69,.16);--wrong-line:#e25555;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{scroll-behavior:smooth}
+  body{background:radial-gradient(1100px 560px at 84% -10%, rgba(43,182,163,.10), transparent 60%),radial-gradient(900px 520px at -10% 22%, rgba(224,164,88,.07), transparent 55%),var(--bg);color:var(--ink);font-family:'Inter Tight',system-ui,sans-serif;line-height:1.6;-webkit-font-smoothing:antialiased}
+  .wrap{max-width:900px;margin:0 auto;padding:46px 22px 120px}
+  .kicker{font-size:.72rem;letter-spacing:.3em;text-transform:uppercase;color:var(--accent);font-weight:600;margin-bottom:12px}
+  h1.title{font-family:'Spectral',serif;font-weight:800;font-size:clamp(1.8rem,4.4vw,2.8rem);line-height:1.05;letter-spacing:-.01em;margin-bottom:8px}
+  h1.title em{font-style:italic;color:var(--accent-2)}
+  .sub{color:var(--muted);font-size:.96rem;margin-bottom:22px}
+  .tabs{position:sticky;top:0;z-index:20;display:flex;flex-wrap:wrap;gap:8px;padding:14px 0 14px;background:linear-gradient(180deg,var(--bg) 78%,rgba(11,20,19,0));margin-bottom:8px}
+  .tab{flex:1 1 130px;min-width:120px;cursor:pointer;border:1px solid var(--line);background:var(--panel);color:var(--muted);border-radius:12px;padding:11px 13px;font-family:inherit;font-size:.88rem;font-weight:600;transition:.2s;text-align:center;line-height:1.2}
+  .tab small{display:block;font-weight:400;font-size:.72rem;opacity:.7;margin-top:2px}
+  .tab:hover{border-color:#345f57;color:var(--ink)}
+  .tab.active{background:var(--accent);border-color:var(--accent);color:#04201c}
+  .panel{display:none;animation:fade .35s ease}.panel.active{display:block}
+  @keyframes fade{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
+  .summary h2{font-family:'Spectral',serif;font-weight:600;font-size:1.45rem;margin:32px 0 6px;color:var(--ink)}
+  .summary h2:first-child{margin-top:6px}
+  .summary h2 .n{color:var(--accent);font-style:italic;margin-right:8px}
+  .summary h3{font-size:1.04rem;font-weight:600;color:var(--accent-2);margin:18px 0 4px}
+  .summary p{margin:10px 0;color:#d5e2df}
+  .summary ul{margin:8px 0 8px 4px;padding-left:20px;color:#d5e2df}
+  .summary li{margin:5px 0}
+  .summary b{color:var(--ink)}
+  .summary .lead{font-size:1.04rem;border-left:3px solid var(--accent);padding-left:16px;color:#cfe0dc}
+  .summary hr{border:none;border-top:1px solid var(--line);margin:28px 0}
+  .summary .formula{background:var(--panel-2);border:1px solid var(--line);border-radius:10px;padding:10px 14px;font-family:'Spectral',serif;color:#e9d9b9;margin:8px 0;display:inline-block}
+  .intro-note{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:14px 16px;color:var(--muted);font-size:.9rem;margin-bottom:16px}
+  .intro-note b{color:var(--accent)}
+  .q{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:18px 18px 14px;margin-top:14px}
+  .q-top{display:flex;gap:11px;align-items:flex-start;margin-bottom:13px}
+  .q-no{flex:none;width:28px;height:28px;border-radius:8px;background:var(--panel-2);color:var(--accent);font-weight:700;font-size:.8rem;display:grid;place-items:center;font-family:'Spectral',serif}
+  .q-text{font-size:1rem;font-weight:500;padding-top:2px}
+  .q-text .blank{color:var(--accent-2);font-weight:700;letter-spacing:1px}
+  .opts{display:flex;flex-direction:column;gap:8px}
+  .opt{text-align:left;width:100%;cursor:pointer;background:var(--panel-2);border:1px solid var(--line);color:var(--ink);border-radius:10px;padding:11px 13px;font-family:inherit;font-size:.94rem;display:flex;gap:11px;align-items:flex-start;transition:.16s}
+  .opt:hover:not(:disabled){background:#1d322e;border-color:#39625a}
+  .opt:disabled{cursor:default}
+  .opt .mark{flex:none;width:21px;height:21px;border-radius:50%;border:1.5px solid var(--muted);color:var(--muted);font-size:.72rem;font-weight:700;display:grid;place-items:center;margin-top:1px;font-family:'Spectral',serif}
+  .opt.correct{background:var(--correct-bg);border-color:var(--correct-line);color:#d6ffe9}
+  .opt.correct .mark{border-color:var(--correct-line);background:var(--correct-line);color:#06231a}
+  .opt.correct .mark::after{content:"✓"}
+  .opt.wrong{background:var(--wrong-bg);border-color:var(--wrong-line);color:#ffe0e0}
+  .opt.wrong .mark{border-color:var(--wrong-line);background:var(--wrong-line);color:#2a0a0a}
+  .opt.wrong .mark::after{content:"✕"}
+  .opt.correct .mark span,.opt.wrong .mark span{display:none}
+  .scorebar{display:flex;gap:12px;flex-wrap:wrap;margin-bottom:8px}
+  .sc{flex:1 1 130px;background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:12px 14px}
+  .sc .l{font-size:.7rem;letter-spacing:.1em;text-transform:uppercase;color:var(--muted)}
+  .sc .v{font-family:'Spectral',serif;font-size:1.35rem;font-weight:600;margin-top:2px}
+  .reveal{background:var(--panel);border:1px solid var(--line);border-radius:14px;margin-top:12px;overflow:hidden;transition:border-color .2s}
+  .reveal:hover{border-color:#345f57}
+  .reveal-head{display:flex;gap:12px;align-items:center;padding:14px 16px;cursor:pointer}
+  .reveal-no{flex:none;width:28px;height:28px;border-radius:8px;background:var(--panel-2);color:var(--accent);font-weight:700;font-size:.8rem;display:grid;place-items:center;font-family:'Spectral',serif}
+  .reveal-term{flex:1;font-weight:600;font-size:1rem}
+  .dots{flex:none;font-family:'Spectral',serif;font-weight:800;color:var(--accent-2);font-size:1.4rem;letter-spacing:2px;line-height:1;transition:.25s;padding:0 4px}
+  .reveal.open .dots{color:var(--accent);transform:rotate(90deg)}
+  .reveal-body{max-height:0;opacity:0;padding:0 16px;transition:max-height .3s ease,opacity .25s ease,padding .3s ease;color:#d5e2df;font-size:.95rem;border-top:1px solid transparent}
+  .reveal.open .reveal-body{max-height:800px;opacity:1;padding:13px 16px 16px;border-top:1px solid var(--line)}
+  .reveal-body b{color:var(--accent-2)}
+  footer{margin-top:60px;text-align:center;color:var(--muted);font-size:.82rem}
+  .tools{display:flex;gap:10px;justify-content:center;flex-wrap:wrap;margin-top:14px}
+  .toolbtn{background:transparent;border:1px solid var(--line);color:var(--muted);padding:9px 16px;border-radius:10px;font-family:inherit;cursor:pointer;font-size:.84rem;transition:.2s}
+  .toolbtn:hover{border-color:var(--accent);color:var(--accent)}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="kicker">Farmasötik Teknoloji · Ders Notları</div>
+  <h1 class="title">Transdermal İlaç Taşıyıcı <em>Sistemler</em></h1>
+  <div class="sub">Detaylı uzun özet, 50 boşluk doldurma (test), 70 terim–anlam ve 30 klasik soru — tek sayfada, sekmelerle.</div>
+
+  <nav class="tabs">
+    <button class="tab active" data-sub="ozet">Detaylı Özet</button>
+    <button class="tab" data-sub="bosluk">Boşluk<small>50 · yeşil/kırmızı</small></button>
+    <button class="tab" data-sub="terim">Terim–Anlam<small>70 · tıkla, aç</small></button>
+    <button class="tab" data-sub="klasik">Klasik<small>30 · tıkla, aç</small></button>
+  </nav>
+
+  <section class="panel summary active" id="ozet">
+    <p class="lead">Yamalar (patch) olarak da bilinen <b>transdermal ilaç verme sistemleri (TDDS)</b>, hastanın cildine terapötik olarak etkili miktarda ilaç vermek için tasarlanan dozaj formlarıdır. Transdermal uygulama; hasta uyumunu artırarak ve özellikle <b>ilk geçiş (first-pass) metabolizmasını önleyerek</b> enjekte edilebilir ve oral yollara karşı önemli bir etkinlik sağlar. İlk transdermal sistem, hareket hastalığını (deniz tutmasını) tedavi etmek için skopolamin sağlayan üç günlük bir yamaydı ve <b>1979'da ABD'de</b> onaylandı.</p>
+
+    <h2><span class="n">1.</span>Dermal ve Transdermal Uygulama Farkı</h2>
+    <p><b>Dermal uygulama</b> lokal etki için ilacı doğrudan cilde uygular ve cilt katmanlarını (epidermis/dermis) hedefler; sistemik emilimi en aza indirmeyi amaçlar (akne, döküntü, lokalize ağrı). Kremler, merhemler, losyonlar ve jeller örnektir — ilaç cildin "üzerinde"dir. <b>Transdermal uygulama</b> ise sistemik (tüm vücut) etki için cilt katmanlarından geçerek kana karışır; <b>sistemik dolaşımı</b> hedefler (hormon replasmanı, sigara bırakma, kronik ağrı — örn. nikotin bantları). Emilim için stratum korneum, epidermis ve dermis boyunca kılcal damar ağlarına ulaşılır; ilaç cildin "içinden" geçer ve genellikle geçirgenliği artıran özel bantlar/cihazlar kullanılır.</p>
+
+    <h2><span class="n">2.</span>Niçin Transdermal? Avantajlar</h2>
+    <ul>
+      <li><b>1 –</b> İlk geçiş metabolizmasından kaçınma,</li>
+      <li><b>2 –</b> Azaltılmış yan etkiler,</li>
+      <li><b>3 –</b> Plazma ilaç seviyelerindeki dalgalanmaların azalması; <b>kısa yarı ömürlü</b> ve <b>düşük terapötik indeksli</b> ilaç adaylarının kullanılabilmesi,</li>
+      <li><b>4 –</b> Toksisite durumunda ilacın kolayca ortadan kaldırılması (yamanın çıkarılması),</li>
+      <li><b>5 –</b> Dozlama sıklığının azalması ve hasta uyumunun artması,</li>
+      <li><b>6 –</b> Uzun süre boyunca <b>sürekli ilaç infüzyonu</b> sağlaması,</li>
+      <li><b>7 –</b> İlaca özgü sorunlardan kaçınma (GI tahrişi, düşük emilim, hepatik ilk geçişe bağlı ayrışma),</li>
+      <li><b>8 –</b> Eşdeğer terapötik etkinin <b>daha düşük günlük dozla</b> elde edilebilmesi,</li>
+      <li><b>9 –</b> Basitleştirilmiş rejim → daha iyi uyum, hastalar arası/içi farklılıkların azalması.</li>
+    </ul>
+
+    <h2><span class="n">3.</span>Sınırlamalar</h2>
+    <ul>
+      <li>Genellikle <b>&gt; 500 Da</b> büyük moleküller stratum korneuma zor nüfuz eder,</li>
+      <li><b>Partisyon katsayısı</b> çok düşük veya çok yüksek olan ilaçlar kan dolaşımına ulaşamaz,</li>
+      <li>Hem suda hem yağda çözünürlüğü uygun olan, uygun erime özelliğine sahip ilaçlar verilebilir; ilacı cilt bariyerinden geçirmek için çok sayıda yaklaşım denenmiştir.</li>
+    </ul>
+
+    <hr>
+    <h2><span class="n">4.</span>Derinin Yapısı</h2>
+    <p>Deri, yaklaşık <b>1,7 m²</b> yüzey alanıyla vücudun en erişilebilir ve en büyük organıdır; toplam vücut kütlesinin yaklaşık %16'sını oluşturur. Ana işlevi vücut ile dış ortam arasında <b>koruyucu bariyer</b> sağlamaktır (mikroorganizma, UV, kimyasal, alerjenlere karşı koruma ve su kaybını önleme). Üç ana tabaka:</p>
+    <ul>
+      <li><b>Epidermis</b>: hücrelerin yaklaşık <b>%95'i keratinosittir</b>; ayrıca melanositler, Langerhans ve Merkel hücreleri bulunur. En dış kısım olan <b>stratum korneumdaki</b> su, korneositlerdeki keratinle ilişkilidir ve ana bariyeri oluşturur.</li>
+      <li><b>Dermis</b>: yaklaşık 2–3 mm kalınlıkta; <b>kollajen (%70)</b> ve elastin liflerinden oluşur, deriye güç ve esneklik verir. Kan damarları (besin sağlar), sinirler, makrofajlar ve lenfatik damarlar burada bulunur.</li>
+      <li><b>Hipodermis (deri altı)</b>: en derin tabaka; <b>yağ hücresi</b> ağından oluşur. Fiziksel/şok koruması, ısı yalıtımı ve vasküler/nöral sinyallerin desteği sağlar; vücut yağının ~%50'sini içerir, fibroblast ve makrofaj barındırır.</li>
+    </ul>
+
+    <h2><span class="n">5.</span>Deriden Penetrasyon Yolları</h2>
+    <p>Sağlam deri boyunca iki yol vardır:</p>
+    <ul>
+      <li><b>Transepidermal yol</b>: moleküllerin stratum korneumdan (çok katmanlı, çok hücreli bariyer) geçişi. İkiye ayrılır: <b>hücre içi (intrasellüler)</b> — keratinositler içinden, hidrofilik/polar maddeler; <b>hücreler arası (intersellüler)</b> — sürekli lipid matriks boyunca, lipofilik/polar olmayan maddeler.</li>
+      <li><b>Transappendageal yol</b>: moleküllerin <b>ter bezleri ve saç folikülleri</b> yoluyla geçişi.</li>
+    </ul>
+
+    <h2><span class="n">6.</span>TDD Sisteminin Kinetiği</h2>
+    <p>Başarılı bir TDD geliştirmek için sistemin ciltten nüfuz kinetiğinin anlaşılması gerekir. <b>Perkütan absorpsiyon</b>, maddelerin çeşitli cilt katmanlarından geçip sistemik dolaşıma ulaşmasıdır ve adım adım bir süreçtir: penetrasyon (bir tabakaya girme) → stratum korneumdan canlı epidermise ayrılma → canlı epidermis ve üst dermise difüzyon → permeasyon (bir katmandan diğerine geçiş) → absorpsiyon (sistemik dolaşıma geçiş).</p>
+    <p>Deri boyunca nüfuz oranı: <span class="formula">dQ/dt = P(Cd − Cr)</span> Burada Cd ve Cr, sırasıyla donör (SC yüzeyi) ve alıcı (gövde) bölmesindeki konsantrasyonlar; P geçirgenlik katsayısıdır: <span class="formula">P = D·K/L</span> (D difüzyon katsayısı, K bölme/partisyon katsayısı, L doku kalınlığı). Cd ≫ Cr olduğunda sabit hız elde edilir ve denklem <span class="formula">dQ/dt = P·Cd</span> olur. Belirli sürede bariyeri geçen kümülatif miktar: <span class="formula">Q = P·A·Cd·t</span> P, kümülatif geçirgenlik–zaman grafiğinin <b>doğrusal (kararlı durum) kısmının eğiminden</b> elde edilir. Eğrinin durağan olmayan kısmı <b>Fick'in ikinci yasasıyla</b>, doğrusal kısmı <b>Fick'in birinci yasasıyla</b> tanımlanır. Kararlı duruma ulaşma süresine <b>gecikme süresi (tLag)</b> denir: <span class="formula">tLag = L²/6D</span></p>
+
+    <h2><span class="n">7.</span>Transdermal Absorpsiyonu Etkileyen Parametreler</h2>
+    <p>İlaç uygulama bölgesi; stratum korneumun kalınlığı ve bütünlüğü; molekül boyutu; zarın geçirgenliği; cildin hidrasyon durumu; ilacın pH'ı; deri florası ile ilaç metabolizması; lipid çözünürlüğü; deride ilaç deposu; katkı maddeleri ve vücut ısısıyla ciltteki kan akışı değişikliği.</p>
+
+    <h2><span class="n">8.</span>Permeabiliteyi Etkileyen Faktörler</h2>
+    <p>Dört ana grup: <b>(a) etkin maddenin fizikokimyasal özelliği</b> (molekül ağırlığı, partisyon katsayısı, pH, konsantrasyon), <b>(b) taşıyıcı sistemin fizikokimyasal özelliği</b> (ilaç serbestleşmesi, penetrasyon artırıcılar, sistem yapısı), <b>(c) derinin fizyolojik ve patolojik durumu</b> ve <b>(d) biyolojik faktörler</b>.</p>
+    <ul>
+      <li><b>Cilt yaşı</b>: fetal/bebek cildi yetişkininkinden daha geçirgendir; topikal steroidlerin perkütan emilimi çocuklarda daha hızlıdır (su geçirgenliği aynı).</li>
+      <li><b>Lipid film / SSLF</b>: sebum ve hücre lipitlerinden oluşan <b>Deri Yüzeyi Lipid Filmi (SSLF)</b> koruyucu film sağlar, doğal nemlendirme faktörünün kaybını önler. Sebum ~%30 serbest yağ asidi, %33 trigliserit, %15 mum içerir; terle karışıp emülsiyon filmi oluşturur (0,01–2,1 µm). Cilt yüzeyi <b>pH 4,5–5,5 asit manto</b> ile kaplıdır, zararlı bakteri çoğalmasını engeller.</li>
+      <li><b>Cilt hidrasyonu</b>: SC hidrasyonu transdermal geçirgenliği artırır.</li>
+      <li><b>Cilt sıcaklığı</b>: yükselmesi penetrasyon oranını artırır; vazodilatasyon perkütan absorpsiyonu artırır.</li>
+      <li><b>Kutan ilaç metabolizması</b>: derideki enzimler ilacı metabolize eder (örn. testosteronun ~%95'i ciltte metabolize olur).</li>
+      <li><b>Türler arası farklılık</b> ve <b>patolojik/yaralı deri</b>: yaralı deride SC bozulduğu için permeabilite artar.</li>
+    </ul>
+
+    <hr>
+    <h2><span class="n">9.</span>Transdermal Yama Yapısı ve Komponentleri</h2>
+    <p>TDDS komponentleri: <b>(1) polimer matrisi, (2) etkin madde, (3) penetrasyon artırıcı, (4) diğer eksipiyanlar</b>. Polimerler, ilacın düzgün yayılması ve salınmasına izin vermeli; büyük miktarda etken madde taşıyabilmeli; stabil, toksik olmayan, ucuz ve kolay üretilebilir olmalıdır. Yapısal tabakalar:</p>
+    <ul>
+      <li><b>Astar (liner)</b>: depolamada ilacı korur, kullanmadan önce çıkarılır,</li>
+      <li><b>Adhesif</b>: yama bileşenlerini cilde bağlar,</li>
+      <li><b>Membran</b>: bazı yama türlerinde ilacın rezervuardan salımını kontrol eder,</li>
+      <li><b>İlaç matrisi/rezervuarı</b>: etkin maddenin bulunduğu kısım,</li>
+      <li><b>Destek (backing)</b>: yamayı dış ortamdan korur.</li>
+    </ul>
+
+    <h2><span class="n">10.</span>Transdermal Yama Tipleri</h2>
+    <ul>
+      <li><b>Tek katmanlı (single-layer) drug-in-adhesive</b>: ilaç tek bir yapışkan katmanda; basit yapı, düşük maliyet.</li>
+      <li><b>Çok katmanlı (multi-layer) drug-in-adhesive</b>: birden çok yapışkan katman; hemen veya uzun süreli salımla karmaşık dozaj profilleri (örn. nikotin bantları, bazı hormon yamaları).</li>
+      <li><b>Rezervuar (depo) tipi</b>: ilaç, dış tabaka ile <b>hız kontrol membranı</b> arasında sıvı/jel/süspansiyon halinde tutulur; salım hassas kontrol edilir, <b>dose-dumping</b> riski en aza indirilir ama yama hasarında sızıntı riski vardır (örn. skopolamin, bazı fentanil bantları).</li>
+      <li><b>Matriks tipi</b>: etkin madde hidrofilik/lipofilik polimer matriste <b>homojen</b> dağılır; salım matrisin fiziksel özelliklerine bağlı; rezervuara göre daha ince/esnek (örn. rivastigmin flasterleri).</li>
+      <li><b>Mikro-rezervuar sistemleri</b>: rezervuar + matris hibridi; ilaç önce suda çözünen polimerde süspansiyon yapılır, sonra lipofilik polimerde binlerce mikroskobik damlacık halinde dağıtılır.</li>
+    </ul>
+
+    <h2><span class="n">11.</span>TDDS Nesilleri</h2>
+    <ul>
+      <li><b>Birinci nesil</b>: klinikte en yaygın kullanılan; aday moleküller <b>düşük molekül ağırlıklı, lipofilik, düşük dozlu ve etkili</b> olmalıdır. Yama olmadan ölçülü sıvı sprey/jel uygulanan varyasyonu da vardır (örn. testosteron jelleri; estradiol için onaylı transdermal sprey).</li>
+      <li><b>İkinci nesil</b>: cilt geçirgenliğini artırmaya odaklanır; <b>kimyasal penetranlar, iyontoforez ve kavitasyonel olmayan ultrason</b> kullanılır. SC'den taşınma artarken derin doku korunur. Küçük moleküllerin lokal/dermatolojik/kozmetik ve bazı sistemik uygulamalarında etkilidir; makromoleküllerde az etkilidir.</li>
+      <li><b>Üçüncü nesil</b>: SC'yi daha güçlü hedefler; <b>yeni kimyasal artırıcılar, elektroporasyon, kavitasyonel ultrason, mikroiğneler, termal ablasyon ve mikrodermabrazyon</b> ile derin doku korunurken etkili taşıma sağlanır. Klinik deneylerde <b>terapötik proteinler ve aşılar dahil makromoleküllerde</b> iyi etki elde edilmiştir.</li>
+    </ul>
+
+    <h2><span class="n">12.</span>Geçirgenliği Artırma Yaklaşımları</h2>
+    <p>Başlıca dört yaklaşım: <b>(1) Kimyasal</b> (kimyasal penetranlar); <b>(2) Biyokimyasal</b> — epidermal lipid sentezinin anahtar enzimlerini inhibe eder (örn. HMG-CoA redüktaz, asetil-CoA karboksilaz); <b>(3) Fiziksel</b> — iyontoforez (~15 mA elektrik akımı) ve sonoforez (düşük frekanslı ultrason, 20 kHz); <b>(4) Veziküler taşıyıcılar</b> — lipozomlar, niozomlar (sentetik veziküller) ve elastik veziküller.</p>
+    <h3>Mekanizma ve ideal özellikler</h3>
+    <p>Penetrasyon artırıcılar üç yolla etki eder: SC'nin organize yapısında bozulma, hücreler arası proteinlerle etkileşim ve çözücü yardımıyla ilacın SC'de partisyonu. İdeal artırıcı: biyouyumlu, toksik olmayan, ilaçla uyumlu, farmakolojik aktivitesiz, ucuz, iyi çözücü, renksiz/kokusuz/tatsız, fiziksel-kimyasal stabil; etkisi tekrarlanabilir/hızlı, tek yönlü akışlı (endojen madde sızdırmaz) olmalı ve çıkarılınca cilt bariyer özelliğini hemen geri kazanmalıdır.</p>
+    <h3>Penetran örnekleri</h3>
+    <ul>
+      <li><b>Alkoller, polioller, propilen glikol</b>; amin ve amidler; <b>siklodekstrinler</b>,</li>
+      <li><b>Yağ asitleri</b>: doymamışlar daha iyi artırıcıdır; <b>palmitoleik asit</b> önemli bir nüfuz artırıcıdır,</li>
+      <li><b>Pirolidonlar</b> (N-metilpirolidon),</li>
+      <li><b>Azonlar</b>: başlıca yüzey penetrasyon artırıcı sınıfı (PG ile kompleks → metotreksat/piroksikam akışı artar),</li>
+      <li><b>Sülfoksitler</b>: <b>DMSO</b> aprotik çözücü olarak yaygın; ayrıca DMF,</li>
+      <li><b>Yüzey aktif maddeler</b>: anyonik <b>sodyum lauril sülfat</b> SC bariyerini değiştirir; noniyonikler sebumu emülsifiye eder,</li>
+      <li><b>Terpenler</b>: uçucu yağ bileşenleri, izopren (C₅H₈) birimli (okaliptüs, ylang-ylang).</li>
+    </ul>
+    <p><b>Ablasyon</b>: özellikle lazerle (CO₂ veya Erbium:YAG), termal ya da femtosaniye lazerlerle cildin en üst tabakasının kontrollü uzaklaştırılması veya mikro kanallar açılarak daha derin/etkili nüfuzun sağlanmasıdır.</p>
+
+    <hr>
+    <h2><span class="n">13.</span>TDDS'lerin Sınıflandırılması (Teknik Temelli)</h2>
+    <ul>
+      <li><b>A) Hızın ön-programlandığı TDDS</b>: deri bariyeri boyunca moleküler difüzyonu kontrol eder — (1) polimer membran geçirgenlik kontrollü (ilaç rezervuarı + yarı geçirgen membran), (2) polimer matriks difüzyon kontrollü (örn. Nitro-Dur), (3) mikro-hazne (mikro-rezervuar) kontrollü.</li>
+      <li><b>B) Aktivite modülasyonuna dayanan TDDS</b>: fiziksel (ozmotik/hidrodinamik/buhar basıncı, mekanik, manyetik, elektrik, ultrason, hidrasyonla aktive), kimyasal (pH/iyon/hidrolizle aktive) ve biyokimyasal (enzimle aktive) araçlar.</li>
+      <li><b>C) Geri besleme (feed-back) düzenlemeli TDDS</b>: salım, ilacı tetikleyen bir ajanla kolaylaştırılır ve konsantrasyonuyla düzenlenir — bio-erozyonla düzenlenen, bio-duyarlı ve kendi kendini düzenleyen sistemler.</li>
+      <li><b>D) Taşıyıcı temelli TDDS</b>: kolloidal partikül/veziküler taşıyıcılar — hidrojel, lipozom, niozom, nanokapsül, nanopartikül, mikrosfer, transferozom, dendrimer, akuazom vb.</li>
+    </ul>
+
+    <h2><span class="n">14.</span>TDDS Geliştirmek İçin Son Teknikler</h2>
+    <p>Yapı bazlı, elektrik bazlı, hız bazlı ve diğer iyileştirme teknikleri uygulanır.</p>
+    <ul>
+      <li><b>İyontoforez</b>: formülasyonla temas eden elektrotla cilde küçük (birkaç mA) akım geçirilir; iyonize moleküller daha fazla nüfuz eder. İlaç, kendisiyle aynı yüklü elektroda yerleştirilir (örn. pozitif lidokain anoda), toprak elektrodu zıt yüklü uzak bir noktaya konur. En uygun elektrot çifti <b>Ag/AgCl</b>'dir. Penetrasyon uygulama ve süreyle orantılıdır; çözelti konsantrasyonu önemli görünmez. Üst sınır ~<b>5–10 mg/saat</b>'tir. Avantajları: invaziv değil (düşük enfeksiyon), doğrudan tedavi bölgesine verme, nispeten ağrısız, az doku travması, ilk geçişin olmaması, kısa yarı ömürlü ilaçlara uygunluk, tedavinin hızlı sonlandırılabilmesi. Dezavantajları: ilaç sulu çözeltide ve iyonize olmalı; eklenen iyonlar (NaCl, Na-sitrat) yüklü rakip olabilir; verilebilen miktar sınırlı; derinin kendisi bariyer oluşturmaya devam eder.</li>
+      <li><b>Ultrason (sonoforez)</b>: ilaç bir taşıyıcıyla (jel/krem/merhem) karıştırılır; ultrasonik enerji SC lipitlerini parçalayarak penetrasyonu sağlar.</li>
+      <li><b>Fotomekanik dalgalar</b>: geçici kanallar oluşturarak SC'yi yüksek oranda geçirgen hale getirir.</li>
+      <li><b>Elektroporasyon</b>: kısa, yüksek voltajlı darbelerle SC'de küçük gözenekler açılır; yakın aralıklı elektrotlarla güvenli/ağrısız uygulanır.</li>
+      <li><b>Elektro-ozmoz</b>: yüklü gözenekli membrana voltaj farkı uygulanınca, konsantrasyon gradyanı olmadan yığın sıvı/hacim akışı oluşur.</li>
+      <li><b>İğnesiz enjeksiyon / jet enjektörleri</b> (Intraject, Implaject, Iject, Mini-ject): difüzyon hızıyla sınırlı değildir. <b>Powderject (TOZject)</b>: katı ilaç parçacıkları yüksek hızlı helyum gazıyla cilde itilir.</li>
+      <li><b>Transferozomlar</b>: cilt nem gradyanı boyunca bariyere nüfuz eden, lipid çift katmanı destabilize eden bir bileşen (surfaktan = "aktivatör") içeren <b>ultra deforme olabilen</b> veziküller; çaplarının 5–10 katı dar kanallardan geçebilir. İtici güç, susuz cilt yüzeyi (~%20 su) ile sulu canlı epidermis (~%100) arasındaki <b>transdermal gradyandır</b>.</li>
+      <li><b>Etozomlar</b>: yüksek alkol konsantrasyonlu hidroalkolik/hidro-alkolik-glikolik fosfolipid veziküller.</li>
+      <li><b>İlaçlı dövmeler (Med-Tat)</b>: aktif madde içeren geçici dövme; geleneksel dozaj formu alamayan çocuklarda yararlı.</li>
+      <li><b>Cilt aşınması (mikrodermabrazyon)</b>: keskin mikro metal granüllerle üst tabakaları aşındırıp mikro kanal açma.</li>
+      <li><b>CHADD (Kontrollü Isı Destekli İlaç Verme)</b>: cilde ısı uygulayarak mikrosirkülasyon ve geçirgenliği artırır; yama üzerine yerleştirilen ısıtma ünitesinde sınırlı oksidasyon reaksiyonu ısı üretir.</li>
+      <li><b>Lazer radyasyonu</b> (SC ablasyonu) ve <b>manyetoforez</b> (manyetik alanla difüzyon akısını artırma).</li>
+    </ul>
+
+    <h2><span class="n">15.</span>Kalite Kontrolü</h2>
+    <p>Başlıca testler: <b>etkileşim çalışmaları</b> (ilaç-eksipiyan uyumluluğu; termal analiz, FT-IR, UV, kromatografi); <b>yamanın kalınlığı</b> (dijital mikrometre); <b>ağırlık tekdüzeliği</b>; <b>katlanma dayanıklılığı</b> (kırılana kadar aynı yerde katlama sayısı); <b>yüzde nem içeriği</b> ve <b>nem alımı</b> (desikatör, KCl ile %84 RH); <b>su buharı geçirgenliği (WVP)</b>; <b>ilaç içeriği</b> (UV/HPLC); <b>dozaj birimi tekdüzeliği</b>; <b>polariskop muayenesi</b> (ilaç kristalleri); yapışma testleri — <b>shear (kohezif mukavemet), peel (soyulma), başparmak (thumb), yuvarlanan top tack, quick stick</b>; <b>düzlük</b> ve <b>yüzde uzama (kopma)</b>; <b>in vitro ilaç salım</b> (USP aparatı V — palet disk, fosfat tamponu pH 7,4, 32±0,5 °C); <b>in vitro deri geçirgenliği</b> (difüzyon hücresi, sıçan derisi); <b>cilt irritasyon</b> çalışması (tavşan); ve <b>stabilite</b> (ICH'ye göre 40±0,5 °C, %75±5 RH, 6 ay).</p>
+
+    <h2><span class="n">16.</span>Mikroiğneler (Microneedles)</h2>
+    <p>Mikroiğneler, geleneksel hipodermik iğnelerin etkinliğini transdermal bantların güvenliğiyle birleştiren <b>hibrit</b> bir teknolojidir; stratum korneum bariyerini <b>ağrı reseptörlerine ulaşmadan</b> aşarak ilacı doğrudan epidermis/üst dermise iletir. Bir yama üzerine yüzlerce mikron boyutlu iğne dizi halinde düzenlenir; genellikle <b>150–1500 µm</b> uzunlukta, 50–250 µm genişlikte, 1–25 µm uç kalınlığındadır. Avantajlar: ağrısız, kendi kendine uygulanabilir, soğuk zincir gereksinimini azaltma, kesici aşı yaralanmalarını önleme. Zorluklar: sınırlı doz (genellikle &lt;1 mg), üretim maliyeti, sterilizasyon ve regülatif süreçler. <b>Tipleri</b>:</p>
+    <ul>
+      <li><b>Katı</b>: ciltte mikro kanal açar; sonra ilaç içeren yama/krem uygulanır,</li>
+      <li><b>Kaplı</b>: iğne yüzeyi ilaç/aşıyla kaplanır, ciltte hızla çözünür,</li>
+      <li><b>Çözünen</b>: biyobozunur polimerden (hiyalüronik asit, PVP); iğne ciltte tamamen çözünür, kesici atık bırakmaz,</li>
+      <li><b>İçi boş (hollow)</b>: küçük şırınga gibi; sıvı/makromolekül (insülin, aşı) akışı sağlar,</li>
+      <li><b>Hidrojel oluşturan</b>: interstisyel sıvıyı emip şişerek rezervuardan cilde kesintisiz ilaç kanalı oluşturur.</li>
+    </ul>
+    <p>Malzemeler: silikon, metal, seramik, silika, polimer, karbonhidrat. Uygulamalar: insülin/hormon iletimi (ağrısız insülin), aşılar (grip, kızamık, rubella — soğuk zincir azalır, bağışıklık artar), kanser (cilt kanseri/yüzeysel tümör), kozmetik (cilt yenileme, leke, yaşlanma karşıtı). İlgili bir uç ürün <b>akıllı insülin pompasıdır (yapay pankreas)</b> — sürekli glikoz izleme (CGM) ile entegre giyilebilir cihaz (örn. Medtronic MiniMed 780G, Omnipod DASH, Medtrum TouchCare).</p>
+    <p><b>Pazardaki ürünler</b> (örnek): Macroflux (mikroprojeksiyon), E-Trans (iyontoforez, fentanil), SonoPrep/SonoDerm (ultrason; peptit, insülin), Intraject/Powderject (iğnesiz enjektör), Med-Tat (ilaçlı dövme; asetaminofen, C vitamini), CHADD (ısı; S-Caine).</p>
+  </section>
+
+  <section class="panel" id="bosluk">
+    <div class="scorebar">
+      <div class="sc"><div class="l">Yanıtlanan</div><div class="v"><span id="b-ans">0</span> / 50</div></div>
+      <div class="sc"><div class="l">Doğru</div><div class="v" id="b-correct" style="color:var(--correct-line)">0</div></div>
+      <div class="sc"><div class="l">Başarı</div><div class="v" id="b-pct">—</div></div>
+    </div>
+    <div class="intro-note">Boşluğu tamamlayan şıkka tıklayın: doğruysa <b>yeşil</b>, yanlışsa <b>kırmızı</b> yanar, doğru cevap yeşille işaretlenir.</div>
+    <div id="fill"></div>
+  </section>
+  <section class="panel" id="terim"><div class="intro-note">Terime tıklayın; <b>···</b> ile anlamı açılır.</div><div id="terms"></div></section>
+  <section class="panel" id="klasik"><div class="intro-note">Soruyu düşünün, ardından <b>···</b> ile model cevabı açın.</div><div id="classic"></div></section>
+
+  <footer>
+    <div>Çalışma materyali eğitim amaçlıdır. Sınav/klinik kullanım öncesi ders notlarıyla karşılaştırın.</div>
+    <div class="tools">
+      <button class="toolbtn" id="expandAll">Açık sekmedeki tümünü aç</button>
+      <button class="toolbtn" id="collapseAll">Tümünü kapat</button>
+      <button class="toolbtn" onclick="location.reload()">↺ Sıfırla</button>
+    </div>
+  </footer>
+</div>
+
+<script>
+const FILL=[
+  {q:"Yamalar olarak da bilinen TDDS, cilde terapötik miktarda ___ vermek için tasarlanır.",o:["enzim","ilaç","su","besin"],a:1},
+  {q:"Transdermal uygulama, özellikle ilk geçiş ___ önler.",o:["emilimini","metabolizmasını","atılımını","sentezini"],a:1},
+  {q:"İlk transdermal sistem, 1979'da onaylanan ve ___ tedavi eden skopolamin yamasıydı.",o:["hipertansiyonu","hareket hastalığını (deniz tutmasını)","diyabeti","ağrıyı"],a:1},
+  {q:"Dermal uygulama cildin 'üzerinde', transdermal uygulama ise cildin '___' geçer.",o:["yanından","içinden","altından","dışından"],a:1},
+  {q:"Transdermal uygulama ___ dolaşımı (kan dolaşımı) hedefler.",o:["lenfatik","sistemik","portal","lokal"],a:1},
+  {q:"Genellikle ___ Da'dan büyük ilaç molekülleri stratum korneuma zor nüfuz eder.",o:["100","500","50","1000"],a:1},
+  {q:"Deri, vücudun en büyük organıdır; yüzey alanı yaklaşık ___ m²'dir.",o:["0.5","1.7","3.4","5.0"],a:1},
+  {q:"Epidermis hücrelerinin yaklaşık %95'i ___ tir.",o:["melanosit","keratinosit","fibroblast","makrofaj"],a:1},
+  {q:"Dermis ağırlıklı olarak kollajen ve ___ liflerinden oluşur.",o:["keratin","elastin","aktin","miyozin"],a:1},
+  {q:"Cildin en derin tabakası olan ___, yağ hücrelerinden oluşur.",o:["epidermis","hipodermis","dermis","stratum korneum"],a:1},
+  {q:"Transepidermal yol, moleküllerin ___ geçişini içerir.",o:["ter bezlerinden","stratum korneumdan","saç folikülünden","kan damarından"],a:1},
+  {q:"Transappendageal yol, moleküllerin ter bezleri ve ___ geçişini içerir.",o:["kan damarları","saç folikülleri","lenf düğümleri","sinirler"],a:1},
+  {q:"Hücreler arası yol, sürekli ___ matriks boyunca lipofilik maddelerin difüzyonuna izin verir.",o:["protein","lipid","su","karbonhidrat"],a:1},
+  {q:"Maddelerin cilt katmanlarından geçip dolaşıma ulaşmasına ___ absorpsiyon denir.",o:["enteral","perkütan","pulmoner","rektal"],a:1},
+  {q:"Kararlı durum difüzyonu Fick'in ___ yasasıyla ifade edilir.",o:["ikinci","birinci","üçüncü","sıfırıncı"],a:1},
+  {q:"Kararlı duruma ulaşmak için gereken süreye ___ süresi denir.",o:["yarılanma","gecikme (lag)","emilim","temas"],a:1},
+  {q:"Gecikme süresi tLag = L²/___ formülüyle hesaplanır.",o:["2D","6D","3D","4D"],a:1},
+  {q:"Sabit ilaç geçirgenlik hızı için donör konsantrasyonu Cd, alıcı Cr'den ___ olmalıdır.",o:["küçük","büyük (yüksek)","eşit","sıfır"],a:1},
+  {q:"Cilt ___ artması, vazodilatasyonla penetrasyon oranını artırır.",o:["pH'ının","sıcaklığının","kuruluğunun","kalınlığının"],a:1},
+  {q:"Stratum korneumun ___ transdermal geçirgenliği artırır.",o:["kuruması","hidrasyonu","kalınlaşması","sertleşmesi"],a:1},
+  {q:"Yaralı deride SC yapısı bozulduğu için ___ artar.",o:["bariyer","permeabilite (geçirgenlik)","kalınlık","kuruluk"],a:1},
+  {q:"Testosteronun yaklaşık %95'i ___ metabolize olur.",o:["karaciğerde","ciltte","böbrekte","akciğerde"],a:1},
+  {q:"Cilt yüzeyindeki, yağ bezlerinden salgılanan yağlı sıvıya ___ denir.",o:["keratin","sebum","kollajen","melanin"],a:1},
+  {q:"Asit manto, cilt yüzeyinin pH'sını yaklaşık ___ aralığında tutar.",o:["2.0-3.0","4.5-5.5","7.0-7.4","8.0-9.0"],a:1},
+  {q:"TDDS komponentlerinden biri, ilacın yayılmasını/salınmasını sağlayan ___ matrisidir.",o:["lipid","polimer","protein","mineral"],a:1},
+  {q:"Yamada depolama sırasında ilacı koruyan, kullanmadan çıkarılan tabaka ___ dır.",o:["destek","astar (liner)","membran","adhesif"],a:1},
+  {q:"Yamayı dış ortamdan koruyan dış tabaka ___ tir.",o:["astar","destek (backing)","membran","matris"],a:1},
+  {q:"Rezervuar tipi yamada salım hızını ___ membran kontrol eder.",o:["yarı geçirgen yapışkan","hız kontrol (rate-controlling)","koruyucu","destek"],a:1},
+  {q:"Matriks tipi yamada etkin madde, polimer matris içinde ___ dağılmıştır.",o:["rastgele","homojen","yüzeyde","kristal"],a:1},
+  {q:"Nikotin bantları, ___ katmanlı drug-in-adhesive yamaya örnektir.",o:["tek","çok","sıfır","yarım"],a:1},
+  {q:"Birinci nesil TDDS'de aday moleküller düşük molekül ağırlıklı ve ___ olmalıdır.",o:["hidrofilik","lipofilik","iyonik","makromolekül"],a:1},
+  {q:"İkinci nesil TDDS'de geçirgenlik, penetrasyon artırıcılar ve ___ gibi yöntemlerle artırılır.",o:["iyontoforez","santrifüj","liyofilizasyon","ekstrüzyon"],a:0},
+  {q:"Üçüncü nesil sistemler, ___ ve aşılar gibi makromoleküllerin geçişini sağlar.",o:["şekerler","terapötik proteinler","yağ asitleri","mineraller"],a:1},
+  {q:"Penetrasyon artırıcılar, stratum korneumun ___ yapısında bozulmaya neden olur.",o:["amorf","organize","sıvı","gözenekli"],a:1},
+  {q:"Önemli bir nüfuz artırıcı doymamış yağ asidi ___ tir.",o:["stearik asit","palmitoleik asit","laurik asit","miristik asit"],a:1},
+  {q:"Aprotik çözücü olarak görev yapan, yaygın penetrasyon artırıcı sülfoksit ___ tir.",o:["DMSO (dimetil sülfoksit)","etanol","gliserin","aseton"],a:1},
+  {q:"Anyonik yüzey aktif madde ___, SC'nin bariyer fonksiyonunu değiştirir.",o:["setrimid","sodyum lauril sülfat","tween 80","span 20"],a:1},
+  {q:"Terpenler, tekrarlayan ___ birimlerinden oluşur.",o:["glikoz","izopren","amino asit","nükleotid"],a:1},
+  {q:"İyontoforez, cilde küçük bir ___ akımı geçirilmesini içerir.",o:["manyetik","elektrik","ses","ısı"],a:1},
+  {q:"İyontoforez için en uygun elektrot çifti ___ dir.",o:["Cu/CuO","Ag/AgCl","Zn/ZnO","Pt/Au"],a:1},
+  {q:"İyontoforezle verilebilecek ilaç miktarının üst sınırı yaklaşık ___ mg/saattir.",o:["50-100","5-10","100-200","0.1-0.5"],a:1},
+  {q:"Elektroporasyonda cilde kısa ve yüksek ___ elektrik darbeleri uygulanır.",o:["frekanslı","voltajlı","akımlı","dirençli"],a:1},
+  {q:"Transferozomlar, kendi çaplarından çok küçük kanallardan geçebilen yüksek ___ veziküllerdir.",o:["yoğunluklu","deforme olabilir","yüklü","kristal"],a:1},
+  {q:"Etozomlar, yüksek ___ konsantrasyonlu hidroalkolik fosfolipid veziküllerdir.",o:["su","alkol","tuz","yağ"],a:1},
+  {q:"CHADD sistemi, ilaç geçişini ___ uygulayarak kolaylaştırır.",o:["ışık","ısı","basınç","ses"],a:1},
+  {q:"İn vitro ilaç salımı, USP aparatı ___ (palet disk) ile değerlendirilir.",o:["II","V","I","IV"],a:1},
+  {q:"Stabilite çalışmaları ICH'ye göre 40 °C ve %___ RH'de yapılır.",o:["45","75","25","90"],a:1},
+  {q:"Mikroiğneler, stratum korneumu ___ reseptörlerine ulaşmadan aşar.",o:["ağrı","ısı","basınç","tat"],a:0},
+  {q:"___ mikroiğneler biyobozunur polimerden yapılır ve ciltte tamamen çözünür.",o:["Katı","Çözünen","Kaplı","İçi boş"],a:1},
+  {q:"İçi boş (hollow) mikroiğneler, küçük bir ___ gibi sıvı formülasyon akışı sağlar.",o:["sünger","şırınga","film","jel"],a:1}
+];
+const TERMS=[
+  ["TDDS (Transdermal İlaç Verme Sistemi)","Yamalar; cilde terapötik miktarda ilaç vererek sistemik etki sağlayan dozaj formları."],
+  ["Transdermal uygulama","Cilt katmanlarından geçip sistemik dolaşıma karışan, tüm vücut etkili uygulama."],
+  ["Dermal uygulama","Lokal etki için doğrudan cilde uygulanan, sistemik emilimi en aza indiren uygulama."],
+  ["İlk geçiş (first-pass) metabolizması","İlacın karaciğerden ilk geçişte yıkımı; transdermal yolla önlenir."],
+  ["Skopolamin yaması","1979'da onaylanan ilk transdermal sistem (hareket hastalığı)."],
+  ["Epidermis","Derinin en dış tabakası; %95 keratinosit, melanosit, Langerhans ve Merkel hücreleri."],
+  ["Stratum korneum","Epidermisin en dış tabakası; transdermal geçişin ana bariyeri."],
+  ["Keratinosit","Epidermisin baskın hücresi."],
+  ["Dermis","Kollajen (%70) ve elastin lifli; kan damarı, sinir, makrofaj içeren tabaka."],
+  ["Hipodermis","En derin tabaka; yağ hücreli, ısı yalıtımı ve şok koruması sağlar."],
+  ["Transepidermal yol","Moleküllerin stratum korneumdan (hücre içi veya hücreler arası) geçişi."],
+  ["Hücre içi (intrasellüler) yol","Keratinositler içinden; hidrofilik/polar maddelerin geçişi."],
+  ["Hücreler arası (intersellüler) yol","Sürekli lipid matriks boyunca; lipofilik/polar olmayan maddelerin difüzyonu."],
+  ["Transappendageal yol","Ter bezleri ve saç folikülleri yoluyla geçiş."],
+  ["Perkütan absorpsiyon","Maddelerin cilt katmanlarından geçip sistemik dolaşıma ulaşması."],
+  ["Penetrasyon","Bir maddenin belirli bir deri tabakasına girmesi."],
+  ["Permeasyon (geçirgenlik)","Moleküllerin bir katmandan diğerine geçmesi."],
+  ["Geçirgenlik katsayısı (P)","P = D·K/L; deri dokusunun penetranta geçirgenliği."],
+  ["Difüzyon katsayısı (D)","Maddenin difüzyon hızını belirleyen katsayı."],
+  ["Partisyon (bölme) katsayısı","Maddenin iki faz arasındaki dağılım katsayısı; çok düşük/yüksek olursa ilaç kana ulaşamaz."],
+  ["Gecikme süresi (tLag)","Kararlı duruma ulaşmak için gereken süre; tLag = L²/6D."],
+  ["Fick'in birinci yasası","Kararlı durum (doğrusal) difüzyonu ifade eder."],
+  ["Fick'in ikinci yasası","Kararlı olmayan durum difüzyonunu tanımlar."],
+  ["Moleküler akı (J)","Birim alandan birim zamanda geçen madde miktarı."],
+  ["Cilt hidrasyonu","SC su içeriği; arttığında transdermal geçirgenlik artar."],
+  ["SSLF (Deri Yüzeyi Lipid Filmi)","Sebum ve ter emülsiyonu; aşırı su kaybını önler, cildi nemli/pürüzsüz tutar."],
+  ["Sebum","Yağ bezlerinden salgılanan, serbest yağ asidi/trigliserit/mum içeren yağlı sıvı."],
+  ["Asit manto","Cilt yüzeyinin pH 4,5-5,5 filmi; zararlı bakteri çoğalmasını engeller."],
+  ["Kutan ilaç metabolizması","Derideki enzimlerin ilacı metabolize etmesi (örn. testosteron %95)."],
+  ["Polimer matris","TDDS'de ilacı taşıyan ve yayılmasını/salınmasını sağlayan polimerik yapı."],
+  ["Astar (liner)","Depolamada ilacı koruyan, kullanmadan önce çıkarılan tabaka."],
+  ["Adhesif","Yama bileşenlerini cilde bağlayan yapışkan."],
+  ["Hız kontrol membranı","Rezervuar yamada ilacın salım hızını düzenleyen yarı geçirgen membran."],
+  ["Destek (backing)","Yamayı dış ortamdan koruyan dış tabaka."],
+  ["Single-layer drug-in-adhesive","İlacın tek yapışkan katmanda olduğu, basit ve düşük maliyetli yama."],
+  ["Multi-layer drug-in-adhesive","Birden çok yapışkan katmanlı; karmaşık dozaj profili (örn. nikotin bandı)."],
+  ["Rezervuar (depo) tipi yama","İlacın hız kontrol membranıyla düzenlenen bölmede tutulduğu sistem."],
+  ["Dose-dumping","Rezervuar yama hasarında ilacın ani boşalması riski."],
+  ["Matriks tipi yama","Etkin maddenin polimer matriste homojen dağıldığı, ince/esnek sistem (örn. rivastigmin)."],
+  ["Mikro-rezervuar sistemi","Rezervuar + matris hibridi; suda çözünen polimerde süspansiyon, lipofilik polimerde damlacıklar."],
+  ["Birinci nesil TDDS","Düşük molekül ağırlıklı, lipofilik, düşük dozlu ilaçlar için geleneksel yama/jel/sprey."],
+  ["İkinci nesil TDDS","Penetrasyon artırıcı, iyontoforez ve kavitasyonsuz ultrasonla geçirgenliği artıran sistem."],
+  ["Üçüncü nesil TDDS","Elektroporasyon, mikroiğne, termal ablasyonla makromolekül/aşı geçişi sağlayan sistem."],
+  ["Penetrasyon artırıcı (enhancer)","Cilt geçirgenliğini artıran kimyasal madde veya fiziksel yöntem."],
+  ["Kimyasal yaklaşım","Kimyasal penetranlarla geçirgenlik artırma."],
+  ["Biyokimyasal yaklaşım","Epidermal lipid sentez enzimlerini (HMG-CoA redüktaz, asetil-CoA karboksilaz) inhibe etme."],
+  ["Fiziksel yaklaşım","İyontoforez (~15 mA) ve sonoforez (20 kHz) gibi fiziksel geçirgenlik artırma."],
+  ["Veziküler taşıyıcı","Lipozom, niozom, elastik vezikül gibi aktif molekül taşıyan mikroskobik küreler."],
+  ["Azon","Başlıca yüzey penetrasyon artırıcı sınıfı (PG ile kompleks akışı artırır)."],
+  ["DMSO","Aprotik çözücü; yaygın penetrasyon artırıcı sülfoksit."],
+  ["Sodyum lauril sülfat","Anyonik surfaktan; SC bariyer fonksiyonunu değiştirir."],
+  ["Terpenler","Uçucu yağ bileşenleri; izopren (C5H8) birimli penetrasyon artırıcılar."],
+  ["Pirolidonlar","N-metilpirolidon gibi transkutanöz absorpsiyon artırıcılar."],
+  ["İyontoforez","Düşük elektrik akımıyla iyonize moleküllerin penetrasyonunu artırma; üst sınır ~5-10 mg/saat."],
+  ["Ag/AgCl elektrot","İyontoforez için en uygun elektrot çifti."],
+  ["Sonoforez (ultrason)","Düşük frekanslı ultrasonla SC lipitlerini parçalayarak penetrasyon sağlama."],
+  ["Elektroporasyon","Kısa, yüksek voltajlı darbelerle SC'de geçici gözenekler açma."],
+  ["Elektro-ozmoz","Yüklü gözenekli membrana voltaj farkıyla yığın sıvı/hacim akışı oluşması."],
+  ["Fotomekanik dalgalar","Geçici kanallar oluşturarak SC geçirgenliğini artıran dalgalar."],
+  ["İğnesiz enjeksiyon (jet)","Yüksek hızlı akışla ilacı difüzyondan bağımsız iten enjeksiyon (Intraject, Iject vb.)."],
+  ["Powderject (TOZject)","Katı ilaç parçacıklarını yüksek hızlı helyum gazıyla cilde iten cihaz."],
+  ["Transferozom","Ultra deforme olabilen, transdermal gradyanla cilt bariyerini geçen karışık lipid vezikül."],
+  ["Aktivatör (surfaktan)","Transferozomda ultra deforme olabilirliği sağlayan molekül."],
+  ["Etozom","Yüksek alkol konsantrasyonlu hidroalkolik fosfolipid vezikülü."],
+  ["İlaçlı dövme (Med-Tat)","Etkin madde içeren geçici dövme; çocuklarda uygulama için yararlı."],
+  ["Mikrodermabrazyon (cilt aşınması)","SC'yi keskin mikro granüllerle aşındırıp mikro kanal açma."],
+  ["CHADD","Kontrollü ısı destekli ilaç verme; ısıyla mikrosirkülasyon ve geçirgenliği artırma."],
+  ["Manyetoforez","Manyetik alanla ilacın difüzyon akısını artırma."],
+  ["Ablasyon","Lazer (CO2/Erbium:YAG) veya ısı ile SC'nin kontrollü uzaklaştırılması / mikro kanal açma."],
+  ["Mikroiğne (microneedle)","SC'yi ağrısız aşan, 150-1500 µm mikron boyutlu iğne dizileri (katı/kaplı/çözünen/içi boş/hidrojel)."]
+];
+const CLASSIC=[
+  ["Transdermal ilaç taşıyıcı sistem (TDDS) nedir?","Yamalar olarak da bilinen, cilde terapötik miktarda ilaç vererek (cilt katmanlarından geçip kana karışarak) sistemik etki sağlayan dozaj formlarıdır. İlk geçiş metabolizmasını önler ve hasta uyumunu artırır."],
+  ["İlk transdermal sistemi ve tarihçesini açıklayınız.","Hareket hastalığını (deniz tutması) tedavi etmek için skopolamin sağlayan üç günlük bir yamaydı ve 1979'da ABD'de kullanım için onaylandı."],
+  ["Dermal ve transdermal uygulamayı karşılaştırınız.","Dermal: ilaç cildin üzerinde, lokal etki için epidermis/dermisi hedefler, sistemik emilimi en aza indirir (krem/merhem/losyon). Transdermal: ilaç cildin içinden geçer, sistemik dolaşımı hedefler (nikotin bandı), SC-epidermis-dermis boyunca emilim gerektirir."],
+  ["TDDS'nin avantajlarını (en az 6) sayınız.","İlk geçişten kaçınma, azaltılmış yan etki, plazma dalgalanmalarının azalması (kısa t½/düşük indeksli ilaçlar), toksisitede kolay ortadan kaldırma, doz sıklığının azalması/uyum artışı, sürekli infüzyon, ilaca özgü sorunlardan kaçınma ve daha düşük günlük doz."],
+  ["TDDS'nin sınırlamalarını açıklayınız.","> 500 Da moleküller SC'ye zor nüfuz eder; partisyon katsayısı çok düşük/yüksek ilaçlar kana ulaşamaz; uygun çözünürlük/erime özelliği gerekir. Cilt bariyerini aşmak için çeşitli yaklaşımlar gerekir."],
+  ["Derinin tabakalarını (epidermis, dermis, hipodermis) açıklayınız.","Epidermis: %95 keratinosit, melanosit/Langerhans/Merkel; en dış SC ana bariyerdir. Dermis: 2-3 mm, kollajen (%70) + elastin, kan damarı/sinir/makrofaj, güç-esneklik. Hipodermis: en derin, yağ hücreli, ısı yalıtımı ve şok koruması."],
+  ["Deriden penetrasyon yollarını açıklayınız.","Transepidermal yol (SC'den) — hücre içi (keratinositlerden, hidrofilik maddeler) ve hücreler arası (lipid matriks boyunca, lipofilik maddeler). Transappendageal yol — ter bezleri ve saç folikülleri yoluyla."],
+  ["Perkütan absorpsiyonun adımlarını sayınız.","Penetrasyon (tabakaya girme), SC'den canlı epidermise ayrılma, canlı epidermis ve üst dermise difüzyon, permeasyon (katmandan katmana geçiş) ve absorpsiyon (sistemik dolaşıma geçiş)."],
+  ["TDD kinetiğinde geçirgenlik katsayısı ve gecikme süresini açıklayınız.","Nüfuz oranı dQ/dt = P(Cd−Cr); Cd≫Cr iken dQ/dt=P·Cd ve Q=P·A·Cd·t. P=D·K/L olup kümülatif geçirgenlik-zaman grafiğinin doğrusal kısmının eğiminden bulunur. Kararlı duruma ulaşma süresi gecikme süresidir: tLag=L²/6D."],
+  ["Transdermal absorpsiyonu etkileyen parametreleri sayınız.","Uygulama bölgesi, SC kalınlığı/bütünlüğü, molekül boyutu, zar geçirgenliği, cilt hidrasyonu, ilacın pH'ı, deri florası/metabolizma, lipid çözünürlüğü, deride ilaç deposu, katkı maddeleri ve vücut ısısıyla kan akışı."],
+  ["Permeabiliteyi etkileyen faktörleri (4 ana grup) açıklayınız.","(a) Etkin maddenin fizikokimyasal özelliği (MA, partisyon katsayısı, pH, konsantrasyon); (b) taşıyıcı sistemin özelliği (salım, penetrasyon artırıcılar, yapı); (c) derinin fizyolojik/patolojik durumu; (d) biyolojik faktörler."],
+  ["Cilt yaşı, hidrasyon ve sıcaklığın penetrasyona etkisini açıklayınız.","Cilt yaşı: fetal/bebek cildi daha geçirgen; çocukta topikal steroid emilimi daha hızlı. Hidrasyon: SC hidrasyonu geçirgenliği artırır. Sıcaklık: artması ve vazodilatasyon perkütan absorpsiyonu artırır."],
+  ["Asit manto ve SSLF nedir?","SSLF (Deri Yüzeyi Lipid Filmi): sebum + ter emülsiyonu; su kaybını önler, cildi nemli/pürüzsüz tutar. Asit manto: cilt yüzeyinin pH 4,5-5,5 filmi; zararlı bakterilerin çoğalmasını engeller."],
+  ["TDDS komponentlerini sayınız.","(1) Polimer matrisi, (2) etkin madde, (3) penetrasyon artırıcı, (4) diğer eksipiyanlar."],
+  ["Bir transdermal yamanın yapısal tabakalarını açıklayınız.","Astar (depolamada korur, kullanmadan çıkarılır), adhesif (cilde bağlar), membran (bazı tiplerde salımı kontrol eder), ilaç matrisi/rezervuarı ve destek/backing (dış ortamdan korur)."],
+  ["Yama tiplerini açıklayınız.","Tek katmanlı drug-in-adhesive (basit/ucuz), çok katmanlı (karmaşık salım, nikotin bandı), rezervuar (membran kontrollü, dose-dumping az), matriks (homojen dağılım, ince/esnek) ve mikro-rezervuar (rezervuar+matris hibridi)."],
+  ["Rezervuar ve matriks tipi yamaları karşılaştırınız.","Rezervuar: ilaç membranla kontrol edilen bölmede; salım hassas, dose-dumping az, hasarda sızıntı riski. Matriks: ilaç polimer matriste homojen; salım matrisin özelliklerine bağlı; daha ince ve esnek."],
+  ["Birinci nesil TDDS'yi açıklayınız.","Klinikte en yaygın; düşük molekül ağırlıklı, lipofilik, düşük dozlu ilaçlar için. Yamasız varyasyonda ölçülü sıvı sprey/jel uygulanır (testosteron jeli, estradiol spreyi)."],
+  ["İkinci nesil TDDS'yi açıklayınız.","Cilt geçirgenliğini artırmaya odaklanır; kimyasal penetranlar, iyontoforez ve kavitasyonsuz ultrason kullanır. SC'den taşıma artarken derin doku korunur; küçük moleküllerde etkili, makromoleküllerde az etkilidir."],
+  ["Üçüncü nesil TDDS'yi açıklayınız.","SC'yi daha güçlü hedefler; yeni kimyasal artırıcılar, elektroporasyon, kavitasyonel ultrason, mikroiğne, termal ablasyon, mikrodermabrazyon kullanır. Terapötik protein ve aşılar dahil makromoleküllerde iyi etki sağlar."],
+  ["Penetrasyon artırma yaklaşımlarını açıklayınız.","Kimyasal (penetranlar), biyokimyasal (lipid sentez enzimlerinin inhibisyonu — HMG-CoA redüktaz vb.), fiziksel (iyontoforez ~15 mA, sonoforez 20 kHz) ve veziküler taşıyıcılar (lipozom, niozom, elastik vezikül)."],
+  ["Penetrasyon artırıcıların ideal özelliklerini sayınız.","Biyouyumlu, toksik olmayan, ilaçla uyumlu, farmakolojik aktivitesiz, ucuz, iyi çözücü, renksiz/kokusuz/tatsız, fiziksel-kimyasal stabil, etkisi tekrarlanabilir/hızlı, tek yönlü akışlı ve çıkarılınca cilt bariyerini hemen geri kazandıran."],
+  ["Penetrasyon artırıcılara örnekler veriniz.","Alkoller/polioller/propilen glikol, amin-amidler, siklodekstrinler, yağ asitleri (palmitoleik), pirolidonlar (N-metilpirolidon), azonlar, sülfoksitler (DMSO), surfaktanlar (sodyum lauril sülfat) ve terpenler."],
+  ["İyontoforezi açıklayınız ve avantajlarını sayınız.","Cilde düşük elektrik akımı uygulayarak iyonize moleküllerin penetrasyonunu artırır; ilaç kendisiyle aynı yüklü elektroda konur (Ag/AgCl uygun). Avantajlar: invaziv değil, doğrudan bölgeye verme, ağrısız, az doku travması, ilk geçişin olmaması, kısa t½ ilaçlara uygunluk, tedavinin hızlı sonlandırılabilmesi."],
+  ["İyontoforezin dezavantajlarını açıklayınız.","İlaç sulu çözeltide ve iyonize olmalı; eklenen iyonlar (NaCl, Na-sitrat) yüklü rakip olabilir; verilebilen miktar sınırlı (~5-10 mg/saat); deri hâlâ bir bariyer oluşturur."],
+  ["Elektroporasyon ve elektro-ozmozu açıklayınız.","Elektroporasyon: kısa, yüksek voltajlı darbelerle SC'de geçici küçük gözenekler açarak difüzyonu iyileştirir; yakın aralıklı elektrotlarla güvenli/ağrısız. Elektro-ozmoz: yüklü gözenekli membrana voltaj farkı uygulanınca, konsantrasyon gradyanı olmadan yığın sıvı akışı oluşur."],
+  ["Transferozom ve etozomu açıklayınız.","Transferozom: ultra deforme olabilen, surfaktan (aktivatör) içeren karışık lipid vezikül; transdermal su gradyanıyla dar kanallardan geçer. Etozom: yüksek alkol konsantrasyonlu hidroalkolik fosfolipid vezikülü."],
+  ["CHADD sistemini açıklayınız.","Kontrollü Isı Destekli İlaç Verme: cilde ısı uygulayarak mikrosirkülasyon ve damar geçirgenliğini artırır, ilacın kana geçişini kolaylaştırır. Yama üzerine yerleştirilen ünitede sınırlı oksidasyon reaksiyonu ısı üretir."],
+  ["TDDS kalite kontrol testlerini (en az 6) sayınız.","Etkileşim çalışmaları, yama kalınlığı, ağırlık tekdüzeliği, katlanma dayanıklılığı, nem içeriği/alımı, su buharı geçirgenliği (WVP), ilaç içeriği, dozaj tekdüzeliği, polariskop, yapışma testleri (shear/peel/thumb/quick stick), in vitro salım (USP V), deri geçirgenliği, irritasyon ve stabilite (ICH)."],
+  ["Mikroiğneleri ve tiplerini açıklayınız.","SC'yi ağrı reseptörlerine ulaşmadan aşan, 150-1500 µm mikron boyutlu iğne dizileridir. Tipleri: katı (mikro kanal açar), kaplı (yüzeyi ilaçla kaplı), çözünen (biyobozunur polimer, tamamen çözünür), içi boş (şırınga gibi sıvı akışı) ve hidrojel oluşturan (interstisyel sıvıyı emip kanal oluşturur)."]
+];
+
+function renderFill(boxId, arr, prefix){
+  const box=document.getElementById(boxId);
+  arr.forEach((it,i)=>{
+    const card=document.createElement('div');card.className='q';
+    const qHtml=it.q.replace('___','<span class="blank">______</span>');
+    const opts=it.o.map((t,oi)=>`<button class="opt" data-c="${oi===it.a}"><span class="mark"><span>${String.fromCharCode(65+oi)}</span></span><span>${t}</span></button>`).join('');
+    card.innerHTML=`<div class="q-top"><div class="q-no">${i+1}</div><div class="q-text">${qHtml}</div></div><div class="opts">${opts}</div>`;
+    box.appendChild(card);
+  });
+  let ans=0,cor=0;
+  box.addEventListener('click',e=>{
+    const b=e.target.closest('.opt');if(!b)return;
+    const card=b.closest('.q');if(card.dataset.done)return;card.dataset.done="1";
+    const right=b.dataset.c==='true';
+    card.querySelectorAll('.opt').forEach(o=>{o.disabled=true;if(o.dataset.c==='true')o.classList.add('correct');});
+    if(!right)b.classList.add('wrong');
+    ans++;if(right)cor++;
+    document.getElementById(prefix+'-ans').textContent=ans;
+    document.getElementById(prefix+'-correct').textContent=cor;
+    document.getElementById(prefix+'-pct').textContent=Math.round(cor/ans*100)+'%';
+  });
+}
+function renderReveal(boxId, list){
+  const box=document.getElementById(boxId);
+  list.forEach((item,i)=>{
+    const [head,body]=item;
+    const el=document.createElement('div');el.className='reveal';
+    el.innerHTML=`<div class="reveal-head"><div class="reveal-no">${i+1}</div><div class="reveal-term">${head}</div><div class="dots">···</div></div><div class="reveal-body">${body}</div>`;
+    el.querySelector('.reveal-head').addEventListener('click',()=>el.classList.toggle('open'));
+    box.appendChild(el);
+  });
+}
+renderFill('fill',FILL,'b');renderReveal('terms',TERMS);renderReveal('classic',CLASSIC);
+
+document.querySelectorAll('.tab').forEach(t=>{
+  t.addEventListener('click',()=>{
+    document.querySelectorAll('.tab').forEach(x=>x.classList.remove('active'));
+    document.querySelectorAll('.panel').forEach(x=>x.classList.remove('active'));
+    t.classList.add('active');document.getElementById(t.dataset.sub).classList.add('active');
+    window.scrollTo({top:0,behavior:'smooth'});
+  });
+});
+document.getElementById('expandAll').addEventListener('click',()=>{document.querySelectorAll('.panel.active .reveal').forEach(r=>r.classList.add('open'));});
+document.getElementById('collapseAll').addEventListener('click',()=>{document.querySelectorAll('.reveal').forEach(r=>r.classList.remove('open'));});
+</script>
+</body>
+</html>

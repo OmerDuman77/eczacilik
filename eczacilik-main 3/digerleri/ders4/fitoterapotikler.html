@@ -1,0 +1,935 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Fitoterapötikler - Ders Notu & Test</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700;800&family=Source+Sans+3:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #0f1a12;
+  --bg-card: #172119;
+  --bg-card-alt: #1c2a20;
+  --accent: #7dd3a0;
+  --accent-dim: #4a9e6e;
+  --accent-glow: rgba(125, 211, 160, 0.15);
+  --text: #e8efe9;
+  --text-dim: #9aab9f;
+  --text-muted: #6b7e6f;
+  --border: #2a3d2f;
+  --danger: #e87676;
+  --gold: #d4a853;
+  --purple: #b39ddb;
+}
+
+* { margin:0; padding:0; box-sizing:border-box; }
+
+body {
+  font-family: 'Source Sans 3', sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  line-height: 1.7;
+  overflow-x: hidden;
+}
+
+/* === TOP NAV === */
+.topnav {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 1000;
+  background: rgba(15, 26, 18, 0.92);
+  backdrop-filter: blur(20px);
+  border-bottom: 1px solid var(--border);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0;
+  padding: 0;
+  height: 60px;
+}
+
+.topnav a {
+  text-decoration: none;
+  color: var(--text-dim);
+  font-weight: 600;
+  font-size: 0.95rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  padding: 18px 36px;
+  transition: all 0.3s ease;
+  position: relative;
+  cursor: pointer;
+}
+
+.topnav a::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 0;
+  height: 2px;
+  background: var(--accent);
+  transition: width 0.3s ease;
+  border-radius: 2px;
+}
+
+.topnav a:hover, .topnav a.active {
+  color: var(--accent);
+}
+
+.topnav a:hover::after, .topnav a.active::after {
+  width: 60%;
+}
+
+.logo-area {
+  position: absolute;
+  left: 28px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.logo-area .leaf {
+  font-size: 1.3rem;
+}
+
+.logo-area span {
+  font-family: 'Playfair Display', serif;
+  font-weight: 700;
+  color: var(--accent);
+  font-size: 1.05rem;
+}
+
+/* === SECTIONS === */
+.section {
+  display: none;
+  padding: 90px 20px 60px;
+  max-width: 960px;
+  margin: 0 auto;
+  animation: fadeIn 0.4s ease;
+}
+
+.section.active { display: block; }
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(12px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* === HERO === */
+.hero {
+  text-align: center;
+  margin-bottom: 50px;
+  padding: 40px 0 30px;
+}
+
+.hero h1 {
+  font-family: 'Playfair Display', serif;
+  font-size: 2.6rem;
+  font-weight: 800;
+  background: linear-gradient(135deg, var(--accent), var(--gold));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  margin-bottom: 10px;
+}
+
+.hero .sub {
+  color: var(--text-dim);
+  font-size: 1.05rem;
+  font-weight: 300;
+}
+
+/* === SUMMARY CARDS === */
+.topic-block {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  padding: 32px 36px;
+  margin-bottom: 28px;
+  position: relative;
+  overflow: hidden;
+}
+
+.topic-block::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0;
+  width: 4px;
+  height: 100%;
+  background: linear-gradient(180deg, var(--accent), var(--accent-dim));
+  border-radius: 4px 0 0 4px;
+}
+
+.topic-block h2 {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.55rem;
+  font-weight: 700;
+  color: var(--accent);
+  margin-bottom: 16px;
+  padding-left: 8px;
+}
+
+.topic-block h3 {
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: var(--gold);
+  margin: 18px 0 8px;
+}
+
+.topic-block p, .topic-block li {
+  color: var(--text);
+  font-size: 0.96rem;
+  line-height: 1.8;
+}
+
+.topic-block ul {
+  padding-left: 20px;
+  margin: 6px 0;
+}
+
+.topic-block li {
+  margin-bottom: 4px;
+}
+
+.topic-block li::marker {
+  color: var(--accent-dim);
+}
+
+.highlight {
+  color: var(--accent);
+  font-weight: 600;
+}
+
+.warn {
+  color: var(--danger);
+  font-weight: 600;
+}
+
+.info-tag {
+  display: inline-block;
+  background: var(--accent-glow);
+  color: var(--accent);
+  font-size: 0.8rem;
+  font-weight: 600;
+  padding: 3px 10px;
+  border-radius: 20px;
+  margin: 2px 4px 2px 0;
+  letter-spacing: 0.02em;
+}
+
+.divider {
+  height: 1px;
+  background: var(--border);
+  margin: 12px 0 16px;
+}
+
+/* === DRUG TABLE === */
+.drug-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 14px 0;
+  font-size: 0.9rem;
+}
+
+.drug-table th {
+  background: var(--bg-card-alt);
+  color: var(--accent);
+  padding: 10px 14px;
+  text-align: left;
+  font-weight: 600;
+  border-bottom: 2px solid var(--border);
+}
+
+.drug-table td {
+  padding: 9px 14px;
+  border-bottom: 1px solid var(--border);
+  color: var(--text);
+}
+
+.drug-table tr:hover td {
+  background: rgba(125, 211, 160, 0.04);
+}
+
+/* === TEST SECTION === */
+.question-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 24px 28px;
+  margin-bottom: 20px;
+  counter-increment: qcount;
+  transition: border-color 0.3s;
+}
+
+.question-card:hover {
+  border-color: var(--accent-dim);
+}
+
+.q-number {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  background: var(--accent-glow);
+  color: var(--accent);
+  font-weight: 700;
+  font-size: 0.85rem;
+  border-radius: 50%;
+  margin-right: 10px;
+  flex-shrink: 0;
+}
+
+.q-text {
+  font-weight: 600;
+  font-size: 1rem;
+  color: var(--text);
+  margin-bottom: 14px;
+  display: flex;
+  align-items: flex-start;
+}
+
+.q-text span { padding-top: 4px; }
+
+.options { padding-left: 42px; }
+
+.options label {
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+  padding: 7px 12px;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background 0.2s;
+  font-size: 0.94rem;
+  color: var(--text-dim);
+}
+
+.options label:hover {
+  background: rgba(125,211,160,0.06);
+  color: var(--text);
+}
+
+.options input[type="radio"] {
+  accent-color: var(--accent);
+  margin-top: 3px;
+  flex-shrink: 0;
+}
+
+/* === ANSWER KEY === */
+.answer-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(110px, 1fr));
+  gap: 10px;
+  margin: 30px 0;
+}
+
+.answer-cell {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 12px;
+  text-align: center;
+  transition: transform 0.2s, border-color 0.2s;
+}
+
+.answer-cell:hover {
+  transform: translateY(-2px);
+  border-color: var(--accent-dim);
+}
+
+.answer-cell .anum {
+  font-size: 0.75rem;
+  color: var(--text-muted);
+  font-weight: 600;
+  margin-bottom: 4px;
+}
+
+.answer-cell .aletter {
+  font-size: 1.2rem;
+  font-weight: 700;
+  color: var(--accent);
+}
+
+.explanation-list {
+  margin-top: 30px;
+}
+
+.exp-item {
+  background: var(--bg-card);
+  border-left: 3px solid var(--accent-dim);
+  padding: 14px 20px;
+  margin-bottom: 12px;
+  border-radius: 0 10px 10px 0;
+  font-size: 0.93rem;
+  color: var(--text-dim);
+}
+
+.exp-item strong {
+  color: var(--accent);
+}
+
+/* === RESPONSIVE === */
+@media (max-width: 700px) {
+  .topnav a { padding: 16px 16px; font-size: 0.8rem; }
+  .logo-area { display: none; }
+  .hero h1 { font-size: 1.8rem; }
+  .topic-block { padding: 22px 20px; }
+  .section { padding: 80px 14px 40px; }
+  .answer-grid { grid-template-columns: repeat(auto-fill, minmax(80px, 1fr)); }
+}
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav class="topnav">
+  <div class="logo-area"><span class="leaf">🌿</span><span>Fitoterapötikler</span></div>
+  <a href="#" onclick="showSection('ozet')" id="nav-ozet" class="active">Özet</a>
+  <a href="#" onclick="showSection('test')" id="nav-test">Test Soruları</a>
+  <a href="#" onclick="showSection('cevap')" id="nav-cevap">Cevap Anahtarı</a>
+</nav>
+
+<!-- ======================== ÖZET ======================== -->
+<div class="section active" id="sec-ozet">
+
+<div class="hero">
+  <h1>Fitoterapötikler</h1>
+  <div class="sub">Dr. Öğr. Üyesi Tuğba İduğ — 1., 2. ve 3. Ders Özeti</div>
+</div>
+
+<!-- TARIHCE -->
+<div class="topic-block">
+  <h2>1. Tarihçe</h2>
+  <p>Ampirik dönemde bitkiler hakkındaki bilgiler deneme-yanılma yöntemiyle edinilmiştir. Bitkisel tedavi tarih öncesi dönemlerden itibaren Mezopotamya, Çin, Mısır ve Hindistan gibi büyük uygarlıklarda uygulanmıştır.</p>
+
+  <h3>Tarih Öncesi Dönem</h3>
+  <p>Anadolu insanı <span class="highlight">MÖ 50.000</span>'den beri bitkileri tedavi amacıyla kullanmaktadır. Hakkari'nin güneyindeki <span class="highlight">Şanidar Mağarası</span>'ndaki Neanderthal mezarlarında bulunan bitki örnekleri bu bilgiyi doğrulamaktadır.</p>
+
+  <h3>Mezopotamya (MÖ 3000)</h3>
+  <ul>
+    <li>Sümer, Akad ve Asur uygarlıkları; rahip hekimler sihir ve ilaçla tedavi yapmıştır.</li>
+    <li>İlaçların önemli kısmı bitkisel kökenlidir; hayvansal ve mineral kaynaklar azdır.</li>
+    <li>Dekoksiyon, maserasyon, lapa, merhem, suppozituvar, şurup gibi farmasötik şekiller bilinmektedir.</li>
+    <li>Bilinen drog sayısı yaklaşık <span class="highlight">250</span>'dir (adamotu, çöpleme, banotu, eğir kökü, kekik, nane vb.).</li>
+  </ul>
+
+  <h3>Hindistan</h3>
+  <p><span class="highlight">Ayurveda</span> ("Hayat Bilgisi"): MÖ 1500'de yazılan <em>Atharva Veda</em> kitabında 125 tıbbi bitkinin özellikleri yer almaktadır.</p>
+
+  <h3>Mısır</h3>
+  <p>MÖ 1550'li yıllarda yazıldığı tahmin edilen <span class="highlight">Ebers Papirüsleri</span>: 110 sayfa, 77 bitkisel/hayvansal/madensel drog ve 800'den fazla reçete içerir.</p>
+
+  <h3>Hitit Dönemi (MÖ 1500)</h3>
+  <p>Orta Anadolu, başşehir Boğazköy (Hattuşaş). Mezopotamya tıbbına benzer niteliktedir. Adamotu, alıç, arpa, badem, banotu, defne, haşhaş, meyankökü, safran gibi droglar bilinmektedir. Reçetelerde miktar belirtilmemiş; her reçetenin sonu "Böylece hasta iyi olacaktır" ifadesiyle biter.</p>
+
+  <h3>Grek Dönemi</h3>
+  <ul>
+    <li><span class="highlight">Hippocrate (MÖ 460-377)</span>: Hekimliğin babası, ~150 eser, ~400 bitkisel drog. Perhize önem vermiş, müshil etkili drogları sıklıkla kullanmıştır.</li>
+    <li><span class="highlight">Theophraste (MÖ 370-287)</span>: Botaniğin babası, ~240 eseri olduğu tahmin edilir. Tıbbi bitkilerden çok botanik özellikler üzerine çalışmıştır.</li>
+  </ul>
+
+  <h3>Roma ve Bizans Dönemi</h3>
+  <ul>
+    <li>Bizans dönemi tıbbi ilerlemeye önem vermemiş; sihir, büyü ön plandadır.</li>
+    <li><span class="highlight">Dioscorides (MS 20-90?)</span>: Kozan/Anazarba doğumlu Grek hekim. <em>De Materia Medica</em> (5 cilt) yazmıştır. Kitabın orijinal yazması "Viyana Kodeksi" adıyla bilinir.</li>
+    <li><span class="highlight">Galenus (MS 130-201)</span>: İslam'da Calinos adıyla tanınır, ~50 eser. İlaç terkiplerini kendi hazırladığı için eczacı olarak da kabul edilir.</li>
+  </ul>
+
+  <h3>İbn-i Sina (980-1037)</h3>
+  <p>Avicenna olarak bilinir. <span class="highlight">Kanun Fit Tıb</span> (5 kitap): İnsan vücudu, basit ilaçlar (droglar), genel sağlık, hastalıkların tedavisi ve ilaç terkipleri konularını kapsar.</p>
+
+  <h3>Doctrine of Signatures</h3>
+  <p>Avrupa'da 1600'lü yıllarda ortaya çıkmıştır. Kurucusu <span class="highlight">Paracelsus (1493-1541)</span>. Bu teoriye göre bitkinin genel görünümü/şekli/rengi, tıbbi etkilerine işaret eder.</p>
+
+  <h3>Yakın Geçmiş</h3>
+  <ul>
+    <li><span class="highlight">William Withering</span>: Ödem için kullanılan bir karışımda etkili bitkiyi <em>Digitalis purpurea</em> olarak mikroskobik yöntemle teşhis etmiştir.</li>
+    <li><span class="highlight">F.W.E. Sertürner</span>: Afyondan morfin izole etmiştir. Morfinin alkali karakterinden dolayı bu tür maddelere "alkaloit" adı verilmiştir. Bitkilerden etkin bileşik izole etme dönemi böylece başlamıştır.</li>
+  </ul>
+</div>
+
+<!-- GENEL KAVRAMLAR -->
+<div class="topic-block">
+  <h2>2. Fitoterapötik Kavramlar</h2>
+
+  <h3>Fitoterapi Nedir?</h3>
+  <p><span class="highlight">Phytos</span> (Bitki) + <span class="highlight">Therapeuein</span> (Tedavi) = Bitkilerle yapılan tedavi. Geleneksel (folklorik) bitkisel tedavi ile allopatik (konvansiyonel) tedavi arasında köprü oluşturur. Terim ilk kez Fransız hekim <span class="highlight">Henri Leclerc (1870-1953)</span> tarafından kullanılmıştır.</p>
+  <p>Fitoterapi <span class="highlight">tamamlayıcı veya tedaviye yardımcı</span> olarak kabul edilir. <span class="warn">Alternatif tedavi olarak kabul edilmemelidir!</span></p>
+
+  <h3>Çağdaş Fitoterapi Tanımı (AB)</h3>
+  <p>Hastalıklardan korunmak veya tedaviyi desteklemek amacıyla tıbbi bitkilerden ve onların etkin maddelerini taşıyan kısımlarından (droglardan) veya doğal ürünlerden hareketle <span class="highlight">standardize edilmiş farmasötik formlar</span> (kapsül, tablet, tentür vb.) kullanmaktır.</p>
+
+  <h3>WHO'ya Göre Bitkisel İlaç</h3>
+  <p>Bitkinin toprak altı/üstü kısımlarını, lateks, uçucu yağ veya sabit yağını ya da standardize ekstrelerini taşıyan; etki şekli açıklanmış, güvenilirlik sınırları/yan etkileri/stabilitesi/toksisitesi belirlenmiş; tekrarlanabilir fizyolojik etki gösteren ve <span class="highlight">GMP</span> kurallarıyla üretilmiş farmasötik ürünlerdir.</p>
+
+  <h3>Önemli Ayrım</h3>
+  <p>Tıbbi bitkilerden izole edilmiş saf etkin maddeler (vinkristin, vinblastin, galantamin, taksol, digoksin, atropin vb.) <span class="warn">bitkisel ilaç olarak kabul edilmez</span>.</p>
+  <p><span class="highlight">Endikasyon belirtilmiş ise → İLAÇ</span> | Endikasyon belirtilmemiş ise → Gıda desteği, Kozmetik</p>
+
+  <h3>Temel Tanımlar</h3>
+  <ul>
+    <li><span class="highlight">Tıbbi bitkiler</span>: İnsanlar ve/veya hayvanlarda farmakolojik aktivite gösteren bileşikleri taşıyan bitkiler.</li>
+    <li><span class="highlight">Drog</span>: Doğal kaynaklı ilaç hammaddesi.</li>
+    <li><span class="highlight">Bitkisel drog</span>: Bilimsel adlarıyla tanımlanmış tıbbi bitkilerden elde edilen, özel işlem görmemiş, çoğunlukla kurutulmuş (bazen taze), bütün/parçalanmış/kesilmiş bitkiler veya bitki parçaları; algler, mantarlar, likenler ve bazı eksudatlardır (reçine, lateks vb.).</li>
+    <li><span class="highlight">GMP (İyi İmalat Uygulamaları)</span>: Farmasötik ürünlerin kalite standartlarına ve ruhsat bilgilerine uygun şekilde sürekli üretilmesini ve kontrol edilmesini güvence altına alan kalite güvencesi parçasıdır.</li>
+  </ul>
+
+  <h3>Fitofarmakalar (Fitofarmasötikler)</h3>
+  <p>Farmakopelerde kayıtlı bitkisel drog veya standardize ekstrelerden, <span class="highlight">belirli bir endikasyona</span> yönelik, uygun farmasötik formda ve belirli dozda hazırlanmış oral ürünler. Üzerinde <span class="highlight">yeterli sayıda klinik çalışma</span> bulunur.</p>
+
+  <h3>Fitoterapötikler</h3>
+  <p>Farmakopelerde kayıtlı bitkisel drog veya standardize ekstrelerden, <span class="highlight">minör bir endikasyona</span> yönelik hazırlanmış ürünler. Henüz <span class="warn">yeterli sayıda klinik çalışma sonucu yoktur</span>. Kullanımları geleneksel tıbba dayanır ve sadece minör endikasyonlar için izin verilir.</p>
+
+  <h3>Bitkilerin Etki Güçlerine Göre Sınıflandırılması</h3>
+  <table class="drug-table">
+    <tr><th>Sınıf</th><th>Özellik</th><th>Örnekler</th></tr>
+    <tr><td>Güçlü etkili</td><td>Fitoterapide doğrudan kullanımdan kaçınılmalı, doz belirlemesi zor</td><td>Belladon yaprağı, Digitalis yaprağı</td></tr>
+    <tr><td>Orta etkili</td><td>Uzun süreli kullanımda yan etki riski var</td><td>Meyan kökü</td></tr>
+    <tr><td>Zayıf etkili</td><td>Geniş terapötik indeks, toksisite az/yok, etki için süre gerekli</td><td>Ihlamur, nane, papatya</td></tr>
+  </table>
+
+  <h3>Besin Destekleri</h3>
+  <p>Beslenmeyi desteklemek amacıyla ağızdan alınan ve "besin maddesi" taşıyan ürünler. Besin maddesi: vitaminler, mineraller, bitkiler, aminoasitler, enzimler, metabolitler vb.</p>
+
+  <h3>Nutrasötikler</h3>
+  <p>Bir gıdanın biyolojik olarak etkili bileşeninin, gıda olmayan bir taşıyıcı içerisinde ve gıdadakinden yüksek miktarlarda bulunduğu; profilaktik olarak veya tedaviyi desteklemek için kullanılan ürünler. Örnekler: likopen (domates), resveratrol (üzüm çekirdeği), EGCG (yeşil çay), izoflavonlar (soya fasulyesi).</p>
+
+  <h3>Geleneksel Bitkisel Tıbbi Ürün</h3>
+  <p>Türkiye'de veya AB'de en az 15 yıl, diğer ülkelerde 30 yıl kullanım geçmişi bibliyografik olarak kanıtlanmış; hekim denetimi/reçetesi olmadan kullanılması tasarlanmış, oral/harici/inhalasyon yoluyla kullanılan müstahzarlardır.</p>
+</div>
+
+<!-- KONVANSIYONEL VS BİTKİSEL -->
+<div class="topic-block">
+  <h2>3. Konvansiyonel vs. Bitkisel İlaçlar</h2>
+
+  <h3>Konvansiyonel (Sentetik) İlaçların Avantajları</h3>
+  <ul>
+    <li>Kalite kontrolü bitkisel ilaçlardaki kompleks karışımlara göre çok daha basit ve güvenilirdir.</li>
+    <li>Aktif bileşiğin farmakolojik etkisi, yan etkileri ve ilaç etkileşmeleri daha iyi tanımlanmıştır.</li>
+  </ul>
+
+  <h3>Konvansiyonel İlaçların Dezavantajları</h3>
+  <ul>
+    <li>Zamanla bazı aktif bileşenlere karşı hassasiyet azalabilir (ör: antibiyotik direnci).</li>
+    <li>Tüm semptomları düzeltmede yetersiz kalabilir.</li>
+    <li>Ciddi yan etkiler görülebilir.</li>
+  </ul>
+
+  <h3>Bitkisel İlaçların Avantajları</h3>
+  <ul>
+    <li>Asırlardır kullanıldıklarından etki ve güvenilirlik konusunda köklü bilgi birikimi vardır.</li>
+    <li>Çok sayıda aktif maddenin sinerjistik/antagonistik etkileşimleriyle birden fazla semptom üzerinde etkili olabilirler.</li>
+    <li>Tek aktif bileşikte zamanla etki kaybı olurken, bitkisel preparatlarda aktivite kaybı gözlenmez.</li>
+    <li>Aktif bileşikler bitkisel matriste stabil iken, izole edildikten sonra hızla bozulabilirler.</li>
+  </ul>
+
+  <h3>Sinerjistik Etki Örnekleri</h3>
+  <ul>
+    <li><span class="highlight">Artemisinin</span> (<em>Artemisia annua</em>): Bitkideki artemetin ve kastisin flavonoidleriyle antimalaryal etkisi çok artmaktadır.</li>
+    <li><span class="highlight">Berberin</span> (<em>Berberis</em> türleri): 5'-metoksihidnokarpin flavanolignin ile birlikte antibiyotik dirençli <em>S. aureus</em>'a karşı etkili olup, mikroplar direnç kazanamamaktadır.</li>
+  </ul>
+</div>
+
+<!-- TEDAVİ ŞEKİLLERİ -->
+<div class="topic-block">
+  <h2>4. Bitkilerin Kullanıldığı Tedavi Şekilleri</h2>
+
+  <h3>Aromaterapi</h3>
+  <p>Uçucu yağlar ve uçucu yağ taşıyan droglar ile yapılan destekleyici tedavi. Uçucu yağlar masaj, inhalasyon (buğu), kompres veya banyo şeklinde uygulanır. <span class="warn">Uçucu yağlar tahriş edici olduğundan doğrudan cilde uygulanmaz</span>; doğal bir sabit yağ içerisinde seyreltilerek kullanılır (2-3 damla UY / 20 ml yağ).</p>
+
+  <h3>Homeopati</h3>
+  <p>"<em>Similia similibus curantur</em>" (benzerlik prensibi). Yüksek dozda sağlıklı kişilerde belirti oluşturan madde, aynı belirtilere sahip hastalara çok düşük dozlarda verilir. Alman doktor <span class="highlight">Samuel Hahnemann</span> tarafından geliştirilmiştir.</p>
+
+  <h3>Tıbbi Çaylar</h3>
+  <p>Kurutulup parçalanmış tıbbi bitkilerin sıcak su ile ekstre edilerek hastalara içirilmesi çok eski bir tedavi yöntemidir. Bitkisel droglar iki gruba ayrılır: çay şeklinde hazırlananlar ve fitofarmasötik imalatında kullanılanlar (aralarında kesin sınır yoktur).</p>
+
+  <h3>Tıbbi Çay Türleri</h3>
+  <ul>
+    <li><span class="highlight">Süzme poşet çaylar</span>: Her poşet kullanılması gereken miktarda drog içerir; ancak UY içeren droglarda aşırı karıştırma UY kaybına neden olabilir.</li>
+    <li><span class="highlight">Çabuk çözünen (instant) çaylar</span>: Sıcak suda çözünür, süzme gerektirmez. Spray dried extract veya granülasyon yöntemiyle hazırlanır. Granüle çaylardaki karbonhidrat miktarı diyabetikler için dikkat gerektirir.</li>
+  </ul>
+
+  <h3>Tıbbi Çay Hazırlanması</h3>
+  <p><span class="highlight">İnfüzyon</span>: Kaynar su drog üzerine eklenir, 5-10 dk bekletilir, süzülür. <span class="highlight">Dekoksiyon</span>: Odunsu/kabuk droglar için suyun içinde belli süre kaynatılır.</p>
+</div>
+
+<!-- MSS FİTOTERAPÖTİKLER -->
+<div class="topic-block">
+  <h2>5. MSS'ye Etkili Fitoterapötikler — Tanımlar</h2>
+  <table class="drug-table">
+    <tr><th>Terim</th><th>Tanım</th></tr>
+    <tr><td>Anksiyete</td><td>Tanımlanabilir bir uyarıya bağlı olmayan huzursuzluk, gerginlik, taşikardi ve dispne ile tehlike hissi</td></tr>
+    <tr><td>Sedatif etki</td><td>MSS depresyonu, sakinleştirici ve uyku verici etki</td></tr>
+    <tr><td>Hipnotik etki</td><td>Uyku hali oluşturma etkisi</td></tr>
+    <tr><td>Depresyon</td><td>Hüzün, çökmüşlük, umutsuzluk gibi psikolojik ve fiziksel değişimlere yol açan durum</td></tr>
+    <tr><td>Mani</td><td>Aşırı heyecan, fikir uçuşması, psikomotor aktivite artışı ile kendini gösteren duygusal hastalık</td></tr>
+    <tr><td>Panik</td><td>Şiddetli ve sebebi belirsiz korku ve gerginlik</td></tr>
+  </table>
+</div>
+
+<!-- VALERIANA -->
+<div class="topic-block">
+  <h2>6. Valeriana officinalis L. (Kediotu — Valerian)</h2>
+  <p><span class="info-tag">Drog: Valeriana radix</span> <span class="info-tag">Familya: Valerianaceae</span> <span class="info-tag">Kayıt: ESCOP, Commission E, WHO</span></p>
+  <p>Drog: Kurutulmuş rizom, kök ve stolonlar.</p>
+
+  <h3>Bileşikler</h3>
+  <ul>
+    <li>UY: Bornil esterleri, kamfen, pinen (monoterpenler), valerenal, valerenon (seskiterpenler), <span class="highlight">valerenik asit</span> ve türevleri</li>
+    <li>GABA, glutamin, arjinin gibi aminoasitler</li>
+    <li>Taze materyalde: <span class="highlight">Valepotriatlar</span> (valtrat + izovaltrat) → kurutma sırasında parçalanıp baldrinal, homobaldrinal ve izovalerik asit (koku veren) açığa çıkar</li>
+    <li>EP: Parçalanmamış drogda UY ≥ 5 ml/kg; seskiterpen asit (valerenik asit) ≥ %0,17</li>
+  </ul>
+
+  <h3>Farmakolojik Etki</h3>
+  <p>Sedatif etkiden <span class="highlight">valerenal, valerenik asit ve valepotriatlar</span> sorumludur. Valerenik asit GABA'nın katabolizmasını ve geri alınımını inhibe edip salınımını stimüle ederek konsantrasyonunu artırır.</p>
+
+  <h3>Endikasyon</h3>
+  <p>Anksiyete, stres ve uyku sorunlarında sedatif ve hipnotik.</p>
+
+  <h3>Kontrendikasyon</h3>
+  <p>Araç/makine kullanımından 2 saat önce kullanılmamalı. Hamileler, emziren anneler ve 3 yaş altı çocuklarda kullanılmamalı.</p>
+
+  <h3>Dozaj</h3>
+  <p>Tek doz: 1-3 g drogdan infüzyon veya eşdeğer ekstre. Gerginlikte günde 3 kez. Uykusuzlukta yatmadan 30 dk-1 saat önce. 3-12 yaşta vücut ağırlığına göre, alkol içermeyen preparatlar.</p>
+</div>
+
+<!-- HUMULUS -->
+<div class="topic-block">
+  <h2>7. Humulus lupulus L. (Şerbetçi otu — Hops)</h2>
+  <p><span class="info-tag">Drog: Lupuli flos</span> <span class="info-tag">Familya: Cannabinaceae</span> <span class="info-tag">Kayıt: ESCOP, Commission E, WHO</span></p>
+  <p>Drog: Kurutulmuş dişi çiçek durumları (kozalak, strobilus).</p>
+
+  <h3>Bileşikler</h3>
+  <ul>
+    <li>Oleorezin: <span class="highlight">Lupulon ve humulon</span> (prenillenmiş floroglusinol türevleri) — acı taddan sorumlu</li>
+    <li>Parçalanma ürünü: <span class="highlight">2-metil-3-büten-2-ol</span> (depolanma süresi uzadıkça miktarı artar)</li>
+    <li>UY (%0,3-1): β-mirsen, humulen, karyofillen</li>
+    <li>Flavonoidler: <span class="highlight">Ksantohumulon</span> (prenillenmiş kalkon) ve diğerleri</li>
+  </ul>
+
+  <h3>Endikasyon / Dozaj</h3>
+  <p>Huzursuzluk, gerginlik, uyku sorunlarında sedatif ve hipnotik. 0,5 g drogdan infüzyon günde 2-4 defa. <span class="warn">2 aydan fazla kullanılması uygun değildir.</span></p>
+</div>
+
+<!-- LAVANTA -->
+<div class="topic-block">
+  <h2>8. Lavandula angustifolia Mill. (Lavanta — Lavender)</h2>
+  <p><span class="info-tag">Drog: Lavander flos / Lavander aetheroleum</span> <span class="info-tag">Familya: Lamiaceae</span> <span class="info-tag">Kayıt: ESCOP, WHO</span></p>
+
+  <h3>Bileşikler</h3>
+  <ul>
+    <li>Lavander aetheroleum: <span class="highlight">Linalool, linalil asetat</span>, terpinen-4-ol, limonen, sineol, kafur, lavandulol</li>
+    <li>Lavander flos: UY (%1-3), flavonoidler, rozmarinik asit, tanen, sterol, triterpenler</li>
+    <li>EP: Drog ≥ 1,3 ml/kg UY</li>
+    <li>Türkiye'de yetişen <em>L. stoechas</em> ve <em>L. cariensis</em> UY'ları kafur yönünden zengindir.</li>
+  </ul>
+
+  <h3>Endikasyon / Dozaj</h3>
+  <p>Huzursuzluk, ajitasyon, uyku problemleri, sinirsel GI rahatsızlıklar. 1-2 çay kaşığı çiçekle infüzyon; UY 20-80 mg (kesme şeker üzerine 1-4 damla); inhalasyon 0,06-0,2 ml günde 3 defaya kadar.</p>
+</div>
+
+<!-- PASSIFLORA -->
+<div class="topic-block">
+  <h2>9. Passiflora incarnata L. (Çarkıfelek — Passion flower)</h2>
+  <p><span class="info-tag">Drog: Passiflorae herba</span> <span class="info-tag">Familya: Passifloraceae</span> <span class="info-tag">Kayıt: Commission E, ESCOP, WHO</span></p>
+  <p>Drog: Kurutulmuş toprak üstü kısımları. EP: En az %1,5 total flavonoid (viteksin üzerinden).</p>
+
+  <h3>Bileşikler</h3>
+  <ul>
+    <li><span class="highlight">Flavonoidler</span>: Apigenin ve luteolinin C-glikozitleri — viteksin, orientin, izoviteksin, şaftozit</li>
+    <li>Eser miktarda <span class="highlight">β-karbolin alkaloitleri</span>: Harman, harmin, harmol, harmalin</li>
+    <li>UY</li>
+  </ul>
+
+  <h3>Endikasyon / Dozaj</h3>
+  <p>Huzursuzluk, gerginlik, uyku sorunları. Yetişkinlerde 0,5-2 g drog günde 3-4 kez; 2,5 g drogdan infüzyon. Hamilelikte ve emzirmede kullanılmamalı. Araç/iş makinesi kullanımı konusunda uyarı.</p>
+</div>
+
+<!-- MELISSA -->
+<div class="topic-block">
+  <h2>10. Melissa officinalis L. (Oğulotu — Lemonbalm)</h2>
+  <p><span class="info-tag">Drog: Melissae folium</span> <span class="info-tag">Familya: Lamiaceae</span> <span class="info-tag">Kayıt: ESCOP, Commission E, WHO</span></p>
+  <p>Drog: Kurutulmuş yapraklar. EP: En az %4 total hidroksisinnamik asit türevleri (rozmarinik asit üzerinden).</p>
+
+  <h3>Bileşikler</h3>
+  <ul>
+    <li>Flavonoidler (apigenin, kersetin, kemferol glikozitleri)</li>
+    <li>UY (%0,06-0,37): <span class="highlight">Geranial, neral, sitronellal</span> (monoterpen aldehitler)</li>
+    <li><span class="highlight">Rozmarinik asit</span> (> %4)</li>
+  </ul>
+
+  <h3>Endikasyon</h3>
+  <p>Uyku sorunları, GI problemleri ve <em>Herpes simplex labialis</em> tedavisi. <span class="warn">Antitiroid aktivitesi nedeniyle uzun süre ve yüksek dozda kullanılmamalı.</span></p>
+</div>
+
+<!-- PAPATYA -->
+<div class="topic-block">
+  <h2>11. Matricaria chamomilla L. (Mayıs papatyası — Chamomile)</h2>
+  <p><span class="info-tag">Drog: Matricariae flos</span> <span class="info-tag">Familya: Asteraceae</span> <span class="info-tag">Kayıt: ESCOP, Commission E, WHO</span></p>
+  <p>Drog: Kurutulmuş kapitulumlar. EP: En az 4 ml/kg mavi UY.</p>
+
+  <h3>Bileşikler</h3>
+  <ul>
+    <li>UY (%0,5-1,5): %50 oranında seskiterpenler — <span class="highlight">matrisin → kamazulen</span>, <span class="highlight">α-bisabolol</span> türevleri</li>
+    <li>Flavon türevleri: <span class="highlight">Apigenin 7-glikozit</span></li>
+    <li>Kumarinler ve fenolik asitler</li>
+  </ul>
+
+  <h3>Endikasyon / Dozaj</h3>
+  <p>Orta şiddette uyku sorunları, GI şikayetlerin semptomatik tedavisi. 3 g drog / 150 ml sıcak su infüzyon, günde 3-4 kez. Kuru ekstre 50-300 mg günde 3 defa.</p>
+</div>
+
+<!-- HYPERICUM -->
+<div class="topic-block">
+  <h2>12. Hypericum perforatum L. (Sarı kantaron — St. John's Wort)</h2>
+  <p><span class="info-tag">Drog: Hyperici herba</span> <span class="info-tag">Familya: Hypericaceae</span> <span class="info-tag">Kayıt: ESCOP, Commission E, WHO</span></p>
+  <p>Drog: Kurutulmuş çiçek durumları ve üst yapraklar. EP: Total hiperisin türevleri ≥ %0,08.</p>
+
+  <h3>Bileşikler</h3>
+  <ul>
+    <li><span class="highlight">Naftodiantronlar</span>: Hiperisin, psödohiperisin</li>
+    <li><span class="highlight">Floroglusinoller</span>: Hiperforin ve türevleri (ana aktif bileşik, stabil değil)</li>
+    <li>Flavonoidler: Kersetin, hiperozit (kersetin 3-galaktozit)</li>
+    <li>UY: Terpenik hidrokarbonlar, 2-metiloktan</li>
+  </ul>
+
+  <h3>Farmakolojik Etki</h3>
+  <p>A tipi <span class="highlight">MAO enzim inhibisyonu</span>. <span class="highlight">Hiperforin</span>: Serotonin, dopamin, noradrenalin ve GABA'nın geri emilimini kuvvetli inhibe eder. Ksantonlar da MAO'yu inhibe eder ancak drogda eser miktardadır. İstenen etkiyi düzenli sağlamak için <span class="highlight">standardize ekstreler</span> kullanılır.</p>
+
+  <h3>Endikasyon</h3>
+  <p>Hafif ve orta şiddette depresyonda sedatif ve antidepresan.</p>
+
+  <h3>Kontrendikasyon</h3>
+  <p><span class="warn">İlaç etkileşimi en fazla olan droglardan!</span> Antikonvülzanlar, siklosporin, HIV proteaz inhibitörleri, varfarin, antikoagülanlar, oral kontraseptiflerle kullanılmamalı. Hamilelerde/emzirenlerde kullanılmamalı. 2 aydan uzun kullanılmamalı.</p>
+
+  <h3>Dozaj</h3>
+  <p>Yetişkinlerde günlük 450-1050 mg kurutulmuş sulu etanolik ekstre. Tentür: günde 3-4,5 ml (%60 EtOH, 1:5). Çay: günde 2-4 g drog infüzyon.</p>
+</div>
+
+<!-- GINKGO -->
+<div class="topic-block">
+  <h2>13. Ginkgo biloba L. (Mabet ağacı — Ginkgo)</h2>
+  <p><span class="info-tag">Drog: Ginkgo folium</span> <span class="info-tag">Familya: Ginkgoaceae</span> <span class="info-tag">Kayıt: ESCOP, Commission E, WHO</span></p>
+  <p>Drog: Kurutulmuş yapraklar. EP: En az %0,5 flavonoid. Standardize ekstre: %22-27 flavonoidler, %5-7 terpenik laktonlar.</p>
+
+  <h3>Bileşikler</h3>
+  <ul>
+    <li>Terpenler: <span class="highlight">Ginkgolidler (A, B, C, J)</span> — 3 lakton halkalı diterpenler; <span class="highlight">Bilobalid</span> — seskiterpen</li>
+    <li>Flavonoidler: Kemferol, kersetin, ramnetin glikozitleri; <span class="highlight">biflavonoitler</span> (amentoflavon vb.)</li>
+    <li>Prosiyanidin oligomerleri, ginkgolik asit (dermatite neden olur, ekstrelerde &lt; 5 ppm)</li>
+  </ul>
+
+  <h3>Farmakolojik Etki</h3>
+  <p>Ginkgolidler: <span class="highlight">PAF (trombosit aktive edici faktör) inhibitörü</span>. Flavonoidler: Antilipoperoksidan, antinekrotik, antioksidan.</p>
+
+  <h3>Endikasyon</h3>
+  <p>Hafif-orta dereceli demans semptomatik tedavisi, serebral dolaşım yetmezliği, vertigo, tinnitus, kognitif performans iyileştirme, periferal arteriyel oklüzif sendrom.</p>
+
+  <h3>Dozaj</h3>
+  <p>Yetişkinlerde günde 120-240 mg standardize ekstre (2-3'e bölünmüş). <span class="highlight">Demans tedavisinde en az 12 hafta</span> devam edilmeli. Kan pıhtılaşmasını engelleyen ilaçlarla etkileşme olasılığı var.</p>
+</div>
+
+<!-- TANACETUM -->
+<div class="topic-block">
+  <h2>14. Tanacetum parthenium (Gümüşdüğme — Feverfew)</h2>
+  <p><span class="info-tag">Drog: Tanaceti herba</span> <span class="info-tag">Familya: Asteraceae</span> <span class="info-tag">Kayıt: ESCOP, Commission E, WHO</span></p>
+  <p>Drog: Kurutulmuş yapraklar. EP: En az %0,2 partenolid.</p>
+
+  <h3>Bileşikler</h3>
+  <ul>
+    <li><span class="highlight">Partenolit</span>: α-metilen bütirolakton grubu içeren germakranolid sınıfı seskiterpen lakton — etkin madde</li>
+    <li>Monoterpenler (kafur, trans-krizantenil asetat), lipofilik ve hidrofilik flavonoidler</li>
+  </ul>
+
+  <h3>Farmakolojik Etki</h3>
+  <p>Partenolit: Antiinflamatuvar, antinosiseptif, serotonerjik etkiler; kan damarlarının kasılma/gevşeme mekanizmasını etkiler; antiülserojenik.</p>
+
+  <h3>Endikasyon / Dozaj</h3>
+  <p><span class="highlight">Migren profilaksisi</span>. Yetişkinlerde günlük 50-120 mg toz drog veya eşdeğeri. Migren ataklarını engellemek için en az birkaç ay kullanılmalı. Hamilelerde/emzirenlerde kullanılmamalı.</p>
+</div>
+
+<!-- DİKKAT EDİLMESİ GEREKENLER -->
+<div class="topic-block">
+  <h2>15. Fitoterapide Dikkat Edilmesi Gerekenler</h2>
+  <ul>
+    <li>Bitkiler kuru, saf ve görünüşü uygun olmalıdır.</li>
+    <li>Firma güvenliği kontrol edilmelidir.</li>
+    <li>Kapalı kaplarda ve güneşten uzakta saklanmalıdır.</li>
+    <li>Ambalaj bilgileri uygun olmalıdır (bitki adı, etkili bileşikler, üretim yeri, SKT).</li>
+    <li>İlaçlarla etkileşime dikkat edilmelidir.</li>
+    <li>Tıbbi bitkiler her derde deva değildir; bilinçli ve doğru şekilde kullanılmalıdır.</li>
+    <li>Hastalar besin desteklerini ilaç olarak görmeyip bilgi vermeyebilir — sorarak öğrenmek gerekir.</li>
+    <li>Eczacılar, tıbbi bitkiler konusunda her yönüyle eğitim alan tek meslek grubudur.</li>
+  </ul>
+
+  <h3>Önemli Kurum ve Kuruluşlar</h3>
+  <p>EMA, HMPC, AESGP, ESCOP, WHO, FDA, DSHEA, Komisyon E Monografları (1994, 380 monograf).</p>
+</div>
+
+</div><!-- /sec-ozet -->
+
+
+<!-- ======================== TEST ======================== -->
+<div class="section" id="sec-test">
+
+<div class="hero">
+  <h1>Test Soruları</h1>
+  <div class="sub">40 Soru — Çoktan Seçmeli</div>
+</div>
+
+<div id="questions-container"></div>
+
+</div><!-- /sec-test -->
+
+
+<!-- ======================== CEVAP ANAHTARI ======================== -->
+<div class="section" id="sec-cevap">
+
+<div class="hero">
+  <h1>Cevap Anahtarı</h1>
+  <div class="sub">40 Sorunun Doğru Cevapları ve Açıklamaları</div>
+</div>
+
+<div class="answer-grid" id="answer-grid"></div>
+<div class="explanation-list" id="explanation-list"></div>
+
+</div><!-- /sec-cevap -->
+
+
+<script>
+// === NAV ===
+function showSection(id) {
+  document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+  document.querySelectorAll('.topnav a').forEach(a => a.classList.remove('active'));
+  document.getElementById('sec-' + id).classList.add('active');
+  document.getElementById('nav-' + id).classList.add('active');
+  window.scrollTo({top: 0, behavior: 'smooth'});
+}
+
+// === QUESTIONS DATA ===
+const questions = [
+{q:"Anadolu insanının bitkileri tedavi amacıyla kullanmaya başladığı dönem aşağıdakilerden hangisidir?", o:["Neolitik dönem","Paleolitik dönem","Mezolitik dönem","Kalkolitik dönem"], a:1},
+{q:"Şanidar Mağarası'nda bulunan bitki örneklerini içeren mezarlar hangi insan türüne aittir?", o:["Homo sapiens","Homo erectus","Neanderthal","Homo habilis"], a:2},
+{q:"Mezopotamya döneminde bilinen drog sayısı yaklaşık kaçtır?", o:["100","250","500","750"], a:1},
+{q:"Ebers Papirüsleri hangi uygarlığa aittir?", o:["Mezopotamya","Hindistan","Mısır","Grek"], a:2},
+{q:"'Hayat Bilgisi' anlamına gelen geleneksel tıp sistemi hangisidir?", o:["Siddha","Ayurveda","Homeopati","Aromaterapi"], a:1},
+{q:"Atharva Veda adlı kitapta kaç tıbbi bitkinin özellikleri yer almaktadır?", o:["75","100","125","200"], a:2},
+{q:"Hekimliğin babası olarak kabul edilen kişi kimdir?", o:["Theophraste","Dioscorides","Galenus","Hippocrate"], a:3},
+{q:"'Botaniğin babası' olarak anılan bilim insanı aşağıdakilerden hangisidir?", o:["Hippocrate","Theophraste","Paracelsus","İbn-i Sina"], a:1},
+{q:"De Materia Medica adlı eserin yazarı kimdir?", o:["Galenus","İbn-i Sina","Dioscorides","Hippocrate"], a:2},
+{q:"Kanun Fit Tıb kaç kitaptan oluşmaktadır?", o:["3","4","5","7"], a:2},
+{q:"Doctrine of Signatures'ın kurucusu aşağıdakilerden hangisidir?", o:["Hippocrate","William Withering","Paracelsus","Henri Leclerc"], a:2},
+{q:"Afyondan morfin izole eden bilim insanı kimdir?", o:["Paracelsus","Withering","Sertürner","Leclerc"], a:2},
+{q:"Fitoterapi terimini ilk kullanan kişi aşağıdakilerden hangisidir?", o:["Samuel Hahnemann","Henri Leclerc","Paracelsus","Dioscorides"], a:1},
+{q:"Fitoterapi için aşağıdaki ifadelerden hangisi doğrudur?", o:["Alternatif tedavi yöntemidir","Tamamlayıcı/yardımcı tedavi olarak kabul edilir","Konvansiyonel tedavinin yerini alır","Sadece geleneksel tıp kapsamındadır"], a:1},
+{q:"WHO tanımına göre bitkisel ilaçlar hangi kurallara göre üretilmelidir?", o:["HACCP","ISO 9001","GMP","GLP"], a:2},
+{q:"Aşağıdakilerden hangisi bitkisel ilaç olarak kabul EDİLMEZ?", o:["Standardize Ginkgo ekstresi","Saf digoksin","Valeriana tentürü","Papatya infüzyonu"], a:1},
+{q:"Fitofarmakalar ile fitoterapötikler arasındaki temel fark nedir?", o:["Farmasötik formları farklıdır","Fitofarmakalar üzerinde yeterli klinik çalışma vardır","Fitoterapötikler daha güçlü etkilidir","Dozaj farkları vardır"], a:1},
+{q:"Aşağıdakilerden hangisi 'güçlü etkili bitki' grubuna girer?", o:["Papatya","Ihlamur","Digitalis yaprağı","Nane"], a:2},
+{q:"Nutrasötik tanımına uyan örnek aşağıdakilerden hangisidir?", o:["Papatya çayı","Domatesin likopeni","Kediotu kökü","Lavanta UY"], a:1},
+{q:"Geleneksel Bitkisel Tıbbi Ürün olabilmesi için Türkiye veya AB'de en az kaç yıl kullanılmış olmalıdır?", o:["5 yıl","10 yıl","15 yıl","30 yıl"], a:2},
+{q:"Konvansiyonel ilaçların dezavantajlarından biri aşağıdakilerden hangisidir?", o:["Kalite kontrolü kolaydır","Antibiyotik direnci gelişebilir","Farmakolojik etkileri iyi tanımlıdır","Aktif bileşik miktarı sabittir"], a:1},
+{q:"Artemisinin'in antimalaryal etkisini artıran bitkisel bileşikler aşağıdakilerden hangileridir?", o:["Berberin ve harman","Artemetin ve kastisin","Humulon ve lupulon","Hiperisin ve hiperforin"], a:1},
+{q:"Aromaterapide uçucu yağların doğrudan cilde uygulanmamasının nedeni nedir?", o:["Koku kaybolur","Tahriş edicidir","Etki azalır","Işığa duyarlıdır"], a:1},
+{q:"Homeopatiyi günümüzdeki şekliyle geliştiren kişi kimdir?", o:["Paracelsus","Samuel Hahnemann","Henri Leclerc","William Withering"], a:1},
+{q:"Tıbbi çay hazırlamada odunsu droglar için hangi yöntem kullanılır?", o:["İnfüzyon","Maserasyon","Dekoksiyon","Perkolasyon"], a:2},
+{q:"Valeriana radix'te sedatif etkiden birincil sorumlu bileşik hangisidir?", o:["İzovalerik asit","Valepotriat","Valerenik asit","Baldrinal"], a:2},
+{q:"Valerenik asidin sedatif etki mekanizması nedir?", o:["Serotonin geri alımını inhibe eder","GABA konsantrasyonunu artırır","Dopamin salınımını azaltır","Asetilkolin esterazı inhibe eder"], a:1},
+{q:"Humulus lupulus'un acı tadından sorumlu bileşikler hangisidir?", o:["Ksantohumulon ve mirsen","Lupulon ve humulon","Karyofillen ve humulen","Linalool ve linalil asetat"], a:1},
+{q:"Lupuli flos'un kaç aydan fazla kullanılması uygun değildir?", o:["1 ay","2 ay","3 ay","6 ay"], a:1},
+{q:"Lavandula angustifolia UY'ında başlıca bulunan bileşikler hangileridir?", o:["Kafur ve sineol","Linalool ve linalil asetat","Timol ve karvakrol","Mentol ve menton"], a:1},
+{q:"Passiflorae herba'da EP'ye göre en az ne kadar total flavonoid bulunmalıdır?", o:["%0,5","%1,0","%1,5","%2,0"], a:2},
+{q:"Passiflora incarnata'da bulunan β-karbolin alkaloitleri aşağıdakilerden hangisidir?", o:["Berberin ve palmatin","Harman ve harmin","Morfin ve kodein","Atropin ve skopolamin"], a:1},
+{q:"Melissa officinalis'in kontrendike olduğu durum hangisidir?", o:["Herpes simpleks tedavisi","Uyku sorunları","Uzun süreli ve yüksek doz kullanım (antitiroit aktivite)","GI problemleri"], a:2},
+{q:"Matricariae flos UY'ında mavi rengi veren karakteristik bileşik hangisidir?", o:["α-bisabolol","Apigenin","Kamazulen","Matrisin"], a:2},
+{q:"Hypericum perforatum'un antidepresan etkisinden birincil sorumlu bileşik aşağıdakilerden hangisidir?", o:["Hiperisin","Hiperforin","Kersetin","Hiperozit"], a:1},
+{q:"Sarı kantaron drogunun farmakolojik aktivitesi hangi enzim sistemiyle ilişkilidir?", o:["COX inhibisyonu","A tipi MAO inhibisyonu","Asetilkolin esteraz inhibisyonu","Fosfodiesteraz inhibisyonu"], a:1},
+{q:"Aşağıdaki ilaçlardan hangisi Hypericum perforatum ile kullanılMAMALIDIR?", o:["Parasetamol","Oral kontraseptifler","İbuprofen","Antihistaminikler"], a:1},
+{q:"Ginkgo biloba'nın PAF inhibitörü olarak etki eden bileşikleri hangileridir?", o:["Flavonoidler","Bilobalid","Ginkgolidler","Amentoflavon"], a:2},
+{q:"Ginkgo folium'daki ginkgolik asidin ekstrelerde izin verilen üst sınırı kaçtır?", o:["1 ppm","5 ppm","10 ppm","50 ppm"], a:1},
+{q:"Tanacetum parthenium'un etkin maddesi olan partenolit hangi bileşik sınıfına aittir?", o:["Monoterpen lakton","Diterpen lakton","Seskiterpen lakton (germakranolid)","Triterpen saponin"], a:2}
+];
+
+// Render questions
+const qContainer = document.getElementById('questions-container');
+questions.forEach((item, i) => {
+  const letters = ['A','B','C','D'];
+  let optionsHTML = '';
+  item.o.forEach((opt, j) => {
+    optionsHTML += `<label><input type="radio" name="q${i}" value="${j}"> <span>${letters[j]}) ${opt}</span></label>`;
+  });
+  qContainer.innerHTML += `
+    <div class="question-card">
+      <div class="q-text"><div class="q-number">${i+1}</div><span>${item.q}</span></div>
+      <div class="options">${optionsHTML}</div>
+    </div>`;
+});
+
+// Render answer grid + explanations
+const answerGrid = document.getElementById('answer-grid');
+const expList = document.getElementById('explanation-list');
+const letters = ['A','B','C','D'];
+
+const explanations = [
+"Anadolu insanı paleolitik dönemden beri (MÖ 50.000) bitkileri tedavi amacıyla kullanmaktadır.",
+"Şanidar Mağarası'nda Neanderthal mezarlarında bitki örnekleri bulunmuştur.",
+"Mezopotamya döneminde bilinen drog sayısı yaklaşık 250'dir.",
+"Ebers Papirüsleri Eski Mısır dönemine (MÖ 1550) ait tıbbi papirüslerdir.",
+"Ayurveda 'Hayat Bilgisi' anlamına gelir ve Hindistan'a ait geleneksel tıp sistemidir.",
+"Atharva Veda'da 125 tıbbi bitkinin özellikleri yer almaktadır.",
+"Hippocrate (MÖ 460-377) hekimliğin babası olarak kabul edilir.",
+"Theophraste (MÖ 370-287) botaniğin babası olarak bilinir.",
+"De Materia Medica (5 cilt) Dioscorides tarafından yazılmıştır.",
+"Kanun Fit Tıb 5 kitaptan oluşmaktadır.",
+"Doctrine of Signatures'ın kurucusu Paracelsus'tur (1493-1541).",
+"F.W.E. Sertürner afyondan morfin izole etmiştir.",
+"Fitoterapi terimi ilk kez Henri Leclerc (1870-1953) tarafından kullanılmıştır.",
+"Fitoterapi tamamlayıcı veya tedaviye yardımcı olarak kabul edilir, alternatif tedavi değildir.",
+"WHO tanımına göre bitkisel ilaçlar GMP kurallarıyla üretilmelidir.",
+"Saf digoksin gibi izole edilmiş etkin maddeler bitkisel ilaç olarak kabul edilmez.",
+"Fitofarmakalar üzerinde yeterli klinik çalışma bulunurken, fitoterapötiklerde henüz yeterli çalışma yoktur.",
+"Digitalis yaprağı güçlü etkili bitkiler grubundadır; doğrudan fitoterapide kullanımından kaçınılır.",
+"Domatesin etkili bileşeni likopen nutrasötik olarak kabul edilir.",
+"Geleneksel Bitkisel Tıbbi Ürün için Türkiye/AB'de en az 15 yıl kullanım gerekir.",
+"Antibiyotik direnci gelişmesi konvansiyonel ilaçların önemli dezavantajlarındandır.",
+"Artemetin ve kastisin flavonoidleri Artemisinin'in antimalaryal etkisini artırır.",
+"Uçucu yağlar tahriş edici olduğundan doğrudan cilde uygulanmaz.",
+"Homeopatiyi günümüzdeki şekliyle Alman doktor Samuel Hahnemann geliştirmiştir.",
+"Odunsu/kabuk drogların etkili maddelerini çıkarmak için dekoksiyon (kaynatma) gerekir.",
+"Valerenik asit sedatif etkiden birincil sorumlu bileşiktir; GABA üzerinden etki eder.",
+"Valerenik asit GABA'nın katabolizmasını ve geri alınımını inhibe edip salınımını stimüle ederek konsantrasyonunu artırır.",
+"Lupulon ve humulon prenillenmiş floroglusinol türevleri olup drogun acı tadından sorumludur.",
+"Lupuli flos'un 2 aydan fazla kullanılması uygun değildir.",
+"Lavandula angustifolia UY'ında başta linalool ve linalil asetat bulunur.",
+"EP'ye göre Passiflorae herba en az %1,5 total flavonoid (viteksin üzerinden) taşımalıdır.",
+"Passiflora'da eser miktarda harman, harmin, harmol, harmalin gibi β-karbolin alkaloitleri bulunur.",
+"Melissa officinalis antitiroit aktivitesi nedeniyle uzun süre ve yüksek dozda kullanılmamalıdır.",
+"Kamazulen, matrisinin dönüşümüyle oluşan ve UY'a mavi renk veren seskiterpendir.",
+"Hiperforin, serotonin/dopamin/noradrenalin/GABA geri emilimini kuvvetli inhibe eden ana aktif bileşiktir.",
+"Hypericum perforatum A tipi MAO enziminin inhibisyonu ile etki gösterir.",
+"Oral kontraseptifler Hypericum perforatum ile kullanılmamalıdır (ilaç etkileşimi en fazla olan droglardan).",
+"Ginkgolidler PAF (trombosit aktive edici faktör) inhibitörüdür.",
+"Ginkgolik asit dermatite neden olduğundan ekstrelerde 5 ppm'den az olması istenir.",
+"Partenolit, α-metilen bütirolakton grubu içeren germakranolid sınıfı seskiterpen laktondur."
+];
+
+questions.forEach((item, i) => {
+  answerGrid.innerHTML += `
+    <div class="answer-cell">
+      <div class="anum">Soru ${i+1}</div>
+      <div class="aletter">${letters[item.a]}</div>
+    </div>`;
+  expList.innerHTML += `
+    <div class="exp-item">
+      <strong>Soru ${i+1} — ${letters[item.a]})</strong> ${explanations[i]}
+    </div>`;
+});
+</script>
+
+</body>
+</html>

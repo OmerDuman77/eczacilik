@@ -1,0 +1,501 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Farmasötik Teknoloji II – Detaylı Özet (Bölüm 2)</title>
+<link href="https://fonts.googleapis.com/css2?family=Merriweather:wght@300;400;700;900&family=Source+Sans+3:wght@300;400;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #f5f0e8;
+    --card: #fffdf8;
+    --accent: #2a5c3f;
+    --accent-light: #e8f0eb;
+    --text: #2c2c2c;
+    --text-muted: #6b6b6b;
+    --border: #d4cdbf;
+    --highlight: #d4a843;
+    --section-a: #2a5c3f;
+    --section-b: #4a3a6b;
+    --section-c: #6b3a3a;
+    --section-d: #3a5a6b;
+    --section-e: #6b5a2a;
+    --section-f: #3a6b5a;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { font-family: 'Source Sans 3', sans-serif; background: var(--bg); color: var(--text); line-height: 1.7; font-size: 16px; }
+  header { background: var(--section-b); color: #fff; padding: 3rem 2rem 2.5rem; text-align: center; }
+  header h1 { font-family: 'Merriweather', serif; font-weight: 900; font-size: 1.8rem; margin-bottom: 0.5rem; letter-spacing: -0.02em; }
+  header p { opacity: 0.8; font-size: 0.95rem; font-weight: 300; }
+  nav.toc { max-width: 800px; margin: -1.5rem auto 2rem; background: var(--card); border-radius: 12px; padding: 1.5rem 2rem; box-shadow: 0 4px 20px rgba(0,0,0,0.08); border: 1px solid var(--border); }
+  nav.toc h2 { font-family: 'Merriweather', serif; font-size: 1rem; margin-bottom: 0.8rem; color: var(--section-b); }
+  nav.toc a { display: block; padding: 0.35rem 0; color: var(--text); text-decoration: none; font-size: 0.92rem; border-bottom: 1px solid #eee; transition: color 0.2s; }
+  nav.toc a:last-child { border-bottom: none; }
+  nav.toc a:hover { color: var(--section-b); }
+  nav.toc a span.num { display: inline-block; width: 26px; font-weight: 700; color: var(--section-b); }
+  main { max-width: 800px; margin: 0 auto 4rem; padding: 0 1.5rem; }
+  .section { background: var(--card); border-radius: 12px; padding: 2rem; margin-bottom: 1.5rem; border: 1px solid var(--border); box-shadow: 0 2px 12px rgba(0,0,0,0.04); }
+  .section-header { display: flex; align-items: center; gap: 0.75rem; margin-bottom: 1.2rem; padding-bottom: 0.8rem; border-bottom: 2px solid #e8e4f0; }
+  .section-header .badge { width: 36px; height: 36px; border-radius: 8px; display: flex; align-items: center; justify-content: center; color: #fff; font-weight: 700; font-size: 0.85rem; flex-shrink: 0; }
+  .section-header h2 { font-family: 'Merriweather', serif; font-size: 1.25rem; font-weight: 700; color: var(--text); }
+  h3 { font-family: 'Merriweather', serif; font-size: 1.05rem; color: var(--section-b); margin: 1.4rem 0 0.6rem; font-weight: 700; }
+  h4 { font-size: 0.95rem; font-weight: 700; color: var(--text); margin: 1rem 0 0.4rem; }
+  p { margin-bottom: 0.7rem; }
+  .formula-box { background: #f8f6f0; border-left: 3px solid var(--highlight); padding: 1rem 1.2rem; border-radius: 0 8px 8px 0; margin: 1rem 0; font-size: 0.92rem; }
+  .formula-box strong { display: block; margin-bottom: 0.5rem; color: var(--text); font-size: 0.95rem; }
+  .formula-box .ingredient { display: flex; justify-content: space-between; padding: 0.15rem 0; border-bottom: 1px dotted #ddd; }
+  .formula-box .ingredient:last-of-type { border-bottom: none; }
+  .key-point { background: #ece8f4; padding: 0.6rem 1rem; border-radius: 8px; margin: 0.6rem 0; font-size: 0.92rem; position: relative; padding-left: 2rem; }
+  .key-point::before { content: "•"; position: absolute; left: 0.8rem; color: var(--section-b); font-weight: 700; }
+  .sub-list { margin: 0.4rem 0 0.6rem 1.5rem; font-size: 0.92rem; }
+  .sub-list li { margin-bottom: 0.25rem; list-style: disc; }
+  .comparison-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 0.8rem; margin: 1rem 0; }
+  .comp-card { background: #f8f6f0; border-radius: 8px; padding: 1rem; font-size: 0.88rem; }
+  .comp-card h5 { font-size: 0.9rem; margin-bottom: 0.4rem; color: var(--section-b); }
+  .prep-steps { counter-reset: step; margin: 0.6rem 0; }
+  .prep-steps li { counter-increment: step; list-style: none; padding: 0.35rem 0 0.35rem 2.2rem; position: relative; font-size: 0.92rem; border-bottom: 1px solid #f0ede5; }
+  .prep-steps li::before { content: counter(step); position: absolute; left: 0; top: 0.35rem; width: 22px; height: 22px; background: var(--section-b); color: #fff; border-radius: 50%; font-size: 0.72rem; display: flex; align-items: center; justify-content: center; font-weight: 700; }
+  .note-box { background: #fff8e8; border: 1px solid #f0dfa0; border-radius: 8px; padding: 0.8rem 1rem; margin: 0.8rem 0; font-size: 0.88rem; }
+  .note-box::before { content: "⚠ Not: "; font-weight: 700; color: var(--highlight); }
+  .av-dez { display: grid; grid-template-columns: 1fr 1fr; gap: 0.8rem; margin: 1rem 0; }
+  .av-box, .dez-box { border-radius: 8px; padding: 1rem; font-size: 0.88rem; }
+  .av-box { background: #e8f5e9; border: 1px solid #c8e6c9; }
+  .av-box h5 { color: #2e7d32; margin-bottom: 0.5rem; }
+  .dez-box { background: #fce4ec; border: 1px solid #f8bbd0; }
+  .dez-box h5 { color: #c62828; margin-bottom: 0.5rem; }
+  @media (max-width: 600px) {
+    header h1 { font-size: 1.4rem; }
+    .section { padding: 1.4rem; }
+    .comparison-grid, .av-dez { grid-template-columns: 1fr; }
+    nav.toc { margin: -1rem 1rem 1.5rem; padding: 1rem 1.2rem; }
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <h1>Farmasötik Teknoloji II – Yarı-Katı İlaçlar (Bölüm 2)</h1>
+  <p>Merhem Türleri · Jeller · Patlar · Losyonlar · Sabunlar · Supozituvarlar</p>
+</header>
+
+<nav class="toc">
+  <h2>İçindekiler</h2>
+  <a href="#s1"><span class="num">1.</span> Salım Testleri – USP Apparatus 6 &amp; 7, İn Vivo</a>
+  <a href="#s2"><span class="num">2.</span> Merhemlerin Farmakolojik Sınıflandırması</a>
+  <a href="#s3"><span class="num">3.</span> Merhem Formülasyon Örnekleri</a>
+  <a href="#s4"><span class="num">4.</span> Jeller</a>
+  <a href="#s5"><span class="num">5.</span> Jel Polimerleri</a>
+  <a href="#s6"><span class="num">6.</span> Patlar (Pastalar)</a>
+  <a href="#s7"><span class="num">7.</span> Diğer Yarı-Katılar &amp; Karşılaştırma</a>
+  <a href="#s8"><span class="num">8.</span> Sabunlar</a>
+  <a href="#s9"><span class="num">9.</span> Supozituvarlar</a>
+</nav>
+
+<main>
+
+<!-- 1. SALIM TESTLERİ DEVAM -->
+<div class="section" id="s1">
+  <div class="section-header">
+    <div class="badge" style="background:var(--section-a)">1</div>
+    <h2>Salım Testleri – USP Apparatus 6 &amp; 7, İn Vivo</h2>
+  </div>
+
+  <h3>Apparatus 6 – Rotating Cylinder (Dönen Silindir)</h3>
+  <div class="key-point">Transdermal yamalar için uygundur.</div>
+  <div class="key-point">İçi gözenekli selüloz bir silindir kullanılır; yama silindirin yan yüzeyine yapıştırılır.</div>
+  <div class="key-point">Sıcaklık: <strong>32 ± 0,5 °C</strong></div>
+
+  <h3>Apparatus 7 – Reciprocating Disk/Holder</h3>
+  <div class="key-point">Dakikada 30 defa yukarı-aşağı hareket eder.</div>
+  <div class="key-point">Transdermal yamalar ve dağılmayan oral kontrollü sistemler için uygundur.</div>
+  <div class="key-point">Probun ucunda disk bulunur. Sıcaklık: <strong>32 ± 0,5 °C</strong></div>
+
+  <h3>İn Vivo Yöntemler</h3>
+  <p>İnsan veya hayvan denekler kullanılır. Merhem deriye uygulandıktan sonra <strong>idrar, kan, deri veya organ analizleri</strong> yapılarak etken maddenin salımı ve geçişi araştırılır. Yara-yanık merhemleri gibi topikal formülasyonlar göz ile veya ölçümlerle kontrol gruplarına karşı istatistiksel olarak değerlendirilir.</p>
+</div>
+
+<!-- 2. MERHEM SINIFLANDIRMASI -->
+<div class="section" id="s2">
+  <div class="section-header">
+    <div class="badge" style="background:var(--section-c)">2</div>
+    <h2>Merhemlerin Farmakolojik Sınıflandırması</h2>
+  </div>
+
+  <h3>1. Antiseptik Merhemler</h3>
+  <p>Mikroorganizma veya mantar enfeksiyonlarına karşı kullanılır. Çeşitli antibiyotik ve antifungaller içerir.</p>
+
+  <h3>2. Antipirüritik Merhemler</h3>
+  <p>Kaşıntı gidermek amacıyla hazırlanır. Örnek konsantrasyonlar: <strong>%0,25 mentol</strong>, <strong>%0,5 fenol</strong>, <strong>%2 kafur</strong>.</p>
+
+  <h3>3. Keratoplastik Merhemler</h3>
+  <p>Derinin koruyucu tabakasının kalınlığını artırmak için kullanılır. <strong>%10 ihtiyol</strong> ve <strong>%1-2 salisilik asit</strong> keratoplastik etki gösterir.</p>
+
+  <h3>4. Keratolitik Merhemler</h3>
+  <p>Derinin boynuzsu tabakasını yumuşatmak veya yok etmek için kullanılır.</p>
+  <ul class="sub-list">
+    <li>Salisilik asit: %4-10</li>
+    <li>Rezorsin: %2-4</li>
+    <li>İhtiyol: %10-20</li>
+    <li>Kükürt: %4-10</li>
+    <li>Trikloro asetik asit: oldukça kuvvetli keratolitik etkiye sahip</li>
+  </ul>
+
+  <h3>5. Lokal Analjezik Merhemler</h3>
+  <p>Haricen antiromatizmal ve antienflamatuvar etkili maddeleri içeren, lokal etki göstermesi için hazırlanan merhemlerdir.</p>
+
+  <h3>6. Lokal Anestezik Merhemler</h3>
+  <p>Derinin belli bir bölgesindeki acı hissini hafifletmek için kullanılır. <strong>Benzokain (%1-20)</strong> ve <strong>lidokain (%2-5)</strong> gibi maddeler içerir.</p>
+
+  <h3>7. Yumuşatıcı / Nemlendirici Merhemler</h3>
+  <p>Deri yüzeyini yumuşatarak normal esnekliğini sağlar. Film tabakası oluşturarak nem kaybını (TEWL – Trans Epidermal Water Loss) engeller. Silikon, vazelin, lanolin ve gliserin bu amaçla kullanılan maddelerdendir.</p>
+
+  <h3>8. Koruyucu Merhemler</h3>
+  <p>Silikon, vazelin, çinko oksit, nişasta gibi maddeler içerir. Deriyi hava, nem, kimyasal maddeler ve çözücülerden korur. Güneş kremleri/UV filtreleri de bu gruba dahildir.</p>
+  <div class="key-point">UV absorbe eden maddeler: homosalat, sinoksat, metil antranilat, oktil metoksi sinnamat, oktokrilen, avobenzon.</div>
+  <div class="key-point">Formüldeki oranları, ürünün SPF (güneşten koruma faktörü) değerini belirler.</div>
+
+  <h3>9. Sistemik Etkili Merhemler</h3>
+  <p>Deriye veya mukozaya uygulandıklarında sistemik etki gösterir. <strong>Kortizon, nitrogliserin ve östrojen</strong> gibi maddeler çok az miktarlarda bile kana geçerek farmakolojik etki oluşturabilir.</p>
+</div>
+
+<!-- 3. MERHEM FORMÜLASYON ÖRNEKLERİ -->
+<div class="section" id="s3">
+  <div class="section-header">
+    <div class="badge" style="background:var(--section-d)">3</div>
+    <h2>Merhem Formülasyon Örnekleri</h2>
+  </div>
+
+  <div class="formula-box">
+    <strong>Rivanol Merhemi</strong>
+    <div class="ingredient"><span>Rivanol</span><span>1 g</span></div>
+    <div class="ingredient"><span>Susuz lanolin</span><span>40 g</span></div>
+    <div class="ingredient"><span>Vazelin</span><span>20 g</span></div>
+    <div class="ingredient"><span>Distile su</span><span>40 g</span></div>
+    <p style="margin-top:0.6rem; margin-bottom:0"><em>Hazırlanışı:</em> Rivanol, distile suyun yarısında çözündürülür ve havandaki susuz lanolinin üzerine azar azar eklenerek her seferinde iyice karıştırılır. Kalan su aynı şekilde eklendikten sonra vazelin konularak iyice karıştırılır.</p>
+  </div>
+
+  <div class="formula-box">
+    <strong>Benzokain Merhemi</strong>
+    <div class="ingredient"><span>Benzokain</span><span>2 g</span></div>
+    <div class="ingredient"><span>Çinko oksit</span><span>5 g</span></div>
+    <div class="ingredient"><span>Adrenalin çözeltisi (%0,1)</span><span>2 g</span></div>
+    <div class="ingredient"><span>Lanolin</span><span>10 g</span></div>
+    <div class="ingredient"><span>Beyaz vazelin</span><span>20 g</span></div>
+    <p style="margin-top:0.6rem; margin-bottom:0"><em>Hazırlanışı:</em> Çinko oksit ve benzokain havana alınıp iyice ezilir. Vazelinin yarısı eklenerek karıştırılır. Kalan vazelin ve lanolin su banyosunda eritilip havana ilave edilir. Soğumaya başladığında adrenalin çözeltisi damla damla ilave edilerek karıştırılır.</p>
+  </div>
+</div>
+
+<!-- 4. JELLER -->
+<div class="section" id="s4">
+  <div class="section-header">
+    <div class="badge" style="background:var(--section-e)">4</div>
+    <h2>Jeller</h2>
+  </div>
+
+  <p>Jeller; küçük katı madde veya çözünmeyen parçacıkların sıvı ortamda dağılması ile oluşan, jel oluşturan bir madde ve yüksek oranda çözücü içeren, <strong>şeffaf ya da opak</strong> görünüşlü yarı-katı ilaçlardır.</p>
+
+  <h3>Jellerin Sınıflandırılması</h3>
+
+  <h4>A) Tek Fazlı Sistemler</h4>
+  <p>Sıvı fazda tamamen çözünmüş organik moleküller ile hazırlanır. Doğal zamklar (arap zamkı vb.), yarı-sentetik veya sentetik makromoleküller (Carbopol gibi) kullanılır. Doğal zamklarla hazırlanan jellere <strong>müsilaj</strong> denir.</p>
+  <div class="key-point"><strong>Hidrojel:</strong> Su ile hazırlanan jeller (örn: HMC + su)</div>
+  <div class="key-point"><strong>Organojel:</strong> Alkol veya mineral yağ ile hazırlanan jeller (örn: Plastibase)</div>
+  <div class="key-point"><strong>In situ gel:</strong> Termal olarak hassas jeller (Poloksamerler), iyonik aktivasyona duyarlı jeller (gellan gum), pH duyarlı jeller (HPMC, Carbopol)</div>
+
+  <h4>B) İki Fazlı Sistemler</h4>
+  <p>İnorganik küçük moleküllerin sıvı faz içinde üç boyutlu dayanıksız bir ağ yapısı oluşturduğu sistemlerdir. İnorganik moleküller çözünmediği için dağılmış haldedir (örn: Alüminyum hidroksit jeli). Dağılan fazın partikül boyutu büyükse jel kütlesi <strong>magma</strong> olarak adlandırılır (örn: Bentonit Magma) ve <strong>tiksotropi</strong> gösterir.</p>
+
+  <div class="formula-box">
+    <strong>Naproksen Jel</strong>
+    <div class="ingredient"><span>Naproksen*</span><span>10 g</span></div>
+    <div class="ingredient"><span>Carbopol 934</span><span>1 g</span></div>
+    <div class="ingredient"><span>Trietanolamin</span><span>3,5 g</span></div>
+    <div class="ingredient"><span>İzopropil alkol</span><span>20 g</span></div>
+    <div class="ingredient"><span>Gliserin</span><span>7 g</span></div>
+    <div class="ingredient"><span>Distile su</span><span>k.m. 100 g</span></div>
+    <p style="margin-top:0.4rem; margin-bottom:0; font-size:0.85rem;">* Naproksene eşdeğer miktarda naproksen sodyum kullanılır.</p>
+  </div>
+</div>
+
+<!-- 5. JEL POLİMERLERİ -->
+<div class="section" id="s5">
+  <div class="section-header">
+    <div class="badge" style="background:var(--section-f)">5</div>
+    <h2>Jel Hazırlamada Kullanılan Polimerler</h2>
+  </div>
+
+  <h3>A) Doğal Polimerler</h3>
+  <p>Jelatin, aljinatlar, agar, karragen, kitosan, pektin, kitre zamkı, arap zamkı, ksantan zamkı vb.</p>
+  <div class="key-point"><strong>Aljinatlar:</strong> Deniz yosunlarından elde edilir. Sodyum aljinat (tek değerli tuz) → suda çözünen jel; Kalsiyum aljinat (çift değerli tuz) → suda çözünmeyen jel.</div>
+  <div class="key-point"><strong>Agar:</strong> Anyonik polisakkarit, çok düşük konsantrasyonlarda (%0,1) jel oluşturur.</div>
+  <div class="key-point"><strong>Kitosan:</strong> Kitinin kısmi deasetilasyonu ile elde edilir, suda çözünmez. Organik asitlerle (asetik asit, laktik asit) suda çözünür. %1-2 konsantrasyonda jel oluşturur.</div>
+  <div class="key-point"><strong>Glisirizin:</strong> Meyan kökünden elde edilir, glisirizik asit içerir. %2-3 konsantrasyonda jel oluşturur.</div>
+  <div class="key-point"><strong>Jelatin:</strong> Hayvan kolajeninden elde edilir. Asit hidroliz → Jelatin A, Alkali hidroliz → Jelatin B.</div>
+
+  <h3>B) Yarı-Sentetik Polimerler</h3>
+  <p>Selüloz türevleri: CMC, HPMC, MC vb.</p>
+
+  <h3>C) Sentetik Polimerler</h3>
+  <div class="key-point"><strong>Poloksamerler:</strong> Polietilen oksit + polipropilen oksit yapısında. Vücut sıcaklığında jelleşir, oda sıcaklığında düşük kıvam. %15-25 konsantrasyonda kullanılır.</div>
+  <div class="key-point"><strong>Karbopol:</strong> pH 5-10 aralığında jelleşir. Bu nedenle trietanolamin, diisopropanolamin gibi alkali madde ilavesi gerekir.</div>
+  <div class="key-point"><strong>Polivinil alkol (PVA):</strong> Hidrofilik polimer, %10-15 oranında jel yapıcı özellik gösterir.</div>
+  <div class="key-point"><strong>Poliakrilamitler:</strong> Hidrofilik, pseudoplastik akış gösterir (%4-10).</div>
+
+  <h3>D) İnorganik Jel Yapıcı Maddeler</h3>
+  <p>Bentonit, Veegum, mikrokristal selüloz ve mikrokristal silika gibi inorganik kolloidal maddeler.</p>
+</div>
+
+<!-- 6. PATLAR -->
+<div class="section" id="s6">
+  <div class="section-header">
+    <div class="badge" style="background:var(--section-c)">6</div>
+    <h2>Patlar (Pastalar)</h2>
+  </div>
+
+  <p>Patlar; yüksek oranda toz madde (%50-70) içeren, dahilen ve haricen kullanılan yarı-katı preparatlardır.</p>
+
+  <h3>Sınıflandırma</h3>
+  <div class="key-point"><strong>Dahilen kullanılan patlar (macun / electuaria):</strong> Şeker ve zamk içerir.</div>
+  <div class="key-point"><strong>Haricen kullanılan yağlı patlar:</strong> Merhemlere benzer. Nişasta, çinko oksit, kalsiyum karbonat, vazelin, sıvı parafin, mum içerir.</div>
+  <div class="key-point"><strong>Gliserinli patlar:</strong> Nişasta, gliserin, jelatin, pektin veya kitre zamkı içerir.</div>
+
+  <h3>Hazırlanış</h3>
+  <ol class="prep-steps">
+    <li>Katı maddeler iyice toz edilir.</li>
+    <li>Yağlı sıvağ ile homojen karışım yapılır veya suda şişen jellerle jel kütlesi hazırlanarak tozlarla karıştırılır.</li>
+    <li>Nişasta kullanılacaksa önce mutlaka soğuk su ile karıştırılarak kütleye ilave edilir.</li>
+  </ol>
+
+  <h3>Kullanım Özellikleri</h3>
+  <div class="key-point">Kurutucu özelliğe sahiptirler.</div>
+  <div class="key-point">Saçlı deriye asla uygulanmazlar.</div>
+  <div class="key-point">Merhemler gibi deriye nüfuz etmezler.</div>
+  <div class="key-point">Genellikle ifrazatı tutma ve emmek için kullanılırlar.</div>
+
+  <div class="formula-box">
+    <strong>Unna'nın Patı (Unna's Paste)</strong>
+    <div class="ingredient"><span>Çinko oksit</span><span>10 g</span></div>
+    <div class="ingredient"><span>Jelatin</span><span>15 g</span></div>
+    <div class="ingredient"><span>Gliserin</span><span>40 g</span></div>
+    <div class="ingredient"><span>Distile su</span><span>35 g</span></div>
+    <p style="margin-top:0.6rem; margin-bottom:0"><em>Hazırlanışı:</em> Jelatin distile suda 15-30 dakika şişirilir. Çinko oksit gliserin ile havanda ezilerek karıştırılır. Ardından su banyosu üzerinde iki karışım birleştirilerek homojenize edilir.</p>
+  </div>
+
+  <h3>Diş Patları (Macunlar)</h3>
+  <p>Dişleri temizlemek amacıyla kullanılır. Temizleyici özelliğinin yanında diş çürümesi ve diş eti hastalıklarını önleyici formülasyonlar da geliştirilmektedir.</p>
+
+  <h4>Diş Patlarındaki Bileşenler</h4>
+  <div class="comparison-grid">
+    <div class="comp-card">
+      <h5>Mekanik Temizleyiciler</h5>
+      <p>Kalsiyum karbonat, dikalsiyum fosfat, kalsiyum pirofosfat, trikalsiyum fosfat, sodyum metafosfat, alüminyum oksit/hidroksit, silika</p>
+    </div>
+    <div class="comp-card">
+      <h5>Nemlendiriciler</h5>
+      <p>Gliserin, sorbitol, dietilen glikol, etil alkol, izopropil alkol</p>
+    </div>
+    <div class="comp-card">
+      <h5>Kıvam Vericiler</h5>
+      <p>Selüloz türevleri, agar-agar, aljinatlar, karragen, kitre zamkı, poliakril tuzu, nişasta, magnezyum alüminyum silikat</p>
+    </div>
+    <div class="comp-card">
+      <h5>Köpük Temin Ediciler</h5>
+      <p>Sodyum lauril sülfat, sabun, yağ alkolleri, sülfatlar, alkil sülfoasetat, olefin sülfat</p>
+    </div>
+    <div class="comp-card">
+      <h5>Koku &amp; Tat Maddeleri</h5>
+      <p>Uçucu yağlar (nane, portakal, gül, anason, limon, okaliptus, mentol); sakarin, stevia</p>
+    </div>
+    <div class="comp-card">
+      <h5>Antimikrobiyal &amp; Özel Maddeler</h5>
+      <p>Sorbik asit, benzoik asit, sodyum benzoat; boya, parlatıcı, beyazlatıcı, leke temizleyici, antiseptikler, etken madde</p>
+    </div>
+  </div>
+
+  <div class="formula-box">
+    <strong>Diş Patı Formülasyonu</strong>
+    <div class="ingredient"><span>Kalsiyum karbonat</span><span>40 g</span></div>
+    <div class="ingredient"><span>Aerosil</span><span>1 g</span></div>
+    <div class="ingredient"><span>Sodyum lauril sülfat</span><span>3 g</span></div>
+    <div class="ingredient"><span>CMC</span><span>2 g</span></div>
+    <div class="ingredient"><span>Sakarin</span><span>0,1 g</span></div>
+    <div class="ingredient"><span>Sodyum benzoat çözeltisi (%10)</span><span>2,5 g</span></div>
+    <div class="ingredient"><span>Gliserin</span><span>20 g</span></div>
+    <div class="ingredient"><span>Esans</span><span>1 g</span></div>
+    <div class="ingredient"><span>Distile su</span><span>30 g</span></div>
+  </div>
+</div>
+
+<!-- 7. DİĞER YARI-KATILAR -->
+<div class="section" id="s7">
+  <div class="section-header">
+    <div class="badge" style="background:var(--section-d)">7</div>
+    <h2>Diğer Yarı-Katılar &amp; Karşılaştırma</h2>
+  </div>
+
+  <h3>Losyonlar</h3>
+  <p>Cilde <strong>ovulmaksızın</strong> tatbik edilerek kullanılan akışkan preparatlardır. Çözelti, süspansiyon ve emülsiyon tipinde olabilir. Deri üzerinde görünmez film tabakası oluşturur, salgıların çıkmasını engellemez ve kolaylıkla yıkanabilir. Örn: el losyonları, kalamin losyonu.</p>
+
+  <h3>Sera</h3>
+  <p>Yüksek oranda <strong>mum</strong> içeren preparatlardır. Deri üzerinde erimezler; koruyucu amaçla doğrudan veya bez üzerine sürülerek uygulanır. Genellikle astrenjan ve stimülan maddeler için sıvağ olarak kullanılır.</p>
+
+  <h3>Yarı-Katılar Arasında Karşılaştırma</h3>
+  <div class="key-point"><strong>Sera:</strong> Kıvam bakımından merhemlere yakın, mum içerir.</div>
+  <div class="key-point"><strong>Pat:</strong> Yüksek miktarda katı madde içerir, merhemlerden daha sert ve absorplayıcı.</div>
+  <div class="key-point"><strong>Krem:</strong> Merhemlerden daha yumuşak kıvamlı.</div>
+  <div class="key-point"><strong>Jel:</strong> Sıvı görünümünde, oldukça yumuşak.</div>
+  <div class="key-point"><strong>Losyon:</strong> Cilde uygulanan akışkan preparat.</div>
+  <div class="note-box">Losyon, krem ve jeller genellikle merhemlerden daha düşük viskozitededir. Buna karşılık patlar genellikle merhemlerden daha sert ve daha absorplayıcı özelliktedir.</div>
+</div>
+
+<!-- 8. SABUNLAR -->
+<div class="section" id="s8">
+  <div class="section-header">
+    <div class="badge" style="background:var(--section-e)">8</div>
+    <h2>Sabunlar</h2>
+  </div>
+
+  <p>Sabunlar, yağ asitlerinin alkalilerle veya amin grubu maddelerle verdiği <strong>tuzlardır</strong>. Genel formül: <strong>R-COOM</strong> (R: doymuş/doymamış hidrokarbon zinciri, M: organik veya inorganik katyondur).</p>
+
+  <h3>Hazırlanış Yöntemleri</h3>
+
+  <h4>1. Yağdan Hareketle</h4>
+  <p>Yağlar (oleat, palmitat, stearat esterleri) sabunlaşma ile yağ asidi tuzu karışımı verir. Hayvansal yağlar (koyun, balık, iç yağı) veya bitkisel yağlar (zeytin, hindistan cevizi, susam, pamuk, keten tohumu, hurma çekirdeği yağı) kullanılır.</p>
+
+  <h4>2. Yağ Asidinden Hareketle</h4>
+  <p>Soda kullanılır. Yağ asidi olarak bazı reçine asitleri (pimarik asit, abietinik asit) da kullanılabilir.</p>
+
+  <h4>3. Sülfürik Asit İle</h4>
+  <p>Sülfat veya sülfonat tipi sabunlar elde edilir. Sert suda köpüren sabun imalinde kullanılır. Şampuanlar için alkil etanol amid sülfonat, alkil etanolamin sülfat, alkil sülfonat tercih edilir.</p>
+
+  <h3>Sabunların Özellikleri</h3>
+  <div class="key-point">Suda çözünen kolloidal dağılımlardır; alkolde çözünürler, jel de oluşturabilirler.</div>
+  <div class="key-point">Yüzey gerilimini azaltırlar; köpük oluştururlar ve yağları emülsifiye ederler.</div>
+  <div class="key-point">Sertlik → <strong>stearik asit</strong>; Yumuşaklık → <strong>oleik asit</strong>.</div>
+  <div class="key-point">En iyi emülsifiyan ve köpüren: <strong>laurik ve miristik asit</strong> tuzları (ancak tahriş edici etkisi palmitat ve stearattan fazla → konsantrasyonları %20-25 ile sınırlı).</div>
+  <div class="key-point">Küçük karbonlu yağ asitleri (butirik, kaproik, kaprilik, kaprik, laurik) iritan etkiye sahiptir ve laurik asit hariç hoş kokulu değildir.</div>
+
+  <h3>Sabun Sınıflandırması</h3>
+  <div class="comparison-grid">
+    <div class="comp-card">
+      <h5>Yumuşak Sabunlar</h5>
+      <p><strong>Potasyum</strong> tuzları. Yüksek potasyum oleat içerir. Köpürme zayıf, <strong>emülgatör özelliği yüksek</strong>.</p>
+    </div>
+    <div class="comp-card">
+      <h5>Katı Sabunlar</h5>
+      <p><strong>Sodyum</strong> tuzları. Yüksek sodyum stearat içerir. İyi köpürür, <strong>emülsifiyan özelliği zayıf</strong>.</p>
+    </div>
+  </div>
+
+  <div class="note-box">Sabun, sudaki toprak alkali metallerle (Ca²⁺, Mg²⁺) reaksiyona girerek suda çözünmeyen sabun oluşturur — bu "sert su" sorunudur.</div>
+
+  <h3>Sabunlara İlave Edilen Maddeler</h3>
+  <ul class="sub-list">
+    <li><strong>Boya maddeleri:</strong> Suda çözünen anilin boyaları</li>
+    <li><strong>Risinoleik asit:</strong> Fazla alkaliliği gidermek için (%3-5)</li>
+    <li><strong>Lanolin:</strong> %3-5 oranında ilave edilebilir</li>
+    <li><strong>Antioksidanlar:</strong> Fenol türevleri, aromatik amin türevleri</li>
+    <li><strong>Koku maddeleri:</strong> Sentetik veya doğal uçucu yağlar</li>
+  </ul>
+</div>
+
+<!-- 9. SUPOZİTUVARLAR -->
+<div class="section" id="s9">
+  <div class="section-header">
+    <div class="badge" style="background:var(--section-a)">9</div>
+    <h2>Supozituvarlar</h2>
+  </div>
+
+  <p>Rektum, vajina ve üretra gibi vücut boşluklarına konulmak üzere hazırlanmış, vücut sıcaklığında eriyerek, vücut sıvısında çözünerek veya dağılarak etki gösteren <strong>katı görünümlü yarı-katı</strong> ilaç şekilleridir. Lokal veya sistemik etki amacıyla kullanılır.</p>
+
+  <h3>Türleri</h3>
+  <div class="key-point"><strong>Rektal supozituvar:</strong> Rektuma uygulanır.</div>
+  <div class="key-point"><strong>Vajinal supozituvar (ovül/globül/pessari):</strong> Vajinaya uygulanır.</div>
+  <div class="key-point"><strong>Üretral supozituvar (buji/tıbbi kalem/bacilli):</strong> Üretraya uygulanır.</div>
+
+  <h3>Rektal Supozituvarlar</h3>
+  <div class="key-point">USP'ye göre yetişkinler için yaklaşık <strong>2 g</strong>, çocuklar için yaklaşık yarısı kadardır.</div>
+  <div class="key-point">En geniş kullanım alanı <strong>hemoroit tedavisi</strong>dir.</div>
+  <div class="key-point">Yapılarında kakao yağı, PEG gibi sıvağlar bulunur.</div>
+  <div class="key-point">Supozituvar dışında tablet, kapsül ve lavman da rektal yoldan uygulanabilir.</div>
+  <div class="key-point">Endikasyonlar: hemoroid, anal fissür, ülseratif kolit, bağırsak hastalıkları, radyolojik tetkiklerde lavman.</div>
+
+  <div class="av-dez">
+    <div class="av-box">
+      <h5>Rektal Supo. – Avantajları</h5>
+      <ul class="sub-list">
+        <li>Karaciğer ilk geçiş etkisinden kurtulma</li>
+        <li>Gİ kanalda bozulan ilaçlar için uygun</li>
+        <li>Gİ kanalda yan etki/tahriş yapan ilaçlar için uygun</li>
+        <li>Hızlı etki (iv uygulanamadığında)</li>
+        <li>Oral yol kontrendike ise alternatif</li>
+        <li>Bebek, yaşlı, bilinçsiz hastalar için kolay</li>
+        <li>Düşük dozla sistemik etki</li>
+        <li>Biyoyararlanım artışı</li>
+      </ul>
+    </div>
+    <div class="dez-box">
+      <h5>Rektal Supo. – Dezavantajları</h5>
+      <ul class="sub-list">
+        <li>Hasta uyuncu düşük</li>
+        <li>Mukozal iritasyon</li>
+        <li>Pahalı üretim</li>
+        <li>Özel saklama koşulları</li>
+      </ul>
+    </div>
+  </div>
+
+  <h3>Vajinal Supozituvarlar (Ovüller)</h3>
+  <div class="key-point">USP'ye göre damla/oval şekilli, <strong>3-5 g</strong> ağırlığında. Pessariler 1-8 g'dır.</div>
+  <div class="key-point">Oda sıcaklığında katı, vücut sıcaklığında yumuşayarak erir.</div>
+  <div class="key-point">Antifungal, antibakteriyel, kontraseptif, astrenjan etkili ilaçlar içerir.</div>
+  <div class="key-point">Genellikle <em>Candida</em> ve <em>Trichomonas</em> enfeksiyonlarında lokal tedavi amacıyla kullanılır.</div>
+  <div class="key-point">Aplikatör yardımıyla uygulanır; supozituvar dışında tablet, krem, jel, insert de vajinal yoldan uygulanabilir.</div>
+
+  <h4>Vajinal Absorpsiyonu Etkileyen Faktörler</h4>
+  <ul class="sub-list">
+    <li><strong>Fizyolojik koşullar:</strong> Vajinal sıvı, mukus özellikleri (viskoz, pH 4-5), enzim aktivitesi, menstrüal siklus, epitelyum özellikleri</li>
+    <li><strong>Etken maddenin fizikokimyasal özellikleri:</strong> Çözünürlük, pKa, partikül büyüklüğü, logP, konsantrasyon</li>
+    <li><strong>Sıvağın özellikleri:</strong> İçerik, erime özellikleri, viskozite, ester içeriği</li>
+  </ul>
+
+  <div class="av-dez">
+    <div class="av-box">
+      <h5>Vajinal Supo. – Avantajları</h5>
+      <ul class="sub-list">
+        <li>Karaciğer ilk geçiş etkisinden kurtulma</li>
+        <li>Geniş yüzey alanı, zengin damarlanma</li>
+        <li>Gİ kanalda bozulan/tahriş eden ilaçlar için uygun</li>
+        <li>Oral yol kontrendike ise alternatif</li>
+        <li>Düşük dozla sistemik etki</li>
+        <li>Hem lokal hem sistemik etki</li>
+        <li>Biyoyararlanım artışı</li>
+      </ul>
+    </div>
+    <div class="dez-box">
+      <h5>Vajinal Supo. – Dezavantajları</h5>
+      <ul class="sub-list">
+        <li>Hasta uyuncu düşük</li>
+        <li>Mukozal iritasyon ihtimali</li>
+        <li>Pahalı üretim</li>
+        <li>Özel saklama koşulları</li>
+        <li>Menstrüal siklus etkisi</li>
+      </ul>
+    </div>
+  </div>
+
+  <h3>Üretral Supozituvarlar (Bujiler)</h3>
+  <div class="key-point">Genellikle <strong>5 mm çapında</strong>, kolay bükülen ince silindir şeklinde, uçları sivridir.</div>
+  <div class="key-point">Erkekler için <strong>125 mm</strong>, kadınlar için <strong>50 mm</strong> uzunluğunda.</div>
+  <div class="key-point"><strong>Bougie uretrale:</strong> Üretraya tatbik edilir, genellikle enfeksiyon tedavisinde.</div>
+  <div class="key-point"><strong>Bougie rectale:</strong> Rektuma tatbik edilen bujiler.</div>
+</div>
+
+</main>
+
+<footer style="text-align:center; padding:2rem; color:var(--text-muted); font-size:0.82rem; border-top:1px solid var(--border);">
+  Farmasötik Teknoloji II – Yarı-Katı İlaçlar (Bölüm 2) Ders Özeti
+</footer>
+
+</body>
+</html>

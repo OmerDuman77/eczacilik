@@ -1,0 +1,404 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Klinik Öncesi Toksisite — Özet & Test</title>
+<link href="https://fonts.googleapis.com/css2?family=Crimson+Pro:wght@400;500;600;700;800&family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root {
+  --ink: #1a1a2e;
+  --paper: #faf8f4;
+  --cream: #f3efe8;
+  --accent: #8b2f3a;
+  --accent-light: #c0545e;
+  --accent-bg: rgba(139,47,58,.07);
+  --teal: #2a6f6f;
+  --teal-bg: rgba(42,111,111,.08);
+  --gold: #b8860b;
+  --text: #2c2c3a;
+  --text-dim: #6b6b7d;
+  --border: #d8d0c4;
+  --correct: #2d7a4f;
+  --correct-bg: rgba(45,122,79,.1);
+  --wrong: #b53030;
+  --wrong-bg: rgba(181,48,48,.08);
+  --radius: 10px;
+  --shadow: 0 2px 20px rgba(26,26,46,.06);
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{background:var(--paper);color:var(--text);font-family:'Outfit',sans-serif;font-weight:400;line-height:1.7;-webkit-font-smoothing:antialiased}
+::selection{background:var(--accent);color:#fff}
+
+.header{background:var(--ink);color:#fff;padding:56px 24px 48px;text-align:center;position:relative;overflow:hidden}
+.header::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse at 20% 80%,rgba(139,47,58,.35) 0%,transparent 55%),radial-gradient(ellipse at 80% 20%,rgba(42,111,111,.3) 0%,transparent 50%);pointer-events:none}
+.header h1{font-family:'Crimson Pro',serif;font-size:clamp(2.2rem,5.5vw,3.6rem);font-weight:800;letter-spacing:-.02em;position:relative;line-height:1.2}
+.header .subtitle{font-size:1.05rem;font-weight:300;color:rgba(255,255,255,.65);margin-top:10px;position:relative}
+.header .authors{margin-top:18px;font-size:.88rem;color:rgba(255,255,255,.45);position:relative}
+
+.tab-nav{position:sticky;top:0;z-index:100;background:rgba(250,248,244,.95);backdrop-filter:blur(12px);border-bottom:1px solid var(--border);display:flex;justify-content:center;gap:6px;padding:12px 16px;flex-wrap:wrap}
+.tab-btn{padding:9px 24px;border-radius:50px;font-family:'Outfit',sans-serif;font-size:.9rem;font-weight:500;color:var(--text);background:transparent;border:1.5px solid transparent;cursor:pointer;transition:all .2s;user-select:none}
+.tab-btn:hover{background:var(--cream);border-color:var(--border)}
+.tab-btn.active{background:var(--accent);color:#fff;border-color:var(--accent)}
+
+.tab-panel{display:none}
+.tab-panel.visible{display:block;animation:fadePanel .35s ease}
+@keyframes fadePanel{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
+
+.container{max-width:880px;margin:0 auto;padding:0 24px}
+
+.section-title{font-family:'Crimson Pro',serif;font-size:2rem;font-weight:700;color:var(--ink);margin-bottom:32px;padding-bottom:12px;border-bottom:3px solid var(--accent);display:inline-block}
+
+.summary-section{padding:48px 0 40px}
+
+.topic-block{margin-bottom:32px;background:#fff;border:1px solid var(--border);border-radius:var(--radius);padding:28px 30px;box-shadow:var(--shadow);position:relative;overflow:hidden}
+.topic-block::before{content:'';position:absolute;left:0;top:0;bottom:0;width:4px;background:var(--accent);border-radius:4px 0 0 4px}
+.topic-block.teal::before{background:var(--teal)}
+.topic-block.gold::before{background:var(--gold)}
+.topic-block h3{font-family:'Crimson Pro',serif;font-size:1.35rem;font-weight:700;color:var(--accent);margin-bottom:12px}
+.topic-block.teal h3{color:var(--teal)}
+.topic-block.gold h3{color:var(--gold)}
+.topic-block p{margin-bottom:10px;font-size:.96rem;line-height:1.75}
+.topic-block p:last-child{margin-bottom:0}
+
+.highlight-box{background:var(--accent-bg);border-left:3px solid var(--accent);padding:14px 18px;border-radius:0 8px 8px 0;margin:14px 0;font-size:.93rem}
+.highlight-box.teal-hl{background:var(--teal-bg);border-left-color:var(--teal)}
+
+.inline-table{width:100%;border-collapse:collapse;margin:16px 0;font-size:.9rem}
+.inline-table th{background:var(--ink);color:#fff;padding:10px 14px;text-align:left;font-weight:600}
+.inline-table td{padding:9px 14px;border-bottom:1px solid var(--border)}
+.inline-table tr:nth-child(even) td{background:var(--cream)}
+
+.quiz-section{padding:48px 0 20px}
+.quiz-controls{display:flex;justify-content:center;gap:12px;margin-bottom:32px;flex-wrap:wrap}
+.btn{padding:11px 26px;border-radius:50px;font-family:inherit;font-size:.92rem;font-weight:600;cursor:pointer;transition:all .25s;border:1.5px solid var(--border);background:#fff;color:var(--text)}
+.btn:hover{border-color:var(--accent);color:var(--accent)}
+.btn-primary{background:var(--accent);border-color:var(--accent);color:#fff}
+.btn-primary:hover{background:#7a2833}
+
+.score-banner{display:none;background:#fff;border:2px solid var(--accent);border-radius:var(--radius);padding:30px;text-align:center;margin-bottom:30px;box-shadow:var(--shadow);animation:slideUp .4s ease}
+@keyframes slideUp{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:translateY(0)}}
+.score-banner .big{font-family:'Crimson Pro',serif;font-size:3rem;font-weight:800;color:var(--accent)}
+
+.q-card{background:#fff;border:1px solid var(--border);border-radius:var(--radius);padding:24px 28px;margin-bottom:16px;box-shadow:var(--shadow);transition:border-color .3s}
+.q-card.is-correct{border-color:var(--correct)}
+.q-card.is-wrong{border-color:var(--wrong)}
+.q-head{display:flex;gap:14px;margin-bottom:16px;align-items:flex-start}
+.q-num{flex-shrink:0;width:34px;height:34px;border-radius:8px;background:var(--accent-bg);color:var(--accent);display:flex;align-items:center;justify-content:center;font-weight:700;font-size:.85rem}
+.q-text{font-size:.98rem;font-weight:500;padding-top:5px;line-height:1.6}
+.opts{display:flex;flex-direction:column;gap:8px;padding-left:48px}
+.opt{display:flex;align-items:center;gap:12px;padding:11px 16px;border:1.5px solid var(--border);border-radius:8px;cursor:pointer;transition:all .2s;font-size:.93rem}
+.opt:hover{background:var(--cream);border-color:#bbb}
+.opt.sel{border-color:var(--accent);background:var(--accent-bg)}
+.opt.show-correct{border-color:var(--correct)!important;background:var(--correct-bg)!important}
+.opt.show-wrong{border-color:var(--wrong)!important;background:var(--wrong-bg)!important}
+.opt-letter{flex-shrink:0;width:26px;height:26px;border-radius:50%;border:2px solid var(--border);display:flex;align-items:center;justify-content:center;font-weight:700;font-size:.78rem;transition:all .2s}
+.opt.sel .opt-letter{border-color:var(--accent);background:var(--accent);color:#fff}
+.opt.show-correct .opt-letter{border-color:var(--correct);background:var(--correct);color:#fff}
+.opt.show-wrong .opt-letter{border-color:var(--wrong);background:var(--wrong);color:#fff}
+
+.key-section{padding:48px 0 60px}
+.key-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(90px,1fr));gap:8px}
+.key-cell{background:#fff;border:1px solid var(--border);border-radius:8px;padding:10px 8px;text-align:center;font-size:.88rem;font-weight:500}
+.key-cell span{color:var(--accent);font-weight:700}
+
+@media(max-width:640px){
+  .opts{padding-left:0}
+  .q-card{padding:18px 16px}
+  .topic-block{padding:22px 20px}
+  .key-grid{grid-template-columns:repeat(auto-fill,minmax(75px,1fr))}
+}
+</style>
+</head>
+<body>
+
+<div class="header">
+  <h1>Klinik Öncesi Toksisite</h1>
+  <div class="subtitle">Detaylı Özet & 40 Soruluk Çoktan Seçmeli Test</div>
+  <div class="authors">Prof.Dr. Gülden Z. Omurtag & Doç.Dr. Esma Söylemez Yeşilçimen</div>
+</div>
+
+<div class="tab-nav">
+  <button class="tab-btn active" onclick="switchTab('ozet',this)">Özet</button>
+  <button class="tab-btn" onclick="switchTab('test',this)">Test Sınavı</button>
+  <button class="tab-btn" onclick="switchTab('anahtar',this)">Cevap Anahtarı</button>
+</div>
+
+<!-- ══════════ PANEL 1: ÖZET ══════════ -->
+<div class="tab-panel visible" id="panel-ozet">
+<div class="container">
+<section class="summary-section">
+  <div class="section-title">Detaylı Özet</div>
+
+  <div class="topic-block">
+    <h3>1. İlaç Tanımı</h3>
+    <p>İlaç, hastalıklardan korunma, teşhis, tedavi veya vücudun herhangi bir fonksiyonunu değiştirmek amacıyla klinik araştırmalarda kullanılacak sentetik, bitkisel veya biyolojik kaynaklı etken madde, terkip ve/veya farmasötik müstahzardır. Kısaca, insan veya hayvanlarda bir hastalığın önlenmesi, teşhisi veya tedavisi için verilen maddelerin genel adıdır.</p>
+  </div>
+
+  <div class="topic-block teal">
+    <h3>2. İlaç ile İlgili Araştırmalar</h3>
+    <p>İlaç araştırmaları iki ana döneme ayrılır: <strong>Klinik öncesi değerlendirme</strong> ve <strong>Klinik araştırmalar</strong>.</p>
+    <p>Klinik öncesi değerlendirmede şu parametreler incelenir: farmakolojik etkiler, toksisite profili, farmakokinetik özellikler (emilim, dağılım, metabolizma, atılım) ve farmasötik şekil ile ilacın stabilitesi.</p>
+  </div>
+
+  <div class="topic-block">
+    <h3>3. Toksisite Testleri — Genel Sınıflandırma</h3>
+    <p>Toksisite testleri dört ana kategoride değerlendirilir: <strong>(1) Akut Toksisite,</strong> <strong>(2) Subakut Toksisite,</strong> <strong>(3) Kronik Toksisite</strong> (teratojenik, karsinojenik, mutajenik etki ve fertilite üzerindeki etki dahil) ve <strong>(4) Özel Toksisite Testleri.</strong></p>
+  </div>
+
+  <div class="topic-block gold">
+    <h3>4. Akut Toksisitenin Araştırılması</h3>
+    <p>Akut toksisite incelemesinde madde, çeşitli hayvan türlerinde her iki cinsiyetten bireylere <strong>bir defada veya kısa süre içinde birkaç defada yüksek dozda</strong> verilir.</p>
+    <div class="highlight-box"><strong>Temel amaç:</strong> Maddenin çeşitli yollardan verilmesinde <strong>öldürücü dozun (LD50)</strong> saptanmasıdır.</div>
+    <p>Bu deneyler sonucunda maddenin hedef organı, etki mekanizması ve ölüm sebebi ortaya çıkarılır. Aynı zamanda akut zehirlenme halinde alınabilecek önlemler de belirlenebilir.</p>
+    <p><strong>Diğer akut toksisite testleri:</strong> Gözdeki irritasyon (sistemik toksisiteyi ilgilendiren bir organ olarak göz, topikal irritan etki açısından değerlendirilir) ve dermal irritasyon testleri (özellikle kozmetikler, deterjanlar ve endüstriyel kimyasal maddeler için önemlidir). Dermal toksisite testleri dört grupta toplanır: <em>primer irritasyon, cilt sensitizasyonu, fototoksisite ve fotosensitizasyon.</em></p>
+  </div>
+
+  <div class="topic-block">
+    <h3>5. Subakut Toksisitenin Araştırılması</h3>
+    <p>Subakut toksisite testlerinde, akut toksisiteye oranla öldürücü dozda değişme olup olmadığı, hassasiyet hali, tolerans gelişip gelişmediği ve yeni toksik etkilerin ortaya çıkması araştırılır.</p>
+    <p>Deney hayvanlarında maddenin <strong>kan seviyesi, doku seviyesi, idrar ve safra ile itrahı</strong> takip edilir. Maddenin emilimi, dağılımı, metabolizması, itrahı ve birikme özelliği incelenir.</p>
+    <p>Prensip olarak deney hayvanlarına <strong>3 veya 4 farklı dozdaki</strong> kimyasal madde, yemlerine karıştırılarak oral yolla uygulanır. <strong>14 günlük</strong> bir maruziyetten sonra klinik kimyasal ve histopatolojik incelemeler yapılır. Subakut toksisite genelde <strong>sıçan ve köpekte</strong> uygulanır.</p>
+  </div>
+
+  <div class="topic-block teal">
+    <h3>6. Subkronik Toksisitenin Araştırılması</h3>
+    <p>Subkronik toksisite, deney hayvanlarının kimyasal maddeye subkronik maruziyetinin araştırılmasını kapsar. Genelde test süresi <strong>90 gün</strong> olarak uygulanır. İki türde (sıçan ve köpek) ve insanın maruz kalacağı yoldan (çoğunlukla oral) uygulanarak gerçekleştirilir.</p>
+    <div class="highlight-box teal-hl"><strong>En az 3 farklı dozda uygulama yapılır:</strong><br>a) Deney hayvanlarının %10'undan fazlasını öldürmeyecek yüksek doz<br>b) Belirgin toksik etki göstermeyecek düşük doz<br>c) Bir ara doz</div>
+    <p>Uygulama süresinde <strong>ağırlık değişmesi, diyet tüketimi, görünüş değişiklikleri, solunum ve kalp anormallikleri, motor ve davranış anormallikleri, ölüm yüzdesi</strong> gibi belirtiler incelenir.</p>
+    <p>90 günlük test süresinden sonra deney hayvanları öldürülür, kan ve dokular ayrı ayrı analiz için toplanır. Organ ve dokularda gross ve mikroskopik incelemeler yapılır. Kanda hematolojik incelemeler (kan elementlerinin sayımı, Hb tayini, protrombin zamanı tayini) ve biyokimyasal analizler (SGOT, SGPT, kreatinin, bilirubin, protein) gerçekleştirilir.</p>
+    <div class="highlight-box teal-hl"><strong>Önemli:</strong> Subkronik toksisite testleri çoğunlukla <strong>NOEL (No Observable Effect Level)</strong> saptanması için kullanılır.</div>
+  </div>
+
+  <div class="topic-block gold">
+    <h3>7. Kronik Toksisite Deneyleri</h3>
+    <p>Kronik testler, deney hayvanının yaşamının önemli bir kısmını, bazen birden fazla jenerasyon üzerinde yapılan toksisite araştırmalarını içerir. <strong>3 aydan fazla süreli</strong> olarak uygulanır. <strong>Rodentlerde:</strong> 6 ay–2 yıl arası. <strong>Diğer türlerde:</strong> 1 yıldan uzun olabilir.</p>
+    <table class="inline-table">
+      <tr><th>Parametre</th><th>Detay</th></tr>
+      <tr><td>Hayvan Türleri</td><td>Rodent (sıçan, fare) + Nonrodent (köpek); anlamlı toksisite varsa 3. tür</td></tr>
+      <tr><td>Test Grupları</td><td>En az 3 deney + 1 kontrol grubu</td></tr>
+      <tr><td>Rodent Sayısı</td><td>Her iki cinsiyetten en az 10 adet</td></tr>
+      <tr><td>Nonrodent Sayısı</td><td>Her iki cinsiyetten 5 adet</td></tr>
+      <tr><td>Doz Seviyeleri</td><td>Yüksek / Orta (tedavi dozu) / Düşük (no effect level)</td></tr>
+      <tr><td>Hayvan Yaşı</td><td>Sıçanlar doğumdan sonra, köpekler 1 yaşında</td></tr>
+    </table>
+    <p>Deney sonunda komple otopsi yapılır; organ ağırlıkları, histopatoloji, karsinojenik etki (tümör), mutajenik etki (kromozomlar) ve teratojenik etki (embriyo gelişimi, düşük olayları) araştırılır.</p>
+  </div>
+
+  <div class="topic-block">
+    <h3>8. Önemli Toksikolojik Bilgiler</h3>
+    <p><strong>Kimyasal ve Fiziksel:</strong> Kimyasal yapı, pH stabilitesi, pK değeri (iyonizasyon pH'ı), lipofilik derece (organik çözücü/su dağılım katsayısı), serum proteinlerine bağlanma, okside edici özellik, bozunma ürünleri, kelat yapıcı özellikler, fotokimyasal özellikler, DNA/RNA/lipitlere bağlanma.</p>
+    <p><strong>ADME:</strong> Klinikte öngörülen her yoldan emilim, mikrozomal enzim indüksiyonu/inhibisyonu, atılım yolları, biyotransformasyonun yeri, yarı ömür, dokularda dağılım, sütle atılım, renal klerens, intestinal floranın etkileri.</p>
+  </div>
+
+  <div class="topic-block teal">
+    <h3>9. İlaç Etkileşimleri</h3>
+    <p>Bir ilacın etkisinin başka bir ilaç veya madde tarafından artırılması, azaltılması ya da toksik hale getirilmesidir. <strong>Mekanizmalar:</strong> Enzim indüksiyonu, enzim inhibisyonu, proteine bağlanma yarışması ve farmakodinamik sinerji.</p>
+  </div>
+
+  <div class="topic-block">
+    <h3>10. In Vitro Araştırmalar</h3>
+    <p>Alyuvarlar üzerine osmotik/mekanik fragilite, mitokondriyal respirasyon, memeli hücrelerine sitotoksik etki, çeşitli enzimler üzerine etkiler, lökositlerin kemotaksik motilitesi, trombosit agregasyonu/adhezyonu, G6PD eksikliği olan alyuvarlara etki, izole organlar üzerine etkiler.</p>
+  </div>
+
+  <div class="topic-block gold">
+    <h3>11. Farmakolojik Araştırmalar</h3>
+    <p>EKG, karaciğer fonksiyonu, kan basıncı, vücut ısısı, santral/periferik nörotoksisite, kalp fonksiyonu, adrenerjik/adrenolitik etkiler, EEG, konvülsan aktivite, kolinerjik/antikolinerjik etkiler. Klinik süreçte: fizik/psişik bağımlılık, nöromüsküler fonksiyon, GİS motilite, safra akışı, davranış toksisitesi, göz içi basınç, solunum parametreleri, GİS ülser.</p>
+  </div>
+
+  <div class="topic-block teal">
+    <h3>12. Klinik Araştırma Fazları</h3>
+    <p>Klinik araştırmalarda <strong>Etik Kurul Onayı</strong> ve <strong>Bilgilendirilmiş Olur Formu (BOF)</strong> zorunludur.</p>
+    <table class="inline-table">
+      <tr><th>Faz</th><th>Amaç</th><th>Popülasyon</th><th>Sayı</th><th>Süre</th></tr>
+      <tr><td><strong>Faz I</strong></td><td>Güvenlik, farmakokinetik, doz üst sınırı</td><td>Sağlıklı gönüllüler</td><td>50–100</td><td>~1 yıl</td></tr>
+      <tr><td><strong>Faz II</strong></td><td>Doz-yanıt, emniyet profili</td><td>Hastalar</td><td>100–300</td><td>~2 yıl</td></tr>
+      <tr><td><strong>Faz III</strong></td><td>Etkinlik, karşılaştırma</td><td>Hedef hastalar</td><td>1000–5000</td><td>~3 yıl</td></tr>
+      <tr><td><strong>Faz IV</strong></td><td>Pazarlama sonrası izleme</td><td>Hastalar</td><td>Değişken</td><td>Devam eden</td></tr>
+    </table>
+    <p><strong>Faz I:</strong> İnsandaki emniyet, dayanıklılık, doz üst sınırı, farmakokinetik, istenmeyen akut etkiler.</p>
+    <p><strong>Faz II:</strong> Emniyet profili, doz aralığı, dozlama sıklığı, tolerabilite. Düşük dozla başlanır, azar azar artırılır.</p>
+    <p><strong>Faz III:</strong> Çok merkezli, uluslararası, kontrollü, körlenmiş, randomize. Uzun süreli emniyet, karşılaştırmalı çalışmalar, ek endikasyonlar.</p>
+    <p><strong>Faz IV:</strong> Rutin kullanımda etkinlik/emniyet, yarar/risk oranı, farklı popülasyonlarda değerlendirme, maliyet-etkinlik.</p>
+  </div>
+
+  <div class="topic-block">
+    <h3>13. Toksikolojik Testlerin Klinikten Farkları</h3>
+    <p>Ksenobiyotikler tedavi dozunun üstünde verilir. Hayvanlar uzun süre maruz kalır. Uygulama yolu farklı olabilir. Hayvanlar deney sonunda öldürülür. Bazı etkiler (baş ağrısı, uykusuzluk, psikotik reaksiyonlar) hayvanlarda saptanamaz. Polimorfizm ve türler arası metabolizma farklılıkları mevcuttur.</p>
+  </div>
+
+  <div class="topic-block gold">
+    <h3>14. İlaç Toksisitesinin Tipleri</h3>
+    <p>(1) Adverse etkiler/yan etkiler, (2) Akut toksisite (aşırı doz), (3) İdiyosenkrazik reaksiyonlar (nadir), (4) İlaç etkileşimlerine bağlı toksisite, (5) Alışkanlık/kronik kullanıma bağlı toksik etkiler.</p>
+  </div>
+
+  <div class="topic-block">
+    <h3>15. Tarihsel İlaç Toksisitesi Örnekleri</h3>
+    <table class="inline-table">
+      <tr><th>Yıl</th><th>İlaç</th><th>Toksik Etki</th></tr>
+      <tr><td>1933</td><td>Antipirin</td><td>Agranülositoz</td></tr>
+      <tr><td>1960</td><td>Fenasetin</td><td>Analjezik nefropati</td></tr>
+      <tr><td>—</td><td>Metamizol</td><td>Agranülositoz riski</td></tr>
+      <tr><td>1930</td><td>Clioquinol</td><td>SMON (subakut myelo-optiko-nöropati)</td></tr>
+      <tr><td>1960-61</td><td>Talidomit</td><td>Teratojenite (fokomeli)</td></tr>
+      <tr><td>1970-75</td><td>Practolol</td><td>Oculomucocutaneous sendrom</td></tr>
+      <tr><td>2003</td><td>Cisapride</td><td>Atrium fibrilasyonu</td></tr>
+    </table>
+  </div>
+</section>
+</div>
+</div>
+
+<!-- ══════════ PANEL 2: TEST ══════════ -->
+<div class="tab-panel" id="panel-test">
+<div class="container">
+<section class="quiz-section">
+  <div class="section-title">40 Soruluk Test Sınavı</div>
+  <div class="quiz-controls">
+    <button class="btn btn-primary" onclick="evaluate()">Sınavı Değerlendir</button>
+    <button class="btn" onclick="resetQuiz()">Sıfırla</button>
+  </div>
+  <div class="score-banner" id="scoreBanner">
+    <div class="big" id="scoreText"></div>
+    <p id="scoreMsg" style="color:var(--text-dim);margin-top:6px"></p>
+  </div>
+  <div id="quizBox"></div>
+</section>
+</div>
+</div>
+
+<!-- ══════════ PANEL 3: CEVAP ANAHTARI ══════════ -->
+<div class="tab-panel" id="panel-anahtar">
+<div class="container">
+<section class="key-section">
+  <div class="section-title">Cevap Anahtarı</div>
+  <div class="key-grid" id="keyGrid"></div>
+</section>
+</div>
+</div>
+
+<script>
+function switchTab(name, btn){
+  document.querySelectorAll('.tab-panel').forEach(function(p){p.classList.remove('visible')});
+  document.querySelectorAll('.tab-btn').forEach(function(b){b.classList.remove('active')});
+  document.getElementById('panel-'+name).classList.add('visible');
+  btn.classList.add('active');
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+
+var DATA=[
+  {q:"Akut toksisite testlerinin temel amacı aşağıdakilerden hangisidir?",o:["NOEL değerinin saptanması","LD50'nin belirlenmesi","Kronik etkilerin incelenmesi","Farmakokinetik profil çıkarma"],a:1},
+  {q:"Subkronik toksisite testlerinin standart uygulama süresi ne kadardır?",o:["14 gün","30 gün","90 gün","1 yıl"],a:2},
+  {q:"Aşağıdakilerden hangisi klinik öncesi değerlendirmede incelenen parametrelerden DEĞİLDİR?",o:["Farmakolojik etkiler","Toksisite","Faz III etkinlik verileri","Farmakokinetik özellikler"],a:2},
+  {q:"Kronik toksisite deneyleri rodentlerde en fazla ne kadar süreyle uygulanabilir?",o:["3 ay","6 ay","1 yıl","2 yıl"],a:3},
+  {q:"NOEL (No Observable Effect Level) hangi test türü ile saptanır?",o:["Akut toksisite","Subakut toksisite","Subkronik toksisite","Faz I klinik çalışma"],a:2},
+  {q:"Faz I klinik çalışmalar kimler üzerinde gerçekleştirilir?",o:["Hedef hastalar","Sağlıklı gönüllüler","Kronik hastalar","Çocuk hastalar"],a:1},
+  {q:"Subkronik toksisite testinde en az kaç farklı doz uygulanır?",o:["1","2","3","5"],a:2},
+  {q:"Aşağıdakilerden hangisi özel toksisite testlerinden biri DEĞİLDİR?",o:["Teratojenik etki","Karsinojenik etki","LD50 tayini","Mutajenik etki"],a:2},
+  {q:"Talidomit faciası hangi toksik etkiyle ilişkilidir?",o:["Agranülositoz","Teratojenite (fokomeli)","Nefropati","Atrium fibrilasyonu"],a:1},
+  {q:"Faz III klinik çalışmalarda yaklaşık kaç hasta yer alır?",o:["50-100","100-300","1000-5000","10.000+"],a:2},
+  {q:"Dermal toksisite testleri kaç grupta toplanmıştır?",o:["2","3","4","5"],a:2},
+  {q:"Kronik toksisite deneylerinde nonrodent olarak genellikle hangi hayvan kullanılır?",o:["Fare","Sıçan","Köpek","Tavşan"],a:2},
+  {q:"Klinik araştırmalarda zorunlu olan iki temel unsur hangisidir?",o:["LD50 ve ED50","Etik Kurul Onayı ve BOF","NOEL ve NOAEL","Faz I ve Faz IV"],a:1},
+  {q:"Faz IV çalışmalar ne zaman gerçekleştirilir?",o:["Klinik öncesi dönemde","İlacın piyasaya çıkışından sonra","Faz I öncesinde","Hayvan deneyleri sırasında"],a:1},
+  {q:"Subakut toksisite testleri genelde hangi türlerde uygulanır?",o:["Fare ve tavşan","Sıçan ve köpek","Maymun ve köpek","Fare ve sıçan"],a:1},
+  {q:"Bir ilacın pK değeri neyi belirler?",o:["Öldürücü dozu","Hangi pH'ta iyonize olacağını","Protein bağlanma oranını","Yarı ömrünü"],a:1},
+  {q:"Kronik toksisite deneylerinde rodentlerden her iki cinsiyetten en az kaç hayvan kullanılmalıdır?",o:["5","10","15","20"],a:1},
+  {q:"Antipirin (1933) hangi ciddi toksik etkiye neden olmuştur?",o:["Nefropati","Agranülositoz","Fokomeli","Nöropati"],a:1},
+  {q:"Faz II çalışmaların temel amacı nedir?",o:["Pazarlama sonrası izleme","Doz-yanıt ilişkisinin belirlenmesi","LD50 saptanması","Sağlıklı gönüllülerde güvenlik"],a:1},
+  {q:"Subkronik toksisite testinde 90 gün sonunda deney hayvanlarına ne yapılır?",o:["Doğal ortamlarına bırakılır","Öldürülür, kan ve dokular analiz edilir","Bir yıl daha gözlenir","Başka bir deneye aktarılır"],a:1},
+  {q:"Aşağıdakilerden hangisi kronik toksisite deneyleri sırasında incelenen parametrelerden DEĞİLDİR?",o:["Vücut ağırlığı","Davranış değişiklikleri","İlacın piyasa fiyatı","Hematolojik parametreler"],a:2},
+  {q:"Lipofilik bir madde için aşağıdakilerden hangisi DOĞRUDUR?",o:["Suda kolayca çözünür","İyonize haldedir","Hücre zarından kolay geçer ve dokularda birikir","Böbrekten hızla atılır"],a:2},
+  {q:"İlaç etkileşimleri hangi mekanizmalarla oluşabilir?",o:["Enzim indüksiyonu, inhibisyonu, proteine bağlanma yarışması","Sadece enzim indüksiyonu","Yalnızca reseptör düzeyinde","Sadece farmasötik düzeyde"],a:0},
+  {q:"Fenasetin hangi tür toksisiteye neden olarak piyasadan kaldırılmıştır?",o:["Agranülositoz","Analjezik nefropati","Fokomeli","SMON"],a:1},
+  {q:"Faz I çalışmalarda yaklaşık kaç kişi yer alır?",o:["50-100","100-300","1000-5000","10.000+"],a:0},
+  {q:"Clioquinol (Entero-Vioform) hangi ciddi yan etkiye neden olmuştur?",o:["Agranülositoz","Fokomeli","SMON (subakut myelo-optiko-nöropati)","Atrium fibrilasyonu"],a:2},
+  {q:"Subkronik toksisite testinde yüksek doz nasıl tanımlanır?",o:["Tüm hayvanları öldürecek doz","Hayvanların %10'undan fazlasını öldürmeyecek doz","Tedavi dozu","LD50'nin iki katı"],a:1},
+  {q:"Aşağıdakilerden hangisi in vitro araştırmalardan biridir?",o:["Faz I çalışması","Mitokondriyal respirasyon","LD50 tayini","Kohort çalışması"],a:1},
+  {q:"Kronik toksisite deneyleri için besin katkı maddelerinde öngörülen test süresi ne kadardır?",o:["14 gün","90 gün","6 ay","2 yıl"],a:3},
+  {q:"Faz III çalışmalar aşağıdakilerden hangisiyle karakterize edilir?",o:["Sadece tek merkezli çalışma","Kontrollü, körlenmiş, randomize çok merkezli çalışma","Yalnızca sağlıklı gönüllülerde yapılır","Sadece doz-yanıt ilişkisi araştırılır"],a:1},
+  {q:"Toksikolojik testlerde ksenobiyotikler nasıl uygulanır?",o:["Tedavi dozunun altında","Tedavi dozunda","Tedavi dozunun üstünde","Sadece topikal olarak"],a:2},
+  {q:"Aşağıdakilerden hangisi ilaç toksisitesi tiplerinden biri DEĞİLDİR?",o:["Adverse etkiler","Akut toksisite","Terapötik etkinlik","İdiyosenkrazik reaksiyonlar"],a:2},
+  {q:"Subakut toksisite testlerinde maddenin hangi özellikleri incelenir?",o:["Yalnızca LD50","Emilim, dağılım, metabolizma, itrah ve birikme","Sadece karsinojenik etki","Sadece teratojenik etki"],a:1},
+  {q:"Cisapride hangi toksik etkiye yol açmıştır?",o:["Agranülositoz","Nefropati","Atrium fibrilasyonu","Fokomeli"],a:2},
+  {q:"Kronik toksisite deneylerinde nonrodentlerden her iki cinsiyetten kaç hayvan kullanılır?",o:["3","5","10","15"],a:1},
+  {q:"Organik çözücü/su dağılım katsayısı neyi gösterir?",o:["Öldürücü dozu","Lipofilik derecesini","Proteine bağlanma oranını","Yarı ömrü"],a:1},
+  {q:"Faz IV çalışmalarda aşağıdakilerden hangisi değerlendirilir?",o:["Yalnızca LD50","Uzun süreli emniyet ve yarar/risk oranı","Sadece farmakokinetik","Yalnızca akut toksisite"],a:1},
+  {q:"Akut toksisite testlerinde göz irritasyonu neden ayrıca incelenir?",o:["Göz en büyük organdır","Göz, sistemik toksisiteyi ilgilendiren bir organdır","Göz ilacı ilk absorbe eden organdır","Sadece kozmetikler için gereklidir"],a:1},
+  {q:"Kronik toksisite deneylerinde teratojenik etki için ne araştırılır?",o:["Tümör oluşumu","Kromozom değişiklikleri","Embriyoların gelişimi ve düşük olayları","Kan diskrazisi"],a:2},
+  {q:"Aşağıdakilerden hangisi subkronik toksisite testinde yapılan hematolojik incelemelerden biridir?",o:["Tümör taraması","Protrombin zamanı tayini","Karsinojen taraması","Embriyo analizi"],a:1}
+];
+
+var LETTERS=['A','B','C','D'];
+var selections=new Array(DATA.length).fill(-1);
+var evaluated=false;
+
+function render(){
+  var box=document.getElementById('quizBox');
+  box.innerHTML='';
+  DATA.forEach(function(item,i){
+    var card=document.createElement('div');
+    card.className='q-card';
+    card.id='qcard-'+i;
+    var html='<div class="q-head"><div class="q-num">'+(i+1)+'</div><div class="q-text">'+item.q+'</div></div><div class="opts">';
+    item.o.forEach(function(opt,j){
+      html+='<div class="opt" id="opt-'+i+'-'+j+'" onclick="pick('+i+','+j+')"><div class="opt-letter">'+LETTERS[j]+'</div><div>'+opt+'</div></div>';
+    });
+    html+='</div>';
+    card.innerHTML=html;
+    box.appendChild(card);
+  });
+}
+
+function pick(qi,oi){
+  if(evaluated)return;
+  selections[qi]=oi;
+  DATA[qi].o.forEach(function(_,j){
+    var el=document.getElementById('opt-'+qi+'-'+j);
+    if(j===oi){el.classList.add('sel')}else{el.classList.remove('sel')}
+  });
+}
+
+function evaluate(){
+  evaluated=true;
+  var correct=0;
+  DATA.forEach(function(item,i){
+    var card=document.getElementById('qcard-'+i);
+    var sel=selections[i];
+    document.getElementById('opt-'+i+'-'+item.a).classList.add('show-correct');
+    if(sel===item.a){correct++;card.classList.add('is-correct')}
+    else{card.classList.add('is-wrong');if(sel>=0)document.getElementById('opt-'+i+'-'+sel).classList.add('show-wrong')}
+  });
+  var banner=document.getElementById('scoreBanner');
+  banner.style.display='block';
+  document.getElementById('scoreText').textContent=correct+' / '+DATA.length;
+  var pct=Math.round(correct/DATA.length*100);
+  var msg=pct>=90?'Mükemmel!':pct>=70?'Başarılı!':pct>=50?'Orta düzey, tekrar çalışmanız önerilir.':'Konuyu tekrar gözden geçirmeniz faydalı olacaktır.';
+  document.getElementById('scoreMsg').textContent='%'+pct+' başarı oranı — '+msg;
+  banner.scrollIntoView({behavior:'smooth',block:'center'});
+}
+
+function resetQuiz(){
+  evaluated=false;
+  selections=new Array(DATA.length).fill(-1);
+  document.getElementById('scoreBanner').style.display='none';
+  render();
+}
+
+function renderKey(){
+  var grid=document.getElementById('keyGrid');
+  grid.innerHTML='';
+  DATA.forEach(function(item,i){
+    var cell=document.createElement('div');
+    cell.className='key-cell';
+    cell.innerHTML=(i+1)+'. <span>'+LETTERS[item.a]+'</span>';
+    grid.appendChild(cell);
+  });
+}
+
+render();
+renderKey();
+</script>
+</body>
+</html>

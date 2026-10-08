@@ -1,0 +1,1467 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Fitoterapötikler — Ders 6 & 10 Çalışma Rehberi</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700;800&family=Source+Sans+3:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #0c0f14;
+  --surface: #151921;
+  --surface2: #1c2230;
+  --border: #2a3142;
+  --text: #e2e6ef;
+  --text-dim: #8892a6;
+  --accent: #6ee7b7;
+  --accent2: #34d399;
+  --accent-glow: rgba(110, 231, 183, 0.15);
+  --warm: #fbbf24;
+  --coral: #f87171;
+  --blue: #60a5fa;
+  --purple: #a78bfa;
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+html { scroll-behavior: smooth; scroll-padding-top: 80px; }
+
+body {
+  font-family: 'Source Sans 3', sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  line-height: 1.7;
+  font-size: 16px;
+}
+
+/* ── NAV BAR ── */
+nav {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 1000;
+  background: rgba(12, 15, 20, 0.85);
+  backdrop-filter: blur(20px);
+  border-bottom: 1px solid var(--border);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+  padding: 0 24px;
+  height: 64px;
+}
+
+nav a {
+  text-decoration: none;
+  color: var(--text-dim);
+  font-weight: 600;
+  font-size: 14px;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+  padding: 8px 28px;
+  border-radius: 8px;
+  transition: all 0.3s ease;
+  position: relative;
+}
+
+nav a:hover, nav a.active {
+  color: var(--accent);
+  background: var(--accent-glow);
+}
+
+nav a::after {
+  content: '';
+  position: absolute;
+  bottom: 2px;
+  left: 50%;
+  transform: translateX(-50%) scaleX(0);
+  width: 60%;
+  height: 2px;
+  background: var(--accent);
+  border-radius: 2px;
+  transition: transform 0.3s ease;
+}
+
+nav a:hover::after, nav a.active::after {
+  transform: translateX(-50%) scaleX(1);
+}
+
+.nav-logo {
+  position: absolute;
+  left: 24px;
+  font-family: 'Playfair Display', serif;
+  font-weight: 800;
+  font-size: 18px;
+  color: var(--accent);
+  letter-spacing: -0.5px;
+}
+
+/* ── HERO ── */
+.hero {
+  padding: 140px 24px 80px;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+}
+
+.hero::before {
+  content: '';
+  position: absolute;
+  top: -200px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 800px;
+  height: 800px;
+  background: radial-gradient(circle, rgba(110,231,183,0.08) 0%, transparent 70%);
+  pointer-events: none;
+}
+
+.hero h1 {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(2.2rem, 5vw, 3.8rem);
+  font-weight: 800;
+  line-height: 1.15;
+  margin-bottom: 16px;
+  background: linear-gradient(135deg, var(--accent), var(--blue), var(--purple));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.hero p {
+  color: var(--text-dim);
+  font-size: 1.1rem;
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+/* ── SECTIONS ── */
+.container {
+  max-width: 920px;
+  margin: 0 auto;
+  padding: 0 24px;
+}
+
+section {
+  padding: 60px 0;
+}
+
+.section-title {
+  font-family: 'Playfair Display', serif;
+  font-size: 2rem;
+  font-weight: 700;
+  margin-bottom: 40px;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.section-title .badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 42px;
+  height: 42px;
+  border-radius: 12px;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 16px;
+  font-weight: 500;
+  flex-shrink: 0;
+}
+
+.badge-green { background: rgba(110,231,183,0.15); color: var(--accent); }
+.badge-yellow { background: rgba(251,191,36,0.15); color: var(--warm); }
+.badge-coral { background: rgba(248,113,113,0.15); color: var(--coral); }
+
+/* ── DRUG CARDS ── */
+.drug-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  padding: 32px;
+  margin-bottom: 28px;
+  transition: border-color 0.3s;
+}
+
+.drug-card:hover {
+  border-color: rgba(110,231,183,0.3);
+}
+
+.drug-header {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 8px 16px;
+  margin-bottom: 16px;
+}
+
+.drug-header h3 {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.35rem;
+  font-weight: 700;
+  color: var(--accent);
+}
+
+.drug-header .latin {
+  font-style: italic;
+  color: var(--text-dim);
+  font-size: 0.95rem;
+}
+
+.drug-meta {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 8px 24px;
+  padding: 16px 20px;
+  background: var(--surface2);
+  border-radius: 10px;
+  margin-bottom: 18px;
+  font-size: 0.92rem;
+}
+
+.drug-meta span {
+  color: var(--text-dim);
+}
+
+.drug-meta strong {
+  color: var(--text);
+  font-weight: 600;
+}
+
+.sub-title {
+  font-weight: 700;
+  font-size: 0.88rem;
+  text-transform: uppercase;
+  letter-spacing: 0.8px;
+  margin: 18px 0 8px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.st-green { color: var(--accent); }
+.st-yellow { color: var(--warm); }
+.st-coral { color: var(--coral); }
+.st-blue { color: var(--blue); }
+.st-purple { color: var(--purple); }
+
+.drug-card p, .drug-card ul {
+  color: var(--text);
+  font-size: 0.95rem;
+  line-height: 1.75;
+}
+
+.drug-card ul {
+  padding-left: 20px;
+}
+
+.drug-card li {
+  margin-bottom: 4px;
+}
+
+.warn-box {
+  background: rgba(248,113,113,0.08);
+  border-left: 3px solid var(--coral);
+  padding: 12px 18px;
+  border-radius: 0 8px 8px 0;
+  margin-top: 12px;
+  font-size: 0.9rem;
+  color: #fca5a5;
+}
+
+.info-box {
+  background: rgba(96,165,250,0.08);
+  border-left: 3px solid var(--blue);
+  padding: 12px 18px;
+  border-radius: 0 8px 8px 0;
+  margin-top: 12px;
+  font-size: 0.9rem;
+  color: #93c5fd;
+}
+
+/* ── TOPIC DIVIDER ── */
+.topic-divider {
+  text-align: center;
+  margin: 50px 0 30px;
+  position: relative;
+}
+
+.topic-divider::before {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background: var(--border);
+}
+
+.topic-divider span {
+  position: relative;
+  background: var(--bg);
+  padding: 0 24px;
+  font-family: 'Playfair Display', serif;
+  font-size: 1.2rem;
+  font-weight: 600;
+  color: var(--warm);
+}
+
+/* ── TEST QUESTIONS ── */
+.question-block {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  padding: 24px 28px;
+  margin-bottom: 18px;
+  counter-increment: q;
+  transition: border-color 0.3s;
+}
+
+.question-block:hover {
+  border-color: rgba(251,191,36,0.3);
+}
+
+.q-number {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.8rem;
+  font-weight: 500;
+  color: var(--warm);
+  background: rgba(251,191,36,0.12);
+  padding: 3px 10px;
+  border-radius: 6px;
+  display: inline-block;
+  margin-bottom: 10px;
+}
+
+.question-block .q-text {
+  font-weight: 600;
+  font-size: 1rem;
+  margin-bottom: 14px;
+  line-height: 1.6;
+}
+
+.options {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.options label {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  padding: 8px 14px;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background 0.2s;
+  font-size: 0.93rem;
+  line-height: 1.5;
+}
+
+.options label:hover {
+  background: var(--surface2);
+}
+
+.options input[type="radio"] {
+  accent-color: var(--warm);
+  margin-top: 4px;
+  flex-shrink: 0;
+}
+
+.opt-letter {
+  font-family: 'JetBrains Mono', monospace;
+  font-weight: 600;
+  color: var(--text-dim);
+  min-width: 20px;
+}
+
+/* ── ANSWER KEY ── */
+.answer-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 10px;
+}
+
+.answer-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 18px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  font-size: 0.93rem;
+  transition: border-color 0.3s;
+}
+
+.answer-item:hover {
+  border-color: rgba(248,113,113,0.3);
+}
+
+.answer-item .a-num {
+  font-family: 'JetBrains Mono', monospace;
+  font-weight: 600;
+  color: var(--text-dim);
+  min-width: 28px;
+}
+
+.answer-item .a-val {
+  font-weight: 700;
+  color: var(--coral);
+}
+
+.answer-item .a-explain {
+  color: var(--text-dim);
+  font-size: 0.82rem;
+  margin-left: auto;
+  white-space: nowrap;
+}
+
+/* ── FOOTER ── */
+footer {
+  text-align: center;
+  padding: 60px 24px 40px;
+  color: var(--text-dim);
+  font-size: 0.85rem;
+  border-top: 1px solid var(--border);
+  margin-top: 40px;
+}
+
+/* ── RESPONSIVE ── */
+@media (max-width: 640px) {
+  nav { gap: 0; padding: 0 12px; }
+  nav a { padding: 8px 14px; font-size: 12px; }
+  .nav-logo { display: none; }
+  .drug-meta { grid-template-columns: 1fr; }
+  .answer-grid { grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)); }
+  .drug-card { padding: 22px 18px; }
+  .question-block { padding: 18px 16px; }
+}
+
+/* scroll active link highlight via JS */
+</style>
+</head>
+<body>
+
+<nav id="navbar">
+  <span class="nav-logo">FT</span>
+  <a href="#ozet" class="active">Özet</a>
+  <a href="#sorular">Test Soruları</a>
+  <a href="#cevaplar">Cevap Anahtarı</a>
+</nav>
+
+<!-- HERO -->
+<div class="hero">
+  <h1>Fitoterapötikler<br>Ders 6 & 10</h1>
+  <p>Sindirim Sistemi Rahatsızlıkları • Algler • Fitosterol & Fitoöstrojenler — Kapsamlı Çalışma Rehberi</p>
+</div>
+
+<!-- ═══════════════════════════════════════ -->
+<!-- SECTION 1: ÖZET -->
+<!-- ═══════════════════════════════════════ -->
+<section id="ozet">
+<div class="container">
+  <h2 class="section-title"><span class="badge badge-green">01</span> Detaylı Özet</h2>
+
+  <!-- ── DERS 6 ── -->
+  <div class="topic-divider"><span>DERS 6 — Sindirim Sistemi Fitoterapötikleri</span></div>
+
+  <!-- 1. Angelica -->
+  <div class="drug-card">
+    <div class="drug-header">
+      <h3>Melekotu (Angelica)</h3>
+      <span class="latin">Angelica archangelica L.</span>
+    </div>
+    <div class="drug-meta">
+      <span>Drog: <strong>Angelica radix</strong></span>
+      <span>Familya: <strong>Apiaceae</strong></span>
+      <span>EP UY: <strong>≥ 2 ml/kg</strong></span>
+      <span>Monograf: <strong>ESCOP, Commission E</strong></span>
+    </div>
+    <p class="sub-title st-green">● Bileşikler</p>
+    <p>Drogta %0,2-1 oranında uçucu yağ (UY) bulunur. UY'de α-pinen, δ-3-karen, β-fellandren, sabinen, limonen, p-simen ve mirsen gibi <strong>monoterpenler</strong> yer alır. Az miktarda α-kapoen, germakren D, β-bisabolen ve karyofillen gibi <strong>seskiterpenler</strong> de taşır. Ostenol (%0,04) ve ostol gibi <strong>prenillenmiş kumarinler</strong>, 20'den fazla <strong>furanokumarin</strong> türevi (bergapten, anjelisin) ve dihidropiranokumarin (anomalin) içerir. Ayrıca fenolik asitler, sitosteril esterleri ve tanenler bulunur.</p>
+
+    <p class="sub-title st-yellow">● Endikasyonlar</p>
+    <p>Hafif Gİ spazm, gaz, hazımsızlık, dolgunluk hissi gibi <strong>dispepsi</strong> şikayetlerinde; <strong>iştahsızlık/anoreksi</strong> tedavisinde ve bronşit tedavisinde kullanılır.</p>
+
+    <p class="sub-title st-blue">● Dozaj</p>
+    <p>Yetişkinlerde günlük doz: 3-6 g drog veya eşdeğer infüzyon. %25 EtOH sıvı ekstre (1:1) 1,5-6 ml; %50 EtOH tentür (1:5) 1,5-6 ml. Günlük doz 3 defada verilir. Çocuklarda 4 yaşından sonra; 4-10 yaş: 2-3 g, 10-16 yaş: 3-4 g.</p>
+
+    <div class="warn-box">⚠ Furanokumarinler nedeniyle <strong>fotosensibilite</strong> riski vardır; güneş ışığına uzun süre maruz kalınmamalıdır. Hamile ve emziren kadınlar sadece doktor kontrolünde kullanmalıdır.</div>
+  </div>
+
+  <!-- 2. Chelidonium -->
+  <div class="drug-card">
+    <div class="drug-header">
+      <h3>Kırlangıç Otu (Greater Celandine)</h3>
+      <span class="latin">Chelidonium majus L.</span>
+    </div>
+    <div class="drug-meta">
+      <span>Drog: <strong>Chelidonii herba</strong></span>
+      <span>Familya: <strong>Papaveraceae</strong></span>
+      <span>EP: <strong>≥ %0,6 total alkaloit</strong></span>
+      <span>Monograf: <strong>ESCOP, Commission E</strong></span>
+    </div>
+    <p class="sub-title st-green">● Bileşikler</p>
+    <p><strong>Benzilizokinolin alkaloitleri</strong> (%0,01-1) taşır. Ana alkaloit <strong>koptisin</strong>dir; ayrıca kelidonin, protopin, berberin ve sanguinarin gibi 20'den fazla alkaloit içerir. Kafeoilmalik asit gibi hidroksisinnamik asit türevleri de bulunur.</p>
+
+    <p class="sub-title st-yellow">● Endikasyonlar</p>
+    <p>Üst Gİ bölgesindeki hafif-orta şiddette spazmların semptomatik tedavisinde, safra kesesindeki küçük rahatsızlıkların, gaz ve şişlik gibi <strong>dispepsi</strong> tedavisinde kullanılır.</p>
+
+    <p class="sub-title st-blue">● Dozaj</p>
+    <p>Yetişkinler ve >12 yaş: günlük 1,2-3,6 g drogdan infüzyon veya 9-24 mg total alkaloite (kelidonin üz.) karşılık gelen 125-700 mg standardize ekstreler. Tentür (1:10) 2-4 ml günde 3×; sıvı ekstre (1:1) 1-2 ml günde 3×.</p>
+
+    <div class="warn-box">⚠ Safra kanalı tıkanıklığında ve KC rahatsızlıklarında <strong>kontrendike</strong>. 4 haftayı aşan kullanımda KC enzimleri kontrol edilmeli. Nadiren KC inflamasyonu yapabilir. Aşırı dozda karın ağrısı, Gİ kramp, idrarda kan görülür.</div>
+  </div>
+
+  <!-- 3. Curcuma -->
+  <div class="drug-card">
+    <div class="drug-header">
+      <h3>Zerdeçal (Turmeric)</h3>
+      <span class="latin">Curcuma longa L.</span>
+    </div>
+    <div class="drug-meta">
+      <span>Drog: <strong>Curcuma longae rhizoma</strong></span>
+      <span>Familya: <strong>Zingiberaceae</strong></span>
+      <span>DAC: <strong>≥ %2,5 disinnamoilmetan</strong></span>
+      <span>Monograf: <strong>ESCOP, WHO</strong></span>
+    </div>
+    <p class="sub-title st-green">● Bileşikler</p>
+    <p>Ana bileşikler <strong>kurkuminoidler</strong> (%3-5): kurkumin, monodezmetoksi- ve bisdezmetoksi-kurkumin gibi <strong>disinnamoilmetan türevleri (diarilheptanoid)</strong>. UY (%3-5) zingiberen, kurkumol, α- ve β-turmeron gibi seskiterpence zengindir. Asidik arabinogalaktanlardan oluşan ukanon A-D gibi polisakkaritler minör bileşendir.</p>
+
+    <p class="sub-title st-yellow">● Endikasyonlar</p>
+    <p>Orta şiddette sindirim sistemi rahatsızlıklarının semptomatik tedavisinde ve minör safra kesesi problemlerinde kullanılır.</p>
+
+    <p class="sub-title st-blue">● Dozaj</p>
+    <p>Yetişkinlerde günlük doz: 1,5-3 g drog veya eşdeğer ekstre.</p>
+
+    <div class="warn-box">⚠ Safra kanalı tıkanıklığında kullanılmaz. Safra kesesi taşı olanlarda doktora danışılmalı.</div>
+  </div>
+
+  <!-- 4. Anason -->
+  <div class="drug-card">
+    <div class="drug-header">
+      <h3>Anason (Aniseed)</h3>
+      <span class="latin">Pimpinella anisum L.</span>
+    </div>
+    <div class="drug-meta">
+      <span>Drog: <strong>Anisi fructus</strong></span>
+      <span>Familya: <strong>Apiaceae</strong></span>
+      <span>EP UY: <strong>≥ 20 ml/kg</strong></span>
+      <span>Monograf: <strong>ESCOP, Commission E, WHO</strong></span>
+    </div>
+    <p class="sub-title st-green">● Bileşikler</p>
+    <p>%2-6 UY; ana bileşik <strong>trans-anetol</strong> (%80-95), az miktarda estragol, cis-anetol ve anisaldehit. Ayrıca flavonol glikozitleri, fenolik asitler, furanokumarinler, hidroksikumarinler ve sabit yağ bulunur.</p>
+
+    <p class="sub-title st-yellow">● Endikasyonlar</p>
+    <p>Dispepsi şikayetleri; hafif sancılı Gİ sorunları, gaz, şişkinlik. Ayrıca üst solunum yolları tedavisinde (tıkanma, mukus birikmesi) kullanılır.</p>
+
+    <p class="sub-title st-blue">● Dozaj</p>
+    <p>Yetişkinlerde günlük doz: 3 g ezilmiş drog infüzyonu. Çocuklarda; <1 yaş: 0,5 g, 1-4 yaş: 1 g, 4-10 yaş: 2 g, 10-16 yaş: yetişkin dozu.</p>
+
+    <div class="warn-box">⚠ Anetol hassasiyetinde kontrendike. Hamile/emzirenlerde sadece infüzyon halinde tavsiye dozlarında kullanılabilir. UY ve alkollü ekstreler anetolün hafif <strong>östrojenik ve antifertilite</strong> etkileri nedeniyle kullanılmamalıdır.</div>
+  </div>
+
+  <!-- 5. Rezene -->
+  <div class="drug-card">
+    <div class="drug-header">
+      <h3>Rezene (Fennel)</h3>
+      <span class="latin">Foeniculum vulgare subsp. vulgare Mill.</span>
+    </div>
+    <div class="drug-meta">
+      <span>Drog: <strong>Foeniculi fructus</strong></span>
+      <span>Familya: <strong>Apiaceae</strong></span>
+      <span>Varyeteler: <strong>var. vulgare (acı), var. dulce (tatlı)</strong></span>
+      <span>Monograf: <strong>ESCOP, Commission E, WHO</strong></span>
+    </div>
+    <p class="sub-title st-green">● Bileşikler</p>
+    <p>Ana etkin maddeler UY'deki <strong>fenilpropanoidler ve monoterpenler</strong>. Anetol (acı %60, tatlı %80), estragol (acı %5, tatlı <%10), fenkon (acı ≥%15, tatlı ≤%7,5). Acı varyetede EP'ye göre ≥40 ml/kg UY, tatlı varyetede ≥20 ml/kg UY.</p>
+
+    <p class="sub-title st-blue">● Dozaj</p>
+    <p>Yetişkinlerde günlük doz: 5-7 g ezilmiş drog infüzyonu. Çocuklarda; <1 yaş: 1-2 g, 1-4 yaş: 1,5-3 g, 4-10 yaş: 3-5 g.</p>
+
+    <div class="warn-box">⚠ Kontrendikasyonlar ve uyarılar anasonla aynıdır (anetol hassasiyeti, östrojenik etki).</div>
+  </div>
+
+  <!-- 6. Kimyon -->
+  <div class="drug-card">
+    <div class="drug-header">
+      <h3>Frenk Kimyonu / Karaman Kimyonu (Caraway)</h3>
+      <span class="latin">Carum carvi L.</span>
+    </div>
+    <div class="drug-meta">
+      <span>Drog: <strong>Carvi fructus / aetheroleum</strong></span>
+      <span>Familya: <strong>Apiaceae</strong></span>
+      <span>EP UY: <strong>≥ 30 ml/kg</strong></span>
+      <span>Monograf: <strong>ESCOP, Commission E, WHO</strong></span>
+    </div>
+    <p class="sub-title st-green">● Bileşikler</p>
+    <p>%3-7 UY: <strong>(+)-karvon</strong> (%50-65) ile <strong>(+)-limonen</strong> (%45'e kadar) monoterpenler. Ayrıca %10-18 sabit yağ, fenolik asitler ve az miktarda flavonoit.</p>
+
+    <p class="sub-title st-yellow">● Endikasyonlar</p>
+    <p>Sancılı Gİ şikayetleri, gaz, şişkinlik ve <strong>bebeklerdeki gaz sancıları</strong>.</p>
+
+    <p class="sub-title st-blue">● Dozaj</p>
+    <p>Yetişkinlerde ve >10 yaş: 1,5-6 g drog. İnfüzyon: 1-5 g ezilmiş drog + 150 ml kaynar su, 10-15 dk. Çocuklarda; 4-10 yaş: 1-4 g, 1-4 yaş: 1-2 g, <1 yaş: 1 g. UY bebeklerde haricen taşıyıcı yağla (1:9) karına masaj şeklinde uygulanır.</p>
+  </div>
+
+  <!-- 7. Nane -->
+  <div class="drug-card">
+    <div class="drug-header">
+      <h3>Nane (Peppermint)</h3>
+      <span class="latin">Mentha × piperita L.</span>
+    </div>
+    <div class="drug-meta">
+      <span>Drog: <strong>Menthae piperitae folium / aetheroleum</strong></span>
+      <span>Familya: <strong>Lamiaceae</strong></span>
+      <span>EP (yaprak bütün): <strong>≥ 12 ml/kg UY</strong></span>
+      <span>Monograf: <strong>ESCOP, Commission E, WHO</strong></span>
+    </div>
+
+    <p class="sub-title st-green">● UY Bileşikleri</p>
+    <p>Ana bileşik <strong>(-)-mentol</strong> (%35-55), (+)-neomentol, (+)-izomentol ve keto türevi <strong>menton</strong>. EP'ye göre %30-55 mentol, %14-32 sineol, %1,5-10 izomenton; pulegon <%4, karvon <%1. Yaprakta %1-3 UY; ayrıca rutin, hesperidin, luteolin, eriositrin gibi flavonoitler, fenolik asitler ve triterpenler.</p>
+
+    <p class="sub-title st-yellow">● Endikasyonlar</p>
+    <p><strong>Dahilen:</strong> Gaz, şişkinlik, dispepsi, <strong>İBS</strong>, öksürük/soğuk algınlığı. <strong>Haricen:</strong> Romatizma, stres kaynaklı baş ağrısı, deride kaşıntı/ürtiker/iritasyon.</p>
+
+    <p class="sub-title st-blue">● Dozaj</p>
+    <p><strong>UY dahilen:</strong> Gİ için 0,02-0,08 ml (1-4 damla) günde 3×. İBS için 0,2-0,4 ml günde 3× enterik kaplı kapsüller. <strong>Haricen:</strong> İnhalasyon 3-4 damla sıcak suya; baş ağrısı %10'luk çözelti alın/şakaklara. <strong>Yaprak:</strong> 1,5-3 g infüzyon günde 3×.</p>
+
+    <div class="warn-box">⚠ Nane yağı bebeklerin ve küçük çocukların burun bölgesine tatbik edilmemeli (<strong>bronşiyal/laringeal spazm riski</strong>). Mentol yeni doğanlarda (özellikle G6PD eksikliğinde) sarılığa neden olabilir. Enterik kaplı olmayan kapsüller reflüde mide yanması yapabilir.</div>
+  </div>
+
+  <!-- 8. Biberiye -->
+  <div class="drug-card">
+    <div class="drug-header">
+      <h3>Biberiye (Rosemary)</h3>
+      <span class="latin">Rosmarinus officinalis L.</span>
+    </div>
+    <div class="drug-meta">
+      <span>Drog: <strong>Rosmarini folium</strong></span>
+      <span>Familya: <strong>Lamiaceae</strong></span>
+      <span>EP: <strong>≥ 12 ml/kg UY, ≥ %3 hidroksisinnamik asit</strong></span>
+      <span>Monograf: <strong>ESCOP, Commission E, WHO</strong></span>
+    </div>
+    <p class="sub-title st-green">● Bileşikler</p>
+    <p>%1-2,5 UY: 1,8-sineol (%20-50), α-pinen (%15-26), kafur (%10-25), bornil asetat, borneol, kamfen, α-terpineol. <strong>Fenolik diterpenler:</strong> karnosol (%4,6'ya kadar), rozmanol, rosmaridifenol. <strong>Rozmarinik asit</strong> %2-3. Flavonoitler (nepetin, nepitrin). Triterpenik bileşikler (ursolik asit, oleanolik asit).</p>
+
+    <p class="sub-title st-yellow">● Endikasyonlar</p>
+    <p><strong>Dahilen:</strong> KC ve safra kesesi fonksiyonlarının iyileştirilmesi, dispepsi. <strong>Haricen:</strong> Romatizma, periferal dolaşım sorunları, yara iyileştirme, hafif antiseptik.</p>
+
+    <p class="sub-title st-blue">● Dozaj</p>
+    <p>Dahilen: 2-4 g yaprak infüzyonu. Sıvı ekstre (1:1 %45 EtOH) 1,5-3 ml; tentür (1:5 %70 EtOH) 3-8 ml. Haricen: etanolik ekstre (1:20); UY'nin %2 V/V etanolde çözeltisi antiseptik; 1 L dekoksiyon (1:20) banyoya.</p>
+
+    <div class="warn-box">⚠ Karnosol hassasiyetinde kontrendike. Açık/büyük yarası, akut inflamasyon, dolaşım bozukluğu veya hipertansiyon olanlarda haricen kullanılmamalı.</div>
+  </div>
+
+  <!-- 9. Meryemana Dikeni -->
+  <div class="drug-card">
+    <div class="drug-header">
+      <h3>Meryemana Dikeni (Milk Thistle)</h3>
+      <span class="latin">Silybum marianum (L.) Gaertner</span>
+    </div>
+    <div class="drug-meta">
+      <span>Drog: <strong>Silybi mariani fructus</strong></span>
+      <span>Familya: <strong>Asteraceae</strong></span>
+      <span>EP: <strong>≥ %1,5 silimarin (silibinin üz.)</strong></span>
+      <span>Monograf: <strong>ESCOP, Commission E, WHO</strong></span>
+    </div>
+    <p class="sub-title st-green">● Bileşikler</p>
+    <p>Etkin bileşikler <strong>silimarin</strong> karışımındaki <strong>flavanolignanlar</strong>: <strong>silibinin, izosilibinin, silikristin ve silidianin</strong>. Toksifolinin koniferol alkol ile oksidatif kondensasyonu ile oluşurlar. Kuru ekstre (Milk Thistle Dry Extract) %30-65 silimarin taşır; klinik çalışmalarda kullanılan ekstre %74,1-80,9 silimarin içerir. Ayrıca taksifolin, kersetin gibi flavonoitler; linoleik-oleik asit sabit yağ (%20-30); β-sitosterol bulunur.</p>
+
+    <p class="sub-title st-yellow">● Endikasyonlar</p>
+    <p>Toksik <strong>karaciğer hasarları</strong>, kronik KC inflamasyonu ve <strong>KC sirozu</strong> hastalarının yardımcı tedavisi.</p>
+
+    <p class="sub-title st-blue">● Dozaj</p>
+    <p>Yetişkinlerde: 154-324 mg silimarine eşdeğer preparatlar veya 200-420 mg silimarin, 2-3 doza bölünerek. Kullanım süresinde kısıtlama yok; uzun süreli kullanım önerilir.</p>
+  </div>
+
+  <!-- 10. Gentiana -->
+  <div class="drug-card">
+    <div class="drug-header">
+      <h3>Centiyane (Gentian Root)</h3>
+      <span class="latin">Gentiana lutea L.</span>
+    </div>
+    <div class="drug-meta">
+      <span>Drog: <strong>Gentianae radix</strong></span>
+      <span>Familya: <strong>Gentianaceae</strong></span>
+      <span>Monograf: <strong>ESCOP, Commission E, WHO</strong></span>
+    </div>
+    <p class="sub-title st-green">● Bileşikler</p>
+    <p>Acı <strong>sekoiridoit glikozitleri:</strong> centiopikrozit (%1-4) ve çok acı olan amerogenin (%0,025-0,4). Centianoz ve centiobioz gibi acı oligosakkaritler. %0,1 kadar <strong>ksanton</strong> bileşikleri (centisin, izocentisin, centiozit) ve çok az miktarda UY.</p>
+
+    <p class="sub-title st-yellow">● Endikasyonlar</p>
+    <p><strong>Anoreksi</strong> (özellikle hastalık sonrası iştahsızlık) ve dispepsi. Anoreksi tedavisinde yemekten <strong>30-60 dk önce</strong>, dispepside ise yemekten <strong>sonra</strong> verilir.</p>
+
+    <p class="sub-title st-blue">● Dozaj</p>
+    <p>Yetişkinlerde tek doz: 0,1-2 g drog/150 ml su infüzyon/maserasyon/dekoksiyon günde 3×'e kadar. Tentür (1:5 %45-70 EtOH) 1 ml günde 3×.</p>
+
+    <div class="warn-box">⚠ Gastrik/duodenal ülser ve hiperasiditede kontrendike.</div>
+  </div>
+
+  <!-- 11. Zencefil -->
+  <div class="drug-card">
+    <div class="drug-header">
+      <h3>Zencefil (Ginger) — Antiemetik</h3>
+      <span class="latin">Zingiber officinale Roscoe</span>
+    </div>
+    <div class="drug-meta">
+      <span>Drog: <strong>Zingiberis rhizoma</strong></span>
+      <span>Familya: <strong>Zingiberaceae</strong></span>
+      <span>EP UY: <strong>≥ 15 ml/kg</strong></span>
+      <span>Monograf: <strong>ESCOP, Commission E, WHO</strong></span>
+    </div>
+    <p class="sub-title st-green">● Bileşikler</p>
+    <p>%0,25-3,3 UY; monoterpenler (geranial, sitral) ve seskiterpenler (%30-70; β-seskifellandren, β-bisabolen, ar-kurkumen, α-zingiberen). Ana etkin maddeler yakıcı <strong>gingerol ve şogaol</strong> (%4-7,5) ve benzeri fenolik keton türevleri. Ayrıca diarilheptanonlar ve diterpenler.</p>
+
+    <p class="sub-title st-yellow">● Endikasyonlar</p>
+    <p><strong>Antiemetik:</strong> Mide bulantısı/kusma önlenmesi, araç tutması, küçük ameliyat sonrası bulantı.</p>
+
+    <p class="sub-title st-blue">● Dozaj</p>
+    <p>Yetişkinler ve >6 yaş: günde 0,5-2 g toz drog. Araç tutmasına karşı seyahatten <strong>30 dk önce</strong> alınmalı. İlaç etkileşimi: sulfaguanidinin absorbsiyonunu artırabilir.</p>
+  </div>
+
+  <!-- 12. Tarçın -->
+  <div class="drug-card">
+    <div class="drug-header">
+      <h3>Tarçın (Cinnamon) — Antidiyareik</h3>
+      <span class="latin">Cinnamomum zeylanicum Nees</span>
+    </div>
+    <div class="drug-meta">
+      <span>Drog: <strong>Cinnamomi cortex</strong></span>
+      <span>Familya: <strong>Lauraceae</strong></span>
+      <span>EP UY: <strong>≥ 12 ml/kg</strong></span>
+      <span>Monograf: <strong>ESCOP, Commission E, WHO</strong></span>
+    </div>
+    <p class="sub-title st-green">● Bileşikler</p>
+    <p>UY (%4'e kadar): <strong>sinnamaldehit</strong> (%60-75), sinnamil asetat (%1-5), öjenol (%1-5), β-karyofillen, linalol, 1,8-sineol. Ayrıca oligomerik prosiyanidinler, müsilaj polisakkaritleri, sinnamik asit, fenolik asitler ve pentasiklik diterpenler (sinzeylanol, sinzeylanin).</p>
+
+    <p class="sub-title st-yellow">● Endikasyonlar</p>
+    <p>Şişkinlik, gaz, Gİ spazmları gibi dispeptik sorunlar ile <strong>diyare</strong> ve iştahsızlık tedavisi.</p>
+
+    <p class="sub-title st-blue">● Dozaj</p>
+    <p>Yetişkinlerde günlük doz: 1,5-4 g drogtan infüzyon; 0,5-1 ml sıvı ekstre (1:1 %70 EtOH). Çocuklarda yaş/ağırlığa göre oranlanarak, alkolsüz preparat.</p>
+  </div>
+
+  <!-- 13. Aloe -->
+  <div class="drug-card">
+    <div class="drug-header">
+      <h3>Sarısabır (Cape Aloes) — Laksatif</h3>
+      <span class="latin">Aloe ferox Miller</span>
+    </div>
+    <div class="drug-meta">
+      <span>Drog: <strong>Aloe capensis</strong></span>
+      <span>Familya: <strong>Asparagaceae</strong></span>
+      <span>EP: <strong>≥ %18 hidroksiantresen türevleri</strong></span>
+      <span>Monograf: <strong>ESCOP, Commission E, WHO</strong></span>
+    </div>
+    <p class="sub-title st-green">● Bileşikler</p>
+    <p>Ana etkin bileşikler aloe-emodin, <strong>antron C glikozitleri Aloin A, Aloin B ve Hidroksialoin A</strong>. Ayrıca antron C ve O glikozitleri aloinozit A ve B. 2-asetonil-5-metil-kromonlar, 1,8-dihidroksiantrakinonlar ve sinnamik asit.</p>
+
+    <p class="sub-title st-yellow">● Endikasyonlar & Dozaj</p>
+    <p>Kısa süreli <strong>konstipasyon</strong> tedavisi. Yetişkinler ve >10 yaş: 10-30 mg hidroksiantresen türevi (barbaloin üz.) günde 1× geceleri. <10 yaş tavsiye edilmez. <strong>Stimülan laksatifler 2 haftadan fazla kullanılmamalı.</strong></p>
+
+    <div class="warn-box">⚠ İntestinal tıkanma, atoni, stenoz, kolon inflamasyon hastalıkları (Crohn vb.), apendisit, bilinmeyen karın ağrısı, ciddi su/elektrolit kaybında kontrendike. Uzun süreli kullanım <strong>hipokalemi</strong> → kardiyotonik glikozitlerle etkileşim. Hamileliğin ilk 3 ayında kontrendike (genotoksik risk).</div>
+  </div>
+
+  <!-- 14. Ravent -->
+  <div class="drug-card">
+    <div class="drug-header">
+      <h3>Ravent Kökü (Rhubarb Root) — Laksatif</h3>
+      <span class="latin">Rheum palmatum L. / R. officinale Baillon</span>
+    </div>
+    <div class="drug-meta">
+      <span>Drog: <strong>Rhei radix</strong></span>
+      <span>Familya: <strong>Polygonaceae</strong></span>
+      <span>EP: <strong>≥ %2,2 hidroksiantrasen (rein üz.)</strong></span>
+      <span>Monograf: <strong>ESCOP, Commission E, WHO</strong></span>
+    </div>
+    <p class="sub-title st-green">● Bileşikler</p>
+    <p><strong>Hidroksiantresen</strong> türevleri (%3-12): rein mono ve diglikoziti (%60-80), krizofanol, aloe-emodin, fiskion, emodin glikozitleri. Diantron glikozitleri, az miktarda antron glikozitleri. Gallotanenler (%5'e kadar), kromonlar, fenilbutanon türevleri.</p>
+
+    <p class="sub-title st-blue">● Dozaj</p>
+    <p>Yetişkinler ve >10 yaş: 15-50 mg hidroksiantresen türevi (rein üz.) günde 1× geceleri. <10 yaş tavsiye edilmez. Kontrendikasyonları, özel uyarılar ve ilaç etkileşmeleri Aloe capensis ile aynıdır.</p>
+  </div>
+
+  <!-- 15. Keten Tohumu -->
+  <div class="drug-card">
+    <div class="drug-header">
+      <h3>Keten Tohumu (Linseed / Flaxseed)</h3>
+      <span class="latin">Linum usitatissimum L.</span>
+    </div>
+    <div class="drug-meta">
+      <span>Drog: <strong>Lini semen</strong></span>
+      <span>Familya: <strong>Linaceae</strong></span>
+      <span>Monograf: <strong>ESCOP, Commission E</strong></span>
+    </div>
+    <p class="sub-title st-green">● Bileşikler</p>
+    <p>%3-9 <strong>müsilaj polisakkaritleri</strong> (galakturonik asit, ksiloz, ramnoz, galaktoz polimerleri). %30-45 <strong>sabit yağ</strong> (linoleik, linolenik, oleik asit trigliseritleri). %25 protein. %0,1-1,5 <strong>siyanojenetik glikozit</strong> (linustatin, neolinustatin).</p>
+
+    <p class="sub-title st-yellow">● Farmakodinamik & Endikasyonlar</p>
+    <p>Müsilaj suyu adsorbe edip şişerek bağırsakta yumuşatıcı jel oluşturur → dışkı yumuşar, hacim artar → peristaltik hareket stimüle olur. <strong>Dahilen:</strong> Konstipasyon, İBS, divertiküler rahatsızlık, gastrit, enterit. <strong>Haricen:</strong> Ağrılı deri inflamasyonları.</p>
+
+    <p class="sub-title st-blue">● Dozaj</p>
+    <p>Yetişkinler ve >12 yaş: laksatif amaçla 5 g ezilmiş drog suda şişirilerek 1 bardak suyla alınır. Gastrit/enterit için 5-10 gün bütün tohum 150 ml suda 20-30 dk şişirilip sıkılarak müsilajı içilir. En az 2-3 gün devam. Drog miktarının <strong>en az 10 katı su</strong> ile alınmalı.</p>
+
+    <div class="warn-box">⚠ Yeterince şişirilmeden alınırsa bağırsakta tıkanıklık riski! Aşırı kilolularda bütün kabuklu drog tercih edilmeli (sabit yağ 470 kCal/100g). İlaç emilimini geciktirebilir; diyabetiklerde glikoz emilimi gecikmesi.</div>
+  </div>
+
+  <!-- ── DERS 10 ── -->
+  <div class="topic-divider"><span>DERS 10 — Algler, Fitosterol & Fitoöstrojenler</span></div>
+
+  <!-- Klorella -->
+  <div class="drug-card">
+    <div class="drug-header">
+      <h3>Klorella (Chlorella)</h3>
+      <span class="latin">Chlorella sp. (C. vulgaris, C. pyrenoidosa)</span>
+    </div>
+    <p class="sub-title st-green">● Yapı & Kaynak</p>
+    <p>Chlorophyta bölümünden tek hücreli yeşil <strong>tatlı su algi</strong>. Protein bakımından zengin (%60). Klorofil, karotenoitler (astaksantin, kantaksantin, flavoksantin, loraksantin, violaksantin), ksantofil (ekinenon) taşır. İyi bir <strong>vitamin B12</strong> ve β-karoten kaynağı. Chlorella, Spirulina'nın <strong>5 katı klorofil</strong> içerir. GRAS sınıflandırmalıdır.</p>
+
+    <p class="sub-title st-yellow">● Kullanım Alanları</p>
+    <p>Antikarsinojenik, immünomodülatör, hipolipidemik, gastrik mukoza koruyucu, detoks. Makula dejenerasyonunu önler (lutein üretimi). Fibromiyalji semptomlarında, meme kanseri yaşam kalitesinde, anksiyete/depresyonda olumlu bulgular bildirilmiştir.</p>
+
+    <p class="sub-title st-blue">● Doz & Riskler</p>
+    <p>200-500 mg kapsül/tablet/toz. K vitamini zenginliği nedeniyle <strong>warfarin</strong> kullananlar dikkatli olmalı.</p>
+  </div>
+
+  <!-- Spirulina -->
+  <div class="drug-card">
+    <div class="drug-header">
+      <h3>Spirulina</h3>
+      <span class="latin">Spirulina platensis (Arthrospira platensis), S. maxima</span>
+    </div>
+    <p class="sub-title st-green">● Yapı & Kaynak</p>
+    <p>Cyanobacteria bölümünden <strong>mavi-yeşil alg</strong>. Çok hücreli, spiral şekilli. Tatlı suda büyümez; <strong>acı/tuzlu su</strong> gerektirir. Protein zengin, klorofil, karotenoitler, mineraller, gama-linolenik asit ve fikobilin pigmentleri (fikosiyanin, allofikosiyanin → mavimsi renk) taşır. Soyadan <strong>20 kat</strong> daha fazla protein. Toplam proteinin %47'si esansiyel aminoasitler (ancak metiyonin/sistein yetersiz). Selüloz hücre duvarı olmadığından yüksek sindirilebilirlik.</p>
+
+    <p class="sub-title st-yellow">● Kullanım Alanları</p>
+    <p>Antiviral (kalsiyum spirulan: HSV-1, CMV, kızamık, kabakulak, HIV-1 in vitro inhibisyon), hipokolesterolemik, antioksidan (fikosiyanin), hepatoprotektif, antiallerjik, immünomodülatör.</p>
+
+    <p class="sub-title st-blue">● Doz & Riskler</p>
+    <p>250-5000 mg tablet/kapsül/toz/bar. <strong>Ağır metal (cıva) kontaminasyonu</strong> riski → firma güvenilirliği sorgulanmalı.</p>
+  </div>
+
+  <!-- Fitosterol -->
+  <div class="drug-card">
+    <div class="drug-header">
+      <h3>Fitosterol & Fitostanol</h3>
+    </div>
+    <p class="sub-title st-green">● Yapı & Kaynak</p>
+    <p>Sterol yapısında; en yaygını <strong>β-sitosterol</strong>. Günlük diyetle 100-300 mg alınabilir. Suda çözünmez, yağlarda az çözünür; esterleştirme çözünürlüğü artırır. Fitostanoller ise doymuş yapıda fitosterollerdir (sitostanol, kampestanol).</p>
+
+    <p class="sub-title st-yellow">● Etki Mekanizması</p>
+    <p>Kolesterolün Gİ emilimini ve enterohepatik dolaşımla tekrar emilimini baskılayarak serum kolesterol düşürür. Safra tuz misellerinden kolesterol ile yer değiştirir. Bağırsak mukozasında kolesterol esterleşme hızını inhibe eder. Total kolesterolde ~%10, LDL'de ~%13 azalma sağlar; HDL/trigliserit üzerinde belirgin etkisi yok.</p>
+
+    <p class="sub-title st-blue">● Doz</p>
+    <p>Fitosterol esterleri: günlük 1,12-2,24 g; serbest fitosterol: 1 g. Fitostanol: 1,5-4,5 g. Yemeklerle birlikte. β-Sitosterol BPH'da günde 3×20-130 mg.</p>
+
+    <div class="info-box">ℹ α- ve β-karoten, likopen ve E vitamini emilimini engelleyerek serum seviyelerini düşürebilir. β-Sitosterol BPH'da da (Serenoa repens, Cucurbita pepo ile birlikte) yararlıdır; in vitro prostat kanser hücrelerinde apoptozu sağlar.</div>
+  </div>
+
+  <!-- Fitoöstrojenler -->
+  <div class="drug-card">
+    <div class="drug-header">
+      <h3>Soya İzoflavonları & Fitoöstrojenler</h3>
+    </div>
+    <p class="sub-title st-green">● Yapı & Kaynak</p>
+    <p>Steroidal olmayan, östrojen benzeri biyolojik etki gösteren bileşikler. 3 izoflavon aglikonu: <strong>genistein, daidzein, glisitein</strong> ve glikozidleri (genistin, daidzin, glisitin). ER-α ve ER-β'ya bağlanır (α'ya afinitesi daha kuvvetli). Soya fasulyesi, tofu, miso, tempeh kaynak. İzoflavon dağılımı: genistin %50, daidzin %40, glisitin %5-10.</p>
+
+    <p class="sub-title st-yellow">● Etki & Kullanım</p>
+    <p>Antiaterojenik, antiosteoporoz, hipolipidemik, antikarsinojenik, antioksidan, östrojenik. Plazma kolesterolü düşürür. Menopozda sıcak basması hafifletir. Kemik erimesini önler. Göğüs, akciğer, prostat kanseri ve lösemi riskini azaltıcı epidemiyolojik bulgular.</p>
+
+    <p class="sub-title st-blue">● Önemli Bileşikler</p>
+    <p><strong>Genistein:</strong> Antioksidan, zayıf östrojenik, antikarsinojen. <strong>Daidzein:</strong> Antidipsotropik etkisi ile alkol bağımlılığında (Radix Puerariae/kudzu) kullanılır; ADH ve ALDH-2 inhibisyonu. <strong>İpriflavon:</strong> Daidzeinden sentetik; östrojenik değil, osteoklast inhibisyonu/osteoblast stimülasyonu ile kemik yoğunluğu artırır. <strong>Biyoşanin A:</strong> Trifolium pratense (kırmızı yonca) kaynaklı. <strong>Soya proteini:</strong> FDA onaylı, günde 25 g ile kalp hastalığı riskini azaltır; izoflavonlar + protein sinerjistik etki gösterir.</p>
+
+    <p class="sub-title st-blue">● Dozlar</p>
+    <p>Soya izoflavonu: 50 mg/gün (125 mg kapsül ≈ %40 izoflavon). Genistein: 20 mg tablet. İpriflavon: günde 2-3×20 mg. Soya proteini: 25-50 mg + 50 mg izoflavon.</p>
+
+    <div class="warn-box">⚠ İpriflavon teofilin, kalsitonin, östrojen, tolbutamit, nifedipin kan seviyelerini yükseltir. Soya fitik asit bakımından zengin → Ca, Cu, Fe, Zn, Mn biyoyararlanımını azaltır. Hassas kişilerde hipotiroidizm riski.</div>
+  </div>
+
+  <!-- Glukosinolatlar -->
+  <div class="drug-card">
+    <div class="drug-header">
+      <h3>Sülforafan (Sulforaphane) — Glukosinolatlar</h3>
+    </div>
+    <p class="sub-title st-green">● Yapı & Kaynak</p>
+    <p>Glukosinolatlar <strong>β-tiyoglukozit-N-hidroksisülfat</strong> yapısında izotiyosiyanat grubu bileşikler. Sülforafan, glukorafanin'in <strong>mirozinaz</strong> enzimi ile hidrolizi sonucu oluşur. Brassicaceae sebzelerinde (brokoli, karnabahar, lahana, brüksel lahanası, roka, turp, su teresi). Genç brokoli sürgünlerinde olgunlara göre <strong>10-100 kat</strong> daha fazla glukorafanin.</p>
+
+    <p class="sub-title st-yellow">● Etki</p>
+    <p>Faz II detoksifikasyon enzimlerini (glutatyon S-transferaz, kinon redüktaz) artırarak <strong>antikanserojen</strong> etki gösterdiği ileri sürülür.</p>
+  </div>
+
+</div>
+</section>
+
+<!-- ═══════════════════════════════════════ -->
+<!-- SECTION 2: TEST SORULARI -->
+<!-- ═══════════════════════════════════════ -->
+<section id="sorular">
+<div class="container">
+  <h2 class="section-title"><span class="badge badge-yellow">02</span> Test Soruları (40 Adet)</h2>
+
+  <div class="question-block">
+    <span class="q-number">Soru 1</span>
+    <p class="q-text">Angelica radix drogunun Avrupa Farmakopesi'ne (EP) göre taşıması gereken minimum uçucu yağ miktarı nedir?</p>
+    <div class="options">
+      <label><span class="opt-letter">A)</span> 5 ml/kg</label>
+      <label><span class="opt-letter">B)</span> 2 ml/kg</label>
+      <label><span class="opt-letter">C)</span> 12 ml/kg</label>
+      <label><span class="opt-letter">D)</span> 20 ml/kg</label>
+      <label><span class="opt-letter">E)</span> 30 ml/kg</label>
+    </div>
+  </div>
+
+  <div class="question-block">
+    <span class="q-number">Soru 2</span>
+    <p class="q-text">Chelidonii herba drogunun ana alkaloidi hangisidir?</p>
+    <div class="options">
+      <label><span class="opt-letter">A)</span> Kelidonin</label>
+      <label><span class="opt-letter">B)</span> Berberin</label>
+      <label><span class="opt-letter">C)</span> Koptisin</label>
+      <label><span class="opt-letter">D)</span> Sanguinarin</label>
+      <label><span class="opt-letter">E)</span> Protopin</label>
+    </div>
+  </div>
+
+  <div class="question-block">
+    <span class="q-number">Soru 3</span>
+    <p class="q-text">Curcuma longa'nın ana bileşikleri olan kurkuminoidler hangi kimyasal sınıfa aittir?</p>
+    <div class="options">
+      <label><span class="opt-letter">A)</span> Monoterpenler</label>
+      <label><span class="opt-letter">B)</span> Flavanolignanlar</label>
+      <label><span class="opt-letter">C)</span> Disinnamoilmetan türevleri (Diarilheptanoid)</label>
+      <label><span class="opt-letter">D)</span> Sekoiridoit glikozitleri</label>
+      <label><span class="opt-letter">E)</span> Antrakinon türevleri</label>
+    </div>
+  </div>
+
+  <div class="question-block">
+    <span class="q-number">Soru 4</span>
+    <p class="q-text">Anisi fructus uçucu yağının ana bileşiği hangisidir ve oranı yaklaşık ne kadardır?</p>
+    <div class="options">
+      <label><span class="opt-letter">A)</span> Estragol, %60-75</label>
+      <label><span class="opt-letter">B)</span> Karvon, %50-65</label>
+      <label><span class="opt-letter">C)</span> Trans-anetol, %80-95</label>
+      <label><span class="opt-letter">D)</span> Mentol, %35-55</label>
+      <label><span class="opt-letter">E)</span> Sinnamaldehit, %60-75</label>
+    </div>
+  </div>
+
+  <div class="question-block">
+    <span class="q-number">Soru 5</span>
+    <p class="q-text">Foeniculum vulgare'nin acı varyetesinde EP'ye göre uçucu yağda en az ne kadar anetol bulunmalıdır?</p>
+    <div class="options">
+      <label><span class="opt-letter">A)</span> %80</label>
+      <label><span class="opt-letter">B)</span> %60</label>
+      <label><span class="opt-letter">C)</span> %40</label>
+      <label><span class="opt-letter">D)</span> %95</label>
+      <label><span class="opt-letter">E)</span> %50</label>
+    </div>
+  </div>
+
+  <div class="question-block">
+    <span class="q-number">Soru 6</span>
+    <p class="q-text">Carvi fructus UY'nin iki ana monoterpen bileşiği hangisidir?</p>
+    <div class="options">
+      <label><span class="opt-letter">A)</span> Mentol ve menton</label>
+      <label><span class="opt-letter">B)</span> Anetol ve estragol</label>
+      <label><span class="opt-letter">C)</span> (+)-Karvon ve (+)-limonen</label>
+      <label><span class="opt-letter">D)</span> α-Pinen ve 1,8-sineol</label>
+      <label><span class="opt-letter">E)</span> Sinnamaldehit ve öjenol</label>
+    </div>
+  </div>
+
+  <div class="question-block">
+    <span class="q-number">Soru 7</span>
+    <p class="q-text">Nane uçucu yağında EP'ye göre pulegon oranının üst sınırı ne olmalıdır?</p>
+    <div class="options">
+      <label><span class="opt-letter">A)</span> %1</label>
+      <label><span class="opt-letter">B)</span> %2</label>
+      <label><span class="opt-letter">C)</span> %4</label>
+      <label><span class="opt-letter">D)</span> %10</label>
+      <label><span class="opt-letter">E)</span> %7,5</label>
+    </div>
+  </div>
+
+  <div class="question-block">
+    <span class="q-number">Soru 8</span>
+    <p class="q-text">İritabl bağırsak sendromu (İBS) tedavisinde nane yağı hangi formda kullanılır?</p>
+    <div class="options">
+      <label><span class="opt-letter">A)</span> İnfüzyon halinde</label>
+      <label><span class="opt-letter">B)</span> İnhalasyon şeklinde</label>
+      <label><span class="opt-letter">C)</span> Enterik kaplı kapsüller içinde</label>
+      <label><span class="opt-letter">D)</span> %10'luk çözelti haricen</label>
+      <label><span class="opt-letter">E)</span> Tentür halinde</label>
+    </div>
+  </div>
+
+  <div class="question-block">
+    <span class="q-number">Soru 9</span>
+    <p class="q-text">Rosmarini folium drogunun karakteristik fenolik diterpeni hangisidir?</p>
+    <div class="options">
+      <label><span class="opt-letter">A)</span> Kurkumin</label>
+      <label><span class="opt-letter">B)</span> Silibinin</label>
+      <label><span class="opt-letter">C)</span> Karnosol</label>
+      <label><span class="opt-letter">D)</span> Gingerol</label>
+      <label><span class="opt-letter">E)</span> Koptisin</label>
+    </div>
+  </div>
+
+  <div class="question-block">
+    <span class="q-number">Soru 10</span>
+    <p class="q-text">Silybum marianum meyvelerinin etkin bileşikleri olan flavanolignanlar hangileridir?</p>
+    <div class="options">
+      <label><span class="opt-letter">A)</span> Kurkumin, demetoksikurkumin, bisdemetoksikurkumin</label>
+      <label><span class="opt-letter">B)</span> Silibinin, izosilibinin, silikristin, silidianin</label>
+      <label><span class="opt-letter">C)</span> Genistein, daidzein, glisitein</label>
+      <label><span class="opt-letter">D)</span> Aloin A, Aloin B, Hidroksialoin A</label>
+      <label><span class="opt-letter">E)</span> Centiopikrozit, amerogenin, centisin</label>
+    </div>
+  </div>
+
+  <div class="question-block">
+    <span class="q-number">Soru 11</span>
+    <p class="q-text">Silimarin hangi reaksiyon ile meyvelerde oluşur?</p>
+    <div class="options">
+      <label><span class="opt-letter">A)</span> Toksifolin + koniferol alkol → oksidatif kondensasyon</label>
+      <label><span class="opt-letter">B)</span> Glukorafanin + mirozinaz → hidroliz</label>
+      <label><span class="opt-letter">C)</span> Daidzein + metilasyon → ipriflavon</label>
+      <label><span class="opt-letter">D)</span> Rein + glukoz → glikozilasyon</label>
+      <label><span class="opt-letter">E)</span> Kolesterol + esteraz → fitosterol</label>
+    </div>
+  </div>
+
+  <div class="question-block">
+    <span class="q-number">Soru 12</span>
+    <p class="q-text">Gentianae radix'te bulunan çok acı bileşik hangisidir?</p>
+    <div class="options">
+      <label><span class="opt-letter">A)</span> Centiopikrozit</label>
+      <label><span class="opt-letter">B)</span> Amerogenin</label>
+      <label><span class="opt-letter">C)</span> Centisin</label>
+      <label><span class="opt-letter">D)</span> Ostenol</label>
+      <label><span class="opt-letter">E)</span> Sinnamaldehit</label>
+    </div>
+  </div>
+
+  <div class="question-block">
+    <span class="q-number">Soru 13</span>
+    <p class="q-text">Gentianae radix anoreksi tedavisinde yemeklerden ne kadar süre önce alınmalıdır?</p>
+    <div class="options">
+      <label><span class="opt-letter">A)</span> 2 saat önce</label>
+      <label><span class="opt-letter">B)</span> Yemekten hemen sonra</label>
+      <label><span class="opt-letter">C)</span> Yarım veya bir saat önce</label>
+      <label><span class="opt-letter">D)</span> Gece yatmadan önce</label>
+      <label><span class="opt-letter">E)</span> Aç karnına sabah</label>
+    </div>
+  </div>
+
+  <div class="question-block">
+    <span class="q-number">Soru 14</span>
+    <p class="q-text">Zingiberis rhizoma'nın ana etkin maddeleri nelerdir?</p>
+    <div class="options">
+      <label><span class="opt-letter">A)</span> Kurkuminoidler</label>
+      <label><span class="opt-letter">B)</span> Gingerol ve şogaol</label>
+      <label><span class="opt-letter">C)</span> Mentol ve izomerleri</label>
+      <label><span class="opt-letter">D)</span> Sinnamaldehit ve öjenol</label>
+      <label><span class="opt-letter">E)</span> Karvon ve limonen</label>
+    </div>
+  </div>
+
+  <div class="question-block">
+    <span class="q-number">Soru 15</span>
+    <p class="q-text">Zencefil araç tutmasına karşı seyahatten ne kadar süre önce alınmalıdır?</p>
+    <div class="options">
+      <label><span class="opt-letter">A)</span> 2 saat önce</label>
+      <label><span class="opt-letter">B)</span> 10 dakika önce</label>
+      <label><span class="opt-letter">C)</span> 30 dakika önce</label>
+      <label><span class="opt-letter">D)</span> 1 saat önce</label>
+      <label><span class="opt-letter">E)</span> Seyahat sırasında</label>
+    </div>
+  </div>
+
+  <div class="question-block">
+    <span class="q-number">Soru 16</span>
+    <p class="q-text">Cinnamomi cortex uçucu yağının ana bileşiği hangisidir?</p>
+    <div class="options">
+      <label><span class="opt-letter">A)</span> Öjenol</label>
+      <label><span class="opt-letter">B)</span> 1,8-Sineol</label>
+      <label><span class="opt-letter">C)</span> Sinnamaldehit</label>
+      <label><span class="opt-letter">D)</span> Mentol</label>
+      <label><span class="opt-letter">E)</span> Trans-anetol</label>
+    </div>
+  </div>
+
+  <div class="question-block">
+    <span class="q-number">Soru 17</span>
+    <p class="q-text">Aloe capensis drogunun ana etkin antron C glikozitleri hangileridir?</p>
+    <div class="options">
+      <label><span class="opt-letter">A)</span> Rein, krizofanol, emodin</label>
+      <label><span class="opt-letter">B)</span> Silibinin, silikristin, silidianin</label>
+      <label><span class="opt-letter">C)</span> Aloin A, Aloin B ve Hidroksialoin A</label>
+      <label><span class="opt-letter">D)</span> Centiopikrozit ve amerogenin</label>
+      <label><span class="opt-letter">E)</span> Gingerol ve şogaol</label>
+    </div>
+  </div>
+
+  <div class="question-block">
+    <span class="q-number">Soru 18</span>
+    <p class="q-text">Stimülan laksatiflerin uzun süreli kullanımı hangi elektrolit bozukluğuna neden olur?</p>
+    <div class="options">
+      <label><span class="opt-letter">A)</span> Hiperkalsemi</label>
+      <label><span class="opt-letter">B)</span> Hiponatremi</label>
+      <label><span class="opt-letter">C)</span> Hipokalemi</label>
+      <label><span class="opt-letter">D)</span> Hiperkalemi</label>
+      <label><span class="opt-letter">E)</span> Hipofosfatemi</label>
+    </div>
+  </div>
+
+  <div class="question-block">
+    <span class="q-number">Soru 19</span>
+    <p class="q-text">Rhei radix drogunun ana etkin bileşiklerinden rein mono ve diglikoziti drogun toplam hidroksiantresen içeriğinin yüzde kaçını oluşturur?</p>
+    <div class="options">
+      <label><span class="opt-letter">A)</span> %10-20</label>
+      <label><span class="opt-letter">B)</span> %30-40</label>
+      <label><span class="opt-letter">C)</span> %60-80</label>
+      <label><span class="opt-letter">D)</span> %90-95</label>
+      <label><span class="opt-letter">E)</span> %40-50</label>
+    </div>
+  </div>
+
+  <div class="question-block">
+    <span class="q-number">Soru 20</span>
+    <p class="q-text">Lini semen drogunun laksatif etki mekanizması nedir?</p>
+    <div class="options">
+      <label><span class="opt-letter">A)</span> Bağırsak mukozasını irrite ederek peristaltizmi artırır</label>
+      <label><span class="opt-letter">B)</span> Müsilaj polisakkaritler suyu adsorbe ederek jel oluşturur, dışkıyı yumuşatır ve hacim artırır</label>
+      <label><span class="opt-letter">C)</span> Antranoid glikozitler kolon mukozasını stimüle eder</label>
+      <label><span class="opt-letter">D)</span> Ozmotik basınç oluşturarak bağırsaklara su çeker</label>
+      <label><span class="opt-letter">E)</span> Safra asidi salgısını artırarak sindirim hızlandırır</label>
+    </div>
+  </div>
+
+  <div class="question-block">
+    <span class="q-number">Soru 21</span>
+    <p class="q-text">Keten tohumu alınırken en az ne kadar su ile birlikte kullanılmalıdır?</p>
+    <div class="options">
+      <label><span class="opt-letter">A)</span> Miktarının 2 katı</label>
+      <label><span class="opt-letter">B)</span> Miktarının 5 katı</label>
+      <label><span class="opt-letter">C)</span> Miktarının 10 katı</label>
+      <label><span class="opt-letter">D)</span> Miktarının 20 katı</label>
+      <label><span class="opt-letter">E)</span> 1 bardak su yeterlidir</label>
+    </div>
+  </div>
+
+  <div class="question-block">
+    <span class="q-number">Soru 22</span>
+    <p class="q-text">Angelicae radix'te fotosensibiliteye neden olan bileşik grubu hangisidir?</p>
+    <div class="options">
+      <label><span class="opt-letter">A)</span> Monoterpenler</label>
+      <label><span class="opt-letter">B)</span> Flavonoitler</label>
+      <label><span class="opt-letter">C)</span> Furanokumarinler</label>
+      <label><span class="opt-letter">D)</span> Tanenler</label>
+      <label><span class="opt-letter">E)</span> Alkaloitler</label>
+    </div>
+  </div>
+
+  <div class="question-block">
+    <span class="q-number">Soru 23</span>
+    <p class="q-text">Chelidonium majus 4 haftadan uzun süreli kullanılırsa hangi parametrelerin kontrol edilmesi önerilir?</p>
+    <div class="options">
+      <label><span class="opt-letter">A)</span> Böbrek fonksiyon testleri</label>
+      <label><span class="opt-letter">B)</span> Karaciğer enzimleri</label>
+      <label><span class="opt-letter">C)</span> Tiroid fonksiyon testleri</label>
+      <label><span class="opt-letter">D)</span> Tam kan sayımı</label>
+      <label><span class="opt-letter">E)</span> Elektrolit paneli</label>
+    </div>
+  </div>
+
+  <div class="question-block">
+    <span class="q-number">Soru 24</span>
+    <p class="q-text">Spirulina'nın mavimsi rengini veren pigmentler hangisidir?</p>
+    <div class="options">
+      <label><span class="opt-letter">A)</span> Klorofil a ve b</label>
+      <label><span class="opt-letter">B)</span> Astaksantin ve kantaksantin</label>
+      <label><span class="opt-letter">C)</span> Fikosiyanin ve allofikosiyanin</label>
+      <label><span class="opt-letter">D)</span> β-Karoten ve likopen</label>
+      <label><span class="opt-letter">E)</span> Lutein ve zeaksantin</label>
+    </div>
+  </div>
+
+  <div class="question-block">
+    <span class="q-number">Soru 25</span>
+    <p class="q-text">Chlorella ile Spirulina arasındaki temel farklardan biri hangisidir?</p>
+    <div class="options">
+      <label><span class="opt-letter">A)</span> Chlorella tuzlu suda, Spirulina tatlı suda yetişir</label>
+      <label><span class="opt-letter">B)</span> Chlorella tek hücreli, Spirulina çok hücreli ve spiral şekilli</label>
+      <label><span class="opt-letter">C)</span> Spirulina daha fazla klorofil içerir</label>
+      <label><span class="opt-letter">D)</span> Her ikisi de aynı bölümdendir</label>
+      <label><span class="opt-letter">E)</span> Spirulina protein bakımından fakir, Chlorella zengindir</label>
+    </div>
+  </div>
+
+  <div class="question-block">
+    <span class="q-number">Soru 26</span>
+    <p class="q-text">Klorella suplemanlarının warfarin ile etkileşmesinin nedeni nedir?</p>
+    <div class="options">
+      <label><span class="opt-letter">A)</span> Yüksek demir içeriği</label>
+      <label><span class="opt-letter">B)</span> Yüksek protein içeriği</label>
+      <label><span class="opt-letter">C)</span> K vitamini bakımından zenginliği</label>
+      <label><span class="opt-letter">D)</span> Yüksek kalsiyum içeriği</label>
+      <label><span class="opt-letter">E)</span> Gama-linolenik asit içeriği</label>
+    </div>
+  </div>
+
+  <div class="question-block">
+    <span class="q-number">Soru 27</span>
+    <p class="q-text">Fitosterollerin kolesterol düşürücü etkisinde önerilen mekanizma hangisidir?</p>
+    <div class="options">
+      <label><span class="opt-letter">A)</span> HMG-CoA redüktaz inhibisyonu</label>
+      <label><span class="opt-letter">B)</span> Safra tuz misellerinden kolesterol ile yer değiştirme</label>
+      <label><span class="opt-letter">C)</span> LDL reseptör upregülasyonu</label>
+      <label><span class="opt-letter">D)</span> Kolesterol biyosentezinin inhibisyonu</label>
+      <label><span class="opt-letter">E)</span> HDL artırarak ters kolesterol transportu</label>
+    </div>
+  </div>
+
+  <div class="question-block">
+    <span class="q-number">Soru 28</span>
+    <p class="q-text">Fitosterol ve fitostanollerin LDL kolesterol üzerindeki ortalama düşürme etkisi ne kadardır?</p>
+    <div class="options">
+      <label><span class="opt-letter">A)</span> %5</label>
+      <label><span class="opt-letter">B)</span> %13</label>
+      <label><span class="opt-letter">C)</span> %25</label>
+      <label><span class="opt-letter">D)</span> %30</label>
+      <label><span class="opt-letter">E)</span> %50</label>
+    </div>
+  </div>
+
+  <div class="question-block">
+    <span class="q-number">Soru 29</span>
+    <p class="q-text">Soya izoflavonlarının 3 ana aglikonu hangileridir?</p>
+    <div class="options">
+      <label><span class="opt-letter">A)</span> Genistein, daidzein, glisitein</label>
+      <label><span class="opt-letter">B)</span> Genistin, daidzin, glisitin</label>
+      <label><span class="opt-letter">C)</span> Kumestrol, biyoşanin A, formononetin</label>
+      <label><span class="opt-letter">D)</span> Silibinin, silikristin, silidianin</label>
+      <label><span class="opt-letter">E)</span> İpriflavon, daidzein, kersetin</label>
+    </div>
+  </div>
+
+  <div class="question-block">
+    <span class="q-number">Soru 30</span>
+    <p class="q-text">Soya izoflavonları hangi östrojen reseptörüne daha kuvvetli afinite gösterir?</p>
+    <div class="options">
+      <label><span class="opt-letter">A)</span> ER-β</label>
+      <label><span class="opt-letter">B)</span> ER-α</label>
+      <label><span class="opt-letter">C)</span> Her ikisine eşit</label>
+      <label><span class="opt-letter">D)</span> GPR30</label>
+      <label><span class="opt-letter">E)</span> Hiçbirine bağlanmaz</label>
+    </div>
+  </div>
+
+  <div class="question-block">
+    <span class="q-number">Soru 31</span>
+    <p class="q-text">Daidzein'in antidipsotropik etkisi hangi geleneksel ilaçla ilişkilendirilir?</p>
+    <div class="options">
+      <label><span class="opt-letter">A)</span> Ginkgo biloba</label>
+      <label><span class="opt-letter">B)</span> Panax ginseng</label>
+      <label><span class="opt-letter">C)</span> Radix Puerariae (Kudzu)</label>
+      <label><span class="opt-letter">D)</span> Hypericum perforatum</label>
+      <label><span class="opt-letter">E)</span> Valeriana officinalis</label>
+    </div>
+  </div>
+
+  <div class="question-block">
+    <span class="q-number">Soru 32</span>
+    <p class="q-text">İpriflavon'un etki mekanizması nedir?</p>
+    <div class="options">
+      <label><span class="opt-letter">A)</span> Östrojen reseptörlerini aktive eder</label>
+      <label><span class="opt-letter">B)</span> Osteoklast inhibisyonu ve osteoblast stimülasyonu</label>
+      <label><span class="opt-letter">C)</span> Kalsiyum emilimini artırır</label>
+      <label><span class="opt-letter">D)</span> D vitamini sentezini hızlandırır</label>
+      <label><span class="opt-letter">E)</span> Parathormon salgısını azaltır</label>
+    </div>
+  </div>
+
+  <div class="question-block">
+    <span class="q-number">Soru 33</span>
+    <p class="q-text">Sülforafan'ın oluştuğu hidroliz reaksiyonunu katalizleyen enzim hangisidir?</p>
+    <div class="options">
+      <label><span class="opt-letter">A)</span> Kolesterol esteraz</label>
+      <label><span class="opt-letter">B)</span> Glutatyon S-transferaz</label>
+      <label><span class="opt-letter">C)</span> Mirozinaz</label>
+      <label><span class="opt-letter">D)</span> Kinon redüktaz</label>
+      <label><span class="opt-letter">E)</span> Aldehit dehidrojenaz</label>
+    </div>
+  </div>
+
+  <div class="question-block">
+    <span class="q-number">Soru 34</span>
+    <p class="q-text">FDA'nın 1999'da resmi olarak kabul ettiği günlük soya proteini miktarı ne kadardır?</p>
+    <div class="options">
+      <label><span class="opt-letter">A)</span> 10 g</label>
+      <label><span class="opt-letter">B)</span> 25 g</label>
+      <label><span class="opt-letter">C)</span> 50 g</label>
+      <label><span class="opt-letter">D)</span> 100 g</label>
+      <label><span class="opt-letter">E)</span> 5 g</label>
+    </div>
+  </div>
+
+  <div class="question-block">
+    <span class="q-number">Soru 35</span>
+    <p class="q-text">Aşağıdakilerden hangisi Lamiaceae familyasına ait DEĞİLDİR?</p>
+    <div class="options">
+      <label><span class="opt-letter">A)</span> Mentha × piperita</label>
+      <label><span class="opt-letter">B)</span> Rosmarinus officinalis</label>
+      <label><span class="opt-letter">C)</span> Pimpinella anisum</label>
+      <label><span class="opt-letter">D)</span> Her ikisi de Lamiaceae</label>
+      <label><span class="opt-letter">E)</span> Hiçbiri Lamiaceae değil</label>
+    </div>
+  </div>
+
+  <div class="question-block">
+    <span class="q-number">Soru 36</span>
+    <p class="q-text">Aşağıdakilerden hangisi karaciğer/safra kesesi rahatsızlıklarının tedavisinde kullanılır?</p>
+    <div class="options">
+      <label><span class="opt-letter">A)</span> Zingiber officinale</label>
+      <label><span class="opt-letter">B)</span> Silybum marianum</label>
+      <label><span class="opt-letter">C)</span> Gentiana lutea</label>
+      <label><span class="opt-letter">D)</span> Linum usitatissimum</label>
+      <label><span class="opt-letter">E)</span> Pimpinella anisum</label>
+    </div>
+  </div>
+
+  <div class="question-block">
+    <span class="q-number">Soru 37</span>
+    <p class="q-text">Nane yağının bebeklerin burun bölgesine tatbik edilmemesinin nedeni nedir?</p>
+    <div class="options">
+      <label><span class="opt-letter">A)</span> Alerjik reaksiyon riski</label>
+      <label><span class="opt-letter">B)</span> Bronşiyal ve laringeal spazm riski</label>
+      <label><span class="opt-letter">C)</span> Hipotansiyon riski</label>
+      <label><span class="opt-letter">D)</span> Böbrek toksisitesi</label>
+      <label><span class="opt-letter">E)</span> Karaciğer hasarı riski</label>
+    </div>
+  </div>
+
+  <div class="question-block">
+    <span class="q-number">Soru 38</span>
+    <p class="q-text">Soya proteini ile izoflavonların kolesterol düşürücü etkisi nasıl ortaya çıkar?</p>
+    <div class="options">
+      <label><span class="opt-letter">A)</span> Yalnızca izoflavonlar etkilidir</label>
+      <label><span class="opt-letter">B)</span> Yalnızca protein fraksiyonu etkilidir</label>
+      <label><span class="opt-letter">C)</span> Sinerjistik etki gösterirler</label>
+      <label><span class="opt-letter">D)</span> Antagonist etki gösterirler</label>
+      <label><span class="opt-letter">E)</span> Etkileşme yoktur</label>
+    </div>
+  </div>
+
+  <div class="question-block">
+    <span class="q-number">Soru 39</span>
+    <p class="q-text">Lini semen (keten tohumu) drogunda bulunan siyanojenetik glikozitler hangileridir?</p>
+    <div class="options">
+      <label><span class="opt-letter">A)</span> Aloin A ve Aloin B</label>
+      <label><span class="opt-letter">B)</span> Linustatin ve neolinustatin</label>
+      <label><span class="opt-letter">C)</span> Genistin ve daidzin</label>
+      <label><span class="opt-letter">D)</span> Rein ve emodin</label>
+      <label><span class="opt-letter">E)</span> Bergapten ve anjelisin</label>
+    </div>
+  </div>
+
+  <div class="question-block">
+    <span class="q-number">Soru 40</span>
+    <p class="q-text">Aşağıdaki drog-familya eşleştirmelerinden hangisi YANLŞTIR?</p>
+    <div class="options">
+      <label><span class="opt-letter">A)</span> Angelica radix — Apiaceae</label>
+      <label><span class="opt-letter">B)</span> Chelidonii herba — Papaveraceae</label>
+      <label><span class="opt-letter">C)</span> Cinnamomi cortex — Lauraceae</label>
+      <label><span class="opt-letter">D)</span> Silybi mariani fructus — Lamiaceae</label>
+      <label><span class="opt-letter">E)</span> Zingiberis rhizoma — Zingiberaceae</label>
+    </div>
+  </div>
+
+</div>
+</section>
+
+<!-- ═══════════════════════════════════════ -->
+<!-- SECTION 3: CEVAP ANAHTARI -->
+<!-- ═══════════════════════════════════════ -->
+<section id="cevaplar">
+<div class="container">
+  <h2 class="section-title"><span class="badge badge-coral">03</span> Cevap Anahtarı</h2>
+
+  <div class="answer-grid">
+    <div class="answer-item"><span class="a-num">1.</span><span class="a-val">B</span><span class="a-explain">≥ 2 ml/kg UY</span></div>
+    <div class="answer-item"><span class="a-num">2.</span><span class="a-val">C</span><span class="a-explain">Koptisin</span></div>
+    <div class="answer-item"><span class="a-num">3.</span><span class="a-val">C</span><span class="a-explain">Diarilheptanoid</span></div>
+    <div class="answer-item"><span class="a-num">4.</span><span class="a-val">C</span><span class="a-explain">Trans-anetol %80-95</span></div>
+    <div class="answer-item"><span class="a-num">5.</span><span class="a-val">B</span><span class="a-explain">%60 anetol</span></div>
+    <div class="answer-item"><span class="a-num">6.</span><span class="a-val">C</span><span class="a-explain">Karvon + limonen</span></div>
+    <div class="answer-item"><span class="a-num">7.</span><span class="a-val">C</span><span class="a-explain"><%4 pulegon</span></div>
+    <div class="answer-item"><span class="a-num">8.</span><span class="a-val">C</span><span class="a-explain">Enterik kaplı</span></div>
+    <div class="answer-item"><span class="a-num">9.</span><span class="a-val">C</span><span class="a-explain">Karnosol</span></div>
+    <div class="answer-item"><span class="a-num">10.</span><span class="a-val">B</span><span class="a-explain">Silimarin bileşenleri</span></div>
+    <div class="answer-item"><span class="a-num">11.</span><span class="a-val">A</span><span class="a-explain">Oksidatif kond.</span></div>
+    <div class="answer-item"><span class="a-num">12.</span><span class="a-val">B</span><span class="a-explain">Amerogenin</span></div>
+    <div class="answer-item"><span class="a-num">13.</span><span class="a-val">C</span><span class="a-explain">30-60 dk önce</span></div>
+    <div class="answer-item"><span class="a-num">14.</span><span class="a-val">B</span><span class="a-explain">Gingerol & şogaol</span></div>
+    <div class="answer-item"><span class="a-num">15.</span><span class="a-val">C</span><span class="a-explain">30 dk önce</span></div>
+    <div class="answer-item"><span class="a-num">16.</span><span class="a-val">C</span><span class="a-explain">Sinnamaldehit</span></div>
+    <div class="answer-item"><span class="a-num">17.</span><span class="a-val">C</span><span class="a-explain">Aloin A, B, H.aloin A</span></div>
+    <div class="answer-item"><span class="a-num">18.</span><span class="a-val">C</span><span class="a-explain">Hipokalemi</span></div>
+    <div class="answer-item"><span class="a-num">19.</span><span class="a-val">C</span><span class="a-explain">%60-80</span></div>
+    <div class="answer-item"><span class="a-num">20.</span><span class="a-val">B</span><span class="a-explain">Müsilaj jel oluşturur</span></div>
+    <div class="answer-item"><span class="a-num">21.</span><span class="a-val">C</span><span class="a-explain">10 katı su</span></div>
+    <div class="answer-item"><span class="a-num">22.</span><span class="a-val">C</span><span class="a-explain">Furanokumarinler</span></div>
+    <div class="answer-item"><span class="a-num">23.</span><span class="a-val">B</span><span class="a-explain">KC enzimleri</span></div>
+    <div class="answer-item"><span class="a-num">24.</span><span class="a-val">C</span><span class="a-explain">Fikobilinler</span></div>
+    <div class="answer-item"><span class="a-num">25.</span><span class="a-val">B</span><span class="a-explain">Tek vs çok hücreli</span></div>
+    <div class="answer-item"><span class="a-num">26.</span><span class="a-val">C</span><span class="a-explain">K vitamini</span></div>
+    <div class="answer-item"><span class="a-num">27.</span><span class="a-val">B</span><span class="a-explain">Misel yer değiştirme</span></div>
+    <div class="answer-item"><span class="a-num">28.</span><span class="a-val">B</span><span class="a-explain">~%13 LDL düşüş</span></div>
+    <div class="answer-item"><span class="a-num">29.</span><span class="a-val">A</span><span class="a-explain">Aglikonlar</span></div>
+    <div class="answer-item"><span class="a-num">30.</span><span class="a-val">B</span><span class="a-explain">ER-α</span></div>
+    <div class="answer-item"><span class="a-num">31.</span><span class="a-val">C</span><span class="a-explain">Kudzu</span></div>
+    <div class="answer-item"><span class="a-num">32.</span><span class="a-val">B</span><span class="a-explain">OC inhib./OB stim.</span></div>
+    <div class="answer-item"><span class="a-num">33.</span><span class="a-val">C</span><span class="a-explain">Mirozinaz</span></div>
+    <div class="answer-item"><span class="a-num">34.</span><span class="a-val">B</span><span class="a-explain">25 g/gün</span></div>
+    <div class="answer-item"><span class="a-num">35.</span><span class="a-val">C</span><span class="a-explain">P. anisum = Apiaceae</span></div>
+    <div class="answer-item"><span class="a-num">36.</span><span class="a-val">B</span><span class="a-explain">Milk Thistle</span></div>
+    <div class="answer-item"><span class="a-num">37.</span><span class="a-val">B</span><span class="a-explain">Laringeal spazm</span></div>
+    <div class="answer-item"><span class="a-num">38.</span><span class="a-val">C</span><span class="a-explain">Sinerjistik</span></div>
+    <div class="answer-item"><span class="a-num">39.</span><span class="a-val">B</span><span class="a-explain">Linustatin vb.</span></div>
+    <div class="answer-item"><span class="a-num">40.</span><span class="a-val">D</span><span class="a-explain">Asteraceae olmalı</span></div>
+  </div>
+</div>
+</section>
+
+<footer>
+  Fitoterapötikler Ders 6 & 10 — Dr. Öğr. Üyesi Tuğba İduğ &middot; Çalışma Rehberi
+</footer>
+
+<script>
+// Scroll-based active nav highlighting
+const sections = document.querySelectorAll('section');
+const navLinks = document.querySelectorAll('nav a');
+
+function updateActiveLink() {
+  let current = '';
+  sections.forEach(section => {
+    const top = section.offsetTop - 100;
+    if (pageYOffset >= top) {
+      current = section.getAttribute('id');
+    }
+  });
+  navLinks.forEach(link => {
+    link.classList.remove('active');
+    if (link.getAttribute('href') === '#' + current) {
+      link.classList.add('active');
+    }
+  });
+}
+
+window.addEventListener('scroll', updateActiveLink);
+window.addEventListener('load', updateActiveLink);
+</script>
+</body>
+</html>

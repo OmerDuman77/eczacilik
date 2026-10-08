@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Hormonlar, Vitaminler ve Eser Elementler — Soru Bankası</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,600;0,6..72,800;1,6..72,500&family=IBM+Plex+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#0c1015;
+    --panel:#151b23;
+    --panel-2:#1b232d;
+    --ink:#e9eef3;
+    --muted:#92a0b0;
+    --line:#27313d;
+    --accent:#d98b4a;       /* clinical copper */
+    --accent-2:#4ea3c9;     /* clinical blue */
+    --correct-bg:rgba(46,170,110,.16);
+    --correct-line:#34c47e;
+    --wrong-bg:rgba(214,69,69,.16);
+    --wrong-line:#e25555;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{scroll-behavior:smooth}
+  body{
+    background:
+      radial-gradient(1100px 560px at 82% -8%, rgba(217,139,74,.10), transparent 60%),
+      radial-gradient(900px 500px at -8% 28%, rgba(78,163,201,.09), transparent 55%),
+      var(--bg);
+    color:var(--ink);
+    font-family:'IBM Plex Sans',system-ui,sans-serif;
+    line-height:1.55;-webkit-font-smoothing:antialiased;
+  }
+  .wrap{max-width:880px;margin:0 auto;padding:56px 22px 120px}
+
+  header.hero{margin-bottom:44px}
+  .kicker{font-size:.72rem;letter-spacing:.3em;text-transform:uppercase;color:var(--accent);font-weight:600;margin-bottom:14px}
+  h1.title{font-family:'Newsreader',serif;font-weight:800;font-size:clamp(2rem,5vw,3.2rem);line-height:1.04;letter-spacing:-.01em;margin-bottom:16px}
+  h1.title em{font-style:italic;color:var(--accent-2)}
+  .lede{color:var(--muted);max-width:62ch;font-size:1.01rem}
+
+  .scoreboard{display:flex;flex-wrap:wrap;gap:14px;margin-top:30px}
+  .score-card{flex:1 1 180px;background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:16px 18px}
+  .score-card .lbl{font-size:.74rem;letter-spacing:.12em;text-transform:uppercase;color:var(--muted)}
+  .score-card .val{font-family:'Newsreader',serif;font-weight:600;font-size:1.6rem;margin-top:4px}
+  .score-card .val span{color:var(--muted);font-size:1rem;font-weight:400}
+
+  section.topic{margin-top:60px}
+  .topic-head{position:sticky;top:0;z-index:5;background:linear-gradient(180deg,var(--bg) 72%,rgba(12,16,21,0));padding:18px 0 16px;margin-bottom:6px}
+  .topic-num{font-family:'Newsreader',serif;font-style:italic;color:var(--accent);font-size:1rem;display:block;margin-bottom:2px}
+  .topic-head h2{font-family:'Newsreader',serif;font-weight:600;font-size:clamp(1.5rem,3.6vw,2.05rem);letter-spacing:-.01em;display:flex;align-items:baseline;gap:12px;flex-wrap:wrap}
+  .topic-head .meta{font-family:'IBM Plex Sans';font-size:.8rem;color:var(--muted);font-weight:500}
+  .rule{height:2px;background:linear-gradient(90deg,var(--accent),transparent);border-radius:2px;margin-top:4px}
+
+  .q{background:var(--panel);border:1px solid var(--line);border-radius:16px;padding:22px 22px 18px;margin-top:18px;transition:border-color .25s}
+  .q.answered{border-color:var(--panel-2)}
+  .q-top{display:flex;gap:12px;align-items:flex-start;margin-bottom:16px}
+  .q-no{flex:none;width:30px;height:30px;border-radius:8px;background:var(--panel-2);color:var(--accent);font-weight:700;font-size:.82rem;display:grid;place-items:center;font-family:'Newsreader',serif}
+  .q-text{font-size:1.04rem;font-weight:500;padding-top:3px}
+
+  .opts{display:flex;flex-direction:column;gap:9px}
+  .opt{text-align:left;width:100%;cursor:pointer;background:var(--panel-2);border:1px solid var(--line);color:var(--ink);border-radius:11px;padding:12px 14px;font-family:inherit;font-size:.96rem;line-height:1.4;display:flex;gap:12px;align-items:flex-start;transition:background .18s,border-color .18s,transform .06s}
+  .opt:hover:not(:disabled){background:#212a35;border-color:#3a4655}
+  .opt:active:not(:disabled){transform:scale(.995)}
+  .opt:disabled{cursor:default}
+  .opt .mark{flex:none;width:22px;height:22px;border-radius:50%;border:1.5px solid var(--muted);color:var(--muted);font-size:.74rem;font-weight:700;display:grid;place-items:center;margin-top:1px;font-family:'Newsreader',serif;transition:.2s}
+  .opt.correct{background:var(--correct-bg);border-color:var(--correct-line);color:#d6ffe9}
+  .opt.correct .mark{border-color:var(--correct-line);background:var(--correct-line);color:#06231a}
+  .opt.wrong{background:var(--wrong-bg);border-color:var(--wrong-line);color:#ffe0e0}
+  .opt.wrong .mark{border-color:var(--wrong-line);background:var(--wrong-line);color:#2a0a0a}
+  .opt.correct .mark::after{content:"✓"}
+  .opt.wrong .mark::after{content:"✕"}
+  .opt.correct .mark span,.opt.wrong .mark span{display:none}
+
+  .feedback{margin-top:12px;font-size:.86rem;color:var(--muted);padding-left:2px;display:none}
+  .feedback.show{display:block}
+  .feedback b{color:var(--accent)}
+
+  footer{margin-top:80px;text-align:center;color:var(--muted);font-size:.82rem}
+  .reset{margin-top:18px;background:transparent;border:1px solid var(--line);color:var(--muted);padding:10px 18px;border-radius:10px;font-family:inherit;cursor:pointer;font-size:.85rem;transition:.2s}
+  .reset:hover{border-color:var(--accent);color:var(--accent)}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header class="hero">
+    <div class="kicker">Doç. Dr. Ozan Emre Eyupoğlu · Ders Notları</div>
+    <h1 class="title">Hormonlar, Vitaminler<br>ve Eser Elementler <em>Soru Bankası</em></h1>
+    <p class="lede">Sunumun üç başlığı altında toplam <b style="color:var(--ink)">100 çoktan seçmeli soru</b>. Bir şıkka tıklayın: doğruysa yeşil, yanlışsa kırmızı yanar ve doğru cevap yeşille işaretlenir. Cevap anahtarı yoktur — geri bildirim anında ekrandadır.</p>
+    <div class="scoreboard">
+      <div class="score-card"><div class="lbl">Yanıtlanan</div><div class="val"><span id="s-ans">0</span><span> / 100</span></div></div>
+      <div class="score-card"><div class="lbl">Doğru</div><div class="val" id="s-correct" style="color:var(--correct-line)">0</div></div>
+      <div class="score-card"><div class="lbl">Başarı</div><div class="val" id="s-pct">—</div></div>
+    </div>
+  </header>
+
+  <div id="quiz"></div>
+
+  <footer>
+    <div>Soru bankası eğitim amaçlıdır. Klinik karar için güncel kılavuzlara başvurulmalıdır.</div>
+    <button class="reset" onclick="location.reload()">↺ Sınavı Sıfırla</button>
+  </footer>
+</div>
+
+<script>
+const DATA = [
+  {
+    title:"Hormonlar",
+    meta:"44 soru",
+    questions:[
+      {q:"Hormonlar için en doğru tanım hangisidir?",o:["Sadece sindirim sırasında salınan enzimler","Endokrin bezler tarafından çok küçük miktarlarda sentezlenip kan yoluyla hedef dokulara ulaşan kimyasal maddeler","Yalnızca besinlerle dışarıdan alınan organik maddeler","Hücre zarını oluşturan yapısal proteinler","Kanda oksijen taşıyan moleküller"],a:1},
+      {q:"Bazı hormonlar kan yolu dışında etkilerini nasıl gösterebilir?",o:["Sindirim yoluyla","Komşu dokulara diffüze olarak","Solunum havasıyla","Ter bezleriyle","İdrarla"],a:1},
+      {q:"Hormonları vitaminlerden ayıran en önemli fark nedir?",o:["Hormonlar organizmada sentezlenir, vitaminler dışarıdan alınır","Vitaminler her zaman daha büyük moleküllerdir","Hormonlar enerji kaynağıdır","Vitaminler kanda taşınmaz","Hormonlar yalnızca çocuklarda etkilidir"],a:0},
+      {q:"Etki tarzları yönünden hormonlara benzerlik gösteren vitaminler hangileridir?",o:["B ve C","A ve D","K ve E","C ve B12","Folik asit ve niasin"],a:1},
+      {q:"Hormonların görevleri üç başlık altında toplanır. Aşağıdakilerden hangisi bunlardan biri DEĞİLDİR?",o:["Üreme ve neslin devamı","Büyüme ve gelişme","Metabolizmanın sürdürülmesi","Sindirim enzimlerinin yapısal sentezi","—"],a:3},
+      {q:"Kan şekeri seviyesinin ayarlanmasında doğrudan birbirine zıt yönde etki gösteren hormon çifti hangisidir?",o:["Tiroksin ve kalsitonin","İnsülin ve glukagon","ADH ve oksitosin","LH ve FSH","TSH ve TRH"],a:1},
+      {q:"Bir hormonun hedef hücrede etki gösterebilmesi için mutlaka gerekli olan nedir?",o:["Yüksek vücut ısısı","Spesifik reseptör (hormon-reseptör kompleksi)","Asidik ortam","Yüksek glukoz","Oksijen fazlalığı"],a:1},
+      {q:"Hormon reseptörleri temel olarak hangi yapıdadır?",o:["Lipid","Protein","Karbonhidrat","Nükleik asit","Mineral"],a:1},
+      {q:"Bir hücrede ilgili hormonun reseptörü yoksa ne olur?",o:["Hormon o hücreyi daha güçlü etkiler","Hormon o hücreyi etkileyemez","Hücre kendiliğinden reseptör üretir","Hormon yıkılır","Hücre ölür"],a:1},
+      {q:"Aşağıdaki hormonlardan hangisinin depolanma özelliği yoktur, sentezlenip doğrudan dolaşıma verilir?",o:["İnsülin","Glukokortikoidler","Tiroid hormonları","Büyüme hormonu","Prolaktin"],a:1},
+      {q:"ACTH salınımı gün içinde ritmik değişiklik gösterir; en yüksek seviyesine ne zaman ulaşır?",o:["Gece yarısı","Uyanma saatine gelince","Öğle uykusunda","Akşam yemeğinden sonra","Gün boyunca sabit kalır"],a:1},
+      {q:"Birçok hormonun etkisinde rol oynayan ve adenilat siklaz tarafından oluşturulan ikinci haberci hangisidir?",o:["ATP","cAMP","NADH","GTP","Asetil-CoA"],a:1},
+      {q:"Hormonların kimyasal yapılarına göre sınıflamasında yer ALMAYAN grup hangisidir?",o:["Amino asit yapılı (amin)","Peptit/protein/glikoprotein yapılı","Steroid yapılı","Eikozanoid yapılı","Nükleotid yapılı"],a:4},
+      {q:"Aşağıdakilerden hangisi amino asit yapılı (hormonal amin) hormonlara örnektir?",o:["Testosteron","Epinefrin","Kortizol","Progesteron","Prostaglandin"],a:1},
+      {q:"Aşağıdakilerden hangisi steroid yapılı bir hormondur?",o:["İnsülin","Testosteron","TSH","Epinefrin","Tiroksin"],a:1},
+      {q:"Prostaglandinler hangi hormon sınıfında yer alır ve hangi olaya neden olur?",o:["Steroid — büyüme","Eikozanoid — yangı (enflamasyon)","Peptit — sindirim","Amin — pigmentasyon","Glikoprotein — pıhtılaşma"],a:1},
+      {q:"Tiroid hormonları vücutta nerede depolanır?",o:["Karaciğer granüllerinde","Tiroid follikülleri içinde (tiroglobulin yapısında)","Kemik iliğinde","Yağ dokusunda","Böbrek tübüllerinde"],a:1},
+      {q:"Hormon salınımının kontrolünde hakim olan genel mekanizma hangisidir?",o:["Pozitif feedback","Negatif feedback","Pasif difüzyon","Aktif transport","Fagositoz"],a:1},
+      {q:"Pozitif feedback için verilen klasik örnek hangisidir?",o:["Kortizolün ACTH'yı baskılaması","Östrojenin ovulasyon sırasında LH üzerine artırıcı etkisi","İnsülinin glukagonu baskılaması","Tiroksinin TSH'yı azaltması","Kalsitoninin kalsiyumu düşürmesi"],a:1},
+      {q:"Hipotalamus, uyarıcı ve baskılayıcı hormonlarıyla özellikle hangi yapıyı denetler?",o:["Böbrek üstü medullasını","Ön hipofizi","Pankreası","Tiroidi doğrudan","Paratiroidi"],a:1},
+      {q:"TRH (tirotropin salgılatıcı hormon) neyin sentez ve salınımını uyarır?",o:["ACTH","TSH (tirotropin)","GH","LH","Prolaktin"],a:1},
+      {q:"CRH (kortikotropin salgılatıcı hormon) hangi hormonun salgısını uyarır?",o:["TSH","ACTH","FSH","GH","Oksitosin"],a:1},
+      {q:"GnRH (gonadotropin salgılatıcı hormon) hangi hormonların salgılanmasını uyarır?",o:["TSH ve ACTH","LH ve FSH","GH ve prolaktin","ADH ve oksitosin","Kalsitonin ve PTH"],a:1},
+      {q:"Büyüme hormonunun (GH) salınımını inhibe eden hipotalamik hormon hangisidir?",o:["GHRH","Somatostatin","Dopamin","CRH","TRH"],a:1},
+      {q:"Aşağıdakilerden hangisi bir ön hipofiz (adenohipofiz) hormonu DEĞİLDİR?",o:["GH","TSH","ACTH","ADH (vazopressin)","Prolaktin"],a:3},
+      {q:"Puberte öncesinde büyüme hormonunun fazla sentezlenmesi hangi tabloya yol açar?",o:["Akromegali","Gigantizm (devlik)","Dwarfism (cücelik)","Kretenizm","Cushing sendromu"],a:1},
+      {q:"Büyüme hormonunun yetersiz sentezlenmesine bağlı gelişen tablo hangisidir?",o:["Gigantizm","Dwarfism (cücelik)","Akromegali","Guatr","Diabetes insipidus"],a:1},
+      {q:"TSH (tiroid stimüle edici hormon) hangi etkiyi gösterir?",o:["Kalsiyumu düşürür","Tiroid bezine etki ederek tiroid hormonu salgılanmasını sağlar","Süt salınımını uyarır","Kan basıncını düşürür","Melanin üretir"],a:1},
+      {q:"FSH dişilerde hangi etkiyi gösterir?",o:["Corpus luteumun şekillenmesi","Östrojen salgılanması ve folikül gelişimi/olgunlaşması","Süt üretimi","Uterus kasılması","Testosteron sentezi"],a:1},
+      {q:"LH, erkeklerde interstitial (Leydig) hücrelerinden hangi hormonun salgılanmasını uyarır?",o:["Östrojen","Testosteron","Prolaktin","Kortizol","İnsülin"],a:1},
+      {q:"Hipofizin prolaktin salgılayan tümörüne (prolaktinoma) bağlı olarak hangi tablo gelişir?",o:["Diabetes insipidus","Menstrüel düzensizlik ve meme bezlerinden süt gelmesi (galaktore)","Cushing sendromu","Guatr","Gigantizm"],a:1},
+      {q:"ACTH'nın fazla salgılanması hangi sendroma yol açar?",o:["Addison hastalığı","Cushing sendromu","Diabetes insipidus","Graves hastalığı","Kretenizm"],a:1},
+      {q:"Melanosit stimüle edici hormon (MSH) temel olarak neyi düzenler?",o:["Kan şekerini","Kıl ve derinin melanin pigmentini","Kalsiyum dengesini","Süt salınımını","Kan basıncını"],a:1},
+      {q:"Antidiüretik hormonun (ADH/vazopressin) yokluğunda hangi tablo ortaya çıkar?",o:["Diabetes mellitus","Diabetes insipidus","Cushing sendromu","Akromegali","Tetani"],a:1},
+      {q:"Oksitosin hormonunun başlıca etkileri hangileridir?",o:["Kan şekerini yükseltmek","Uterus kasılmasını artırmak ve süt salınımını uyarmak","Kalsiyumu düşürmek","Melanin üretmek","Glukoneogenezi artırmak"],a:1},
+      {q:"Tiroid bezinin normal çalışması için yapısında bulunması gereken element hangisidir?",o:["Demir","İyot","Çinko","Bakır","Kalsiyum"],a:1},
+      {q:"Beslenmede iyot eksikliği sonucunda hangi tablo gelişir?",o:["Tetani","Guatr","Skorbüt","Pellagra","Beriberi"],a:1},
+      {q:"Kalsitonin hormonunun temel etkisi nedir?",o:["Kandaki kalsiyum konsantrasyonunu düşürür","Kandaki kalsiyumu yükseltir","Kan şekerini düşürür","Süt salgısını artırır","Kan basıncını yükseltir"],a:0},
+      {q:"Paratiroid hormonu (PTH) eksikliğinde hangi tablo görülür?",o:["Hiperkalsemi","Hipokalsemi (tetaniye eğilim)","Hipoglisemi","Hiperamonyemi","Hipernatremi"],a:1},
+      {q:"Adrenal korteksten salgılanan ve sodyum-potasyum (su-tuz) dengesini düzenleyen başlıca mineralokortikoid hangisidir?",o:["Kortizol","Aldosteron","Adrenalin","Testosteron","Androstenodion"],a:1},
+      {q:"Glukokortikoidlerin (kortizol) metabolik etkileri için hangisi doğrudur?",o:["Kan şekerini düşürür","Glukoneogenezi artırır ve kan şekerini yükseltir","Yangıyı artırır","Protein sentezini hızlandırır","Kalsiyumu düşürür"],a:1},
+      {q:"Adrenal korteks hormonu eksikliğinde (Addison) tipik bir bulgu nedir?",o:["Deri renginin koyulaşması (melanodermi) ve düşük tansiyon","Aşırı kilo alımı","Yüksek tansiyon","Polidipsi ve poliüri","Guatr"],a:0},
+      {q:"Pankreasta insülin hangi hücrelerde yapılır ve kan şekerine etkisi nedir?",o:["Alfa hücreleri – yükseltir","Beta hücreleri – düşürür","Delta hücreleri – değiştirmez","Beta hücreleri – yükseltir","Alfa hücreleri – düşürür"],a:1},
+      {q:"Glukagon hangi hücrelerde yapılır ve kan şekerine etkisi nedir?",o:["Beta hücreleri – düşürür","Alfa hücreleri – yükseltir","Delta hücreleri – yükseltir","Alfa hücreleri – düşürür","Beta hücreleri – yükseltir"],a:1}
+    ]
+  },
+  {
+    title:"Vitaminler",
+    meta:"28 soru",
+    questions:[
+      {q:"Vitaminler için en doğru tanım hangisidir?",o:["Enerji veren makromoleküller","Sağlıklı beslenme için küçük miktarlarda alınan, eksikliği özgül bir hastalık yapan organik maddeler","Vücutta bol miktarda sentezlenen inorganik maddeler","Hücre zarının yapısal lipidleri","Kanda kalsiyum taşıyan proteinler"],a:1},
+      {q:"Vitaminler çözünürlüklerine göre nasıl sınıflandırılır?",o:["Yalnızca suda çözünenler","Suda çözünenler, yağda çözünenler ve vitamin benzeri bileşikler","Sadece yağda çözünenler","Asidik ve bazik vitaminler","Mineral ve organik vitaminler"],a:1},
+      {q:"Aşağıdaki vitamin grubu yağda çözünen vitaminleri doğru olarak verir?",o:["B, C, folik asit, biotin","A, D, E, K","C ve B12","Niasin ve tiamin","Pantotenik asit ve B6"],a:1},
+      {q:"Aşağıdakilerden hangisi suda çözünen bir vitamindir?",o:["Vitamin A","Vitamin C (askorbik asit)","Vitamin D","Vitamin E","Vitamin K"],a:1},
+      {q:"Vitamin B1 (tiamin) eksikliğinde ortaya çıkan hastalık hangisidir?",o:["Pellagra","Beriberi","Skorbüt","Raşitizm","Gece körlüğü"],a:1},
+      {q:"Tiaminin koenzim olarak görev yapan aktif şekli hangisidir?",o:["FAD","Tiamin pirofosfat (TPP)","NADP","Koenzim A","Piridoksal fosfat"],a:1},
+      {q:"Vitamin B2 (riboflavin) hücrede hangi koenzimlerin yapısında bulunur?",o:["NAD ve NADP","FMN ve FAD","TPP ve CoA","ATP ve GTP","Tetrahidrofolat"],a:1},
+      {q:"Riboflavin eksikliğinde tipik olarak görülen bulgu hangisidir?",o:["Megaloblastik anemi","Seboreik dermatit, glossit ve ağız köşesi çatlağı (keilosis)","Gece körlüğü","Skorbüt","Tetani"],a:1},
+      {q:"Niasin (nikotinik asit) hangi koenzimlerin yapısında yer alır?",o:["FMN ve FAD","NAD+ ve NADP+","TPP","Biotin","Kobalamin"],a:1},
+      {q:"Niasin eksikliğinde ortaya çıkan ve dermatit-diyare-demans ile karakterize tablo hangisidir?",o:["Beriberi","Pellagra","Skorbüt","Pernisiyöz anemi","Raşitizm"],a:1},
+      {q:"Vitamin B5 (pantotenik asit) hangi molekülün yapısında bulunur?",o:["Hemoglobin","Koenzim A (CoA-SH)","Rodopsin","Tiroglobulin","İntrinsik faktör"],a:1},
+      {q:"Pantotenik asit eksikliği insanlarda neden nadiren görülür?",o:["Vücutta hızla sentezlendiği için","Doğada yaygın bulunduğu ve bağırsak florası tarafından sentezlendiği için","İdrarla atılmadığı için","Yağda çözündüğü için","Karaciğerde depolandığı için"],a:1},
+      {q:"Vitamin B6 (piridoksin) eksikliği özellikle hangi ilacın kullanımıyla ortaya çıkabilir?",o:["Warfarin","İzoniazid (tüberküloz tedavisi)","Statin","Aspirin","Metformin"],a:1},
+      {q:"Biotin (vitamin H) ile birleşerek emilimini engelleyen, yumurta akındaki glikoprotein hangisidir?",o:["Albumin","Avidin","Globulin","Kazein","Keratin"],a:1},
+      {q:"Biotin hücrede hangi enzim sisteminin prostetik grubu olarak görev yapar?",o:["Dehidrogenazlar","Karboksilaz (karboksilasyon) enzimleri","Proteazlar","Lipazlar","Nükleazlar"],a:1},
+      {q:"Folik asit eksikliğinde kan tablosunda hangi durum görülür?",o:["Mikrositer hipokrom anemi","Megaloblastik anemi, lökopeni ve trombositopeni","Hemolitik anemi","Polisitemi","Aplastik anemi"],a:1},
+      {q:"Vitamin B12 (kobalamin) eksikliği, mideden intrinsik faktör salgılanamadığında hangi tabloya yol açar?",o:["Demir eksikliği anemisi","Pernisiyöz (megaloblastik) anemi","Skorbüt","Beriberi","Pellagra"],a:1},
+      {q:"Vitamin C (askorbik asit) eksikliğinde ortaya çıkan hastalık hangisidir?",o:["Skorbüt","Raşitizm","Pellagra","Beriberi","Pernisiyöz anemi"],a:0},
+      {q:"Suda çözünen vitaminler içinde en stabil olan ancak ısıya karşı labil olan hangisidir?",o:["Tiamin","Vitamin C (askorbik asit)","Riboflavin","Niasin","Folik asit"],a:1},
+      {q:"Vitamin A'nın bitkilerde bulunan provitamin formu hangisidir?",o:["Retinol","β-karoten","Retinal","Retinoik asit","Kalsitriol"],a:1},
+      {q:"Vitamin A eksikliğinin erken belirtilerinden biri, karanlığa adaptasyon bozukluğu ile karakterize hangi tablodur?",o:["Skorbüt","Gece körlüğü (niktalopi)","Raşitizm","Osteomalazi","Beriberi"],a:1},
+      {q:"Vitamin A'nın normalin çok üstünde alınması hangi tabloya yol açar?",o:["Hipovitaminoz","Hipervitaminoz A","Skorbüt","Pellagra","Megaloblastik anemi"],a:1},
+      {q:"Vitamin D'nin aktif şekli hangisidir?",o:["Ergokalsiferol","1α,25-dihidroksi vitamin D3 (kalsitriol)","7-dehidrokolesterol","β-karoten","Retinol"],a:1},
+      {q:"Vitamin D'nin genel etkisi nedir?",o:["Kanın pıhtılaşmasını sağlamak","Kalsiyum ve fosforun emilimini artırarak kemik mineralizasyonunu sağlamak","Antioksidan etki","Görme pigmenti oluşturmak","Protein sentezini durdurmak"],a:1},
+      {q:"Vitamin D eksikliğinin çocuklarda ve erişkinlerdeki klinik karşılığı sırasıyla hangisidir?",o:["Skorbüt – pellagra","Raşitizm – osteomalazi","Beriberi – tetani","Gece körlüğü – guatr","Pellagra – raşitizm"],a:1},
+      {q:"Vitamin E (tokoferoller) eksikliğinde insanlarda görülen bulgu hangisidir?",o:["Gece körlüğü","Kreatinüri, kas güçsüzlüğü ve dayanıksız eritrositler","Megaloblastik anemi","Skorbüt","Tetani"],a:1},
+      {q:"Vitamin K, karaciğerde hangi pıhtılaşma faktörlerinin oluşması için gereklidir?",o:["Yalnızca faktör I","Faktör II (protrombin), VII, IX ve X","Sadece trombositler","Faktör V ve XIII","Hiçbir faktör"],a:1},
+      {q:"Karnitin (vitamin T) hücrede hangi görevi üstlenir?",o:["Görme pigmenti sentezi","Uzun zincirli yağ asitlerinin β-oksidasyon için mitokondri içine taşınması","Kalsiyum emilimi","Kan pıhtılaşması","Melanin üretimi"],a:1}
+    ]
+  },
+  {
+    title:"Eser Elementler",
+    meta:"28 soru",
+    questions:[
+      {q:"Eser elementler için en doğru tanım hangisidir?",o:["Vücutta kilogram başına gram düzeyinde bulunan organik moleküller","İnsan ve hayvan dokularında kilogram başına miligram veya daha az oranda bulunan inorganik moleküller","Yalnızca vitaminlerle birlikte alınan yağlar","Enerji veren makro besinler","Sadece kemikte bulunan proteinler"],a:1},
+      {q:"İnsan vücudunda bulunan eser elementlerin toplam miktarı yaklaşık ne kadardır?",o:["1 gr","10 gr","100 gr","500 gr","1 kg"],a:1},
+      {q:"Bir eser elementin \"esansiyel\" kabul edilmesi için temel ölçüt nedir?",o:["İdrarla atılması","Eksik alındığında işlev bozukluğu oluşturması ve fizyolojik dozlarda bunu önlemesi","Kanda yüksek bulunması","Yağda çözünmesi","Vücutta sentezlenmesi"],a:1},
+      {q:"Eser elementler enzim reaksiyonlarında çoğunlukla hangi rolü üstlenir?",o:["Substrat","Kofaktör / katalizör","Son ürün","Hormon","Antikor"],a:1},
+      {q:"İnsanlarda serum demir düzeyinin normal değeri yaklaşık hangi aralıktadır?",o:["1-5 µg/dL","60-150 µg/dL","500-1000 µg/dL","10-20 mg/dL","Ölçülemez"],a:1},
+      {q:"Demirin emilimini kolaylaştıran (Fe3+ → Fe2+ indirgemesini sağlayan) maddelere örnek hangisidir?",o:["Fosfat ve fitat","Askorbik asit (C vitamini) ve sistein","Kalsiyum","Lif","Oksalat"],a:1},
+      {q:"Aşağıdakilerden hangisi demiri çözünmeyen bileşiklere dönüştürerek emilimini engeller?",o:["Askorbik asit","Fosfat, fitat ve oksalat","Sistein","Fruktoz","Tiyol grupları"],a:1},
+      {q:"Serum demir düzeyinin normalden yüksek olması nasıl tanımlanır?",o:["Hiposideremi","Hipersideremi","Hemokromatoz","Anemi","Hipokalsemi"],a:1},
+      {q:"Aneminin en sık rastlanan nedeni olan, serum demirinin düşük olması durumu nasıl adlandırılır?",o:["Hipersideremi","Hiposideremi","Hemosideroz","Hemokromatoz","Polisitemi"],a:1},
+      {q:"Doku hasarı olmaksızın görülen demir fazlalığı hangisidir?",o:["Hemokromatoz","Hemosideroz","Hiposideremi","Anemi","Hemoliz"],a:1},
+      {q:"Demirin tutulduğu organlarda hücre hasarı ve fibrozis oluşturan (karaciğer, pankreas, kalp etkilenir) tablo hangisidir?",o:["Hemosideroz","Hemokromatoz","Hiposideremi","Talasemi","Hipersideremi"],a:1},
+      {q:"Bakır (Cu) birçok enzim için esansiyel kofaktördür. Aşağıdakilerden hangisi bakır içeren enzimlerden biri DEĞİLDİR?",o:["Sitokrom c oksidaz","Süperoksit dismutaz","Tirozinaz","Lizil oksidaz","Tiamin pirofosfataz"],a:4},
+      {q:"Karaciğerde sentezlenen, akut faz reaktanı olan ve ferrooksidaz/antioksidan aktivitesi taşıyan bakır proteini hangisidir?",o:["Ferritin","Seruloplazmin","Transferrin","Metallotionein","Hemosiderin"],a:1},
+      {q:"Bakır eksikliğinin klinik bulgularından biri hangisidir?",o:["Hiperkalsemi","Nötropeni ve hipokrom anemi","Poliüri","Hipertansiyon","Guatr"],a:1},
+      {q:"Çinko başlıca nereden emilir?",o:["Mide","Duodenum ve proksimal jejunum","Kalın bağırsak","Özofagus","Rektum"],a:1},
+      {q:"Aşağıdakilerden hangisi çinko emilimini azaltır?",o:["Sistein","Fitat ve diğer lifler (yüksek Ca, P, demir, bakır içeren besinler)","Askorbik asit","Fruktoz","Düşük lifli diyet"],a:1},
+      {q:"Çinko, gen regülasyonunda görev alır ve aşağıdaki enzimlerin yapısında bulunur. Hangisi doğrudur?",o:["Nükleik asit polimeraz ve süperoksit dismutaz","Sadece sitokrom oksidaz","Yalnızca arginaz","Sadece ksantin oksidaz","Hiçbir enzimde bulunmaz"],a:0},
+      {q:"Aşağıdakilerden hangisi çinko eksikliğinin klinik bulgularından biri DEĞİLDİR?",o:["Büyüme-gelişme geriliği","Hipogonadizm","Yara iyileşmesinde gecikme","Koku ve tat duyusu bozukluğu","Hiperkalsemi"],a:4},
+      {q:"Selenyum, emildikten sonra hangi antioksidan enzimin yapısına katılır?",o:["Katalaz","Glutatyon peroksidaz","Süperoksit dismutaz (Cu/Zn)","Laktat dehidrogenaz","Ksantin oksidaz"],a:1},
+      {q:"Selenyum hakkında hangisi doğrudur?",o:["Diyetteki minerallerin en zararsızıdır","Diyetteki minerallerin en zehirlisidir ve E vitamini ile etkisini daha iyi gösterir","Vücutta hiç bulunmaz","Yağda çözünür","Sadece çocuklarda gereklidir"],a:1},
+      {q:"Selenyum eksikliği hangi hastalığa (kardiyomiyopati) neden olur?",o:["Kashin-Beck hastalığı","Keshan hastalığı","Wilson hastalığı","Menkes hastalığı","Addison hastalığı"],a:1},
+      {q:"Selenyumun tiroid hormon metabolizmasındaki rolü nedir?",o:["İyot emilimini engeller","T4'ün periferde T3'e dönüşmesinde görevli deiyodinazların (selenoprotein) yapısında bulunur","Tiroglobulin sentezler","TSH salgılatır","Kalsitonin üretir"],a:1},
+      {q:"Selenyum ve iyodun birlikte eksikliği için hangisi gösterilmiştir?",o:["Hiçbir etkisi yoktur","Tek başına iyot eksikliğinden daha şiddetli hipotiroidizme neden olur","Hipertiroidi yapar","Yalnızca cilt bulgusu verir","Anemi yapar"],a:1},
+      {q:"Krom (Cr) hangi metabolik etkiye sahiptir?",o:["Kanın pıhtılaşmasını sağlar","İnsülin etkisini kuvvetlendirir ve glikoz toleransını sürdürür","Kalsiyumu düşürür","Melanin üretir","Oksijen taşır"],a:1},
+      {q:"Krom eksikliğinde beklenen bulgu hangisidir?",o:["Glikoz toleransının bozulması ve insülin etkilerine direnç","Gece körlüğü","Tetani","Skorbüt","Guatr"],a:0},
+      {q:"Aşırı molibden (Mo) alımında ksantin oksidaz aktivitesindeki artış sonucu hangi hastalık görülebilir?",o:["Diyabet","Gut hastalığı","Anemi","Skorbüt","Raşitizm"],a:1},
+      {q:"Mangan (Mn) aşağıdaki enzimlerin aktivatörü/yapısal bileşeni olarak görev yapar. Hangisi doğrudur?",o:["Arginaz, piruvat karboksilaz ve Mn-SOD","Yalnızca pepsin","Sadece amilaz","Yalnızca tripsin","Hiçbir enzim"],a:0},
+      {q:"Mangan hakkında hangisi doğrudur?",o:["Atılımı tamamen idrarla olur","Atılımı safra ile olur ve glikoziltransferazların en kuvvetli aktivatörüdür","Vücutta depolanmaz","Yağda çözünen bir vitamindir","Kanda oksijen taşır"],a:1}
+    ]
+  }
+];
+
+let answered = 0, correct = 0;
+const quiz = document.getElementById('quiz');
+let globalNo = 0;
+
+DATA.forEach((topic, ti)=>{
+  const sec = document.createElement('section');
+  sec.className = 'topic';
+  sec.innerHTML = `
+    <div class="topic-head">
+      <span class="topic-num">Bölüm ${String.fromCharCode(65+ti)}</span>
+      <h2>${topic.title} <span class="meta">· ${topic.meta}</span></h2>
+      <div class="rule"></div>
+    </div>`;
+  topic.questions.forEach((item)=>{
+    globalNo++;
+    const card = document.createElement('div');
+    card.className = 'q';
+    const opts = item.o.map((txt,oi)=>{
+      const letter = String.fromCharCode(65+oi);
+      return `<button class="opt" data-correct="${oi===item.a}">
+                <span class="mark"><span>${letter}</span></span>
+                <span>${txt}</span>
+              </button>`;
+    }).join('');
+    card.innerHTML = `
+      <div class="q-top">
+        <div class="q-no">${globalNo}</div>
+        <div class="q-text">${item.q}</div>
+      </div>
+      <div class="opts">${opts}</div>
+      <div class="feedback"></div>`;
+    sec.appendChild(card);
+  });
+  quiz.appendChild(sec);
+});
+
+quiz.addEventListener('click', e=>{
+  const btn = e.target.closest('.opt');
+  if(!btn) return;
+  const card = btn.closest('.q');
+  if(card.classList.contains('answered')) return;
+  card.classList.add('answered');
+  const opts = card.querySelectorAll('.opt');
+  const isRight = btn.dataset.correct === 'true';
+  opts.forEach(o=>{
+    o.disabled = true;
+    if(o.dataset.correct === 'true') o.classList.add('correct');
+  });
+  if(!isRight) btn.classList.add('wrong');
+  const fb = card.querySelector('.feedback');
+  fb.classList.add('show');
+  fb.innerHTML = isRight
+    ? '<b>Doğru.</b> İşaretlediğiniz şık doğru cevaptır.'
+    : '<b>Yanlış.</b> Doğru cevap yeşille gösterilmektedir.';
+  answered++;
+  if(isRight) correct++;
+  updateScore();
+});
+
+function updateScore(){
+  document.getElementById('s-ans').textContent = answered;
+  document.getElementById('s-correct').textContent = correct;
+  document.getElementById('s-pct').textContent = answered ? Math.round(correct/answered*100) + '%' : '—';
+}
+</script>
+</body>
+</html>
