@@ -1,0 +1,302 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Farmasötik Biyoteknoloji 1 - Giriş</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Source+Sans+3:wght@400;500;600&display=swap" rel="stylesheet">
+    <style>
+        *,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+        :root{--bg:#f7f5f0;--card-bg:#fff;--text:#2c2c2c;--text-muted:#6b6b6b;--accent:#1a6b4e;--accent-light:#e8f5ee;--border:#e2ddd5;--answer-bg:#fdf8f0;--answer-border:#e8c87a;--tf-true:#1a6b4e;--tf-false:#b5442d}
+        body{font-family:'Source Sans 3',sans-serif;background:var(--bg);color:var(--text);min-height:100vh;line-height:1.55}
+        .hero{width:100%;padding:3rem 1.5rem 2rem;text-align:center;background:linear-gradient(135deg,#1a6b4e 0%,#0d3d2d 100%);color:#fff;position:relative}
+        .hero::after{content:'';position:absolute;inset:0;background:url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.04'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");pointer-events:none}
+        .back-link{display:inline-flex;align-items:center;gap:.4rem;color:rgba(255,255,255,.75);text-decoration:none;font-size:.9rem;margin-bottom:1rem;transition:color .2s}
+        .back-link:hover{color:#fff}
+        .hero h1{font-family:'Playfair Display',serif;font-size:2rem;font-weight:700}
+        .hero p{font-size:1rem;opacity:.85;margin-top:.4rem}
+        .container{max-width:860px;margin:0 auto;padding:2rem 1.5rem 4rem}
+        .controls{display:flex;gap:.75rem;flex-wrap:wrap;margin-bottom:2rem;position:sticky;top:0;z-index:10;background:var(--bg);padding:1rem 0}
+        .btn{padding:.6rem 1.2rem;border:2px solid var(--accent);border-radius:8px;font-weight:600;font-size:.9rem;cursor:pointer;transition:all .2s;font-family:inherit;background:#fff;color:var(--accent)}
+        .btn:hover{background:var(--accent-light)}
+        .btn.active{background:var(--accent);color:#fff}
+        .btn-answer{border-color:#c8951a;color:#a07415}
+        .btn-answer:hover{background:#fdf3dc}
+        .btn-answer.active{background:#c8951a;color:#fff;border-color:#c8951a}
+        .section-title{font-family:'Playfair Display',serif;font-size:1.3rem;font-weight:700;color:var(--accent);margin:2.5rem 0 1rem;padding-bottom:.5rem;border-bottom:2px solid var(--accent-light)}
+        .section-desc{font-size:.9rem;color:var(--text-muted);margin-bottom:1rem;font-style:italic}
+        .q-table{width:100%;border-collapse:collapse;margin-bottom:1.5rem;background:var(--card-bg);border-radius:10px;overflow:hidden;border:1px solid var(--border)}
+        .q-table thead th{background:var(--accent-light);color:var(--accent);font-weight:600;text-align:left;padding:.75rem 1rem;font-size:.85rem;text-transform:uppercase;letter-spacing:.05em}
+        .q-table tbody td{padding:.7rem 1rem;border-top:1px solid var(--border);font-size:.93rem;vertical-align:top}
+        .q-table tbody tr:hover{background:#fafaf7}
+        .num{color:var(--accent);font-weight:700;width:42px;text-align:center;white-space:nowrap}
+        .question-cell{width:62%}
+        .answer-cell{position:relative;min-height:1.4em;cursor:pointer;width:38%}
+        .blank{color:var(--text-muted);font-style:italic;user-select:none}
+        .answer-text{display:none;color:#5a3e00;background:var(--answer-bg);border-left:3px solid var(--answer-border);padding:.35rem .65rem;border-radius:0 4px 4px 0;line-height:1.5;font-size:.9rem}
+        .revealed .blank{display:none}
+        .revealed .answer-text{display:block}
+        .blank-mark{display:inline-block;min-width:120px;border-bottom:1.5px dashed #b5aa98;padding:0 .3rem;margin:0 .15rem;color:var(--text-muted)}
+        .tf-answer{display:flex;flex-direction:column;gap:.35rem}
+        .tf-badge{display:inline-block;padding:.15rem .55rem;border-radius:4px;font-weight:700;font-size:.85rem;letter-spacing:.03em;align-self:flex-start}
+        .tf-badge.true{background:#dff3e7;color:var(--tf-true)}
+        .tf-badge.false{background:#f9e3dc;color:var(--tf-false)}
+        .klasik-card{background:var(--card-bg);border:1px solid var(--border);border-radius:10px;margin-bottom:1rem;overflow:hidden;transition:box-shadow .2s}
+        .klasik-card:hover{box-shadow:0 2px 8px rgba(0,0,0,.04)}
+        .klasik-header{padding:1rem 1.25rem;cursor:pointer;display:flex;gap:.75rem;align-items:flex-start;user-select:none}
+        .klasik-header:hover{background:#fafaf7}
+        .klasik-num{color:var(--accent);font-weight:700;font-size:1rem;min-width:28px}
+        .klasik-q{flex:1;font-size:.95rem;font-weight:500}
+        .klasik-toggle{color:var(--accent);font-size:.85rem;transition:transform .2s;flex-shrink:0;margin-top:.15rem}
+        .revealed .klasik-toggle{transform:rotate(180deg)}
+        .klasik-puan{display:inline-block;background:var(--accent-light);color:var(--accent);font-size:.75rem;font-weight:600;padding:.1rem .45rem;border-radius:4px;margin-left:.4rem;white-space:nowrap}
+        .klasik-answer{display:none;padding:0 1.25rem 1.25rem;border-top:1px solid var(--accent-light);background:var(--answer-bg)}
+        .klasik-answer-inner{padding-top:1rem;color:#3d2f0a;font-size:.92rem;line-height:1.65}
+        .klasik-answer-inner h4{font-family:'Playfair Display',serif;color:var(--accent);font-size:1rem;margin:1rem 0 .4rem}
+        .klasik-answer-inner h4:first-child{margin-top:0}
+        .klasik-answer-inner ul,.klasik-answer-inner ol{margin:.4rem 0 .6rem 1.4rem}
+        .klasik-answer-inner li{margin-bottom:.3rem}
+        .klasik-answer-inner p{margin-bottom:.5rem}
+        .klasik-answer-inner table{width:100%;border-collapse:collapse;margin:.5rem 0;font-size:.88rem;background:#fff}
+        .klasik-answer-inner th,.klasik-answer-inner td{border:1px solid var(--border);padding:.4rem .55rem;text-align:left;vertical-align:top}
+        .klasik-answer-inner th{background:var(--accent-light);color:var(--accent);font-weight:600}
+        .klasik-answer-inner strong{color:#4a3208}
+        .revealed .klasik-answer{display:block}
+        .toc{background:#fff;border:1px solid var(--border);border-radius:10px;padding:1rem 1.25rem;margin-bottom:1.5rem}
+        .toc h3{font-family:'Playfair Display',serif;color:var(--accent);font-size:1rem;margin-bottom:.5rem}
+        .toc ul{list-style:none;display:flex;flex-wrap:wrap;gap:.5rem}
+        .toc a{display:inline-block;padding:.3rem .7rem;background:var(--accent-light);color:var(--accent);text-decoration:none;border-radius:6px;font-size:.85rem;font-weight:500;transition:all .2s}
+        .toc a:hover{background:var(--accent);color:#fff}
+        footer{text-align:center;padding:2rem 1rem;font-size:.82rem;color:var(--text-muted);border-top:1px solid var(--border)}
+        @media(max-width:600px){.hero h1{font-size:1.45rem}.q-table tbody td{padding:.55rem .6rem;font-size:.85rem}.controls{flex-direction:column}.klasik-header{padding:.85rem 1rem}.klasik-q{font-size:.88rem}}
+        @media print{.controls,.toc{display:none}.hero{padding:1.5rem}.answer-text,.klasik-answer{display:block!important;color:#333!important;border:none!important;background:none!important;padding:.3rem 0!important}.blank{display:none!important}.klasik-card{page-break-inside:avoid;border:1px solid #ccc;margin-bottom:.8rem}}
+
+        :root{--ok:#1f7a4d;--ok-bg:#d3eedd;--ok-bd:#2f9a63;--bad:#b5442d;--bad-bg:#f8d8cf;--bad-bd:#cf5a40}
+        .controls{align-items:center}
+        .pill{font-size:.82rem;font-weight:600;padding:.3rem .65rem;border-radius:999px;border:1px solid var(--border);background:#fff;font-variant-numeric:tabular-nums}
+        .pill.ok{color:var(--ok);border-color:var(--ok-bd);background:var(--ok-bg)}
+        .pill.bad{color:var(--bad);border-color:var(--bad-bd);background:var(--bad-bg)}
+        .sep{width:1px;height:28px;background:var(--border)}
+        .mq{background:var(--card-bg);border:1px solid var(--border);border-radius:12px;padding:1.2rem 1.25rem 1.05rem;margin-bottom:1rem}
+        .mq-head{display:flex;gap:.7rem;margin-bottom:.85rem}
+        .mq-num{color:var(--accent);font-weight:700;min-width:1.8rem}
+        .mq-text{font-weight:600;font-size:.98rem}
+        .opts{display:flex;flex-direction:column;gap:.45rem}
+        .opt{display:flex;gap:.7rem;align-items:flex-start;text-align:left;width:100%;padding:.6rem .8rem;border:1.5px solid var(--border);border-radius:9px;background:#fff;font:400 .94rem 'Source Sans 3',sans-serif;color:var(--text);cursor:pointer}
+        .opt:hover:not(:disabled){border-color:var(--accent);background:#fafcfa}
+        .opt:disabled{cursor:default}
+        .letter{flex-shrink:0;width:1.6rem;height:1.6rem;border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:.8rem;background:var(--accent-light);color:var(--accent)}
+        .opt.correct{border-color:var(--ok-bd);background:var(--ok-bg);color:#14472e;font-weight:600}
+        .opt.correct .letter{background:var(--ok);color:#fff}
+        .opt.wrong{border-color:var(--bad-bd);background:var(--bad-bg);color:#6e2414}
+        .opt.wrong .letter{background:var(--bad);color:#fff}
+        .opt.dim{opacity:.55}
+        .mexp{display:none;margin-top:.8rem;padding:.7rem .9rem;background:var(--answer-bg);border-left:3px solid var(--answer-border);border-radius:0 6px 6px 0;font-size:.91rem;color:#3d2f0a}
+        .mexp b{color:var(--ok)}
+        .mq.done .mexp{display:block}
+        .result{display:none;text-align:center;background:#fff;border:1px solid var(--border);border-radius:12px;padding:1.4rem;margin-top:1rem}
+        .result.show{display:block}
+        .result h3{font-family:'Playfair Display',serif;color:var(--accent);margin-bottom:.35rem}
+        .klasik-answer-inner td,.klasik-answer-inner th{overflow-wrap:normal;word-break:normal;hyphens:manual}
+        @media(max-width:600px){.sep{display:none}.mq{padding:1rem}.opt{font-size:.9rem}.controls{flex-direction:row;flex-wrap:wrap;justify-content:center;gap:.35rem;padding:.6rem 0}.controls .btn{padding:.4rem .7rem;font-size:.8rem}.pill{font-size:.74rem;padding:.25rem .5rem}}
+    </style>
+</head>
+<body>
+<header class="hero">
+    <a href="./" class="back-link">← Farmasötik Biyoteknoloji</a>
+    <h1>Farmasötik Biyoteknoloji — Tanımlar, Tarihçe ve Yasal Yaklaşım</h1>
+    <p>60 soru · 42 Klasik + 18 Test · Dr. Öğr. Üyesi Meliha Negin</p>
+</header>
+<main class="container">
+    <div class="controls">
+        <button class="btn btn-answer" id="toggleAll" onclick="toggleAllAnswers()">Tüm Cevapları Göster</button>
+        <button class="btn" onclick="hideAllAnswers()">Gizle</button>
+        <span class="sep"></span>
+        <span class="pill ok" id="sOk">Test doğru: 0</span>
+        <span class="pill bad" id="sBad">Yanlış: 0</span>
+        <span class="pill" id="sLeft">Kalan: 18</span>
+        <button class="btn" id="reset">Testi Sıfırla</button>
+    </div>
+    <div class="toc">
+        <h3>Bölümler</h3>
+        <ul>
+            <li><a href="#bolum-a">A — Klasik Sorular (42)</a></li>
+            <li><a href="#bolum-b">B — Test (18)</a></li>
+        </ul>
+    </div>
+<section id="bolum-a"><h2 class="section-title">A — Klasik Sorular (42 Soru)</h2><p class="section-desc">Cevabınızı düşünün, ardından soruya tıklayarak açıklamalı cevabı görün.</p><div class="klasik-card"><div class="klasik-header" onclick="this.parentElement.classList.toggle('revealed')"><span class="klasik-num">1.</span><span class="klasik-q">Biyoteknolojiyi ve farmasötik biyoteknolojiyi tanımlayınız.<span class="klasik-puan">5 puan</span></span><span class="klasik-toggle">▼</span></div><div class="klasik-answer"><div class="klasik-answer-inner">
+<ul><li><b>Biyoteknoloji:</b> nadir bulunan veya yeni maddeleri üretmek için canlı hücrelerin ve DNA teknolojisinin kullanılması; daha geniş tanımla canlı organizmalar, hücreler veya biyolojik sistemler kullanılarak insanlara yararlı ürün ve teknolojilerin geliştirilmesini sağlayan bilim ve teknoloji alanı.</li>
+<li><b>Farmasötik biyoteknoloji:</b> canlı organizmalardan elde edilen ve ilaç molekülü olarak kullanılan biyolojik maddelerin üretimi, formülasyonu ve sentezi için yeni teknolojileri kullanan; biyoteknoloji ilkelerinin ilaç geliştirmeye uygulandığı, nispeten yeni ve gelişmekte olan alan.</li></ul></div></div></div><div class="klasik-card"><div class="klasik-header" onclick="this.parentElement.classList.toggle('revealed')"><span class="klasik-num">2.</span><span class="klasik-q">EAPB'ye göre farmasötik biyoteknolojinin tanımını yazınız. EAPB'nin açılımı nedir?<span class="klasik-puan">5 puan</span></span><span class="klasik-toggle">▼</span></div><div class="klasik-answer"><div class="klasik-answer-inner">
+<p><b>EAPB:</b> European Association of Pharmaceutical Biotechnology (Avrupa Farmasötik Biyoteknoloji Birliği).</p>
+<p><b>Tanım:</b> Farmasötik biyoteknoloji; biyoteknoloji temelli <b>ilaçların, aşıların ve tanı materyallerinin</b> süreç, geliştirme, karakterizasyon, üretim ve ruhsatlandırılması ile ilgili tüm bilimsel ve teknik yönlerin yanı sıra <b>yasal prosedürleri</b> de kapsayan alandır.</p></div></div></div><div class="klasik-card"><div class="klasik-header" onclick="this.parentElement.classList.toggle('revealed')"><span class="klasik-num">3.</span><span class="klasik-q">Biyofarmasötikler ile geleneksel farmasötikler arasındaki temel farkı açıklayınız.<span class="klasik-puan">5 puan</span></span><span class="klasik-toggle">▼</span></div><div class="klasik-answer"><div class="klasik-answer-inner">
+<div style="overflow-x:auto"><table><tr><th></th><th>Biyofarmasötikler (biyoteknolojik)</th><th>Geleneksel farmasötikler</th></tr>
+<tr><td>Üretim</td><td>Canlı sistemlerde: bakteriler, mayalar, memeli hücreleri</td><td>Bir dizi kimyasal sentez yolu</td></tr>
+<tr><td>Kaynak</td><td>Canlı organizmalar</td><td>Kimyasal ve sentetik kaynaklar</td></tr>
+<tr><td>Yapı</td><td>Büyük, karmaşık (ör. monoklonal antikor ~150.000 g/mol)</td><td>Küçük molekül (ör. aspirin ~180 g/mol)</td></tr></table></div></div></div></div><div class="klasik-card"><div class="klasik-header" onclick="this.parentElement.classList.toggle('revealed')"><span class="klasik-num">4.</span><span class="klasik-q">Biyoteknoloji şirketleri ile farmasötik şirketler arasındaki farkı yazınız.<span class="klasik-puan">3 puan</span></span><span class="klasik-toggle">▼</span></div><div class="klasik-answer"><div class="klasik-answer-inner">
+<ul><li><b>Biyoteknoloji şirketleri:</b> genellikle canlı organizmalardan elde edilen ürünleri araştırır, geliştirir ve pazara sunar.</li>
+<li><b>Farmasötik şirketler:</b> genellikle kimyasallardan ve sentetik kaynaklardan elde edilen ürünleri üretir.</li></ul></div></div></div><div class="klasik-card"><div class="klasik-header" onclick="this.parentElement.classList.toggle('revealed')"><span class="klasik-num">5.</span><span class="klasik-q">Biyoteknolojinin tarihsel gelişimini üç döneme ayırarak açıklayınız.<span class="klasik-puan">10 puan</span></span><span class="klasik-toggle">▼</span></div><div class="klasik-answer"><div class="klasik-answer-inner">
+<ol><li><b>Geleneksel biyoteknoloji (Karl Ereky):</b> temel biyokimyasal ve genetik mekanizmalar bilinmeden, deneme-yanılma ile bakteri, maya ve mantarlardan yararlanılması; biyolojik sistemler hiç modifiye edilmeden kullanılmıştır (şarap/bira fermantasyonu, peynir/yoğurt, ekmek mayası).</li>
+<li><b>Geçiş dönemi (1940–1973):</b> biyolojik sistemlerin endüstriyel kullanımı genomda temel değişiklik yapılmadan genişletilmiş; sınırlı teknikler, üretim büyük ölçüde fermantasyona dayalı. Ürünler: antibiyotikler, enzimler, proteinler, organik asitler, diğer bileşikler.</li>
+<li><b>Modern biyoteknoloji (1973–günümüz):</b> Stanley Cohen ve Herbert Boyer'in (Stanford) 1973'te bir organizmadan diğerine gen aktarmasıyla başlar; biyolojik sistemlere gelişmiş tekniklerin uygulanması; rekombinant ve terapötik proteinler.</li></ol></div></div></div><div class="klasik-card"><div class="klasik-header" onclick="this.parentElement.classList.toggle('revealed')"><span class="klasik-num">6.</span><span class="klasik-q">Karl Ereky'nin tanımladığı geleneksel biyoteknolojiyi örnekleriyle açıklayınız.<span class="klasik-puan">5 puan</span></span><span class="klasik-toggle">▼</span></div><div class="klasik-answer"><div class="klasik-answer-inner">
+<p>İnsanlar temel biyokimyasal ve genetik mekanizmaları <b>bilmeden</b>, <b>deneme-yanılma</b> yoluyla bakteri, maya ve mantar gibi biyolojik sistemlerden yararlanmıştır. Sistemler dönemin bilgi ve teknolojisine dayanarak <b>modifikasyon yapılmadan</b>, oldukları gibi kullanılmıştır.</p>
+<ul><li>Şarap ve bira üretiminde fermantasyon</li><li>Peynir ve yoğurt için sütün bakterilerle işlenmesi</li><li>Ekmek yapımında maya</li></ul>
+<p>Ereky ayrıca biyolojik sistemlerle ham maddelerin yeni ürünlere dönüştürülmesini, canlıların endüstriyel ve ilaç üretiminde kullanımını tanımlamıştır.</p></div></div></div><div class="klasik-card"><div class="klasik-header" onclick="this.parentElement.classList.toggle('revealed')"><span class="klasik-num">7.</span><span class="klasik-q">Geçiş dönemini (1940–1973) özellikleri ve ürünleriyle açıklayınız.<span class="klasik-puan">5 puan</span></span><span class="klasik-toggle">▼</span></div><div class="klasik-answer"><div class="klasik-answer-inner">
+<ul><li>Biyolojik sistemlerin endüstriyel kullanımı <b>genomlarında temel değişiklik yapılmadan</b> genişletildi.</li>
+<li>Sınırlı teknikler uygulandı; üretim büyük ölçüde <b>fermantasyon teknolojisine</b> dayalı kaldı.</li>
+<li>Ürünler: antibiyotikler, enzimler, proteinler, organik asitler ve diğer bileşikler.</li></ul></div></div></div><div class="klasik-card"><div class="klasik-header" onclick="this.parentElement.classList.toggle('revealed')"><span class="klasik-num">8.</span><span class="klasik-q">Modern biyoteknoloji dönemi nasıl ve kimler tarafından başlatılmıştır? Bu dönemin özelliklerini yazınız.<span class="klasik-puan">5 puan</span></span><span class="klasik-toggle">▼</span></div><div class="klasik-answer"><div class="klasik-answer-inner">
+<p>1973'te Stanford Üniversitesi'nden <b>Prof. Stanley Cohen</b> ve <b>Prof. Herbert Boyer</b>'in bir organizmadan diğerine başarılı şekilde <b>gen aktarmasıyla</b> başlamıştır.</p>
+<ul><li>Biyolojik sistemlere gelişmiş ve modern tekniklerin uygulanması</li><li>Genetik materyalin doğrudan değiştirilmesi</li><li>O zamandan bu yana rekombinant ve terapötik proteinlerin geliştirilmesi</li></ul></div></div></div><div class="klasik-card"><div class="klasik-header" onclick="this.parentElement.classList.toggle('revealed')"><span class="klasik-num">9.</span><span class="klasik-q">1870–1953 yılları arasındaki biyoteknoloji kilometre taşlarını yazınız.<span class="klasik-puan">5 puan</span></span><span class="klasik-toggle">▼</span></div><div class="klasik-answer"><div class="klasik-answer-inner">
+<ul><li><b>1870 – Louis Pasteur:</b> kimyasal reaksiyonlarda canlı hücrelerin kullanılması.</li>
+<li><b>Karl Ereky (1917/1919):</b> biyolojik sistemlerle ham maddelerin yeni ürünlere dönüştürülmesi; canlıların endüstriyel ve ilaç üretiminde kullanılması.</li>
+<li><b>1953 – DNA yapısının keşfi:</b> genetik kodun çözülmesi.</li>
+<li>Kortizonun büyük ölçekli üretimi (ilk önemli ürün).</li></ul></div></div></div><div class="klasik-card"><div class="klasik-header" onclick="this.parentElement.classList.toggle('revealed')"><span class="klasik-num">10.</span><span class="klasik-q">1977–1988 yılları arasındaki biyoteknoloji kilometre taşlarını yazınız.<span class="klasik-puan">8 puan</span></span><span class="klasik-toggle">▼</span></div><div class="klasik-answer"><div class="klasik-answer-inner">
+<ul><li><b>1977:</b> insan proteininin bakterilerde ilk kez ekspresyonu</li>
+<li><b>1980:</b> Sanger ve Gilbert Nobel Ödülü</li>
+<li><b>1981:</b> ilk transgenik hayvan</li>
+<li><b>1982:</b> ilk rekombinant protein — insülin (<b>Humulin®</b>) onayı</li>
+<li><b>1986:</b> ilk rekombinant aşı — Hepatit B aşısı (<b>Recombivax HB®</b>) onayı</li>
+<li><b>1988:</b> HUGO (Human Genome Organisation) kuruldu</li></ul></div></div></div><div class="klasik-card"><div class="klasik-header" onclick="this.parentElement.classList.toggle('revealed')"><span class="klasik-num">11.</span><span class="klasik-q">1990–2002 yılları arasındaki biyoteknoloji kilometre taşlarını yazınız.<span class="klasik-puan">8 puan</span></span><span class="klasik-toggle">▼</span></div><div class="klasik-answer"><div class="klasik-answer-inner">
+<ul><li><b>1990:</b> kombinatoryal kimya; hedefli ilaç geliştirme için DNA dizileri (arrays); protein mikroarrayleri; kimyasal genomik, farmakogenomik, biyoinformatik; insan somatik gen tedavisinin onayı; sütünde insan proteini üreten ilk transgenik inek.</li>
+<li><b>1994:</b> kistik fibrozis için DNase onayı.</li>
+<li><b>1995:</b> Craig Venter TIGR'ı (The Institute for Genomic Research) kurdu; sonra Celera Genomics.</li>
+<li><b>1997:</b> koyun Dolly'nin klonlanması.</li>
+<li><b>1998:</b> FDA'nın ilk antisens ilacı onaylaması; embriyonik kök hücre üretimi.</li>
+<li><b>2001:</b> İnsan Genom Projesi'nin tamamlanması.</li>
+<li><b>2002:</b> DNA mikroarraylerinin ticari kullanıma sunulması.</li></ul></div></div></div><div class="klasik-card"><div class="klasik-header" onclick="this.parentElement.classList.toggle('revealed')"><span class="klasik-num">12.</span><span class="klasik-q">İlk onaylanan rekombinant protein ve ilk rekombinant aşı hangileridir? Yıllarıyla yazınız.<span class="klasik-puan">4 puan</span></span><span class="klasik-toggle">▼</span></div><div class="klasik-answer"><div class="klasik-answer-inner">
+<ul><li><b>İlk rekombinant protein:</b> insan insülini — <b>Humulin®</b>, 1982 (Eli Lilly geliştirdi, Genentech).</li>
+<li><b>İlk rekombinant aşı:</b> Hepatit B aşısı — <b>Recombivax HB®</b>, 1986.</li></ul></div></div></div><div class="klasik-card"><div class="klasik-header" onclick="this.parentElement.classList.toggle('revealed')"><span class="klasik-num">13.</span><span class="klasik-q">Biyoteknolojinin dört ana alanını ve bu alanlarda kullanılan teknolojileri yazınız.<span class="klasik-puan">5 puan</span></span><span class="klasik-toggle">▼</span></div><div class="klasik-answer"><div class="klasik-answer-inner">
+<h4>Dört ana alan</h4><ol><li>Tıbbi / farmasötik biyoteknoloji</li><li>Tarımsal biyoteknoloji</li><li>Endüstriyel biyoteknoloji</li><li>Çevresel biyoteknoloji</li></ol>
+<h4>Kullanılan teknolojiler</h4><ul><li>Rekombinant DNA teknolojisi</li><li>Hibridoma (monoklonal antikor üretimi)</li><li>Transgenik teknoloji</li></ul></div></div></div><div class="klasik-card"><div class="klasik-header" onclick="this.parentElement.classList.toggle('revealed')"><span class="klasik-num">14.</span><span class="klasik-q">Geleneksel biyoteknoloji ile modern biyoteknolojiyi karşılaştırınız.<span class="klasik-puan">8 puan</span></span><span class="klasik-toggle">▼</span></div><div class="klasik-answer"><div class="klasik-answer-inner">
+<div style="overflow-x:auto"><table><tr><th>Geleneksel</th><th>Modern</th></tr>
+<tr><td>Canlıların ve mikroorganizmaların <b>doğal özelliklerinden</b> yararlanılır</td><td>Genetik materyal <b>doğrudan değiştirilir</b> veya manipüle edilir</td></tr>
+<tr><td>Fermantasyon gibi yöntemler</td><td>DNA teknolojileri ve genetik mühendisliği</td></tr>
+<tr><td>Ekmek, yoğurt, peynir, bira ve şarap üretimi</td><td>Rekombinant proteinler, biyolojik ilaçlar, gen tedavisi ve ileri tedaviler</td></tr></table></div></div></div></div><div class="klasik-card"><div class="klasik-header" onclick="this.parentElement.classList.toggle('revealed')"><span class="klasik-num">15.</span><span class="klasik-q">Modern farmasötik biyoteknolojide kullanılan teknolojileri sayınız.<span class="klasik-puan">5 puan</span></span><span class="klasik-toggle">▼</span></div><div class="klasik-answer"><div class="klasik-answer-inner">
+<ul><li>Rekombinant DNA teknolojisi</li><li>Genetik mühendisliği</li><li>Hücre kültürü</li><li>Protein mühendisliği</li><li>Gen tedavisi</li><li>İleri ilaç taşıma sistemleri</li></ul>
+<p>Bunlarla biyolojik ilaçlar ve ileri tedavi ürünleri geliştirilir.</p></div></div></div><div class="klasik-card"><div class="klasik-header" onclick="this.parentElement.classList.toggle('revealed')"><span class="klasik-num">16.</span><span class="klasik-q">Moleküler biyoloji merkezli şemaya göre genetik mühendisliğinin yol açtığı uygulamaları yazınız.<span class="klasik-puan">5 puan</span></span><span class="klasik-toggle">▼</span></div><div class="klasik-answer"><div class="klasik-answer-inner">
+<ul><li>Moleküler biyoloji → hücre kültürü, monoklonal antikor (MoAb) → tanı</li>
+<li>Yeni genlerin aktarımı (transfer of new genes)</li>
+<li><b>Genetik mühendisliği</b> → yeni protein sentezi ve klonlama → insan proteini üretimi ve gen tedavisi (GT)</li></ul></div></div></div><div class="klasik-card"><div class="klasik-header" onclick="this.parentElement.classList.toggle('revealed')"><span class="klasik-num">17.</span><span class="klasik-q">Biyofarmasötiklerdeki gelişmeleri (nesiller ve yeni yaklaşımlar) sıralayınız.<span class="klasik-puan">5 puan</span></span><span class="klasik-toggle">▼</span></div><div class="klasik-answer"><div class="klasik-answer-inner">
+<ol><li>Birinci nesil biyofarmasötikler</li><li>İkinci nesil biyofarmasötikler</li><li>Biyobenzerler (biosimilars)</li><li>Yeni Ar-Ge ve ilaç taşıma sistemleri</li><li>Gen tedavisi / doku mühendisliği</li><li>Kişiselleştirilmiş tıp</li></ol></div></div></div><div class="klasik-card"><div class="klasik-header" onclick="this.parentElement.classList.toggle('revealed')"><span class="klasik-num">18.</span><span class="klasik-q">Biyofarmasötiklerin geliştirilmesinin nedenlerini yazınız.<span class="klasik-puan">6 puan</span></span><span class="klasik-toggle">▼</span></div><div class="klasik-answer"><div class="klasik-answer-inner">
+<ul><li>Yüksek hedef özgüllüğü</li><li>Daha seçici etki</li><li>Karmaşık hastalıkların tedavisinde kullanılabilme</li><li>Protein ve diğer biyolojik moleküllerin tedavi amacıyla kullanılabilmesi</li><li>Hastalık mekanizmalarının genetik ve moleküler düzeyde hedeflenebilmesi</li><li>Kişiselleştirilmiş tedaviye olanak</li></ul></div></div></div><div class="klasik-card"><div class="klasik-header" onclick="this.parentElement.classList.toggle('revealed')"><span class="klasik-num">19.</span><span class="klasik-q">Aspirin, monoklonal antikor ve hücre tedavisi ürünlerini molekül yapısı/büyüklüğü açısından karşılaştırınız.<span class="klasik-puan">5 puan</span></span><span class="klasik-toggle">▼</span></div><div class="klasik-answer"><div class="klasik-answer-inner">
+<ul><li><b>Aspirin:</b> küçük molekül, ~180 g/mol (180,157 g/mol).</li>
+<li><b>Monoklonal antikor:</b> ~150.000 g/mol, büyük protein.</li>
+<li><b>Hücre (ileri tedavi tıbbi ürünleri — kök hücre/hücresel tedavi ürünleri):</b> en büyük ve en karmaşık.</li></ul>
+<p>Küçük molekülden hücreye doğru yapılar <b>büyür, karmaşıklaşır ve çeşitlilik artar</b>.</p></div></div></div><div class="klasik-card"><div class="klasik-header" onclick="this.parentElement.classList.toggle('revealed')"><span class="klasik-num">20.</span><span class="klasik-q">Tedavide kullanılan biyolojik ürünleri sayınız.<span class="klasik-puan">4 puan</span></span><span class="klasik-toggle">▼</span></div><div class="klasik-answer"><div class="klasik-answer-inner">
+<ul><li>Proteinler</li><li>Rekombinant proteinler</li><li>Aşılar</li><li>Monoklonal antikorlar</li><li>Gen tedavisi ürünleri</li><li>Diğer biyolojik tedavi ürünleri</li></ul></div></div></div><div class="klasik-card"><div class="klasik-header" onclick="this.parentElement.classList.toggle('revealed')"><span class="klasik-num">21.</span><span class="klasik-q">FDA ve USP'ye göre biyolojik ürünleri tanımlayınız ve örnek veriniz.<span class="klasik-puan">6 puan</span></span><span class="klasik-toggle">▼</span></div><div class="klasik-answer"><div class="klasik-answer-inner">
+<p>Biyolojik kaynaklardan elde edilen veya biyolojik sistemler kullanılarak üretilen terapötik ürünlerdir.</p>
+<ul><li>Aşılar</li><li>Kan ve kan bileşenleri</li><li>Proteinler, rekombinant proteinler</li><li>Monoklonal antikorlar</li><li>Gen tedavisi ürünleri</li><li>Diğer biyolojik tedavi ürünleri</li></ul>
+<p>Üretim, kalite kontrolü, güvenlilik ve etkinlik için özel düzenlemeler ve standartlar vardır.</p></div></div></div><div class="klasik-card"><div class="klasik-header" onclick="this.parentElement.classList.toggle('revealed')"><span class="klasik-num">22.</span><span class="klasik-q">Farmasötik biyoteknolojiyi özetleyiniz.<span class="klasik-puan">5 puan</span></span><span class="klasik-toggle">▼</span></div><div class="klasik-answer"><div class="klasik-answer-inner">
+<ul><li>Biyoteknoloji ve eczacılık bilimlerinin birleştiği alandır.</li><li>Biyolojik sistemlerle yeni ilaç ve tedavi yöntemleri geliştirir.</li><li>Geleneksel biyoteknolojiden modern biyoteknolojiye doğru gelişmiştir.</li><li>Rekombinant DNA, genetik mühendisliği, hücre kültürü gibi modern teknolojilerden yararlanır.</li><li>Biyolojik ilaçlar, aşılar ve ileri tedavilerin geliştirilmesinde önemli role sahiptir.</li></ul></div></div></div><div class="klasik-card"><div class="klasik-header" onclick="this.parentElement.classList.toggle('revealed')"><span class="klasik-num">23.</span><span class="klasik-q">Biyoteknolojinin sağlık alanında getirdiği yenilikleri yazınız.<span class="klasik-puan">6 puan</span></span><span class="klasik-toggle">▼</span></div><div class="klasik-answer"><div class="klasik-answer-inner">
+<ul><li>Yeni ilaçların ve yeni tedavi yöntemlerinin geliştirilmesi</li><li>Hastalıkların moleküler düzeyde anlaşılması</li><li>Daha hızlı ve hassas tanı yöntemleri</li><li>Genetik hastalıkların tespiti</li><li>Kişiselleştirilmiş tedavi</li><li>Biyolojik ürünlerin üretimi</li></ul>
+<p>Böylece hastalık nedenleri moleküler düzeyde incelenir, hastalığa özgü biyolojik hedefler ve yeni ilaç hedefleri bulunur, erken tanı mümkün olur.</p></div></div></div><div class="klasik-card"><div class="klasik-header" onclick="this.parentElement.classList.toggle('revealed')"><span class="klasik-num">24.</span><span class="klasik-q">Biyoteknolojinin sağlık hizmetlerindeki başlıca uygulamalarını sayınız.<span class="klasik-puan">5 puan</span></span><span class="klasik-toggle">▼</span></div><div class="klasik-answer"><div class="klasik-answer-inner">
+<ul><li>Hastalıkların tanısı, tedavisi ve önlenmesi</li><li>Aşı geliştirme</li><li>Genetik hastalıkların belirlenmesi</li><li>İlaç geliştirme</li><li>Biyolojik ürünlerin üretimi</li><li>Kişiselleştirilmiş tıp</li></ul></div></div></div><div class="klasik-card"><div class="klasik-header" onclick="this.parentElement.classList.toggle('revealed')"><span class="klasik-num">25.</span><span class="klasik-q">Biyoteknolojinin enfeksiyonların tedavisi ve önlenmesindeki rolünü açıklayınız.<span class="klasik-puan">5 puan</span></span><span class="klasik-toggle">▼</span></div><div class="klasik-answer"><div class="klasik-answer-inner">
+<ul><li>Enfeksiyon hastalıklarının tanısı</li><li>Enfeksiyonların tedavisi</li><li>Yeni antimikrobiyal ilaçların geliştirilmesi</li><li>Aşı geliştirme</li><li>Patojenlerin moleküler olarak tanımlanması</li></ul>
+<p>Biyoteknolojik yöntemlerle enfeksiyon etkenleri <b>daha hızlı ve daha spesifik</b> belirlenebilir.</p></div></div></div><div class="klasik-card"><div class="klasik-header" onclick="this.parentElement.classList.toggle('revealed')"><span class="klasik-num">26.</span><span class="klasik-q">Moleküler biyoteknolojiyi tanımlayınız; kullanılan başlıca yöntemleri ve kullanım alanlarını yazınız.<span class="klasik-puan">6 puan</span></span><span class="klasik-toggle">▼</span></div><div class="klasik-answer"><div class="klasik-answer-inner">
+<p>Biyolojik sistemlerin <b>moleküler düzeyde incelenmesi ve manipüle edilmesine</b> dayanır.</p>
+<ul><li>DNA analizi, RNA analizi</li><li>PCR</li><li>Rekombinant DNA teknolojisi</li><li>Gen klonlama</li><li>Gen ekspresyonunun incelenmesi</li><li>Protein analizi</li></ul>
+<p>Özellikle tanı, ilaç geliştirme ve genetik araştırmalarda kullanılır.</p></div></div></div><div class="klasik-card"><div class="klasik-header" onclick="this.parentElement.classList.toggle('revealed')"><span class="klasik-num">27.</span><span class="klasik-q">Genetik bozuklukların tespitinde kullanılan biyoteknolojik yöntemleri yazınız.<span class="klasik-puan">4 puan</span></span><span class="klasik-toggle">▼</span></div><div class="klasik-answer"><div class="klasik-answer-inner">
+<ul><li>DNA analizi</li><li>Genetik testler</li><li>PCR</li><li>DNA dizileme</li><li>Moleküler tanı yöntemleri</li></ul>
+<p>Bu yöntemlerle hastalıkla ilişkili genetik değişiklikler belirlenebilir.</p></div></div></div><div class="klasik-card"><div class="klasik-header" onclick="this.parentElement.classList.toggle('revealed')"><span class="klasik-num">28.</span><span class="klasik-q">Fenotipik taramayı tanımlayınız; neleri inceleyebileceğini ve başlangıç noktasının özelliğini yazınız.<span class="klasik-puan">6 puan</span></span><span class="klasik-toggle">▼</span></div><div class="klasik-answer"><div class="klasik-answer-inner">
+<p>Bir bileşiğin veya tedavi adayının hücre ya da organizmada oluşturduğu <b>gözlenebilir değişikliklerin</b> incelenmesidir.</p>
+<ul><li>Hücre büyümesindeki değişiklik</li><li>Hücre morfolojisindeki değişiklik</li><li>Hücre canlılığındaki değişiklik</li><li>Belirli bir biyolojik fonksiyondaki değişiklik</li></ul>
+<p>Başlangıç noktası doğrudan belirli bir gen veya moleküler hedef <b>olmak zorunda değildir</b>; ortaya çıkan fenotip değerlendirilir.</p></div></div></div><div class="klasik-card"><div class="klasik-header" onclick="this.parentElement.classList.toggle('revealed')"><span class="klasik-num">29.</span><span class="klasik-q">Genetik taramayı tanımlayınız ve amaçlarını yazınız.<span class="klasik-puan">5 puan</span></span><span class="klasik-toggle">▼</span></div><div class="klasik-answer"><div class="klasik-answer-inner">
+<p>Bireylerde belirli genetik değişikliklerin veya hastalıklarla ilişkili genlerin araştırılmasıdır.</p>
+<ul><li>Genetik hastalıkların belirlenmesi</li><li>Hastalık riskinin değerlendirilmesi</li><li>Taşıyıcı bireylerin belirlenmesi</li><li>Genetik değişikliklerin tespiti</li></ul></div></div></div><div class="klasik-card"><div class="klasik-header" onclick="this.parentElement.classList.toggle('revealed')"><span class="klasik-num">30.</span><span class="klasik-q">Fenotipik tarama ile genetik taramayı karşılaştırınız.<span class="klasik-puan">6 puan</span></span><span class="klasik-toggle">▼</span></div><div class="klasik-answer"><div class="klasik-answer-inner">
+<div style="overflow-x:auto"><table><tr><th></th><th>Fenotipik tarama</th><th>Genetik tarama</th></tr>
+<tr><td>Ne incelenir?</td><td>Bileşiğin hücre/organizmada oluşturduğu gözlenebilir değişiklik</td><td>Bireyde genetik değişiklik veya hastalıkla ilişkili genler</td></tr>
+<tr><td>Başlangıç</td><td>Belirli gen/hedef gerekmez; fenotip değerlendirilir</td><td>Gen/genetik değişiklik odaklı</td></tr>
+<tr><td>Örnek</td><td>Hücre büyümesi, morfoloji, canlılık değişimi</td><td>Taşıyıcı birey, hastalık riski belirleme</td></tr></table></div></div></div></div><div class="klasik-card"><div class="klasik-header" onclick="this.parentElement.classList.toggle('revealed')"><span class="klasik-num">31.</span><span class="klasik-q">Doğrudan tanıyı (direct diagnosis) tanımlayınız ve örnek veriniz.<span class="klasik-puan">4 puan</span></span><span class="klasik-toggle">▼</span></div><div class="klasik-answer"><div class="klasik-answer-inner">
+<p>Biyoteknolojik yöntemlerle hastalığa neden olan etkenin veya hastalıkla ilişkili moleküler değişikliğin <b>doğrudan</b> tespit edilmesidir.</p>
+<ul><li>Patojenin DNA veya RNA'sının tespiti</li><li>Hastalığa özgü genetik değişikliklerin belirlenmesi</li><li>Belirli biyobelirteçlerin tespiti</li></ul></div></div></div><div class="klasik-card"><div class="klasik-header" onclick="this.parentElement.classList.toggle('revealed')"><span class="klasik-num">32.</span><span class="klasik-q">En çok satan biyoteknolojik ilaçlar tablosuna göre aşağıdaki ürünlerin pazarlayan firmasını ve endikasyonunu yazınız: Epogen, Neupogen, Humulin, Engerix-B, Intron A, Avonex.<span class="klasik-puan">10 puan</span></span><span class="klasik-toggle">▼</span></div><div class="klasik-answer"><div class="klasik-answer-inner">
+<div style="overflow-x:auto"><table><tr><th>İlaç</th><th>Pazarlayan</th><th>Geliştiren</th><th>Endikasyon</th></tr>
+<tr><td>Epogen</td><td>Amgen</td><td>Amgen</td><td>Anemi</td></tr>
+<tr><td>Neupogen</td><td>Amgen</td><td>Amgen</td><td>Nötropeni</td></tr>
+<tr><td>Humulin</td><td>Genentech</td><td>Eli Lilly</td><td>Diyabet</td></tr>
+<tr><td>Engerix-B</td><td>Genentech</td><td>SmithKline Beecham</td><td>Hepatit B</td></tr>
+<tr><td>Intron A</td><td>Biogen</td><td>Schering-Plough</td><td>Tüylü hücreli lösemi, Kaposi sarkomu, Hepatit C</td></tr>
+<tr><td>Avonex</td><td>Biogen</td><td>Biogen</td><td>Multipl skleroz</td></tr></table></div></div></div></div><div class="klasik-card"><div class="klasik-header" onclick="this.parentElement.classList.toggle('revealed')"><span class="klasik-num">33.</span><span class="klasik-q">En çok satan biyoteknolojik ilaçlar tablosuna göre aşağıdaki ürünlerin endikasyonlarını ve firmalarını yazınız: Procrit, Kogenate, Genotropin, Betaseron, ReoPro, Ceredase/Cerezyme.<span class="klasik-puan">10 puan</span></span><span class="klasik-toggle">▼</span></div><div class="klasik-answer"><div class="klasik-answer-inner">
+<div style="overflow-x:auto"><table><tr><th>İlaç</th><th>Pazarlayan</th><th>Geliştiren</th><th>Endikasyon</th></tr>
+<tr><td>Procrit</td><td>Amgen</td><td>Ortho Biotech</td><td>Anemi</td></tr>
+<tr><td>Kogenate</td><td>Bayer Biological</td><td>Bayer Biological</td><td>Hemofili A</td></tr>
+<tr><td>Genotropin</td><td>Genentech</td><td>Pharmacia</td><td>Büyüme yetersizliği</td></tr>
+<tr><td>Betaseron</td><td>Chiron/Berlex</td><td>Berlex/Schering AG</td><td>Multipl skleroz</td></tr>
+<tr><td>ReoPro</td><td>Centocor</td><td>Eli Lilly, Centocor</td><td>Kardiyak iskemik komplikasyonlar</td></tr>
+<tr><td>Ceredase/Cerezyme</td><td>Genzyme</td><td>Genzyme</td><td>Gaucher hastalığı</td></tr></table></div></div></div></div><div class="klasik-card"><div class="klasik-header" onclick="this.parentElement.classList.toggle('revealed')"><span class="klasik-num">34.</span><span class="klasik-q">Önde gelen onaylı biyofarmasötiklerin yıllık pazar değeri tablosuna göre aşağıdaki ürünleri firma, içerik ve kullanım yönünden açıklayınız: Procrit, Epogen & Aranesp, Intron A, Remicade, Avonex, Enbrel, Rituxan, Humulin.<span class="klasik-puan">10 puan</span></span><span class="klasik-toggle">▼</span></div><div class="klasik-answer"><div class="klasik-answer-inner">
+<div style="overflow-x:auto"><table><tr><th>Ürün (Firma)</th><th>İçerik / kullanım</th><th>Yıllık satış (milyar $)</th></tr>
+<tr><td>Procrit (Amgen/Johnson &amp; Johnson)</td><td>EPO — anemi</td><td>4,0</td></tr>
+<tr><td>Epogen &amp; Aranesp (Amgen)</td><td>EPO — anemi</td><td>4,0</td></tr>
+<tr><td>Intron A (Schering Plough)</td><td>IFN-α — lösemi</td><td>0,3</td></tr>
+<tr><td>Remicade (Johnson &amp; Johnson)</td><td>Monoklonal antikor — Crohn hastalığı</td><td>1,7</td></tr>
+<tr><td>Avonex (Biogen)</td><td>IFN-β — multipl skleroz</td><td>1,2</td></tr>
+<tr><td>Enbrel (Wyeth)</td><td>Monoklonal antikor temelli — romatoid artrit</td><td>1,3</td></tr>
+<tr><td>Rituxan (Genentech)</td><td>Monoklonal antikor — non-Hodgkin lenfoma</td><td>1,5</td></tr>
+<tr><td>Humulin (Eli Lilly)</td><td>İnsülin — diyabet</td><td>1,0</td></tr></table></div></div></div></div><div class="klasik-card"><div class="klasik-header" onclick="this.parentElement.classList.toggle('revealed')"><span class="klasik-num">35.</span><span class="klasik-q">2006'ya kadar AB ve/veya ABD'de onaylanan biyofarmasötiklerin ürün tiplerine göre sınıflandırmasını örnekleriyle yazınız.<span class="klasik-puan">10 puan</span></span><span class="klasik-toggle">▼</span></div><div class="klasik-answer"><div class="klasik-answer-inner">
+<div style="overflow-x:auto"><table><tr><th>Ürün tipi</th><th>Örnek</th><th>Onaylı sayı</th></tr>
+<tr><td>Kan faktörleri</td><td>Faktör VIII ve IX</td><td>8</td></tr>
+<tr><td>Trombolitik ajanlar</td><td>tPA</td><td>6</td></tr>
+<tr><td>Hormonlar</td><td>İnsülin, GH, gonadotropinler</td><td>33</td></tr>
+<tr><td>Hematopoietik büyüme faktörleri</td><td>EPO, CSF'ler</td><td>8</td></tr>
+<tr><td>İnterferonlar</td><td>IFN-α, -β, -γ</td><td>16</td></tr>
+<tr><td>İnterlökin temelli ürünler</td><td>IL-2</td><td>3</td></tr>
+<tr><td>Aşılar</td><td>Hepatit B yüzey antijeni</td><td>20</td></tr>
+<tr><td>Monoklonal antikorlar</td><td>Çeşitli</td><td>30</td></tr>
+<tr><td>Nükleik asit temelli</td><td>Antisens ve aptamer</td><td>2</td></tr>
+<tr><td>Ek ürünler</td><td>TNF, terapötik enzimler</td><td>18</td></tr></table></div>
+<p>En çok onaylanan grup <b>hormonlar</b> (33), ardından <b>monoklonal antikorlar</b> (30).</p></div></div></div><div class="klasik-card"><div class="klasik-header" onclick="this.parentElement.classList.toggle('revealed')"><span class="klasik-num">36.</span><span class="klasik-q">ABD ve AB'de biyofarmasötik üreten/pazarlayan firmalardan en az on tanesini yazınız.<span class="klasik-puan">4 puan</span></span><span class="klasik-toggle">▼</span></div><div class="klasik-answer"><div class="klasik-answer-inner">
+<p>Sanofi-Aventis, Bayer, Novo Nordisk, Isis Pharmaceuticals, Genentech, Centocor, Boehringer Mannheim, Galenus Mannheim, Eli Lilly, Ortho Biotech, Schering Plough, Hoffman-La-Roche, Chiron, Hoechst AG, Wyeth, Genzyme, Abbott, Roche, Novartis, Serono, Organon, Amgen, GlaxoSmithKline, Cytogen, Immunomedics, Biogen.</p></div></div></div><div class="klasik-card"><div class="klasik-header" onclick="this.parentElement.classList.toggle('revealed')"><span class="klasik-num">37.</span><span class="klasik-q">Amgen'in ürettiği/pazarladığı biyoteknolojik ürünleri ve endikasyonlarını yazınız.<span class="klasik-puan">4 puan</span></span><span class="klasik-toggle">▼</span></div><div class="klasik-answer"><div class="klasik-answer-inner">
+<ul><li><b>Epogen</b> (EPO) — anemi</li><li><b>Procrit</b> (EPO; Ortho Biotech geliştirdi, Amgen/J&amp;J) — anemi</li><li><b>Neupogen</b> — nötropeni</li><li><b>Aranesp</b> (EPO) — anemi</li></ul></div></div></div><div class="klasik-card"><div class="klasik-header" onclick="this.parentElement.classList.toggle('revealed')"><span class="klasik-num">38.</span><span class="klasik-q">Biogen ve Genentech'e ait biyoteknolojik ürünleri endikasyonlarıyla yazınız.<span class="klasik-puan">5 puan</span></span><span class="klasik-toggle">▼</span></div><div class="klasik-answer"><div class="klasik-answer-inner">
+<h4>Biogen</h4><ul><li>Avonex (IFN-β) — multipl skleroz</li><li>Intron A (pazarlayan; geliştiren Schering-Plough) — tüylü hücreli lösemi, Kaposi sarkomu, Hepatit C</li></ul>
+<h4>Genentech</h4><ul><li>Humulin (pazarlayan; geliştiren Eli Lilly) — diyabet</li><li>Engerix-B (pazarlayan; geliştiren SmithKline Beecham) — Hepatit B</li><li>Genotropin (pazarlayan; geliştiren Pharmacia) — büyüme yetersizliği</li><li>Rituxan — non-Hodgkin lenfoma</li></ul></div></div></div><div class="klasik-card"><div class="klasik-header" onclick="this.parentElement.classList.toggle('revealed')"><span class="klasik-num">39.</span><span class="klasik-q">Multipl skleroz tedavisinde kullanılan biyoteknolojik ürünleri firma ve içerikleriyle yazınız.<span class="klasik-puan">3 puan</span></span><span class="klasik-toggle">▼</span></div><div class="klasik-answer"><div class="klasik-answer-inner">
+<ul><li><b>Avonex</b> — Biogen; interferon-β</li><li><b>Betaseron</b> — Chiron/Berlex (geliştiren Berlex/Schering AG)</li></ul></div></div></div><div class="klasik-card"><div class="klasik-header" onclick="this.parentElement.classList.toggle('revealed')"><span class="klasik-num">40.</span><span class="klasik-q">Anemi tedavisinde kullanılan biyoteknolojik ürünleri ve firmalarını yazınız.<span class="klasik-puan">3 puan</span></span><span class="klasik-toggle">▼</span></div><div class="klasik-answer"><div class="klasik-answer-inner">
+<ul><li><b>Epogen</b> — Amgen (EPO)</li><li><b>Procrit</b> — Amgen / Ortho Biotech / Johnson &amp; Johnson (EPO)</li><li><b>Aranesp</b> — Amgen (EPO)</li></ul></div></div></div><div class="klasik-card"><div class="klasik-header" onclick="this.parentElement.classList.toggle('revealed')"><span class="klasik-num">41.</span><span class="klasik-q">Monoklonal antikor temelli ürün örneklerini firma ve endikasyonlarıyla yazınız.<span class="klasik-puan">4 puan</span></span><span class="klasik-toggle">▼</span></div><div class="klasik-answer"><div class="klasik-answer-inner">
+<ul><li><b>Remicade</b> — Johnson &amp; Johnson; Crohn hastalığı</li><li><b>Enbrel</b> — Wyeth; romatoid artrit</li><li><b>Rituxan</b> — Genentech; non-Hodgkin lenfoma</li><li><b>ReoPro</b> — Centocor (Eli Lilly ile); kardiyak iskemik komplikasyonlar</li></ul></div></div></div><div class="klasik-card"><div class="klasik-header" onclick="this.parentElement.classList.toggle('revealed')"><span class="klasik-num">42.</span><span class="klasik-q">Interferonlar, interlökinler ve hematopoietik büyüme faktörlerinin biyofarmasötik örneklerini, 2006'ya kadarki onay sayılarını ve tablolarda geçen ticari ürün örneklerini yazınız.<span class="klasik-puan">5 puan</span></span><span class="klasik-toggle">▼</span></div><div class="klasik-answer"><div class="klasik-answer-inner">
+<ul><li><b>İnterferonlar:</b> IFN-α, -β, -γ; 16 onay. Örnek: Intron A (IFN-α; lösemi, Kaposi sarkomu, Hepatit C), Avonex (IFN-β; multipl skleroz).</li>
+<li><b>İnterlökin temelli:</b> IL-2; 3 onay.</li>
+<li><b>Hematopoietik büyüme faktörleri:</b> EPO, CSF'ler; 8 onay. Örnek: Epogen, Procrit, Aranesp (EPO; anemi), Neupogen (nötropeni).</li></ul></div></div></div></section>
+<section id="bolum-b"><h2 class="section-title">B — Test (18 Soru)</h2><p class="section-desc">Bir şıkka tıklayın: doğruysa yeşil, yanlışsa kırmızı olur ve doğru şık yeşil gösterilir. Açıklama altta açılır.</p>
+<div id="mcq"></div>
+<div class="result" id="result"></div>
+</section>
+</main>
+<footer>Eczacılık Dersleri — Kaynak: Dr. Öğr. Üyesi Meliha Negin &copy; 2026</footer>
+<script>
+function toggleAllAnswers(){
+    const btn=document.getElementById('toggleAll');
+    const all=document.querySelectorAll('.klasik-card');
+    const allRevealed=[...all].every(c=>c.classList.contains('revealed'));
+    all.forEach(c=>{if(allRevealed)c.classList.remove('revealed');else c.classList.add('revealed')});
+    btn.classList.toggle('active',!allRevealed);
+}
+function hideAllAnswers(){
+    document.querySelectorAll('.klasik-card').forEach(c=>c.classList.remove('revealed'));
+    document.getElementById('toggleAll').classList.remove('active');
+}
+const DATA=[{"q": "Biyofarmasötikleri geleneksel farmasötiklerden ayıran temel özellik hangisidir?", "o": ["Bakteri, maya veya memeli hücreleri gibi canlı sistemlerde üretilmeleri", "Molekül ağırlıklarının küçük olması", "Yalnızca oral yolla uygulanmaları", "Yalnızca bitkisel kaynaklardan ekstrakte edilmeleri", "Bir dizi kimyasal sentez yoluyla üretilmeleri"], "a": 0, "e": "Biyofarmasötikler canlı sistemlerde, geleneksel farmasötikler kimyasal sentezle üretilir."}, {"q": "EAPB tanımına göre farmasötik biyoteknolojinin kapsamına aşağıdakilerden hangisi girmez?", "o": ["Tanı materyallerinin üretimi", "Biyoteknoloji temelli ilaçların ruhsatlandırılması", "Kimyasal sentezle elde edilen küçük moleküllerin üretimi", "Yasal prosedürler", "Aşıların karakterizasyonu"], "a": 2, "e": "EAPB tanımı biyoteknoloji temelli ilaç, aşı ve tanı materyallerinin süreç, geliştirme, karakterizasyon, üretim, ruhsat ve yasal yönlerini kapsar."}, {"q": "Modern biyoteknoloji dönemini başlatan çalışma hangisidir?", "o": ["DNA yapısının 1953'te keşfi", "Dolly'nin 1997'de klonlanması", "İnsan Genom Projesi'nin 2001'de tamamlanması", "Pasteur'ün 1870'te canlı hücreleri kimyasal reaksiyonda kullanması", "Cohen ve Boyer'in 1973'te bir organizmadan diğerine gen aktarması"], "a": 4, "e": "Stanford'dan Stanley Cohen ve Herbert Boyer'in 1973'teki gen aktarımı modern dönemi başlatmıştır."}, {"q": "Geçiş dönemi (1940–1973) için aşağıdakilerden hangisi doğrudur?", "o": ["İlk rekombinant protein onaylanmıştır", "Gen tedavisi rutin hâle gelmiştir", "Üretim büyük ölçüde fermantasyon teknolojisine dayalı kalmıştır", "Genomlarda temel değişiklikler yapılmıştır", "Biyolojik sistemler hiç kullanılmamıştır"], "a": 2, "e": "Bu dönemde genomda temel değişiklik yapılmadan endüstriyel kullanım genişlemiş, üretim fermantasyona dayalı kalmıştır."}, {"q": "İlk onaylanan rekombinant protein hangisidir?", "o": ["İnterferon-β (Avonex) — 1981", "Hepatit B aşısı (Recombivax HB®) — 1986", "Eritropoietin (Epogen) — 1977", "İnsülin (Humulin®) — 1982", "DNase — 1994"], "a": 3, "e": "1982'de insülin (Humulin®) ilk rekombinant protein olarak onaylandı; ilk rekombinant aşı 1986'da Recombivax HB®."}, {"q": "İlk rekombinant aşı aşağıdakilerden hangisidir?", "o": ["BCG aşısı", "Kogenate®", "Recombivax HB® (Hepatit B aşısı)", "Engerix-B® (1982)", "Humulin®"], "a": 2, "e": "1986'da Hepatit B aşısı Recombivax HB® ilk rekombinant aşı olarak onaylandı."}, {"q": "Aşağıdaki eşleştirmelerden hangisi yanlıştır?", "o": ["1994 – Kistik fibrozis için DNase onayı", "2001 – İnsan Genom Projesi'nin tamamlanması", "1998 – İlk antisens ilacın FDA onayı", "1988 – HUGO'nun kurulması", "1997 – İlk transgenik hayvan"], "a": 4, "e": "İlk transgenik hayvan 1981'de üretildi; 1997 Dolly'nin klonlandığı yıldır."}, {"q": "Craig Venter'ın 1995'te kurduğu kuruluş hangisidir?", "o": ["HUGO", "TIGR (The Institute for Genomic Research)", "Amgen", "EAPB", "Genentech"], "a": 1, "e": "Craig Venter 1995'te TIGR'ı kurdu, daha sonra Celera Genomics kuruldu."}, {"q": "Aşağıdakilerden hangisi biyoteknolojinin dört ana alanından biri değildir?", "o": ["Kozmetik biyoteknoloji", "Tarımsal biyoteknoloji", "Tıbbi / farmasötik biyoteknoloji", "Çevresel biyoteknoloji", "Endüstriyel biyoteknoloji"], "a": 0, "e": "Dört ana alan: tıbbi/farmasötik, tarımsal, endüstriyel ve çevresel biyoteknolojidir."}, {"q": "Aşağıdakilerden hangisi geleneksel biyoteknoloji örneğidir?", "o": ["Gen tedavisi", "Monoklonal antikor üretimi", "Transgenik hayvan üretimi", "Yoğurt üretimi", "Rekombinant insülin üretimi"], "a": 3, "e": "Geleneksel biyoteknoloji canlıların doğal özelliklerinden yararlanır; ekmek, yoğurt, peynir, bira, şarap örnektir."}, {"q": "Fenotipik tarama için aşağıdakilerden hangisi doğrudur?", "o": ["Yalnızca belirli bir genin dizisi incelenir", "Başlangıç noktası belirli bir gen veya moleküler hedef olmak zorunda değildir", "Hücre canlılığı değerlendirilmez", "Taşıyıcı bireylerin belirlenmesi temel amaçtır", "Yalnızca patojen DNA'sı tespit edilir"], "a": 1, "e": "Fenotipik taramada bileşiğin oluşturduğu gözlenebilir değişiklik (fenotip) değerlendirilir."}, {"q": "Patojenin DNA veya RNA'sının tespit edilmesi hangi kavrama örnektir?", "o": ["Protein mühendisliği", "Fenotipik tarama", "Kombinatoryal kimya", "Geleneksel biyoteknoloji", "Doğrudan tanı"], "a": 4, "e": "Hastalık etkeninin veya moleküler değişikliğin doğrudan saptanması doğrudan tanıdır."}, {"q": "Aşağıdaki ilaç–endikasyon eşleştirmelerinden hangisi doğrudur?", "o": ["Epogen – Multipl skleroz", "Genotropin – Hemofili A", "Neupogen – Nötropeni", "Avonex – Anemi", "Kogenate – Gaucher hastalığı"], "a": 2, "e": "Neupogen nötropeni; Epogen anemi; Kogenate hemofili A; Avonex multipl skleroz; Genotropin büyüme yetersizliği içindir."}, {"q": "Gaucher hastalığında kullanılan biyoteknolojik ürün ve firması hangisidir?", "o": ["Kogenate – Bayer", "Ceredase/Cerezyme – Genzyme", "ReoPro – Centocor", "Procrit – Amgen", "Betaseron – Chiron/Berlex"], "a": 1, "e": "Ceredase/Cerezyme Genzyme tarafından geliştirilip pazarlanır."}, {"q": "Humulin için aşağıdakilerden hangisi doğrudur?", "o": ["Eli Lilly tarafından geliştirilmiş, diyabet tedavisinde kullanılan insülindir", "Monoklonal antikor temelli bir üründür", "İlk rekombinant aşıdır", "Amgen'in anemi ilacıdır", "Biogen'in multipl skleroz ilacıdır"], "a": 0, "e": "Humulin Eli Lilly'nin insülinidir (tabloda Genentech pazarlayan); ilk rekombinant proteindir."}, {"q": "Remicade, Enbrel ve Rituxan'ın ortak özelliği nedir?", "o": ["Kan faktörü olmaları", "İnterferon içermeleri", "Eritropoietin içermeleri", "Monoklonal antikor temelli ürünler olmaları", "Aşı olmaları"], "a": 3, "e": "Remicade (Crohn), Enbrel (romatoid artrit) ve Rituxan (non-Hodgkin lenfoma) monoklonal antikor temellidir."}, {"q": "2006'ya kadar onaylanan biyofarmasötikler içinde en fazla onay alan ürün tipi hangisidir?", "o": ["İnterferonlar", "Hormonlar", "Kan faktörleri", "Monoklonal antikorlar", "Aşılar"], "a": 1, "e": "Hormonlar 33 onayla ilk sıradadır; monoklonal antikorlar 30, aşılar 20, interferonlar 16."}, {"q": "Modern farmasötik biyoteknolojide kullanılan teknolojiler arasında aşağıdakilerden hangisi yer almaz?", "o": ["Deneme-yanılmayla modifiye edilmemiş maya kullanımı", "Gen tedavisi", "Hücre kültürü", "Protein mühendisliği", "Rekombinant DNA teknolojisi"], "a": 0, "e": "Modifiye edilmemiş sistemlerin deneme-yanılmayla kullanımı geleneksel biyoteknolojinin özelliğidir."}];
+const L=['A','B','C','D','E'];
+const box=document.getElementById('mcq');
+let ok=0,bad=0;
+function e(s){return s.replace(/&/g,'&amp;').replace(/</g,'&lt;')}
+function render(){
+  box.innerHTML=DATA.map((d,i)=>`<div class="mq" id="m${i}"><div class="mq-head"><span class="mq-num">${i+1}.</span><span class="mq-text">${e(d.q)}</span></div><div class="opts">${d.o.map((o,j)=>`<button class="opt" data-q="${i}" data-o="${j}"><span class="letter">${L[j]}</span><span>${e(o)}</span></button>`).join('')}</div><div class="mexp"><b>Doğru cevap: ${L[d.a]}</b> — ${e(d.e)}</div></div>`).join('');
+}
+function update(){
+  const done=ok+bad;
+  document.getElementById('sOk').textContent='Test doğru: '+ok;
+  document.getElementById('sBad').textContent='Yanlış: '+bad;
+  document.getElementById('sLeft').textContent='Kalan: '+(DATA.length-done);
+  const r=document.getElementById('result');
+  if(done===DATA.length){r.innerHTML=`<h3>Test tamamlandı</h3><p>${DATA.length} sorudan <b>${ok}</b> doğru, <b>${bad}</b> yanlış · Başarı: <b>%${Math.round(ok/DATA.length*100)}</b></p>`;r.classList.add('show');}
+  else r.classList.remove('show');
+}
+box.addEventListener('click',ev=>{
+  const b=ev.target.closest('.opt'); if(!b||b.disabled) return;
+  const qi=+b.dataset.q, oi=+b.dataset.o, d=DATA[qi], card=document.getElementById('m'+qi);
+  card.querySelectorAll('.opt').forEach((x,j)=>{x.disabled=true; if(j===d.a)x.classList.add('correct'); else if(j===oi)x.classList.add('wrong'); else x.classList.add('dim');});
+  card.classList.add('done'); if(oi===d.a)ok++; else bad++; update();
+});
+document.getElementById('reset').addEventListener('click',()=>{ok=0;bad=0;render();update();document.getElementById('bolum-b').scrollIntoView({behavior:'smooth'});});
+render();update();
+</script>
+</body>
+</html>
