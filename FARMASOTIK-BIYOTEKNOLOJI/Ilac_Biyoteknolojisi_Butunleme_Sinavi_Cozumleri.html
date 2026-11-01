@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>İlaç Biyoteknolojisi - Bütünleme Sınavı Çözümleri</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Source+Sans+3:wght@400;500;600&display=swap" rel="stylesheet">
+    <style>
+        *,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+        :root{--bg:#f7f5f0;--card-bg:#fff;--text:#2c2c2c;--text-muted:#6b6b6b;--accent:#1a6b4e;--accent-light:#e8f5ee;--border:#e2ddd5;--answer-bg:#fdf8f0;--answer-border:#e8c87a;--tf-true:#1a6b4e;--tf-false:#b5442d}
+        body{font-family:'Source Sans 3',sans-serif;background:var(--bg);color:var(--text);min-height:100vh;line-height:1.55}
+        .hero{width:100%;padding:3rem 1.5rem 2rem;text-align:center;background:linear-gradient(135deg,#1a6b4e 0%,#0d3d2d 100%);color:#fff;position:relative}
+        .hero::after{content:'';position:absolute;inset:0;background:url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.04'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");pointer-events:none}
+        .back-link{display:inline-flex;align-items:center;gap:.4rem;color:rgba(255,255,255,.75);text-decoration:none;font-size:.9rem;margin-bottom:1rem;transition:color .2s}
+        .back-link:hover{color:#fff}
+        .hero h1{font-family:'Playfair Display',serif;font-size:2rem;font-weight:700}
+        .hero p{font-size:1rem;opacity:.85;margin-top:.4rem}
+        .container{max-width:860px;margin:0 auto;padding:2rem 1.5rem 4rem}
+        .controls{display:flex;gap:.75rem;flex-wrap:wrap;margin-bottom:2rem;position:sticky;top:0;z-index:10;background:var(--bg);padding:1rem 0}
+        .btn{padding:.6rem 1.2rem;border:2px solid var(--accent);border-radius:8px;font-weight:600;font-size:.9rem;cursor:pointer;transition:all .2s;font-family:inherit;background:#fff;color:var(--accent)}
+        .btn:hover{background:var(--accent-light)}
+        .btn.active{background:var(--accent);color:#fff}
+        .btn-answer{border-color:#c8951a;color:#a07415}
+        .btn-answer:hover{background:#fdf3dc}
+        .btn-answer.active{background:#c8951a;color:#fff;border-color:#c8951a}
+        .section-title{font-family:'Playfair Display',serif;font-size:1.3rem;font-weight:700;color:var(--accent);margin:2.5rem 0 1rem;padding-bottom:.5rem;border-bottom:2px solid var(--accent-light)}
+        .section-desc{font-size:.9rem;color:var(--text-muted);margin-bottom:1rem;font-style:italic}
+        .q-table{width:100%;border-collapse:collapse;margin-bottom:1.5rem;background:var(--card-bg);border-radius:10px;overflow:hidden;border:1px solid var(--border)}
+        .q-table thead th{background:var(--accent-light);color:var(--accent);font-weight:600;text-align:left;padding:.75rem 1rem;font-size:.85rem;text-transform:uppercase;letter-spacing:.05em}
+        .q-table tbody td{padding:.7rem 1rem;border-top:1px solid var(--border);font-size:.93rem;vertical-align:top}
+        .q-table tbody tr:hover{background:#fafaf7}
+        .num{color:var(--accent);font-weight:700;width:42px;text-align:center;white-space:nowrap}
+        .question-cell{width:62%}
+        .answer-cell{position:relative;min-height:1.4em;cursor:pointer;width:38%}
+        .blank{color:var(--text-muted);font-style:italic;user-select:none}
+        .answer-text{display:none;color:#5a3e00;background:var(--answer-bg);border-left:3px solid var(--answer-border);padding:.35rem .65rem;border-radius:0 4px 4px 0;line-height:1.5;font-size:.9rem}
+        .revealed .blank{display:none}
+        .revealed .answer-text{display:block}
+        .blank-mark{display:inline-block;min-width:120px;border-bottom:1.5px dashed #b5aa98;padding:0 .3rem;margin:0 .15rem;color:var(--text-muted)}
+        .tf-answer{display:flex;flex-direction:column;gap:.35rem}
+        .tf-badge{display:inline-block;padding:.15rem .55rem;border-radius:4px;font-weight:700;font-size:.85rem;letter-spacing:.03em;align-self:flex-start}
+        .tf-badge.true{background:#dff3e7;color:var(--tf-true)}
+        .tf-badge.false{background:#f9e3dc;color:var(--tf-false)}
+        .klasik-card{background:var(--card-bg);border:1px solid var(--border);border-radius:10px;margin-bottom:1rem;overflow:hidden;transition:box-shadow .2s}
+        .klasik-card:hover{box-shadow:0 2px 8px rgba(0,0,0,.04)}
+        .klasik-header{padding:1rem 1.25rem;cursor:pointer;display:flex;gap:.75rem;align-items:flex-start;user-select:none}
+        .klasik-header:hover{background:#fafaf7}
+        .klasik-num{color:var(--accent);font-weight:700;font-size:1rem;min-width:28px}
+        .klasik-q{flex:1;font-size:.95rem;font-weight:500}
+        .klasik-toggle{color:var(--accent);font-size:.85rem;transition:transform .2s;flex-shrink:0;margin-top:.15rem}
+        .revealed .klasik-toggle{transform:rotate(180deg)}
+        .klasik-puan{display:inline-block;background:var(--accent-light);color:var(--accent);font-size:.75rem;font-weight:600;padding:.1rem .45rem;border-radius:4px;margin-left:.4rem;white-space:nowrap}
+        .klasik-answer{display:none;padding:0 1.25rem 1.25rem;border-top:1px solid var(--accent-light);background:var(--answer-bg)}
+        .klasik-answer-inner{padding-top:1rem;color:#3d2f0a;font-size:.92rem;line-height:1.65}
+        .klasik-answer-inner h4{font-family:'Playfair Display',serif;color:var(--accent);font-size:1rem;margin:1rem 0 .4rem}
+        .klasik-answer-inner h4:first-child{margin-top:0}
+        .klasik-answer-inner ul,.klasik-answer-inner ol{margin:.4rem 0 .6rem 1.4rem}
+        .klasik-answer-inner li{margin-bottom:.3rem}
+        .klasik-answer-inner p{margin-bottom:.5rem}
+        .klasik-answer-inner table{width:100%;border-collapse:collapse;margin:.5rem 0;font-size:.88rem;background:#fff}
+        .klasik-answer-inner th,.klasik-answer-inner td{border:1px solid var(--border);padding:.4rem .55rem;text-align:left;vertical-align:top}
+        .klasik-answer-inner th{background:var(--accent-light);color:var(--accent);font-weight:600}
+        .klasik-answer-inner strong{color:#4a3208}
+        .revealed .klasik-answer{display:block}
+        .toc{background:#fff;border:1px solid var(--border);border-radius:10px;padding:1rem 1.25rem;margin-bottom:1.5rem}
+        .toc h3{font-family:'Playfair Display',serif;color:var(--accent);font-size:1rem;margin-bottom:.5rem}
+        .toc ul{list-style:none;display:flex;flex-wrap:wrap;gap:.5rem}
+        .toc a{display:inline-block;padding:.3rem .7rem;background:var(--accent-light);color:var(--accent);text-decoration:none;border-radius:6px;font-size:.85rem;font-weight:500;transition:all .2s}
+        .toc a:hover{background:var(--accent);color:#fff}
+        footer{text-align:center;padding:2rem 1rem;font-size:.82rem;color:var(--text-muted);border-top:1px solid var(--border)}
+        @media(max-width:600px){.hero h1{font-size:1.45rem}.q-table tbody td{padding:.55rem .6rem;font-size:.85rem}.controls{flex-direction:column}.klasik-header{padding:.85rem 1rem}.klasik-q{font-size:.88rem}}
+        @media print{.controls,.toc{display:none}.hero{padding:1.5rem}.answer-text,.klasik-answer{display:block!important;color:#333!important;border:none!important;background:none!important;padding:.3rem 0!important}.blank{display:none!important}.klasik-card{page-break-inside:avoid;border:1px solid #ccc;margin-bottom:.8rem}}
+
+        :root{--ok:#1f7a4d;--ok-bg:#d3eedd;--ok-bd:#2f9a63;--bad:#b5442d;--bad-bg:#f8d8cf;--bad-bd:#cf5a40}
+        .controls{align-items:center}
+        .pill{font-size:.82rem;font-weight:600;padding:.3rem .65rem;border-radius:999px;border:1px solid var(--border);background:#fff;font-variant-numeric:tabular-nums}
+        .pill.ok{color:var(--ok);border-color:var(--ok-bd);background:var(--ok-bg)}
+        .pill.bad{color:var(--bad);border-color:var(--bad-bd);background:var(--bad-bg)}
+        .sep{width:1px;height:28px;background:var(--border)}
+        .mq{background:var(--card-bg);border:1px solid var(--border);border-radius:12px;padding:1.2rem 1.25rem 1.05rem;margin-bottom:1rem}
+        .mq-head{display:flex;gap:.7rem;margin-bottom:.85rem}
+        .mq-num{color:var(--accent);font-weight:700;min-width:1.8rem}
+        .mq-text{font-weight:600;font-size:.98rem}
+        .opts{display:flex;flex-direction:column;gap:.45rem}
+        .opt{display:flex;gap:.7rem;align-items:flex-start;text-align:left;width:100%;padding:.6rem .8rem;border:1.5px solid var(--border);border-radius:9px;background:#fff;font:400 .94rem 'Source Sans 3',sans-serif;color:var(--text);cursor:pointer}
+        .opt:hover:not(:disabled){border-color:var(--accent);background:#fafcfa}
+        .opt:disabled{cursor:default}
+        .letter{flex-shrink:0;width:1.6rem;height:1.6rem;border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:.8rem;background:var(--accent-light);color:var(--accent)}
+        .opt.correct{border-color:var(--ok-bd);background:var(--ok-bg);color:#14472e;font-weight:600}
+        .opt.correct .letter{background:var(--ok);color:#fff}
+        .opt.wrong{border-color:var(--bad-bd);background:var(--bad-bg);color:#6e2414}
+        .opt.wrong .letter{background:var(--bad);color:#fff}
+        .opt.dim{opacity:.55}
+        .mexp{display:none;margin-top:.8rem;padding:.7rem .9rem;background:var(--answer-bg);border-left:3px solid var(--answer-border);border-radius:0 6px 6px 0;font-size:.91rem;color:#3d2f0a}
+        .mexp b{color:var(--ok)}
+        .mq.done .mexp{display:block}
+        .result{display:none;text-align:center;background:#fff;border:1px solid var(--border);border-radius:12px;padding:1.4rem;margin-top:1rem}
+        .result.show{display:block}
+        .result h3{font-family:'Playfair Display',serif;color:var(--accent);margin-bottom:.35rem}
+        .klasik-answer-inner td,.klasik-answer-inner th{overflow-wrap:normal;word-break:normal;hyphens:manual}
+        @media(max-width:600px){.sep{display:none}.mq{padding:1rem}.opt{font-size:.9rem}.controls{flex-direction:row;flex-wrap:wrap;justify-content:center;gap:.35rem;padding:.6rem 0}.controls .btn{padding:.4rem .7rem;font-size:.8rem}.pill{font-size:.74rem;padding:.25rem .5rem}}
+    </style>
+</head>
+<body>
+<header class="hero">
+    <a href="./" class="back-link">← Farmasötik Biyoteknoloji</a>
+    <h1>İlaç Biyoteknolojisi — Bütünleme Sınavı Çözümleri</h1>
+    <p>Eczacılık Fakültesi · 2025-2026 Güz Dönemi bütünleme sınavı · 5 soru / 100 puan</p>
+</header>
+<main class="container">
+    <div class="controls">
+        <button class="btn btn-answer" id="toggleAll" onclick="toggleAllAnswers()">Tüm Cevapları Göster</button>
+        <button class="btn" onclick="hideAllAnswers()">Gizle</button>
+    </div>
+<div class="toc">
+    <h3>Sınav Bilgileri</h3>
+    <ul>
+        <li>Ders: İlaç Biyoteknolojisi</li>
+        <li>Tarih: 03.12.2025 · 16:30</li>
+        <li>Süre: 30 dakika</li>
+        <li>Toplam: 100 puan</li>
+    </ul>
+    <p style="margin-top:.7rem;font-size:.86rem;color:#6b6456">Sınav yönergesi: yanıtlar kısa, net ve öz olmalı; yalnızca her sorunun altındaki boşluklara yazılmalıdır. Aşağıdaki çözümler ayrıntılı hazırlanmıştır — sınavda bu içeriğin özetini yazmanız beklenir.</p>
+</div>
+<section id="bolum-a"><h2 class="section-title">Sorular ve Çözümleri</h2><p class="section-desc">Önce kendiniz cevaplamayı deneyin; ardından soruya tıklayarak ayrıntılı çözümü açın.</p><div class="klasik-card"><div class="klasik-header" onclick="this.parentElement.classList.toggle('revealed')"><span class="klasik-num">1.</span><span class="klasik-q"><b>1.</b> Araştırma ekibiniz, kısa yarı ömürlü bir sitokin olan IL-18 analoğuna dayalı, hedef hücre seçiciliğini artırmak ve immünojenitesini azaltmak üzere tasarlanmış yeni nesil bir biyoteknolojik ilaç geliştirmeyi amaçlamaktadır.<br><b>A.</b> IL-18 analoğunun kısa yarı ömrünü uzatmak için hangi üç modern teknolojiyi kullanırdınız?<span class="klasik-puan">12 puan</span></span><span class="klasik-toggle">▼</span></div><div class="klasik-answer"><div class="klasik-answer-inner">
+<p>Sitokinler küçük (IL-18 ≈ 18 kDa), böbrek eşiğinin (~60 kDa) çok altında proteinlerdir; bu nedenle <b>glomerüler filtrasyonla hızla atılır</b> ve plazma yarı ömürleri dakikalarla ifade edilir. Yarı ömrü uzatmanın ortak mantığı <b>hidrodinamik hacmi büyütmek</b> ve/veya <b>FcRn geri dönüşüm yolundan yararlanmaktır</b>.</p>
+<h4>Seçilecek üç teknoloji</h4>
+<div style="overflow-x:auto"><table><tr><th>Teknoloji</th><th>Mekanizma</th><th>Ek kazanım</th></tr>
+<tr><td><b>1. PEGilasyon</b><br>(polietilen glikol konjugasyonu)</td><td>PEG zinciri molekülün hidrodinamik yarıçapını büyütür → renal klirens azalır; ayrıca proteolitik enzimlerden korur</td><td>PEG örtüsü epitopları maskeleyerek <b>immünojenisiteyi azaltır</b> (ör. pegfilgrastim: 15–80 saat dolaşım süresi)</td></tr>
+<tr><td><b>2. Fc füzyonu</b><br>(IgG1 Fc bölgesine füzyon)</td><td>Molekül ağırlığı artar + <b>FcRn aracılı geri dönüşüm</b> lizozomal yıkımdan kurtarır → yarı ömür günlere çıkar</td><td>Dimerik yapı aviditeyi ve <b>hedef seçiciliğini</b> artırır; Protein A ile kolay saflaştırma</td></tr>
+<tr><td><b>3. Albümin füzyonu / albümine bağlanma</b></td><td>İnsan serum albümini de FcRn ile geri dönüştürülür (yarı ömrü ≈ 19 gün); füzyon veya albümin bağlayıcı peptit/yağ asidi ile bu havuzdan yararlanılır</td><td>İnsan proteini olduğu için immünojenisite düşüktür (ör. insülin detemir'de miristik asit ile albümine bağlanma)</td></tr></table></div>
+<h4>Kabul edilebilecek alternatifler</h4>
+<ul><li><b>XTEN füzyonu:</b> glisin, glutamat ve serince zengin hidrofilik polipeptit uzantısı; PEG'in genetik kodlanabilen alternatifidir, hidrodinamik hacmi büyütür.</li>
+<li><b>Glikomühendislik (hiperglikozilasyon / sialilasyon artırımı):</b> ek N-glikozilasyon bölgeleri eklenerek sialik asit içeriği artırılır, klirens yavaşlar (darbepoetin alfa örneği).</li></ul>
+<p><b>Senaryoya özel not:</b> Soruda hem yarı ömür hem <b>hedef hücre seçiciliği</b> ve <b>düşük immünojenisite</b> isteniyor. Bu üçünü aynı anda en iyi karşılayan kombinasyon <b>Fc füzyonu + PEGilasyon/glikomühendislik</b>'tir; Fc hem yarı ömrü uzatır hem de hedefleyici modül (ör. antikor fragmanı) eklemeye olanak verir.</p></div></div></div><div class="klasik-card"><div class="klasik-header" onclick="this.parentElement.classList.toggle('revealed')"><span class="klasik-num">2.</span><span class="klasik-q"><b>1.B.</b> Bu biyoterapi için en uygun üretim platformu (E. coli, maya, CHO) hangisidir? Bu seçimi neden yaptınız?<span class="klasik-puan">13 puan</span></span><span class="klasik-toggle">▼</span></div><div class="klasik-answer"><div class="klasik-answer-inner">
+<p><b>Cevap: CHO (Chinese Hamster Ovary) memeli hücre hattı.</b></p>
+<h4>Gerekçe</h4>
+<ul><li><b>Kompleks post-translasyonel modifikasyon:</b> Tasarlanan molekül bir <b>Fc füzyon proteinidir</b>; Fc bölgesinin Asn297 konumunda <b>N-glikozilasyon</b> zorunludur. Bu glikan olmadan FcRn ve Fc reseptör etkileşimi, dolayısıyla uzun yarı ömür ve hedef seçiciliği sağlanamaz.</li>
+<li><b>Doğru katlanma ve disülfit bağları:</b> Fc dimerizasyonu için zincirler arası disülfit bağlarının doğru kurulması gerekir; bunu yalnızca memeli hücresinin ER/Golgi makinesi güvenilir biçimde yapar.</li>
+<li><b>Düşük immünojenisite:</b> CHO <b>insan benzeri glikan profili</b> üretir. Bu, sorudaki "immünojeniteyi azaltma" hedefinin doğrudan karşılığıdır.</li>
+<li><b>Ekstrasellüler üretim:</b> Ürün kültür ortamına salgılanır → hücre parçalama gerekmez, saflaştırma daha kolay ve proteaz hasarı riski düşüktür.</li></ul>
+<h4>Diğer platformlar neden elenir?</h4>
+<div style="overflow-x:auto"><table><tr><th>Platform</th><th>Elenme nedeni</th></tr>
+<tr><td><b>E. coli</b></td><td>Post-translasyonel modifikasyon <b>yapamaz</b> (glikozilasyon yok) → Fc işlevsiz kalır. Ayrıca <b>LPS (endotoksin)</b> birikimi ve <b>inklüzyon cisimciği</b> oluşumu; yeniden katlama gerekir, saflaştırma zordur. Endotoksin kalıntısı immünojenisiteyi <b>artırır</b> — senaryonun hedefiyle çelişir.</td></tr>
+<tr><td><b>Maya</b><br>(S. cerevisiae, Pichia)</td><td>PTM yapabilir ancak glikozilasyon profili <b>doğal insan proteininden farklıdır</b>: yüksek mannozlu / hipermannozile yapılar oluşur. Bu glikanlar insanda <b>immünojeniktir</b> ve hızlı klirense yol açar.</td></tr></table></div>
+<p><b>Kavramsal ayrım (not):</b> Doğal IL-18 glikozillenmeyen bir sitokindir; <i>yalın</i> bir IL-18 analoğu E. coli'de üretilip ardından PEGile edilebilirdi. Ancak bu senaryoda molekül bir <b>füzyon proteini</b> olarak tasarlandığından ve <b>düşük immünojenisite</b> şart koşulduğundan doğru yanıt <b>CHO</b>'dur.</p></div></div></div><div class="klasik-card"><div class="klasik-header" onclick="this.parentElement.classList.toggle('revealed')"><span class="klasik-num">3.</span><span class="klasik-q"><b>2.A.</b> Rekombinant DNA teknolojisinin adımlarını sırasıyla yazınız.<span class="klasik-puan">10 puan</span></span><span class="klasik-toggle">▼</span></div><div class="klasik-answer"><div class="klasik-answer-inner">
+<ol><li><b>Hedef genin izolasyonu:</b> Genomik DNA'dan veya mRNA'dan <b>revers transkriptaz</b> ile cDNA sentezlenerek elde edilir (ökaryot genlerinde intron bulunduğu için bakteriyel ifadede <b>cDNA tercih edilir</b>). Gerekirse PCR ile çoğaltılır.</li>
+<li><b>Vektörün seçimi ve hazırlanması:</b> En yaygın vektör <b>bakteriyel plazmittir</b>. Taşıması gerekenler: <b>replikasyon orijini (ori)</b> – çoğalma, <b>antibiyotik direnç geni</b> – seçim, <b>promotör/enhancer ve ribozom bağlanma bölgesi</b> – ifade, <b>çoklu klonlama bölgesi (MCS)</b>.</li>
+<li><b>Restriksiyon enzimiyle kesim:</b> Hedef gen ve vektör <b>aynı restriksiyon enzimiyle</b> kesilerek birbirine uyumlu <b>yapışkan uçlar (sticky end)</b> oluşturulur.</li>
+<li><b>Birleştirme (ligasyon):</b> <b>DNA ligaz</b> enzimi fosfodiester bağını kurarak gen ile vektörü birleştirir → <b>rekombinant DNA (rekombinant plazmit)</b>.</li>
+<li><b>Konak hücreye aktarım:</b> Bakteride <b>transformasyon</b>, memeli hücresinde <b>transfeksiyon</b> (ayrıca elektroporasyon, viral vektör).</li>
+<li><b>Seçim ve tarama:</b> Antibiyotikli besiyeri ile vektörü alanlar seçilir; <b>mavi-beyaz (lacZ) koloni taraması</b> ile gerçekten gen eklenmiş (rekombinant) koloniler ayırt edilir — rekombinantlar <b>beyaz</b> kalır.</li>
+<li><b>Klonların çoğaltılması ve ekspresyon:</b> En yüksek verimli klon seçilir, hücre bankası (MCB/WCB) oluşturulur, fermentör/biyoreaktörde çoğaltılır.</li>
+<li><b>Ürünün hasadı ve saflaştırılması:</b> Hasat (santrifüj/filtrasyon), gerekirse hücre parçalama, kromatografik saflaştırma.</li>
+<li><b>Karakterizasyon ve kalite kontrol:</b> SDS-PAGE, HPLC, kütle spektrometrisi, biyoaktivite tayini, endotoksin ve sterilite testleri.</li></ol>
+<p><b>Kısa akış:</b> Gen izolasyonu → vektör hazırlığı → restriksiyon kesimi → ligasyon → konağa aktarım → seçim/tarama → çoğaltma ve ifade → saflaştırma → kalite kontrol.</p></div></div></div><div class="klasik-card"><div class="klasik-header" onclick="this.parentElement.classList.toggle('revealed')"><span class="klasik-num">4.</span><span class="klasik-q"><b>2.B.</b> Moleküler biyolojide en yaygın kullanılan kısıtlama (restriksiyon) enzimini belirtin.<span class="klasik-puan">5 puan</span></span><span class="klasik-toggle">▼</span></div><div class="klasik-answer"><div class="klasik-answer-inner">
+<p><b>Cevap: EcoRI</b></p>
+<ul><li><i>Escherichia coli</i> RY13 suşundan izole edilmiştir. Adlandırma kuralı: <b>E</b> (cins <i>Escherichia</i>) + <b>co</b> (tür <i>coli</i>) + <b>R</b> (suş RY13) + <b>I</b> (keşif sırası).</li>
+<li><b>Tip II</b> restriksiyon endonükleazdır: ATP gerektirmez, <b>tanıma dizisinin tam içinde</b> kesim yapar; bu yüzden klonlamada kullanılabilen tek gruptur (Tip I ve Tip III tanıma bölgesinden uzakta, rastgele yerlerden keser).</li>
+<li>Yapışkan uç oluşturduğu, ucuz ve güvenilir olduğu için moleküler biyolojinin <b>standart enzimi</b> hâline gelmiştir.</li></ul>
+<p><i>Not:</i> BamHI, HindIII ve PstI de sık kullanılan Tip II enzimleridir; ancak "en yaygın" örneği EcoRI'dır.</p></div></div></div><div class="klasik-card"><div class="klasik-header" onclick="this.parentElement.classList.toggle('revealed')"><span class="klasik-num">5.</span><span class="klasik-q"><b>2.C.</b> Bu enzimin tanıdığı spesifik DNA dizisini ve kesim bölgesini gösterin.<span class="klasik-puan">5 puan</span></span><span class="klasik-toggle">▼</span></div><div class="klasik-answer"><div class="klasik-answer-inner">
+<p>EcoRI, <b>6 bazlık palindromik</b> bir diziyi tanır (iki zincir 5'→3' okunduğunda aynıdır) ve her iki zincirde <b>G ile A arasından</b> keser:</p>
+<pre style="background:#fff;border:1px solid var(--border);border-radius:8px;padding:.9rem 1rem;font-family:ui-monospace,Menlo,Consolas,monospace;font-size:.95rem;line-height:1.7;overflow-x:auto;margin:.6rem 0">5'- G <span style="color:#b5442d">▼</span> A A T T C -3'
+3'- C T T A A <span style="color:#b5442d">▲</span> G -5'</pre>
+<p><b>Tanıma dizisi:</b> 5'-GAATTC-3' / 3'-CTTAAG-5'</p>
+<p><b>Kesim sonucu oluşan uçlar:</b></p>
+<pre style="background:#fff;border:1px solid var(--border);border-radius:8px;padding:.9rem 1rem;font-family:ui-monospace,Menlo,Consolas,monospace;font-size:.95rem;line-height:1.7;overflow-x:auto;margin:.6rem 0">5'- G            A A T T C -3'
+3'- C T T A A            G -5'</pre>
+<ul><li>Kesim <b>kaydırılmış (staggered)</b> olduğu için <b>4 nükleotitlik 5'-AATT çıkıntısı</b>, yani <b>yapışkan uç (sticky end)</b> oluşur.</li>
+<li>Aynı enzimle kesilen gen ve vektörün uçları birbirini tamamlar; bu sayede <b>DNA ligaz</b> ile kolayca birleştirilirler. Rekombinant DNA teknolojisinin temel avantajı budur.</li></ul></div></div></div><div class="klasik-card"><div class="klasik-header" onclick="this.parentElement.classList.toggle('revealed')"><span class="klasik-num">6.</span><span class="klasik-q"><b>3.A.</b> Biyoteknolojik üretimde en yaygın kullanılan vektör tipi hangisidir?<span class="klasik-puan">5 puan</span></span><span class="klasik-toggle">▼</span></div><div class="klasik-answer"><div class="klasik-answer-inner">
+<p><b>Cevap: Bakteriyel plazmit.</b></p>
+<ul><li>Kromozomdan bağımsız çoğalabilen, <b>dairesel, çift sarmallı DNA</b> molekülleridir.</li>
+<li>Kopya sayısı yüksektir, kolay izole edilir ve manipüle edilir.</li>
+<li>Taşıması gereken üç temel öğe:
+<div style="overflow-x:auto"><table><tr><th>Öğe</th><th>Görevi</th></tr>
+<tr><td>Replikasyon orijini (ori)</td><td>Plazmitin konak hücrede çoğalması</td></tr>
+<tr><td>Antibiyotik direnç geni</td><td>Vektörü alan hücrelerin seçimi</td></tr>
+<tr><td>Promotör / enhancer</td><td>Genin ifade edilmesi (ekspresyon vektörlerinde ayrıca ribozom bağlanma bölgesi)</td></tr></table></div></li>
+<li><i>Diğer vektör tipleri:</i> bakteriyofaj, kozmit, YAC/BAC ve memeli hücreleri için viral vektörler; ancak rutin biyoteknolojik üretimde en yaygın olan plazmittir.</li></ul></div></div></div><div class="klasik-card"><div class="klasik-header" onclick="this.parentElement.classList.toggle('revealed')"><span class="klasik-num">7.</span><span class="klasik-q"><b>3.B.</b> Bakteriyel sistemlerin en büyük dezavantajı nedir?<span class="klasik-puan">5 puan</span></span><span class="klasik-toggle">▼</span></div><div class="klasik-answer"><div class="klasik-answer-inner">
+<p><b>Cevap: Post-translasyonel modifikasyon (özellikle glikozilasyon) yapamamaları.</b></p>
+<ul><li>Bakterilerde endoplazmik retikulum ve Golgi bulunmadığı için <b>glikozilasyon, doğru disülfit bağı oluşumu ve kompleks katlanma</b> gerçekleşmez.</li>
+<li>Sonuç: glikoprotein yapılı terapötikler (EPO, FSH, monoklonal antikorlar, Fc füzyon proteinleri) bakteride <b>işlevsel olarak üretilemez</b>.</li></ul>
+<h4>Bakteriyel sistemin diğer dezavantajları</h4>
+<ul><li><b>LPS (endotoksin) birikimi:</b> Gram negatif E. coli'nin dış membranındaki lipopolisakkarit pirojeniktir; pg/mL düzeyinde bile reaksiyon yapabilir ve saflaştırmada ayrıca uzaklaştırılmalıdır.</li>
+<li><b>İnklüzyon cisimciği oluşumu:</b> Aşırı ifade edilen protein hücre içinde çökelir; çözme ve <b>yeniden katlama (refolding)</b> gerekir, verim düşer.</li>
+<li><b>Zor saflaştırma:</b> Ürün hücre içinde kaldığı için hücre parçalama zorunludur; açığa çıkan proteazlar ürünü parçalayabilir.</li></ul></div></div></div><div class="klasik-card"><div class="klasik-header" onclick="this.parentElement.classList.toggle('revealed')"><span class="klasik-num">8.</span><span class="klasik-q"><b>3.C.</b> Hücre dışı (ekstrasellüler) protein üretiminin başlıca avantajı nedir?<span class="klasik-puan">5 puan</span></span><span class="klasik-toggle">▼</span></div><div class="klasik-answer"><div class="klasik-answer-inner">
+<p><b>Cevap: Ürün kültür ortamına (süpernatanta) salgılandığı için hücre parçalamaya gerek kalmaz; saflaştırma çok daha basit ve verimlidir.</b></p>
+<div style="overflow-x:auto"><table><tr><th>Aşama</th><th>İntrasellüler</th><th>Ekstrasellüler</th></tr>
+<tr><td>Hücrelerin ayrılması</td><td>Santrifüj / filtrasyon</td><td>Santrifüj / filtrasyon</td></tr>
+<tr><td>Hücre parçalama</td><td><b>Zorunlu</b> (homojenizasyon, yüksek basınç, enzimatik/kimyasal)</td><td><b>Gerekmez</b></td></tr>
+<tr><td>Hücre artıklarının uzaklaştırılması</td><td>Gerekli</td><td>Gerekmez</td></tr>
+<tr><td>Başlangıç saflaştırma</td><td>Ultrafiltrasyon, iyon değişim, çöktürme</td><td>Ultrafiltrasyon, çöktürme</td></tr>
+<tr><td>Risk</td><td>Hücre içi <b>proteazlar</b> açığa çıkar, ürün parçalanabilir; konak hücre proteini ve DNA kontaminasyonu yüksektir</td><td>Düşük parçalanma riski, daha az kontaminant</td></tr></table></div>
+<p>Ek kazanımlar: proses basamağı azaldığı için <b>maliyet ve süre düşer</b>, ürün başlangıçta zaten görece saf bir ortamda bulunur ve <b>sürekli (perfüzyon) üretime</b> uygundur. Örnekler: HBsAg (maya), monoklonal antikorlar ve eritropoietin (CHO).</p></div></div></div><div class="klasik-card"><div class="klasik-header" onclick="this.parentElement.classList.toggle('revealed')"><span class="klasik-num">9.</span><span class="klasik-q"><b>3.D.</b> Beslemeli kesikli (fed-batch) fermantasyonun başlıca avantajı nedir?<span class="klasik-puan">5 puan</span></span><span class="klasik-toggle">▼</span></div><div class="klasik-answer"><div class="klasik-answer-inner">
+<p><b>Cevap: Besiyerinin üretim boyunca kontrollü biçimde eklenmesi sayesinde yüksek hücre yoğunluğuna ve kesikli (batch) sisteme göre çok daha yüksek ürün verimine ulaşılması; aynı zamanda toksik yan ürün birikiminin önlenmesi.</b></p>
+<div style="overflow-x:auto"><table><tr><th></th><th>Batch (kesikli)</th><th>Fed-batch</th><th>Devamlı (perfüzyon)</th></tr>
+<tr><td>Besiyeri</td><td>Tümü başlangıçta</td><td>Başlangıçta sınırlı, zamanla eklenir</td><td>Sürekli eklenir, ürün alınır</td></tr>
+<tr><td>Verim</td><td>1x (referans)</td><td><b>2–3x</b></td><td>10x'e kadar</td></tr>
+<tr><td>Avantaj</td><td>Basit, kontaminasyon riski düşük</td><td>Yüksek verim, substrat inhibisyonu ve toksik metabolit birikimi önlenir</td><td>Sürekli üretim, steady-state</td></tr>
+<tr><td>Dezavantaj</td><td>Besi bitince üretim durur</td><td>Kontrol ve optimizasyon gerektirir</td><td>Kontaminasyon riski yüksek</td></tr></table></div>
+<p><b>Mekanizma:</b> Substrat (ör. glukoz) düşük derişimde tutulduğu için hücre <b>aşırı akış metabolizmasına</b> girmez; E. coli'de <b>asetat</b>, maya ve memeli hücrelerinde <b>etanol / laktat ve amonyak</b> birikimi engellenir. Bu metabolitler hem hücreyi zehirler hem de ürün kalitesini bozar. Bu nedenle fed-batch, biyofarmasötik üretiminde <b>en yaygın kullanılan</b> işletim şeklidir.</p></div></div></div><div class="klasik-card"><div class="klasik-header" onclick="this.parentElement.classList.toggle('revealed')"><span class="klasik-num">10.</span><span class="klasik-q"><b>4.</b> Eritrosit hücresinin membran protein analizine ait jel sonucu veriliyor (Spektrin, anyon taşıyıcı/Bant 3, Glikoforin A, B ve C bantları).<br><b>A.</b> Bu analizde hangi yöntem kullanıldı?<span class="klasik-puan">10 puan</span></span><span class="klasik-toggle">▼</span></div><div class="klasik-answer"><div class="klasik-answer-inner">
+<p><b>Cevap: SDS-PAGE</b> (Sodyum Dodesil Sülfat – Poliakrilamid Jel Elektroforezi).</p>
+<h4>Yöntemin tanınma ipuçları</h4>
+<ul><li>Dikey jel üzerinde ayrı ayrı <b>bantlar</b> hâlinde görülen bir protein profili verilmiştir.</li>
+<li>Bantların <b>yukarıdan aşağıya azalan molekül ağırlığına</b> göre dizilmesi tipiktir: en üstte spektrin (α ≈ 240 kDa, β ≈ 220 kDa), ortada anyon taşıyıcı (Bant 3 / AE1 ≈ 90–100 kDa), aşağıda glikoforinler (A ≈ 36 kDa, B ve C daha küçük).</li>
+<li>Membran proteinleri ancak <b>deterjanla çözündürülerek</b> analiz edilebilir; SDS hem çözücü hem denatürant olarak bu işi görür.</li></ul>
+<h4>Yöntemin temel ilkesi</h4>
+<ol><li><b>SDS</b> (anyonik deterjan) proteinleri <b>denatüre eder</b>, üçüncül/dördüncül yapıyı açar.</li>
+<li>Her ~2 amino aside bir SDS molekülü bağlanarak proteine <b>kütlesiyle orantılı net negatif yük</b> kazandırır; böylece proteinlerin kendi yük ve şekil farkları ortadan kalkar.</li>
+<li>β-merkaptoetanol/DTT ile <b>disülfit bağları</b> indirgenir, alt birimler ayrılır.</li>
+<li><b>Poliakrilamid jel</b> (akrilamid + bisakrilamid) moleküler elek görevi görür; elektrik alanında tüm proteinler anoda göç eder.</li>
+<li>Boyama (Coomassie Brilliant Blue veya gümüş boyama) ile bantlar görünür hâle gelir; molekül ağırlığı <b>standart marker</b> ile karşılaştırılarak belirlenir.</li></ol>
+<p><b>Neden bu yöntem?</b> En yaygın, en ucuz ve en hızlı protein analiz yöntemidir; ICH Q6B'ye göre <b>konak hücre proteinleri, agregatlar ve proteolitik kesilme</b> gibi kirliliklerin tespitinde de kullanılır.</p></div></div></div><div class="klasik-card"><div class="klasik-header" onclick="this.parentElement.classList.toggle('revealed')"><span class="klasik-num">11.</span><span class="klasik-q"><b>4.B.</b> Bu yöntemde proteinler hangi özelliğe göre ayrıştırılır?<span class="klasik-puan">10 puan</span></span><span class="klasik-toggle">▼</span></div><div class="klasik-answer"><div class="klasik-answer-inner">
+<p><b>Cevap: Molekül ağırlığına (kütlesine) göre.</b></p>
+<h4>Neden yalnızca molekül ağırlığı belirleyicidir?</h4>
+<ul><li>SDS bağlanması proteine <b>kütleyle orantılı, tekdüze negatif yük</b> verir → <b>yük/kütle oranı bütün proteinlerde eşitlenir</b>.</li>
+<li>Denatürasyon ve disülfit indirgemesiyle <b>şekil (konformasyon) farkı</b> ortadan kalkar; tüm proteinler çubuksu yapıya dönüşür.</li>
+<li>Geriye tek değişken kalır: proteinin <b>jel gözeneklerinden geçme kolaylığı</b>, yani boyutu. Küçük proteinler hızlı göç eder ve <b>aşağıda</b>, büyük proteinler yavaş göç eder ve <b>yukarıda</b> toplanır.</li>
+<li>Göç mesafesi, molekül ağırlığının <b>logaritmasıyla ters orantılıdır</b> (log MW – göç mesafesi grafiği doğrusaldır).</li></ul>
+<h4>Diğer elektroforetik yöntemlerle karşılaştırma</h4>
+<div style="overflow-x:auto"><table><tr><th>Yöntem</th><th>Ayırma ilkesi</th></tr>
+<tr><td><b>SDS-PAGE</b></td><td>Molekül ağırlığı</td></tr>
+<tr><td>Natif (denatüre olmayan) PAGE</td><td>Yük, boyut ve şekil birlikte</td></tr>
+<tr><td>İzoelektrik odaklama (IEF)</td><td>İzoelektrik nokta (pI)</td></tr>
+<tr><td>2 boyutlu elektroforez</td><td>1. boyut pI (IEF) + 2. boyut molekül ağırlığı (SDS-PAGE)</td></tr>
+<tr><td>Kapiller elektroforez</td><td>Yük, boyut ve şekil</td></tr></table></div>
+<p><b>Uyarı:</b> Glikoforinler gibi <b>yoğun glikozillenmiş</b> proteinler SDS'i normalden az bağladıkları için jelde beklenenden <b>yüksek</b> görünür ("anormal göç"); bu nedenle glikoproteinlerin gerçek kütlesi kütle spektrometrisiyle doğrulanır.</p></div></div></div><div class="klasik-card"><div class="klasik-header" onclick="this.parentElement.classList.toggle('revealed')"><span class="klasik-num">12.</span><span class="klasik-q"><b>5.</b> Otoinflamatuar hastalıklarda aşırı IL-1α aktivitesini hedefleyen rekombinant biyoteknolojik ilaçlar hangileridir?<span class="klasik-puan">15 puan</span></span><span class="klasik-toggle">▼</span></div><div class="klasik-answer"><div class="klasik-answer-inner">
+<p>IL-1 ailesinin iki ana üyesi <b>IL-1α</b> ve <b>IL-1β</b> aynı reseptöre (<b>IL-1R1</b>) bağlanır. Bu nedenle IL-1α aktivitesi ya <b>reseptör düzeyinde</b> bloke edilir, ya sitokin <b>tuzağa düşürülür</b>, ya da doğrudan <b>IL-1α'ya özgü antikorla</b> nötralize edilir.</p>
+<div style="overflow-x:auto"><table><tr><th>İlaç</th><th>Yapı / Tip</th><th>Etki mekanizması</th><th>Üretim</th></tr>
+<tr><td><b>Anakinra</b><br>(Kineret®)</td><td>Rekombinant insan <b>IL-1 reseptör antagonisti (IL-1Ra)</b>; 17 kDa, N-ucunda ek metiyonin</td><td>IL-1R1'e bağlanır ancak sinyal başlatmaz; <b>hem IL-1α hem IL-1β'nin</b> reseptöre bağlanmasını kompetitif olarak engeller</td><td><b>E. coli</b> (glikozillenmemiş)</td></tr>
+<tr><td><b>Rilonasept</b><br>(Arcalyst®)</td><td><b>IL-1 Trap</b> — füzyon proteini: IL-1R1 ve IL-1RAcP'nin hücre dışı bölgeleri + <b>IgG1 Fc</b></td><td>Çözünür tuzak olarak <b>IL-1α ve IL-1β'yi</b> yüksek afiniteyle bağlayıp dolaşımdan uzaklaştırır; Fc sayesinde yarı ömrü uzundur (haftalık uygulama)</td><td><b>CHO</b> (memeli hücresi)</td></tr>
+<tr><td><b>Bermekimab</b><br>(MABp1)</td><td><b>Gerçek insan</b> (true human) IgG1 monoklonal antikor</td><td><b>Doğrudan ve yalnızca IL-1α'yı</b> nötralize eder; IL-1α'ya özgü tek ajandır</td><td><b>Memeli hücre kültürü</b></td></tr></table></div>
+<h4>Kritik ayrım — kanakinumab neden bu listede yok?</h4>
+<p><b>Kanakinumab</b> (Ilaris®) yüksek afiniteli bir monoklonal antikordur ancak <b>yalnızca IL-1β</b>'ye özgüdür; IL-1α'yı <b>bağlamaz ve bloke etmez</b>. Bu nedenle sorunun hedefi olan "aşırı IL-1α aktivitesi" için uygun değildir. Sınavda bu ayrımı belirtmek puan kazandırır.</p>
+<h4>Kullanım alanları</h4>
+<ul><li><b>Otoinflamatuar sendromlar:</b> CAPS (kriyopirin ilişkili periyodik sendromlar: FCAS, MWS, NOMID/CINCA), FMF (ailesel Akdeniz ateşi), TRAPS, HIDS, Still hastalığı (sistemik JİA ve erişkin Still).</li>
+<li><b>Diğer:</b> romatoid artrit, perikardit (rilonasept), gut alevlenmesi; bermekimab hidradenitis suppurativa ve atopik dermatitte araştırılmıştır.</li></ul>
+<p><b>Özet cevap:</b> <b>Anakinra</b> (IL-1Ra, reseptör blokajı), <b>rilonasept</b> (IL-1 Trap/Fc füzyonu) ve <b>bermekimab</b> (anti-IL-1α mAb). Kanakinumab IL-1β'ye özgü olduğu için IL-1α'yı hedeflemez.</p></div></div></div></section>
+</main>
+<footer>Eczacılık Dersleri — Kaynak: Dr. Öğr. Üyesi Meliha Negin &copy; 2026</footer>
+<script>
+function toggleAllAnswers(){
+    const btn=document.getElementById('toggleAll');
+    const all=document.querySelectorAll('.klasik-card');
+    const allRevealed=[...all].every(c=>c.classList.contains('revealed'));
+    all.forEach(c=>{if(allRevealed)c.classList.remove('revealed');else c.classList.add('revealed')});
+    btn.classList.toggle('active',!allRevealed);
+}
+function hideAllAnswers(){
+    document.querySelectorAll('.klasik-card').forEach(c=>c.classList.remove('revealed'));
+    document.getElementById('toggleAll').classList.remove('active');
+}
+</script>
+</body>
+</html>
